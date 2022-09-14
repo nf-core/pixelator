@@ -1,0 +1,17 @@
+- name: pixelator_concatenate test_pixelator_concatenate
+  command: nextflow run tests/modules/pixelator/concatenate -entry test_pixelator_concatenate -c tests/config/nextflow.config
+  tags:
+    - pixelator
+    - pixelator-concatenate
+  files:
+    - path: output/pixelator/test_data.pixelator-concatenate.log
+      contains:
+        - "Finish pixelator concatenate"
+    - path: output/pixelator/test_data_output/concatenate/test_data.merged.fastq.gz
+
+- name: pixelator_concatenate test_pixelator_concatenate_single_end
+  command: nextflow run tests/modules/pixelator/concatenate -entry test_pixelator_concatenate_single_end -c tests/config/nextflow.config
+  tags:
+    - pixelator
+    - pixelator-concatenate
+  exit_code: 1

@@ -44,6 +44,183 @@
                 }
             }
         },
+        "mandatory_options": {
+            "required": [
+                "design"
+            ],
+            "properties": {
+                "design": {
+                    "description": "The design to load from the configuration file",
+                    "enum": [
+                        "D12",
+                        "D12PE",
+                        "D19",
+                        "D21PE"
+                    ]
+                }
+            }
+        },
+        "preqc_options": {
+            "title": "QC/Filtering/Trimming options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "properties": {
+                "trim_front": {
+                    "type": "integer",
+                    "description": "Trim N bases from the front of the reads",
+                    "default": 0
+                },
+                "trim_tail": {
+                    "type": "integer",
+                    "description": "Trim N bases from the tail of the reads",
+                    "default": 0
+                },
+                "max_length": {
+                    "type": "integer",
+                    "description": "The maximum length (bases) of a read (longer reads will be trimmed off). If you set this argument it will overrrule the value from the chosen design",
+                    "default": null
+                },
+                "min_length": {
+                    "type": "integer",
+                    "description": "The minimum length (bases) of a read (shorter reads will be discarded). If you set this argument it will overrrule the value from the chosen design.",
+                    "default": null
+                },
+                "max_n_bases": {
+                    "description": "The maximum number of Ns allowed in a read",
+                    "type": "integer",
+                    "default": 3
+                },
+                "avg_qual": {
+                    "description": "Minimum avg. quality a read must have (0 will disable the filter)",
+                    "type": "integer",
+                    "default": 20
+                },
+                "dedup": {
+                    "description": "Remove duplicated reads (exact same sequence)",
+                    "type": "boolean",
+                    "default": false
+                },
+                "remove_polyg": {
+                    "description": "Remove PolyG sequences (length of 10 or more)",
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        },
+        "adapterqc_options": {
+            "title": "Adapter QC Options",
+            "properties": {
+                "mismatches": {
+                    "description": "The number of mismatches allowed (in percentage)  [default: 0.1; 0.0<=x<=0.9]",
+                    "type": "number",
+                    "default": 0.1
+                },
+                "pbs1": {
+                    "description": "The PBS1 sequence that must be present in the reads. If you set this argument it will overrrule the value from the chosen design",
+                    "type": "string"
+                },
+                "pbs2": {
+                    "description": "The PBS2 sequence that must be present in the reads. If you set this argument it will overrrule the value from the chosen design",
+                    "type": "string"
+                }
+            }
+        },
+        "demux_options": {
+            "title": "Demux options",
+            "properties": {
+                "demux_mismatches": {
+                    "description": "The number of mismatches allowed (in percentage)  [default: 0.1; 0.0<=x<=0.9]",
+                    "type": "number",
+                    "default": 0.1,
+                    "minimum": 0.0,
+                    "maximum": 0.9
+                },
+                "demux_min_length": {
+                    "type": "integer",
+                    "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design",
+                    "default": null
+                }
+            }
+        },
+        "collapse_options": {
+            "title": "Collapse options",
+            "properties": {
+                "algorithm": {
+                    "description": "The algorithm to use for collapsing (adjacency will peform error correction using the number of mismatches given) [default: adjacency]",
+                    "default": "adjacency",
+                    "enum": [
+                        "adjacency",
+                        "unique"
+                    ]
+                },
+                "upi1_start": {
+                    "description": "The start position (0-based) of UPI1. If you set this argument it will overrrule the value from the chosen design",
+                    "default": null,
+                    "type": "integer"
+                },
+                "upi1_end": {
+                    "description": "The end position (1-based) of UPI1. If you set this argument it will overrrule the  value from the chosen design",
+                    "default": null,
+                    "type": "integer"
+                },
+                "upi2_start": {
+                    "description": "The start position (0-based) of UPI@. If you set this argument it will overrrule the value from the chosen design",
+                    "default": null,
+                    "type": "integer"
+                },
+                "upi2_end": {
+                    "description": "The end position (1-based) of UPI2. If you set this argument it will overrrule the  value from the chosen design",
+                    "default": null,
+                    "type": "integer"
+                },
+                "umi1_start": {
+                    "description": "The start position (0-based) of UMI1 (disabled by default). If you set this argument it will overrrule the value from the chosen design",
+                    "default": null,
+                    "type": "integer"
+                },
+                "umi1_end": {
+                    "description": "The end position (1-based) of UMI1 (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
+                    "default": null,
+                    "type": "integer"
+                },
+                "umi2_start": {
+                    "description": "The start position (0-based) of UMI2 (disabled by default). If you set this argument it will overrrule the value from the chosen design",
+                    "default": null,
+                    "type": "integer"
+                },
+                "umi2_end": {
+                    "description": "The end position (1-based) of UMI2 (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
+                    "default": null,
+                    "type": "integer"
+                },
+                "neighbours": {
+                    "description": "The number of neighbours to use when searching for similar sequences (adjacency) This number depends on the sequence depth and the ratio of erronous molecules expected. A high value can make the algoritthm slower.  [default: 60; 1<=x<=250]",
+                    "default": 60,
+                    "min": 1,
+                    "max": 250,
+                    "type": "integer"
+                },
+                "collapse_mismatches": {
+                    "description": "The number of mismatches allowed when collapsing (adjacency)  [default: 2; 0<=x<=5]",
+                    "default": 2,
+                    "min": 0,
+                    "max": 5,
+                    "type": "integer"
+                },
+                "collapse_min_count": {
+                    "description": "Discard molecules with with a count (reads) lower than this value  [default: 1; 0<=x<=5]",
+                    "default": 1,
+                    "min": 0,
+                    "max": 5,
+                    "type": "integer"
+                },
+                "use_counts": {
+                    "description": "Use counts when collapsing (the difference in counts between two molecules must be more than double in order to be collapsed)",
+                    "default": false,
+                    "type": "boolean"
+                }
+            }
+        },
         "reference_genome_options": {
             "title": "Reference genome options",
             "type": "object",
@@ -245,6 +422,21 @@
     "allOf": [
         {
             "$ref": "#/definitions/input_output_options"
+        },
+        {
+            "$ref": "#/definitions/mandatory_options"
+        },
+        {
+            "$ref": "#/definitions/preqc_options"
+        },
+        {
+            "$ref": "#/definitions/adapterqc_options"
+        },
+        {
+            "$ref": "#/definitions/demux_options"
+        },
+        {
+            "$ref": "#/definitions/collapse_options"
         },
         {
             "$ref": "#/definitions/reference_genome_options"

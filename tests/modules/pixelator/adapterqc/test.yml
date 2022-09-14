@@ -1,0 +1,13 @@
+- name: pixelator_adapterqc test_pixelator_adapterqc
+  command: nextflow run tests/modules/pixelator/adapterqc -entry test_pixelator_adapterqc -c tests/modules/pixelator/adapterqc/nextflow.config -c tests/config/nextflow.config 
+  tags:
+    - pixelator
+    - pixelator-adapterqc
+  files:
+    - path: output/pixelator/test_data.pixelator-adapterqc.log
+      contains:
+        - "Finish pixelator adapterqc"
+    - path: output/pixelator/adapterqc/test_data.failed.fastq.gz
+    - path: output/pixelator/adapterqc/test_data.processed.fastq.gz
+    - path: output/pixelator/adapterqc/test_data.report.json
+      md5sum: fc2d80ec83bca4421159b5d42b55df19

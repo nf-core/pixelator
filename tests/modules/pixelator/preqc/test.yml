@@ -1,0 +1,14 @@
+- name: pixelator_preqc test_pixelator_preqc
+  command: nextflow run tests/modules/pixelator/preqc -entry test_pixelator_preqc -c tests/modules/pixelator/preqc/nextflow.config -c tests/config/nextflow.config 
+  tags:
+    - pixelator
+    - pixelator-preqc
+  files:
+    - path: output/pixelator/test_data.pixelator-preqc.log
+      contains:
+        - "Finish pixelator fastp"
+    - path: output/pixelator/preqc/test_data.failed.fastq.gz
+    - path: output/pixelator/preqc/test_data.processed.fastq.gz
+    - path: output/pixelator/preqc/test_data.report.html
+    - path: output/pixelator/preqc/test_data.report.json
+      md5sum: e484cdab9a7f1c54a466b9123882ab1e
