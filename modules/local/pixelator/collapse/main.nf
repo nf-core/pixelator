@@ -18,8 +18,9 @@ process PIXELATOR_COLLAPSE {
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("concatenate/*.merged.fastq.gz"),       emit: merged
-    tuple val(meta), path("*pixelator-collapse.log"),          emit: log
+    tuple val(meta), path("collapse/*.collapsed.csv"),        emit: collapsed
+    tuple val(meta), path("collapse/test_data.report.json"),  emit: report
+    tuple val(meta), path("*pixelator-collapse.log"),         emit: log
 
     path "versions.yml"           , emit: versions
 
@@ -27,22 +28,22 @@ process PIXELATOR_COLLAPSE {
     task.ext.when == null || task.ext.when
 
     script:
+    assert meta.design != null
+
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
-
-    if ( meta.single_end && meta.single_end == true ) {
-        exit 1, "pixelator concatenate requires paired-end input"
-    }
+    def readsArg = reads.join(' ')
 
     """
     pixelator \\
         --threads $task.cpus \\
         --log-file ${prefix}.pixelator-collapse.log \\
         collapse \\
+        --samples "${meta.id}" \\
         --output . \\
+        --design ${meta.design} \\
         $args \\
-        ${reads[0]} \\
-        ${reads[1]} \\
+        ${readsArg}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

@@ -1,6 +1,5 @@
 # Pixelator command reference
 
-
 ## Main
 
     Usage: pixelator [OPTIONS] COMMAND [ARGS]...

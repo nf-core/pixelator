@@ -1,0 +1,12 @@
+- name: pixelator_collapse test_pixelator_collapse
+  command: nextflow run tests/modules/pixelator/collapse -entry test_pixelator_collapse -c tests/config/nextflow.config -c tests/modules/pixelator/collapse/nextflow.config
+  tags:
+    - pixelator
+    - pixelator-collapse
+
+  files:
+    - path: output/pixelator/test_data.pixelator-collapse.log
+      contains:
+        - "Finish pixelator collapse"
+    - path: output/pixelator/collapse/test_data.collapsed.csv
+    - path: output/pixelator/collapse/test_data.report.json
