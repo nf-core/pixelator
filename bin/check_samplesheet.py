@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# TODO nf-core: Update the script to check the samplesheet
-# This script is based on the example at: https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv
 
 import os
 import sys
@@ -46,6 +44,16 @@ def print_error(error, context="Line", context_str=""):
     print(error_str)
     sys.exit(1)
 
+    def __init__(
+        self,
+        sample_col="sample",
+        first_col="fastq_1",
+        second_col="fastq_2",
+        single_col="single_end",
+        **kwargs,
+    ):
+        """
+        Initialize the row checker with the expected column names.
 
 # TODO nf-core: Update the check_samplesheet function
 def check_samplesheet(file_in, file_out, sep='\t'):
@@ -159,9 +167,15 @@ def check_samplesheet(file_in, file_out, sep='\t'):
         print_error("No entries to process!", "Samplesheet: {}".format(file_in))
 
 
-def main(args=None):
-    args = parse_args(args)
-    check_samplesheet(args.FILE_IN, args.FILE_OUT)
+def main(argv=None):
+    """Coordinate argument parsing and program execution."""
+    args = parse_args(argv)
+    logging.basicConfig(level=args.log_level, format="[%(levelname)s] %(message)s")
+    if not args.file_in.is_file():
+        logger.error(f"The given input file {args.file_in} was not found!")
+        sys.exit(2)
+    args.file_out.parent.mkdir(parents=True, exist_ok=True)
+    check_samplesheet(args.file_in, args.file_out)
 
 
 if __name__ == "__main__":
