@@ -476,6 +476,12 @@
                     "description": "Run this workflow with Conda. You can also use '-profile conda' instead of providing this parameter.",
                     "hidden": true,
                     "fa_icon": "fas fa-bacon"
+                },
+                "testdata_root": {
+                    "type": "string",
+                    "description": "Root path to testdata for running local tests",
+                    "hidden": true,
+                    "fa_icon": "fas fa-folder-tree"
                 }
             }
         }
