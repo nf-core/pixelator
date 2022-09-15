@@ -9,7 +9,7 @@ import csv
 import logging
 import sys
 from collections import Counter
-from pathlib import Path
+from pathlib import Path, PurePath
 
 logger = logging.getLogger()
 
@@ -156,6 +156,7 @@ class PixelatorRowChecker(RowChecker):
         single_col="single_end",
         design_col="design",
         barcodes_col="barcodes",
+        samplesheet_path=None,
         **kwargs
     ):
         super().__init__(
@@ -168,6 +169,7 @@ class PixelatorRowChecker(RowChecker):
 
         self._design_col = design_col
         self._barcodes_col = barcodes_col
+        self._samplesheet_path = samplesheet_path
 
     def _validate_design(self, row):
         """Assert that the design column exists and has supported values."""
@@ -186,6 +188,38 @@ class PixelatorRowChecker(RowChecker):
         barcodes = row[self._barcodes_col]
         if barcodes not in self.VALID_BARCODES:
             raise AssertionError(f"Unsupported value for '{self._barcodes_col}' field.")
+
+    def _resolve_relative_paths(self, row):
+        first = row[self._first_col]
+        second = row[self._second_col]
+
+        first_path = PurePath(first)
+        if not first_path.is_absolute() and self._samplesheet_path is not None:
+            first = str(PurePath(self._samplesheet_path).parent / first_path)
+
+        second_path = PurePath(second)
+        if not second_path.is_absolute() and self._samplesheet_path is not None:
+            second = str(PurePath(self._samplesheet_path).parent / second_path)
+
+        row[self._first_col] = first
+        row[self._second_col] = second
+
+    def validate_and_transform(self, row):
+        """
+        Perform all validations on the given row and insert the read pairing status.
+
+        Args:
+            row (dict): A mapping from column headers (keys) to elements of that row
+                (values).
+
+        """
+        self._validate_sample(row)
+        self._validate_first(row)
+        self._validate_second(row)
+        self._validate_pair(row)
+        self._resolve_relative_paths(row)
+        self._seen.add((row[self._sample_col], row[self._first_col]))
+        self.modified.append(row)
 
 
 def read_head(handle, num_lines=10):
@@ -223,7 +257,7 @@ def sniff_format(handle):
     return dialect
 
 
-def check_samplesheet(file_in, file_out):
+def check_samplesheet(file_in, file_out, samplesheet_path):
     """
     Check that the tabular samplesheet has the structure expected by nf-core pipelines.
 
@@ -261,7 +295,8 @@ def check_samplesheet(file_in, file_out):
         # Validate each row.
         checker = PixelatorRowChecker(
             barcodes_col="barcodes",
-            design_col="design"
+            design_col="design",
+            samplesheet_path=samplesheet_path
         )
 
         for i, row in enumerate(reader):
@@ -276,7 +311,7 @@ def check_samplesheet(file_in, file_out):
     header.insert(1, "single_end")
     # See https://docs.python.org/3.9/library/csv.html#id3 to read up on `newline=""`.
     with file_out.open(mode="w", newline="") as out_handle:
-        writer = csv.DictWriter(out_handle, header, delimiter="\t")
+        writer = csv.DictWriter(out_handle, header, delimiter=",")
         writer.writeheader()
         for row in checker.modified:
             writer.writerow(row)
@@ -301,6 +336,12 @@ def parse_args(argv=None):
         help="Transformed output samplesheet in CSV format.",
     )
     parser.add_argument(
+        "--samplesheet-path",
+        metavar="PATH",
+        type=PurePath,
+        help="Local or remote location of the samplesheet",
+    )
+    parser.add_argument(
         "-l",
         "--log-level",
         help="The desired log level (default WARNING).",
@@ -318,7 +359,7 @@ def main(argv=None):
         logger.error(f"The given input file {args.file_in} was not found!")
         sys.exit(2)
     args.file_out.parent.mkdir(parents=True, exist_ok=True)
-    check_samplesheet(args.file_in, args.file_out)
+    check_samplesheet(args.file_in, args.file_out, args.samplesheet_path)
 
 
 if __name__ == "__main__":

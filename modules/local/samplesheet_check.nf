@@ -8,6 +8,7 @@ process SAMPLESHEET_CHECK {
 
     input:
     path samplesheet
+    val samplesheet_path
 
     output:
     path '*.csv'       , emit: csv
@@ -17,7 +18,8 @@ process SAMPLESHEET_CHECK {
     """
     check_samplesheet.py \\
         $samplesheet \\
-        samplesheet.valid.csv
+        samplesheet.valid.csv \\
+        --samplesheet-path $samplesheet_path
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

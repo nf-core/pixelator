@@ -49,6 +49,8 @@ S2	D12	D12_v1	  /root/S2_R1.fastq.gz
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
+> **_NOTE:_** When using relative paths in the samplesheet these will be resolved against the parent dir of the samplesheet. This makes a directory of files together with a samplesheet with relative paths relocatable
+
 ## Running the pipeline
 
 The typical command for running the pipeline is as follows:

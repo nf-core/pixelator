@@ -9,9 +9,9 @@ workflow INPUT_CHECK {
     samplesheet // file: /path/to/samplesheet.csv
 
     main:
-    SAMPLESHEET_CHECK ( samplesheet )
+    SAMPLESHEET_CHECK ( samplesheet, samplesheet.toUri() )
         .csv
-        .splitCsv ( header:true, sep:'\t' )
+        .splitCsv ( header:true, sep:',' )
         .dump(tag: "samplesheet_csv_split")
         .map { create_fastq_channel(it) }
         .set { reads }
@@ -33,9 +33,17 @@ def create_fastq_channel(LinkedHashMap row) {
 
     // add path(s) of the fastq file(s) to the meta map
     def fastq_meta = []
+
     if (!file(row.fastq_1).exists()) {
         exit 1, "ERROR: Please check input samplesheet -> Read 1 FastQ file does not exist!\n${row.fastq_1}"
     }
+    if (!meta.single_end && !meta.design.endsWith("PE")) {
+        exit 1, "ERROR: Please check input samplesheet -> Non paired-end design with paired-end input! Consider adding 'PE' suffix to the design.\n${row.fastq_1}"
+    }
+    if (meta.single_end && meta.design.endsWith("PE")) {
+        exit 1, "ERROR: Please check input samplesheet -> Paired-end design with single-end input! Consider removing 'PE' suffix from the design.\n${row.fastq_1}"
+    }
+
     if (meta.single_end) {
         fastq_meta = [ meta, [ file(row.fastq_1) ] ]
     } else {
