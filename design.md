@@ -12,7 +12,7 @@
     --profile          Activate profiling mode
     --log-file PATH    The path to the log file (it is created if it does not
                         exist)
-    --threads INTEGER  The number of threads to use for parallel processing
+    --coresINTEGER  The number of threads to use for parallel processing
                         [default: 7]
     --help             Show this message and exit.
 

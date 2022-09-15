@@ -12,7 +12,7 @@ process PIXELATOR_REPORT {
     // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
     //     'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':
     //     'quay.io/biocontainers/YOUR-TOOL-HERE' }"
-    container "pixelator:0.2.2"
+    container "https://registry.gitlab.com/pixelgen-technologies/pixelator:dev"
 
     input:
     val meta
@@ -35,7 +35,7 @@ process PIXELATOR_REPORT {
 
     script:
     def args = task.ext.args ?: ''
-    def samples = meta.samples.join('.')
+    def samples = meta.samples.join(',')
 
     """
     mkdir results

@@ -12,7 +12,7 @@ process PIXELATOR_ADAPTERQC {
     // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
     //     'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':
     //     'quay.io/biocontainers/YOUR-TOOL-HERE' }"
-    container "pixelator:0.2.2"
+    container "https://registry.gitlab.com/pixelgen-technologies/pixelator:dev"
 
     input:
     tuple val(meta), path(reads)
@@ -39,7 +39,7 @@ process PIXELATOR_ADAPTERQC {
     """
     mkdir ${prefix}_output
     pixelator \\
-        --threads $task.cpus \\
+        --cores $task.cpus \\
         --log-file ${prefix}.pixelator-adapterqc.log \\
         adapterqc \\
         --output . \\

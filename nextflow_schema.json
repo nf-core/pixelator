@@ -15,8 +15,6 @@
                 "input": {
                     "type": "string",
                     "format": "file-path",
-                    "mimetype": "text/tsv",
-                    "pattern": "^\\S+\\.tsv$",
                     "schema": "assets/schema_input.json",
                     "description": "Path to tab-separated file containing information about the samples in the experiment.",
                     "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/pixelator/usage#samplesheet-input).",
@@ -39,19 +37,6 @@
                     "type": "string",
                     "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
                     "fa_icon": "fas fa-file-signature"
-                }
-            }
-        },
-        "mandatory_options": {
-            "properties": {
-                "design": {
-                    "description": "The design to load from the configuration file",
-                    "enum": [
-                        "D12",
-                        "D12PE",
-                        "D19",
-                        "D21PE"
-                    ]
                 }
             }
         },
@@ -498,9 +483,6 @@
     "allOf": [
         {
             "$ref": "#/definitions/input_output_options"
-        },
-        {
-            "$ref": "#/definitions/mandatory_options"
         },
         {
             "$ref": "#/definitions/preqc_options"

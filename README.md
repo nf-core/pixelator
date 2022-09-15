@@ -1,14 +1,14 @@
 # ![nf-core/pixelator](docs/images/nf-core-pixelator_logo_light.png#gh-light-mode-only) ![nf-core/pixelator](docs/images/nf-core-pixelator_logo_dark.png#gh-dark-mode-only)
 
-[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/pixelator/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
+<!-- [![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/pixelator/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX) -->
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A521.10.3-23aa62.svg)](https://www.nextflow.io/)
-[![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
+<!-- [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/) -->
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
-[![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
-[![Launch on Nextflow Tower](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Nextflow%20Tower-%234256e7)](https://tower.nf/launch?pipeline=https://github.com/nf-core/pixelator)
+<!-- [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
+[![Launch on Nextflow Tower](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Nextflow%20Tower-%234256e7)](https://tower.nf/launch?pipeline=https://github.com/nf-core/pixelator) -->
 
-[![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23pixelator-4A154B?labelColor=000000&logo=slack)](https://nfcore.slack.com/channels/pixelator)[![Follow on Twitter](http://img.shields.io/badge/twitter-%40nf__core-1DA1F2?labelColor=000000&logo=twitter)](https://twitter.com/nf_core)[![Watch on YouTube](http://img.shields.io/badge/youtube-nf--core-FF0000?labelColor=000000&logo=youtube)](https://www.youtube.com/c/nf-core)
+<!-- [![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23pixelator-4A154B?labelColor=000000&logo=slack)](https://nfcore.slack.com/channels/pixelator)[![Follow on Twitter](http://img.shields.io/badge/twitter-%40nf__core-1DA1F2?labelColor=000000&logo=twitter)](https://twitter.com/nf_core)[![Watch on YouTube](http://img.shields.io/badge/youtube-nf--core-FF0000?labelColor=000000&logo=youtube)](https://www.youtube.com/c/nf-core) -->
 
 ## Introduction
 
@@ -20,25 +20,47 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 <!-- TODO nf-core: Add full-sized test dataset and amend the paragraph below if applicable -->
 
-On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources.The results obtained from the full-sized test can be viewed on the [nf-core website](https://nf-co.re/pixelator/results).
+<!-- On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources.The results obtained from the full-sized test can be viewed on the [nf-core website](https://nf-co.re/pixelator/results). -->
 
 ## Pipeline summary
 
 <!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
-1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
-2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+1. (Optional) Concatenate paired end data ([`pixelator concatenate`](https://gitlab.com/pixelgen-technologies/pixelator))
+2. Read QC and filtering ([`pixelator preqc`](https://gitlab.com/pixelgen-technologies/pixelator))
+3. Check Correctness/presence of PBS1/2 sequences ([`pixelator adapterqc`](https://gitlab.com/pixelgen-technologies/pixelator))
+4. Assign a marker (barcode) to each read ([`pixelator demux`](https://gitlab.com/pixelgen-technologies/pixelator))
+5. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://gitlab.com/pixelgen-technologies/pixelator))
+5. Report generation ([`pixelator report`](https://gitlab.com/pixelgen-technologies/pixelator))
+
 
 ## Quick Start
+
+> **_NOTE:_**  Only docker and local profile are currently supported
+> **_NOTE:_**  Only docker and local profile are currently supported
 
 1. Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=21.10.3`)
 
 2. Install any of [`Docker`](https://docs.docker.com/engine/installation/), [`Singularity`](https://www.sylabs.io/guides/3.0/user-guide/) (you can follow [this tutorial](https://singularity-tutorial.github.io/01-installation/)), [`Podman`](https://podman.io/), [`Shifter`](https://nersc.gitlab.io/development/shifter/how-to-use/) or [`Charliecloud`](https://hpc.github.io/charliecloud/) for full pipeline reproducibility _(you can use [`Conda`](https://conda.io/miniconda.html) both to install Nextflow itself and also to manage software within pipelines. Please only use it within pipelines as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_.
 
-3. Download the pipeline and test it on a minimal dataset with a single command:
+3. Provide GitLab credentials to nextflow
+
+  Create or edit the file: $HOME/.nextflow/scm
+  and add the `gitlab` block under the providers section.
+
+  ```
+  providers {
+    gitlab {
+      user = 'my-gitlab-email@example.com'
+      password = '<GitLab Access token with read_api, read_registry and read_repository scope>'
+    }
+  }
+  ```
+
+4. Download the pipeline and test it on a minimal dataset with a single command:
 
    ```bash
-   nextflow run nf-core/pixelator -profile test,YOURPROFILE --outdir <OUTDIR>
+   nextflow run PixelgenTechnologies/nf-core-pixelator -hub gitlab -r dev -profile test,YOURPROFILE --outdir "./results"
    ```
 
    Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above). You can chain multiple config profiles in a comma-separated string.
@@ -53,18 +75,23 @@ On release, automated continuous integration tests run the pipeline on a full-si
    <!-- TODO nf-core: Update the example "typical command" below used to run the pipeline -->
 
    ```bash
-   nextflow run nf-core/pixelator --input samplesheet.csv --outdir <OUTDIR> --genome GRCh37 -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
+   nextflow run PixelgenTechnologies/nf-core-pixelator -hub gitlab -r dev --input samplesheet.tsv --outdir <OUTDIR> -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
    ```
 
 ## Documentation
 
-The nf-core/pixelator pipeline comes with documentation about the pipeline [usage](https://nf-co.re/pixelator/usage), [parameters](https://nf-co.re/pixelator/parameters) and [output](https://nf-co.re/pixelator/output).
+// TODO
+<!-- The nf-core/pixelator pipeline comes with documentation about the pipeline [usage](https://nf-co.re/pixelator/usage), [parameters](https://nf-co.re/pixelator/parameters) and [output](https://nf-co.re/pixelator/output). -->
+The nf-core/pixelator pipeline comes with documentation about the pipeline [usage](./docs/usage.md), [parameters](./docs/parameters) and [output](./docs/output).
 
 ## Credits
 
-nf-core/pixelator was originally written by Pixelgen Technologies AB.
+nf-core/pixelator was originally written for [Pixelgen Technologies AB](https://www.pixelgen.tech/) by:
 
-We thank the following people for their extensive assistance in the development of this pipeline:
+- Florian De Temmerman
+- Jose Fernandez Navarro
+
+<!-- We thank the following people for their extensive assistance in the development of this pipeline: -->
 
 <!-- TODO nf-core: If applicable, make list of people who have also contributed -->
 
@@ -72,7 +99,9 @@ We thank the following people for their extensive assistance in the development 
 
 If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
 
-For further information or help, don't hesitate to get in touch on the [Slack `#pixelator` channel](https://nfcore.slack.com/channels/pixelator) (you can join with [this invite](https://nf-co.re/join/slack)).
+<!-- For further information or help, don't hesitate to get in touch on the [Slack `#pixelator` channel](https://nfcore.slack.com/channels/pixelator) (you can join with [this invite](https://nf-co.re/join/slack)). -->
+
+For further information or help, don't hesitate to get in touch on the [Slack `#nf-core-pixelator` channel](https://pixelgen-technologies.slack.com/channels/nf-core-pixelator)
 
 ## Citations
 

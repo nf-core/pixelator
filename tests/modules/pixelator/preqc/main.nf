@@ -8,11 +8,11 @@ include { PIXELATOR_PREQC } from '../../../../modules/local/pixelator/preqc/main
 workflow test_pixelator_preqc {
     input = [ 
         [ 
-            id: "${params.test_data['pixelator']['reads_test_data']['id']}",
+            id: "${params.test_data['pixelator']['micro']['id']}",
             design: "D12",
         ],
         [ 
-            file(params.test_data['pixelator']['reads_test_data']['concat'], checkIfExists: true),
+            file(params.test_data['pixelator']['micro']['concat'], checkIfExists: true),
         ]
     ]
 

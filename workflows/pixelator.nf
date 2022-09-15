@@ -11,7 +11,7 @@ WorkflowPixelator.initialise(params, log)
 
 // TODO nf-core: Add all file path parameters for the pipeline to the list below
 // Check input path parameters to see if they exist
-def checkPathParamList = [ params.input, params.multiqc_config ]
+def checkPathParamList = [ params.input ]
 for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
 
 // Check mandatory parameters
@@ -23,8 +23,8 @@ if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input sample
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-ch_multiqc_config        = file("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
-ch_multiqc_custom_config = params.multiqc_config ? Channel.fromPath(params.multiqc_config) : Channel.empty()
+// ch_multiqc_config        = file("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
+// ch_multiqc_custom_config = params.multiqc_config ? Channel.fromPath(params.multiqc_config) : Channel.empty()
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,8 +46,6 @@ include { INPUT_CHECK } from '../subworkflows/local/input_check'
 //
 // MODULE: Installed directly from nf-core/modules
 //
-include { FASTQC                      } from '../modules/nf-core/modules/fastqc/main'
-include { MULTIQC                     } from '../modules/nf-core/modules/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/modules/custom/dumpsoftwareversions/main'
 
 /*
@@ -97,40 +95,37 @@ workflow PIXELATOR {
     ch_renamed_reads = RENAME_READS.out.reads
     ch_renamed_reads.dump(tag: "ch_renamed_reads")
 
-    // MODULE: Run FastQC
-    //
-    // FASTQC (
-    //     INPUT_CHECK.out.reads
-    // )
-    // ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
     PIXELATOR_CONCATENATE ( ch_renamed_reads )
 
     ch_merged = PIXELATOR_CONCATENATE.out.merged
     ch_merged.dump(tag: "ch_merged")
+    ch_versions = ch_versions.mix(PIXELATOR_CONCATENATE.out.versions.first())
 
     PIXELATOR_PREQC ( ch_merged )
     ch_preqc = PIXELATOR_PREQC.out.processed
     ch_preqc.dump(tag: "ch_preqc")
+    ch_versions = ch_versions.mix(PIXELATOR_PREQC.out.versions.first())
 
     PIXELATOR_ADAPTERQC ( ch_merged )
     ch_adapterqc = PIXELATOR_ADAPTERQC.out.processed
     ch_adapterqc.dump(tag: "ch_adapterqc")
+    ch_versions = ch_versions.mix(PIXELATOR_ADAPTERQC.out.versions.first())
 
     PIXELATOR_DEMUX ( ch_adapterqc )
     ch_demuxed = PIXELATOR_DEMUX.out.processed
     ch_demuxed.dump(tag: "ch_demuxed")
+    ch_versions = ch_versions.mix(PIXELATOR_DEMUX.out.versions.first())
 
     PIXELATOR_COLLAPSE ( ch_demuxed )
     ch_collapsed = PIXELATOR_COLLAPSE.out.collapsed
     ch_collapsed.dump(tag: "ch_collapsed")
+    ch_versions = ch_versions.mix(PIXELATOR_COLLAPSE.out.versions.first())
 
     PIXELATOR_CLUSTER( ch_collapsed )
     ch_clustered = PIXELATOR_CLUSTER.out.results
     ch_clustered.dump(tag: "ch_clustered")
-
-
-    // PIXELATOR_CONCATENATE.out.results_dir.view()
+    ch_versions = ch_versions.mix(PIXELATOR_CLUSTER.out.versions.first())
 
     ch_concatenate_col = PIXELATOR_CONCATENATE.out.results_dir.map { meta, data -> [meta.id, data] }
     ch_preqc_col       = PIXELATOR_PREQC.out.results_dir.map { meta, data -> [ meta.id, data] }
@@ -148,8 +143,6 @@ workflow PIXELATOR {
         .groupTuple ()
 
 
-    // // ch_concatenate_col.
-    // ch_concatenate_col2 = ch_concatenate_col.map (it -> "test" )
     ch_report_data.dump(tag: "ch_report_data")
 
     ch_concatenate_grouped = ch_report_data.map { id, data -> data[0] }.collect()
@@ -178,36 +171,13 @@ workflow PIXELATOR {
         ch_cluster_grouped
     )
 
-    // ch_report_meta = ch_samples.map( samples -> [ id: "report", samples: samples ] )
-    // ch_report_meta.view()
-
-    // ch_report_input =
-
-    // PIXELATOR_REPORT( [ ch_report_meta, ch_report_input ])
-
-
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
 
-    //
-    // MODULE: MultiQC
-    //
     workflow_summary    = WorkflowPixelator.paramsSummaryMultiqc(workflow, summary_params)
     ch_workflow_summary = Channel.value(workflow_summary)
-
-    ch_multiqc_files = Channel.empty()
-    ch_multiqc_files = ch_multiqc_files.mix(Channel.from(ch_multiqc_config))
-    ch_multiqc_files = ch_multiqc_files.mix(ch_multiqc_custom_config.collect().ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
-    ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
-    // ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
-
-    MULTIQC (
-        ch_multiqc_files.collect()
-    )
-    multiqc_report = MULTIQC.out.report.toList()
-    ch_versions    = ch_versions.mix(MULTIQC.out.versions)
+    ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml')
 }
 
 /*
