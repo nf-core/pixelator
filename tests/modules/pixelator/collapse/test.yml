@@ -1,5 +1,5 @@
 - name: pixelator_collapse test_pixelator_collapse
-  command: nextflow run tests/modules/pixelator/collapse -entry test_pixelator_collapse -c tests/config/nextflow.config -c tests/modules/pixelator/collapse/nextflow.config
+  command: nextflow -C tests/modules/pixelator/collapse/nextflow.config run tests/modules/pixelator/collapse -entry test_pixelator_collapse 
   tags:
     - pixelator
     - pixelator-collapse

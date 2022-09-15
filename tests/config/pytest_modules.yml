@@ -3,7 +3,7 @@ pixelator-concatenate:
   - modules/pixelator/concatenate/**
   - tests/modules/pixelator/concatenate/**
 
-  pixelator-preqc:
+pixelator-preqc:
   - modules/pixelator/preqc/**
   - tests/modules/pixelator/preqc/**
 
@@ -18,3 +18,11 @@ pixelator-demux:
 pixelator-collapse:
   - modules/pixelator/collapse/**
   - tests/modules/pixelator/collapse/**
+
+pixelator-cluster:
+  - modules/pixelator/cluster/**
+  - tests/modules/pixelator/cluster/**
+
+pixelator-report:
+  - modules/pixelator/report/**
+  - tests/modules/pixelator/report/**

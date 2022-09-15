@@ -1,0 +1,2 @@
+sample	single_end	design	barcodes	fastq_1	fastq_2
+test_data_T1	0	/home/fbdtemme/Documents/pixelgen/nf-core-pixelator-testdata/test_data/test_data_R1.fastq.gz	/home/fbdtemme/Documents/pixelgen/nf-core-pixelator-testdata/test_data/test_data_R2.fastq.gz	D12PE	D12_v1

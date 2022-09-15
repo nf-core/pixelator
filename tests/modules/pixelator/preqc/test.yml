@@ -1,5 +1,5 @@
 - name: pixelator_preqc test_pixelator_preqc
-  command: nextflow run tests/modules/pixelator/preqc -entry test_pixelator_preqc -c tests/modules/pixelator/preqc/nextflow.config -c tests/config/nextflow.config 
+  command: nextflow -C tests/modules/pixelator/preqc/nextflow.config run tests/modules/pixelator/preqc -entry test_pixelator_preqc
   tags:
     - pixelator
     - pixelator-preqc
@@ -11,4 +11,3 @@
     - path: output/pixelator/preqc/test_data.processed.fastq.gz
     - path: output/pixelator/preqc/test_data.report.html
     - path: output/pixelator/preqc/test_data.report.json
-      md5sum: e484cdab9a7f1c54a466b9123882ab1e

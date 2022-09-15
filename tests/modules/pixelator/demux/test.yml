@@ -1,5 +1,5 @@
 - name: pixelator_demux test_pixelator_demux
-  command: nextflow run tests/modules/pixelator/demux -entry test_pixelator_demux -c tests/modules/pixelator/demux/nextflow.config -c tests/config/nextflow.config 
+  command: nextflow -C tests/modules/pixelator/demux/nextflow.config run tests/modules/pixelator/demux -entry test_pixelator_demux
   tags:
     - pixelator
     - pixelator-demux

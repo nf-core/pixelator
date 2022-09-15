@@ -11,7 +11,7 @@ workflow INPUT_CHECK {
     main:
     SAMPLESHEET_CHECK ( samplesheet )
         .csv
-        .splitCsv ( header:true, sep:',' )
+        .splitCsv ( header:true, sep:'\t' )
         .map { create_fastq_channels(it) }
         .set { reads }
 
@@ -25,6 +25,8 @@ def create_fastq_channels(LinkedHashMap row) {
     def meta = [:]
     meta.id           = row.sample
     meta.single_end   = row.single_end.toBoolean()
+    meta.design       = row.design
+    meta.barcodes     = row.barcodes
 
     def array = []
     if (!file(row.fastq_1).exists()) {

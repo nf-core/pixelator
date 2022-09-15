@@ -23,6 +23,7 @@ process PIXELATOR_PREQC {
     tuple val(meta), path("preqc/*.failed.fastq.gz"),      emit: failed
     tuple val(meta), path("preqc/*.report.html"),          emit: report_html
     tuple val(meta), path("preqc/*.report.json"),          emit: report_json
+    tuple val(meta), path("preqc"),                        emit: results_dir
     tuple val(meta), path("*pixelator-preqc.log"),         emit: log
 
     path "versions.yml"           , emit: versions
@@ -31,6 +32,8 @@ process PIXELATOR_PREQC {
     task.ext.when == null || task.ext.when
 
     script:
+    assert meta.design
+
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
 
@@ -40,7 +43,7 @@ process PIXELATOR_PREQC {
         --log-file ${prefix}.pixelator-preqc.log \\
         preqc \\
         --output . \\
-        --samples ${meta.id} \\
+        --design ${meta.design} \\
         ${args} \\
         ${reads} \\
 

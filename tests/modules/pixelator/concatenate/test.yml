@@ -1,5 +1,5 @@
 - name: pixelator_concatenate test_pixelator_concatenate
-  command: nextflow run tests/modules/pixelator/concatenate -entry test_pixelator_concatenate -c tests/config/nextflow.config
+  command: nextflow -C tests/modules/pixelator/concatenate/nextflow.config run tests/modules/pixelator/concatenate -entry test_pixelator_concatenate
   tags:
     - pixelator
     - pixelator-concatenate

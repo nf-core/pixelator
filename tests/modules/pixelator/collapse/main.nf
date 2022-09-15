@@ -7,13 +7,11 @@ include { PIXELATOR_COLLAPSE } from '../../../../modules/local/pixelator/collaps
 
 workflow test_pixelator_collapse {
 
-    def files = params.test_data['pixelator']['reads_test_data']['demux'].each( it -> file(it, checkIfExists: true) )
+    files = params.test_data['pixelator']['reads_test_data']['demux'].each( it -> file(it, checkIfExists: true) )
 
-    input = [ [ id: "${params.test_data['pixelator']['reads_test_data']['id']}", 
-                design: "D12"
-              ], // meta map
-              files
-            ]
-
+    input = [ 
+        [ id: "${params.test_data['pixelator']['reads_test_data']['id']}", design: "D12" ], // meta map
+        files
+    ]
     PIXELATOR_COLLAPSE ( input )
 }

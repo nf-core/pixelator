@@ -1,0 +1,5 @@
+- name: pixelator_report test_pixelator_report
+  command: nextflow run tests/modules/pixelator/report -entry test_pixelator_report -c tests/modules/pixelator/report/nextflow.config -c tests/config/nextflow.config 
+  tags:
+    - pixelator
+    - pixelator-report

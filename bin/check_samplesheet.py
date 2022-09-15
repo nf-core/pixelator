@@ -9,6 +9,11 @@ import errno
 import argparse
 
 
+VALID_DESIGNS = ["D12", "D12PE", "D19", "D21PE"]
+INPUT_HEADER = ["sample", "design", "barcodes", "fastq_1", "fastq_2"]
+OUTPUT_HEADER = ["sample", "single_end", "fastq_1", "fastq_2", "design", "barcodes"]
+
+
 def parse_args(args=None):
     Description = "Reformat nf-core/pixelator samplesheet file and check its contents."
     Epilog = "Example usage: python check_samplesheet.py <FILE_IN> <FILE_OUT>"
@@ -28,6 +33,10 @@ def make_dir(path):
                 raise exception
 
 
+def validate_design(design: str) -> bool:
+    return design in VALID_DESIGNS
+
+
 def print_error(error, context="Line", context_str=""):
     error_str = "ERROR: Please check samplesheet -> {}".format(error)
     if context != "" and context_str != "":
@@ -39,18 +48,18 @@ def print_error(error, context="Line", context_str=""):
 
 
 # TODO nf-core: Update the check_samplesheet function
-def check_samplesheet(file_in, file_out):
+def check_samplesheet(file_in, file_out, sep='\t'):
     """
     This function checks that the samplesheet follows the following structure:
 
-    sample,fastq_1,fastq_2
-    SAMPLE_PE,SAMPLE_PE_RUN1_1.fastq.gz,SAMPLE_PE_RUN1_2.fastq.gz
-    SAMPLE_PE,SAMPLE_PE_RUN2_1.fastq.gz,SAMPLE_PE_RUN2_2.fastq.gz
-    SAMPLE_SE,SAMPLE_SE_RUN1_1.fastq.gz,
+    SAMPLEID	DESIGN	BARCODES	R1	R2
+    test_data	D12PE	D12_v1	tests/data/test_data_R1.fastq.gz	tests/data/test_data_R2.fastq.gz
 
+    // TODO: Update example
     For an example see:
     https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv
     """
+
 
     sample_mapping_dict = {}
     with open(file_in, "r") as fin:
@@ -58,20 +67,20 @@ def check_samplesheet(file_in, file_out):
         ## Check header
         MIN_COLS = 2
         # TODO nf-core: Update the column names for the input samplesheet
-        HEADER = ["sample", "fastq_1", "fastq_2"]
-        header = [x.strip('"') for x in fin.readline().strip().split(",")]
-        if header[: len(HEADER)] != HEADER:
-            print("ERROR: Please check samplesheet header -> {} != {}".format(",".join(header), ",".join(HEADER)))
+        header = [x.strip('"').lower() for x in fin.readline().strip().split(sep)]
+
+        if header[: len(INPUT_HEADER)] != INPUT_HEADER:
+            print("ERROR: Please check samplesheet header -> {} != {}".format(sep.join(header), sep.join(INPUT_HEADER)))
             sys.exit(1)
 
         ## Check sample entries
         for line in fin:
-            lspl = [x.strip().strip('"') for x in line.strip().split(",")]
+            lspl = [x.strip().strip('"') for x in line.strip().split(sep)]
 
             # Check valid number of columns per row
-            if len(lspl) < len(HEADER):
+            if len(lspl) < len(INPUT_HEADER):
                 print_error(
-                    "Invalid number of columns (minimum = {})!".format(len(HEADER)),
+                    "Invalid number of columns (minimum = {})!".format(len(INPUT_HEADER)),
                     "Line",
                     line,
                 )
@@ -84,7 +93,7 @@ def check_samplesheet(file_in, file_out):
                 )
 
             ## Check sample name entries
-            sample, fastq_1, fastq_2 = lspl[: len(HEADER)]
+            sample, design, barcodes, fastq_1, fastq_2 = lspl[: len(INPUT_HEADER)]
             sample = sample.replace(" ", "_")
             if not sample:
                 print_error("Sample entry has not been specified!", "Line", line)
@@ -110,7 +119,13 @@ def check_samplesheet(file_in, file_out):
             else:
                 print_error("Invalid combination of columns provided!", "Line", line)
 
-            ## Create sample mapping dictionary = { sample: [ single_end, fastq_1, fastq_2 ] }
+            sample_info += [design, barcodes]
+
+            ## Check design
+            if not validate_design(design):
+                print_error("Invalid design provided!", "Line", line)
+
+            ## Create sample mapping dictionary = { sample: [ single_end, fastq_1, fastq_2, design, barcodes ] }
             if sample not in sample_mapping_dict:
                 sample_mapping_dict[sample] = [sample_info]
             else:
@@ -123,16 +138,23 @@ def check_samplesheet(file_in, file_out):
     if len(sample_mapping_dict) > 0:
         out_dir = os.path.dirname(file_out)
         make_dir(out_dir)
+
         with open(file_out, "w") as fout:
-            fout.write(",".join(["sample", "single_end", "fastq_1", "fastq_2"]) + "\n")
+            fout.write(sep.join(OUTPUT_HEADER) + "\n")
             for sample in sorted(sample_mapping_dict.keys()):
 
                 ## Check that multiple runs of the same sample are of the same datatype
                 if not all(x[0] == sample_mapping_dict[sample][0][0] for x in sample_mapping_dict[sample]):
                     print_error("Multiple runs of a sample must be of the same datatype!", "Sample: {}".format(sample))
 
-                for idx, val in enumerate(sample_mapping_dict[sample]):
-                    fout.write(",".join(["{}_T{}".format(sample, idx + 1)] + val) + "\n")
+                if len(sample_mapping_dict[sample]) != 1:
+                    print_error("Multiple rows with same sample identified!", "Sample: {}".format(sample))
+
+                val = sample_mapping_dict[sample][0]
+                fout.write(sep.join([sample] + val) + "\n")
+
+                # for idx, val in enumerate(sample_mapping_dict[sample]):
+                #     fout.write(sep.join(["{}_T{}".format(sample, idx + 1)] + val) + "\n")
     else:
         print_error("No entries to process!", "Samplesheet: {}".format(file_in))
 

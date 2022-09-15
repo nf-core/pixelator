@@ -1,0 +1,35 @@
+- name: pixelator_cluster test_pixelator_cluster
+  command: nextflow -C tests/modules/pixelator/cluster/nextflow.config run tests/modules/pixelator/cluster -entry test_pixelator_cluster
+  tags:
+    - pixelator
+    - pixelator-cluster
+
+  files:
+    - path: output/pixelator/test_data.pixelator-cluster.log
+      contains:
+        - "Finish pixelator cluster"
+    - path: output/pixelator/cluster/test_data/antibody_metrics.csv
+    - path: output/pixelator/cluster/test_data/antibody_metrics_filtered.csv
+    - path: output/pixelator/cluster/test_data/antibody_metrics_filtered.png
+    - path: output/pixelator/cluster/test_data/antibody_metrics.png
+    - path: output/pixelator/cluster/test_data/clusters_antibody.csv
+    - path: output/pixelator/cluster/test_data/clusters_antibody_filtered.csv
+    - path: output/pixelator/cluster/test_data/clusters_dist_filtered.png
+    - path: output/pixelator/cluster/test_data/clusters_dist.png
+    - path: output/pixelator/cluster/test_data/clusters_metrics.csv
+    - path: output/pixelator/cluster/test_data/clusters_metrics_filtered.csv
+    - path: output/pixelator/cluster/test_data/coabundance_boxplot_filtered.png
+    - path: output/pixelator/cluster/test_data/coabundance_heatmap_filtered.png
+    - path: output/pixelator/cluster/test_data/coabundance_matrix_filtered.csv
+    - path: output/pixelator/cluster/test_data/colocalization_boxplot_filtered.png
+    - path: output/pixelator/cluster/test_data/colocalization_heatmap_filtered.png
+    - path: output/pixelator/cluster/test_data/colocalization_matrix_filtered.csv
+    - path: output/pixelator/cluster/test_data/data_summary.png
+    - path: output/pixelator/cluster/test_data/pixel_data.csv
+    - path: output/pixelator/cluster/test_data/pixel_data_filtered.csv
+    - path: output/pixelator/cluster/test_data/polarization_boxplot_filtered.png
+    - path: output/pixelator/cluster/test_data/polarization_heatmap_filtered.png
+    - path: output/pixelator/cluster/test_data/polarization_matrix_filtered.csv
+    - path: output/pixelator/cluster/test_data/test_data.report.json
+
+
