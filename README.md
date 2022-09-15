@@ -37,7 +37,6 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 ## Quick Start
 
 > **_NOTE:_**  Only docker and local profile are currently supported
-> **_NOTE:_**  Only docker and local profile are currently supported
 
 1. Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=21.10.3`)
 

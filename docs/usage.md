@@ -10,7 +10,7 @@
 
 ## Samplesheet input
 
-You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a tab-separated file with 5 columns, and a header row as shown in the examples below.
+You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 5 columns, and a header row as shown in the examples below.
 
 ```bash
 --input '[path to samplesheet file]'
@@ -34,9 +34,9 @@ The pipeline will auto-detect whether a sample is single- or paired-end using th
 A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 2 samples.
 
 ```console
-sample	design	barcodes	fastq_1   fastq_2
-S1	D12PE	D12_v1	  /root/S1_R1.fastq.gz	/root/S1_R2.fastq.gz
-S2	D12	D12_v1	  /root/S2_R1.fastq.gz
+sample,design,barcodes,fastq_1,fastq_2
+S1,D12PE,D12_v1,S1_R1.fastq.gz,S1_R2.fastq.gz
+S2,D12,D12_v1,S2_R1.fastq.gz
 ```
 
 | Column     | Description                                                                                                                                                                            |

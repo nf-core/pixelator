@@ -14,17 +14,16 @@ process RENAME_READS {
     output:
     tuple val(meta), path("${meta.id}_*"), emit: reads
 
-    script: // This script is bundled with the pipeline, in nf-core/pixelator/bin/
-    assert reads.size() <= 2
+    script:
 
-    if (reads.size() == 2) {
+    if (reads in List) {
         """
         mv ${reads[0]} ${meta.id}_R1.fastq.gz
         mv ${reads[1]} ${meta.id}_R2.fastq.gz
         """
     } else {
         """
-        mv ${reads[0]} ${meta.id}_R1.fastq.gz
+        mv ${reads} ${meta.id}_R1.fastq.gz
         """
     }
 }

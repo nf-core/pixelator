@@ -95,19 +95,35 @@ workflow PIXELATOR {
     ch_renamed_reads = RENAME_READS.out.reads
     ch_renamed_reads.dump(tag: "ch_renamed_reads")
 
+    ch_renamed_branched = ch_renamed_reads.branch {
+        single_end: it[0].single_end
+        paired_end: true
+    }
 
-    PIXELATOR_CONCATENATE ( ch_renamed_reads )
+    ch_renamed_branched.single_end.dump(tag: "ch_renamed_branched.single_end")
+    ch_renamed_branched.paired_end.dump(tag: "ch_renamed_branched.paired_end")
 
+
+    PIXELATOR_CONCATENATE ( ch_renamed_branched.paired_end )
     ch_merged = PIXELATOR_CONCATENATE.out.merged
     ch_merged.dump(tag: "ch_merged")
     ch_versions = ch_versions.mix(PIXELATOR_CONCATENATE.out.versions.first())
 
-    PIXELATOR_PREQC ( ch_merged )
+    // Return concatenate ouput but with [] placeholder for single_end reads
+    ch_concat_results = ch_renamed_branched.single_end
+        .map { meta, _ -> [meta, []] }
+        .mix(PIXELATOR_CONCATENATE.out.results_dir)
+    ch_concat_results.dump(tag: "ch_concat_results")
+
+    ch_input_reads = ch_renamed_branched.single_end.mix(ch_merged)
+    ch_input_reads.dump(tag: "ch_input_reads")
+
+    PIXELATOR_PREQC ( ch_input_reads )
     ch_preqc = PIXELATOR_PREQC.out.processed
     ch_preqc.dump(tag: "ch_preqc")
     ch_versions = ch_versions.mix(PIXELATOR_PREQC.out.versions.first())
 
-    PIXELATOR_ADAPTERQC ( ch_merged )
+    PIXELATOR_ADAPTERQC ( ch_input_reads )
     ch_adapterqc = PIXELATOR_ADAPTERQC.out.processed
     ch_adapterqc.dump(tag: "ch_adapterqc")
     ch_versions = ch_versions.mix(PIXELATOR_ADAPTERQC.out.versions.first())
@@ -127,7 +143,7 @@ workflow PIXELATOR {
     ch_clustered.dump(tag: "ch_clustered")
     ch_versions = ch_versions.mix(PIXELATOR_CLUSTER.out.versions.first())
 
-    ch_concatenate_col = PIXELATOR_CONCATENATE.out.results_dir.map { meta, data -> [meta.id, data] }
+    ch_concatenate_col = ch_concat_results.map { meta, data -> [meta.id, data] }
     ch_preqc_col       = PIXELATOR_PREQC.out.results_dir.map { meta, data -> [ meta.id, data] }
     ch_adapterqc_col   = PIXELATOR_ADAPTERQC.out.results_dir.map { meta, data -> [ meta.id, data] }
     ch_demux_col       = PIXELATOR_DEMUX.out.results_dir.map { meta, data -> [ meta.id, data] }
@@ -142,16 +158,16 @@ workflow PIXELATOR {
         .concat ( ch_cluster_col )
         .groupTuple ()
 
-
     ch_report_data.dump(tag: "ch_report_data")
 
-    ch_concatenate_grouped = ch_report_data.map { id, data -> data[0] }.collect()
-    ch_preqc_grouped = ch_report_data.map { id, data -> data[1] }.collect()
-    ch_adapterqc_grouped = ch_report_data.map { id, data -> data[2] }.collect()
-    ch_demux_grouped = ch_report_data.map { id, data -> data[3] }.collect()
-    ch_collapse_grouped = ch_report_data.map { id, data -> data[4] }.collect()
-    ch_cluster_grouped = ch_report_data.map { id, data -> data[5] }.collect()
-    ch_report_meta = ch_report_data.map( it -> it[0] ).collect().map { [ id: params.report_name , samples: it] }
+    ch_concatenate_grouped  = ch_report_data.map { id, data -> data[0] }.collect()
+    ch_preqc_grouped        = ch_report_data.map { id, data -> data[1] }.collect()
+    ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[2] }.collect()
+    ch_demux_grouped        = ch_report_data.map { id, data -> data[3] }.collect()
+    ch_collapse_grouped     = ch_report_data.map { id, data -> data[4] }.collect()
+    ch_cluster_grouped      = ch_report_data.map { id, data -> data[5] }.collect()
+    ch_report_meta          = ch_report_data.map { it -> it[0] }.collect()
+                                            .map { [ id: params.report_name , samples: it] }
 
     ch_concatenate_grouped.dump(tag: "ch_concatenate_grouped")
     ch_preqc_grouped.dump(tag: "ch_preqc_grouped")
@@ -170,6 +186,7 @@ workflow PIXELATOR {
         ch_collapse_grouped,
         ch_cluster_grouped
     )
+    ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions.first())
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
