@@ -186,7 +186,7 @@ workflow PIXELATOR {
         ch_collapse_grouped,
         ch_cluster_grouped
     )
-    ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions.first())
+    ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions)
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
