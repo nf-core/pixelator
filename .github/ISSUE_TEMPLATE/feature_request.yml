@@ -1,5 +1,5 @@
 name: Feature request
-description: Suggest an idea for the nf-core/pixelator pipeline
+description: Suggest an idea for the PixelgenTechnologies/nf-core-pixelator pipeline
 labels: enhancement
 body:
   - type: textarea
