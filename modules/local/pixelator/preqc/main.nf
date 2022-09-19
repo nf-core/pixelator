@@ -12,7 +12,7 @@ process PIXELATOR_PREQC {
     // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
     //     'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':
     //     'quay.io/biocontainers/YOUR-TOOL-HERE' }"
-    container "registry.gitlab.com/pixelgen-technologies/pixelator:dev"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.2.3"
 
     input:
     tuple val(meta), path(reads)

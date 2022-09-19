@@ -6,12 +6,12 @@ include { PIXELATOR_PREQC } from '../../../../modules/local/pixelator/preqc/main
 
 
 workflow test_pixelator_preqc {
-    input = [ 
-        [ 
+    input = [
+        [
             id: "${params.test_data['pixelator']['micro']['id']}",
             design: "D12",
         ],
-        [ 
+        [
             file(params.test_data['pixelator']['micro']['concat'], checkIfExists: true),
         ]
     ]

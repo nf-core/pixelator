@@ -6,11 +6,12 @@ include { PIXELATOR_ADAPTERQC } from '../../../../modules/local/pixelator/adapte
 
 
 workflow test_pixelator_adapterqc {
-    input = [ [ id: "${params.test_data['pixelator']['micro']['id']}", design: "D12" ], // meta map
-              [ 
-                file(params.test_data['pixelator']['micro']['concat'], checkIfExists: true),
-              ]
-            ]
+    input = [
+        [ id: "${params.test_data['pixelator']['micro']['id']}", design: "D12" ], // meta map
+        [
+            file(params.test_data['pixelator']['micro']['concat'], checkIfExists: true),
+        ]
+    ]
 
     PIXELATOR_ADAPTERQC ( input )
 }

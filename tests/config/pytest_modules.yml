@@ -1,4 +1,3 @@
-
 pixelator-concatenate:
   - modules/pixelator/concatenate/**
   - tests/modules/pixelator/concatenate/**

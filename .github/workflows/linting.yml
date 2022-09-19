@@ -67,6 +67,7 @@ jobs:
 
   nf-core:
     runs-on: ubuntu-latest
+    if: ${{ false }}
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@v2

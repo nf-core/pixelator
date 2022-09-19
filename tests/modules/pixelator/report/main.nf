@@ -16,13 +16,13 @@ workflow test_pixelator_report {
     demux = file(params.test_data['pixelator']['micro']["result_dirs"]["demux"], checkIfExists: true)
     cluster = file(params.test_data['pixelator']['micro']["result_dirs"]["cluster"], checkIfExists: true)
 
-    PIXELATOR_REPORT ( 
+    PIXELATOR_REPORT (
         input,
         concatenate,
         preqc,
         adapterqc,
         demux,
         collapse,
-        cluster 
+        cluster
     )
 }

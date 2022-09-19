@@ -1,5 +1,5 @@
 - name: pixelator_adapterqc test_pixelator_adapterqc
-  command: nextflow -C tests/modules/pixelator/adapterqc/nextflow.config run tests/modules/pixelator/adapterqc -entry test_pixelator_adapterqc 
+  command: nextflow -C tests/modules/pixelator/adapterqc/nextflow.config run tests/modules/pixelator/adapterqc -entry test_pixelator_adapterqc
   tags:
     - pixelator
     - pixelator-adapterqc

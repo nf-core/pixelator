@@ -9,7 +9,7 @@ workflow test_pixelator_collapse {
 
     files = params.test_data['pixelator']['micro']['demux'].each( it -> file(it, checkIfExists: true) )
 
-    input = [ 
+    input = [
         [ id: "${params.test_data['pixelator']['micro']['id']}", design: "D12" ], // meta map
         files
     ]

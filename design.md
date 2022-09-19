@@ -34,7 +34,6 @@
     pipeline     performs all the commands using settings (yaml) and samplesheet
                 (tsv) files
 
-
 ## Concatenate
 
     Usage: pixelator concatenate <options> FASTQ_FILES
@@ -50,7 +49,6 @@
     --output PATH          The path where the results will be placed (it is
                             created if it does not exist)  [required]
     --help                 Show this message and exit.
-
 
 ## preqc
 
@@ -202,7 +200,6 @@
     --design [D12|D12PE|D19|D21PE]  The design to load from the configuration
                                     file  [required]
     --help                          Show this message and exit.
-
 
 ## Cluster
 
