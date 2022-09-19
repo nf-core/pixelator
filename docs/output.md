@@ -1,4 +1,4 @@
-# nf-core/pixelator: Output
+# PixelgenTechnologies/nf-core-pixelator: Output
 
 ## Introduction
 
@@ -24,7 +24,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
-  - concatenate`
+  - `concatenate`
     - `*merged.fastq.gz`: Concatenated R1 and R2 reads.
   - `/logs`
     - `*pixelator-concatenate.log`: Pixelator concatenate log output.
@@ -36,7 +36,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
-  - preqc`
+  - `preqc`
     - `*processed.fastq.gz`: Processed reads.
     - `*failed.fastq.gz`: Discarded reads.
     - `*report.html`: Fastp html report.
@@ -52,7 +52,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
-  - adapterqc`
+  - `adapterqc`
     - `*processed.fastq.gz`: Processed reads.
     - `*failed.fastq.gz`: Discarded reads.
     - `*report.json`: Cutadapt json report.
@@ -66,7 +66,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
-  - adapterqc`
+  - `adapterqc`
     - `*processed-*-.fastq.gz`: Reads demultiplexed per antibody.
     - `*report.json`: Cutadapt json report.
   - `/logs`
@@ -79,7 +79,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
-  - adapterqc`
+  - `adapterqc`
     - `*.collapse.csv`: Edge list matrix.
     - `*collapse.json`: Statistics.
   - `/logs`

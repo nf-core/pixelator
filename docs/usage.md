@@ -1,8 +1,8 @@
-# nf-core/pixelator: Usage
+# PixelgenTechnologies/nf-core-pixelator: Usage
 
-## :warning: Please read this documentation on the nf-core website: [https://nf-co.re/pixelator/usage](https://nf-co.re/pixelator/usage)
+<!-- ## :warning: Please read this documentation on the nf-core website: [https://nf-co.re/pixelator/usage](https://nf-co.re/pixelator/usage) -->
 
-> _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
+<!-- > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._ -->
 
 ## Introduction
 
@@ -25,7 +25,8 @@ sample,fastq_1,fastq_2
 CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
 CONTROL_REP1,AEG588A1_S1_L003_R1_001.fastq.gz,AEG588A1_S1_L003_R2_001.fastq.gz
 CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
-``` -->
+```
+-->
 
 ### Full samplesheet
 
@@ -56,7 +57,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/pixelator --input samplesheet.csv --outdir <OUTDIR> --genome GRCh37 -profile docker
+nextflow run PixelgenTechnologies/nf-core-pixelator --input samplesheet.csv --outdir <OUTDIR> --genome GRCh37 -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -75,14 +76,14 @@ work                # Directory containing the nextflow working files
 When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:
 
 ```bash
-nextflow pull PixelgenTechnologies/nf-core-pixelator -hub gitlab -r dev
+nextflow pull PixelgenTechnologies/nf-core-pixelator
 ```
 
 ### Reproducibility
 
 It is a good idea to specify a pipeline version when running the pipeline on your data. This ensures that a specific version of the pipeline code and software are used when you run your pipeline. If you keep using the same tag, you'll be running the same version of the pipeline, even if there have been changes to the code since.
 
-First, go to the [nf-core/pixelator releases page](https://github.com/nf-core/pixelator/releases) and find the latest version number - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`.
+First, go to the [PixelgenTechnologies/nf-core-pixelator releases page](https://github.com/PixelgenTechnologies/nf-core-pixelator/releases) and find the latest version number - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`.
 
 This version number will be logged in reports when you run the pipeline, so that you'll know what you used when you look back in the future.
 

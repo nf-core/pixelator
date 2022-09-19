@@ -49,9 +49,9 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
   ```
   providers {
-    gitlab {
-      user = 'my-gitlab-email@example.com'
-      password = '<GitLab Access token with read_api, read_registry and read_repository scope>'
+    github {
+      user = 'GitHub username'
+      password = '<GitHub Access token with read_api, read_registry and read_repository scope>'
     }
   }
   ```
@@ -59,7 +59,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 4. Download the pipeline and test it on a minimal dataset with a single command:
 
    ```bash
-   nextflow run PixelgenTechnologies/nf-core-pixelator -hub gitlab -r dev -profile test,YOURPROFILE --outdir "./results"
+   nextflow run PixelgenTechnologies/nf-core-pixelator -profile test,YOURPROFILE --outdir "./results"
    ```
 
    Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above). You can chain multiple config profiles in a comma-separated string.
@@ -74,14 +74,14 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
    <!-- TODO nf-core: Update the example "typical command" below used to run the pipeline -->
 
    ```bash
-   nextflow run PixelgenTechnologies/nf-core-pixelator -hub gitlab -r dev --input samplesheet.tsv --outdir <OUTDIR> -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
+   nextflow run PixelgenTechnologies/nf-core-pixelator--input samplesheet.tsv --outdir <OUTDIR> -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
    ```
 
 ## Documentation
 
 // TODO
 <!-- The nf-core/pixelator pipeline comes with documentation about the pipeline [usage](https://nf-co.re/pixelator/usage), [parameters](https://nf-co.re/pixelator/parameters) and [output](https://nf-co.re/pixelator/output). -->
-The nf-core/pixelator pipeline comes with documentation about the pipeline [usage](./docs/usage.md), [parameters](./docs/parameters) and [output](./docs/output).
+The PixelgenTechnologies/nf-core-pixelator pipeline comes with documentation about the pipeline [usage](./docs/usage.md), [parameters](./docs/parameters.md) and [output](./docs/output.md).
 
 ## Credits
 
