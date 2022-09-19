@@ -3,9 +3,9 @@ name: nf-core linting comment
 # It posts an automated comment to the PR, even if the PR is coming from a fork
 
 on:
-  workflow_run:
-    on: workflow_dispatch
-    # workflows: ["nf-core linting"]
+  workflow_dispatch
+  # workflow_run:
+  #   workflows: ["nf-core linting"]
 
 jobs:
   test:
