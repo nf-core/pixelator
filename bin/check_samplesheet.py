@@ -130,7 +130,6 @@ class RowChecker:
             row[self._sample_col] = f"{sample}_T{seen[sample]}"
 
 
-
 class PixelatorRowChecker(RowChecker):
     VALID_DESIGNS = {"D12", "D12PE", "D19", "D21PE"}
     VALID_BARCODES = {
@@ -149,7 +148,8 @@ class PixelatorRowChecker(RowChecker):
         "TBS_v1",
     }
 
-    def __init__(   self,
+    def __init__(
+        self,
         sample_col="sample",
         first_col="fastq_1",
         second_col="fastq_2",
@@ -157,14 +157,10 @@ class PixelatorRowChecker(RowChecker):
         design_col="design",
         barcodes_col="barcodes",
         samplesheet_path=None,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(
-            sample_col="sample",
-            first_col="fastq_1",
-            second_col="fastq_2",
-            single_col="single_end",
-            **kwargs
+            sample_col="sample", first_col="fastq_1", second_col="fastq_2", single_col="single_end", **kwargs
         )
 
         self._design_col = design_col
@@ -293,11 +289,7 @@ def check_samplesheet(file_in, file_out, samplesheet_path):
             logger.critical(f"The sample sheet **must** contain these column headers: {req_cols}.")
             sys.exit(1)
         # Validate each row.
-        checker = PixelatorRowChecker(
-            barcodes_col="barcodes",
-            design_col="design",
-            samplesheet_path=samplesheet_path
-        )
+        checker = PixelatorRowChecker(barcodes_col="barcodes", design_col="design", samplesheet_path=samplesheet_path)
 
         for i, row in enumerate(reader):
             try:
