@@ -11,12 +11,12 @@ The directories listed below will be created in the results directory after the 
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using multiple subcommands of the [`pixelator`](https://gitlab.com/pixelgen-technologies/pixelator) tool.
 
--  [`pixelator concatenate`](#pixelator-concatenate)(Optional) - Concatenate paired end data
--  [`pixelator preqc`](#pixelator-preqc)) - Read QC and filtering
--  [`pixelator adapterqc`](#pixelator-adapterqc)) - Check Correctness/presence of PBS1/2 sequences
--  [`pixelator demux`](#pixelator-demux)) - Assign a marker (barcode) to each read
--  [`pixelator collapse`](#pixelator-collapse)) - Error correction, duplicate removal, compute read counts
--  [`pixelator report`](#pixelator-report)) - Report generation
+- [`pixelator concatenate`](#pixelator-concatenate)(Optional) - Concatenate paired end data
+- [`pixelator preqc`](#pixelator-preqc)) - Read QC and filtering
+- [`pixelator adapterqc`](#pixelator-adapterqc)) - Check Correctness/presence of PBS1/2 sequences
+- [`pixelator demux`](#pixelator-demux)) - Assign a marker (barcode) to each read
+- [`pixelator collapse`](#pixelator-collapse)) - Error correction, duplicate removal, compute read counts
+- [`pixelator report`](#pixelator-report)) - Report generation
 
 ### pixelator concatenate
 
@@ -26,9 +26,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - `pixelator`
   - `concatenate`
     - `*merged.fastq.gz`: Concatenated R1 and R2 reads.
-  - `/logs`
-    - `*pixelator-concatenate.log`: Pixelator concatenate log output.
-</details>
+  - `/logs` - `*pixelator-concatenate.log`: Pixelator concatenate log output.
+  </details>
 
 ### pixelator preqc
 
@@ -41,10 +40,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
     - `*failed.fastq.gz`: Discarded reads.
     - `*report.html`: Fastp html report.
     - `*report.json`: Fastp json report.
-  - `/logs`
-    - `*pixelator-preqc.log`: Pixelator preqc log output.
-</details>
-
+  - `/logs` - `*pixelator-preqc.log`: Pixelator preqc log output.
+  </details>
 
 ### pixelator adapterqc
 
@@ -56,9 +53,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
     - `*processed.fastq.gz`: Processed reads.
     - `*failed.fastq.gz`: Discarded reads.
     - `*report.json`: Cutadapt json report.
-  - `/logs`
-    - `*pixelator-adapterqc.log`: Pixelator adapterqc log output.
-</details>
+  - `/logs` - `*pixelator-adapterqc.log`: Pixelator adapterqc log output.
+  </details>
 
 ### pixelator demux
 
@@ -69,9 +65,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   - `adapterqc`
     - `*processed-*-.fastq.gz`: Reads demultiplexed per antibody.
     - `*report.json`: Cutadapt json report.
-  - `/logs`
-    - `*pixelator-demultiplex.log`: Pixelator adapterqc log output.
-</details>
+  - `/logs` - `*pixelator-demultiplex.log`: Pixelator adapterqc log output.
+  </details>
 
 ### pixelator collapse
 
@@ -82,9 +77,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   - `adapterqc`
     - `*.collapse.csv`: Edge list matrix.
     - `*collapse.json`: Statistics.
-  - `/logs`
-    - `*pixelator-collapse.log`: Pixelator collapse log output.
-</details>
+  - `/logs` - `*pixelator-collapse.log`: Pixelator collapse log output.
+  </details>
 
 ### pixelator cluster
 
@@ -107,10 +101,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
     - `pixel_data.csv`:
     - `pixel_data_filtered.csv`:
     - `*.report.json`:
-  - `/logs`
-    - `*pixelator-cluster.log`: Pixelator cluster log output.
-</details>
-
+  - `/logs` - `*pixelator-cluster.log`: Pixelator cluster log output.
+  </details>
 
 ### pixelator report
 
@@ -123,10 +115,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
     - `clusters_dist.html`:
     - `report.html`:
     - `summary_stats.html`:
-  - `/logs`
-    - `*pixelator-report.log`: Pixelator report log output.
-</details>
-
+  - `/logs` - `*pixelator-report.log`: Pixelator report log output.
+  </details>
 
 ### Pipeline information
 

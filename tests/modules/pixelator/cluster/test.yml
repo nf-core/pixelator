@@ -31,5 +31,3 @@
     - path: output/pixelator/cluster/test_data/polarization_heatmap_filtered.png
     - path: output/pixelator/cluster/test_data/polarization_matrix_filtered.csv
     - path: output/pixelator/cluster/test_data/test_data.report.json
-
-

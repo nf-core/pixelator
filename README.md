@@ -3,8 +3,11 @@
 <!-- [![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/pixelator/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX) -->
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A521.10.3-23aa62.svg)](https://www.nextflow.io/)
+
 <!-- [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/) -->
+
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
+
 <!-- [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 [![Launch on Nextflow Tower](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Nextflow%20Tower-%234256e7)](https://tower.nf/launch?pipeline=https://github.com/nf-core/pixelator) -->
 
@@ -31,12 +34,11 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 3. Check Correctness/presence of PBS1/2 sequences ([`pixelator adapterqc`](https://gitlab.com/pixelgen-technologies/pixelator))
 4. Assign a marker (barcode) to each read ([`pixelator demux`](https://gitlab.com/pixelgen-technologies/pixelator))
 5. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://gitlab.com/pixelgen-technologies/pixelator))
-5. Report generation ([`pixelator report`](https://gitlab.com/pixelgen-technologies/pixelator))
-
+6. Report generation ([`pixelator report`](https://gitlab.com/pixelgen-technologies/pixelator))
 
 ## Quick Start
 
-> **_NOTE:_**  Only docker and local profile are currently supported
+> **_NOTE:_** Only docker and local profile are currently supported
 
 1. Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=21.10.3`)
 
@@ -44,43 +46,45 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 3. Provide GitLab credentials to nextflow
 
-  Create or edit the file: $HOME/.nextflow/scm
-  and add the `gitlab` block under the providers section.
+Create or edit the file: $HOME/.nextflow/scm
+and add the `gitlab` block under the providers section.
 
-  ```
-  providers {
-    github {
-      user = 'GitHub username'
-      password = '<GitHub Access token with read_api, read_registry and read_repository scope>'
-    }
+```
+providers {
+  github {
+    user = 'GitHub username'
+    password = '<GitHub Access token with read_api, read_registry and read_repository scope>'
   }
-  ```
+}
+```
 
 4. Download the pipeline and test it on a minimal dataset with a single command:
 
-  ```bash
-  nextflow run PixelgenTechnologies/nf-core-pixelator -profile test,YOURPROFILE --outdir "./results"
-  ```
+```bash
+nextflow run PixelgenTechnologies/nf-core-pixelator -profile test,YOURPROFILE --outdir "./results"
+```
 
-  Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above). You can chain multiple config profiles in a comma-separated string.
+Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above). You can chain multiple config profiles in a comma-separated string.
 
-  > - The pipeline comes with config profiles called `docker`, `singularity`, `podman`, `shifter`, `charliecloud` and `conda` which instruct the pipeline to use the named tool for software management. For example, `-profile test,docker`.
-  > - Please check [nf-core/configs](https://github.com/nf-core/configs#documentation) to see if a custom config file to run nf-core pipelines already exists for your Institute. If so, you can simply use `-profile <institute>` in your command. This will enable either `docker` or `singularity` and set the appropriate execution settings for your local compute environment.
-  > - If you are using `singularity`, please use the [`nf-core download`](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) command to download images first, before running the pipeline. Setting the [`NXF_SINGULARITY_CACHEDIR` or `singularity.cacheDir`](https://www.nextflow.io/docs/latest/singularity.html?#singularity-docker-hub) Nextflow options enables you to store and re-use the images from a central location for future pipeline runs.
-  > - If you are using `conda`, it is highly recommended to use the [`NXF_CONDA_CACHEDIR` or `conda.cacheDir`](https://www.nextflow.io/docs/latest/conda.html) settings to store the environments in a central location for future pipeline runs.
+> - The pipeline comes with config profiles called `docker`, `singularity`, `podman`, `shifter`, `charliecloud` and `conda` which instruct the pipeline to use the named tool for software management. For example, `-profile test,docker`.
+> - Please check [nf-core/configs](https://github.com/nf-core/configs#documentation) to see if a custom config file to run nf-core pipelines already exists for your Institute. If so, you can simply use `-profile <institute>` in your command. This will enable either `docker` or `singularity` and set the appropriate execution settings for your local compute environment.
+> - If you are using `singularity`, please use the [`nf-core download`](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) command to download images first, before running the pipeline. Setting the [`NXF_SINGULARITY_CACHEDIR` or `singularity.cacheDir`](https://www.nextflow.io/docs/latest/singularity.html?#singularity-docker-hub) Nextflow options enables you to store and re-use the images from a central location for future pipeline runs.
+> - If you are using `conda`, it is highly recommended to use the [`NXF_CONDA_CACHEDIR` or `conda.cacheDir`](https://www.nextflow.io/docs/latest/conda.html) settings to store the environments in a central location for future pipeline runs.
 
 4. Start running your own analysis!
 
   <!-- TODO nf-core: Update the example "typical command" below used to run the pipeline -->
 
-  ```bash
-  nextflow run PixelgenTechnologies/nf-core-pixelator--input samplesheet.tsv --outdir <OUTDIR> -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
-  ```
+```bash
+nextflow run PixelgenTechnologies/nf-core-pixelator--input samplesheet.tsv --outdir <OUTDIR> -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
+```
 
 ## Documentation
 
 // TODO
+
 <!-- The nf-core/pixelator pipeline comes with documentation about the pipeline [usage](https://nf-co.re/pixelator/usage), [parameters](https://nf-co.re/pixelator/parameters) and [output](https://nf-co.re/pixelator/output). -->
+
 The PixelgenTechnologies/nf-core-pixelator pipeline comes with documentation about the pipeline [usage](./docs/usage.md), [parameters](./docs/parameters.md) and [output](./docs/output.md).
 
 ## Credits
