@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/nf-core/pixelator/master/nextflow_schema.json",
+    "$id": "https://raw.githubusercontent.com/PixelgenTechnologies/nf-core-pixelator/master/nextflow_schema.json",
     "title": "nf-core/pixelator pipeline parameters",
     "description": "Pipeline for analysis of Molecular Pixelation assays",
     "type": "object",
@@ -22,6 +22,7 @@
                 },
                 "outdir": {
                     "type": "string",
+                    "default": "./results",
                     "format": "directory-path",
                     "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
                     "fa_icon": "fas fa-folder-open"
@@ -32,11 +33,6 @@
                     "fa_icon": "fas fa-envelope",
                     "help_text": "Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then you don't need to specify this on the command line for every run.",
                     "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
-                },
-                "multiqc_title": {
-                    "type": "string",
-                    "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
-                    "fa_icon": "fas fa-file-signature"
                 }
             }
         },
@@ -97,11 +93,13 @@
                 },
                 "pbs1": {
                     "description": "The PBS1 sequence that must be present in the reads. If you set this argument it will overrrule the value from the chosen design",
-                    "type": "string"
+                    "type": ["string", "null"],
+                    "default": null
                 },
                 "pbs2": {
                     "description": "The PBS2 sequence that must be present in the reads. If you set this argument it will overrrule the value from the chosen design",
-                    "type": "string"
+                    "type": ["string", "null"],
+                    "default": null
                 }
             }
         },
@@ -128,7 +126,8 @@
                 "algorithm": {
                     "description": "The algorithm to use for collapsing (adjacency will peform error correction using the number of mismatches given) [default: adjacency]",
                     "default": "adjacency",
-                    "enum": ["adjacency", "unique"]
+                    "enum": ["adjacency", "unique"],
+                    "type": "string"
                 },
                 "upi1_start": {
                     "description": "The start position (0-based) of UPI1. If you set this argument it will overrrule the value from the chosen design",
@@ -224,7 +223,8 @@
                 "condition": {
                     "description": "Which approach to use to select the best community (--big-clusters-recover) optimal will use the community that maximizes the modularity max-size will iterate until the biggest component in the community is below --max-size/2 or the maximum number of iterations is reached  [default: optimal]",
                     "default": "optimal",
-                    "enum": ["optimal", "max-size"]
+                    "enum": ["optimal", "max-size"],
+                    "type": "string"
                 },
                 "cluster_min_count": {
                     "description": "Discard molecules (edges) with with a count (reads) lower than this  [default: 2; 1<=x<=50]",
@@ -264,44 +264,6 @@
                     "description": "The name for the report",
                     "type": ["string"],
                     "default": "report"
-                }
-            }
-        },
-        "reference_genome_options": {
-            "title": "Reference genome options",
-            "type": "object",
-            "fa_icon": "fas fa-dna",
-            "description": "Reference genome related files and options required for the workflow.",
-            "properties": {
-                "genome": {
-                    "type": "string",
-                    "description": "Name of iGenomes reference.",
-                    "fa_icon": "fas fa-book",
-                    "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details."
-                },
-                "fasta": {
-                    "type": "string",
-                    "format": "file-path",
-                    "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "description": "Path to FASTA genome file.",
-                    "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
-                    "fa_icon": "far fa-file-code"
-                },
-                "igenomes_base": {
-                    "type": "string",
-                    "format": "directory-path",
-                    "description": "Directory / URL base for iGenomes references.",
-                    "default": "s3://ngi-igenomes/igenomes",
-                    "fa_icon": "fas fa-cloud-download-alt",
-                    "hidden": true
-                },
-                "igenomes_ignore": {
-                    "type": "boolean",
-                    "description": "Do not load the iGenomes reference config.",
-                    "fa_icon": "fas fa-ban",
-                    "hidden": true,
-                    "help_text": "Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`."
                 }
             }
         },
@@ -501,9 +463,6 @@
         },
         {
             "$ref": "#/definitions/report_options"
-        },
-        {
-            "$ref": "#/definitions/reference_genome_options"
         },
         {
             "$ref": "#/definitions/institutional_config_options"
