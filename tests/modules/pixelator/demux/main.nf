@@ -6,13 +6,13 @@ include { PIXELATOR_DEMUX } from '../../../../modules/local/pixelator/demux/main
 
 
 workflow test_pixelator_demux {
-    input = [ 
-        [ 
+    input = [
+        [
             id: "${params.test_data['pixelator']['micro']['id']}",
             design: "D12",
             barcodes: "D12_v1"
         ],
-        [ 
+        [
             file(params.test_data['pixelator']['micro']['adapterqc'], checkIfExists: true),
         ]
     ]

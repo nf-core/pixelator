@@ -379,7 +379,7 @@ The maximum size (pixels) a cluster/cell must have (default is no filtering)
 **Type:** integer
 **Default:** 10000
 
- The maximum size cutoff to use in the recovery (--big-clusters-recover) [default: 10000]
+The maximum size cutoff to use in the recovery (--big-clusters-recover) [default: 10000]
 
 ---
 
@@ -481,7 +481,7 @@ Reference genome related files and options required for the workflow.### <img sr
 **Type:** string
 
 Name of iGenomes reference.
-If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. 
+If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`.
 
 See the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details.
 
@@ -743,6 +743,16 @@ By default, parameters set as _hidden_ in the schema are not shown on the comman
 **Type:** boolean
 
 Run this workflow with Conda. You can also use '-profile conda' instead of providing this parameter.
+
+---
+
+
+### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/folder-tree.svg" width=16 height=16 /> ``--testdata_root``
+
+
+**Type:** string
+
+Root path to testdata for running local tests
 
 
 

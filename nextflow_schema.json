@@ -215,7 +215,7 @@
                     "default": null
                 },
                 "max_size_recover": {
-                    "description": " The maximum size cutoff to use in the recovery (--big-clusters-recover) [default: 10000]",
+                    "description": "The maximum size cutoff to use in the recovery (--big-clusters-recover) [default: 10000]",
                     "type": "integer",
                     "default": 10000
                 },
