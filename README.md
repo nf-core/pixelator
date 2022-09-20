@@ -34,7 +34,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 3. Check Correctness/presence of PBS1/2 sequences ([`pixelator adapterqc`](https://gitlab.com/pixelgen-technologies/pixelator))
 4. Assign a marker (barcode) to each read ([`pixelator demux`](https://gitlab.com/pixelgen-technologies/pixelator))
 5. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://gitlab.com/pixelgen-technologies/pixelator))
-6. Report generation ([`pixelator report`](https://gitlab.com/pixelgen-technologies/pixelator))
+6. Compute the components/clusters of the graph from the edge list matrix.([`pixelator cluster`](https://gitlab.com/pixelgen-technologies/pixelator))
+7. Report generation ([`pixelator report`](https://gitlab.com/pixelgen-technologies/pixelator))
 
 ## Quick Start
 
@@ -61,7 +62,13 @@ providers {
 4. Download the pipeline and test it on a minimal dataset with a single command:
 
 ```bash
-nextflow run PixelgenTechnologies/nf-core-pixelator -profile test,YOURPROFILE --outdir "./results"
+nextflow run PixelgenTechnologies/nf-core-pixelator -profile test,YOURPROFILE --outdir "./results"  --testdata_root "<root directory of nf-core-pixelator-datasets>"
+```
+
+Note that you will first have to clone the testdata repository and then pass the path to the cloned repository with `--testdata_root`
+
+```bash
+git clone https://github.com/PixelgenTechnologies/nf-core-pixelator-datasets
 ```
 
 Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above). You can chain multiple config profiles in a comma-separated string.
