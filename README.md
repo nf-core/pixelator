@@ -78,6 +78,13 @@ Note that some form of configuration will be needed so that Nextflow knows how t
 > - If you are using `singularity`, please use the [`nf-core download`](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) command to download images first, before running the pipeline. Setting the [`NXF_SINGULARITY_CACHEDIR` or `singularity.cacheDir`](https://www.nextflow.io/docs/latest/singularity.html?#singularity-docker-hub) Nextflow options enables you to store and re-use the images from a central location for future pipeline runs.
 > - If you are using `conda`, it is highly recommended to use the [`NXF_CONDA_CACHEDIR` or `conda.cacheDir`](https://www.nextflow.io/docs/latest/conda.html) settings to store the environments in a central location for future pipeline runs.
 
+When running with docker you will also have to authenticate your Docker client with the Github Container Registry.
+
+```bash
+echo "<github PAT token with read_repository scope>" | docker login ghcr.io -u <github username> --password-stdin
+```
+
+
 4. Start running your own analysis!
 
   <!-- TODO nf-core: Update the example "typical command" below used to run the pipeline -->
