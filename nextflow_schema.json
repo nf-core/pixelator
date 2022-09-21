@@ -52,14 +52,12 @@
                     "default": 0
                 },
                 "max_length": {
-                    "type": ["integer", "null"],
-                    "description": "The maximum length (bases) of a read (longer reads will be trimmed off). If you set this argument it will overrrule the value from the chosen design",
-                    "default": null
+                    "type": "integer",
+                    "description": "The maximum length (bases) of a read (longer reads will be trimmed off). If you set this argument it will overrrule the value from the chosen design"
                 },
                 "min_length": {
-                    "type": ["integer", "null"],
-                    "description": "The minimum length (bases) of a read (shorter reads will be discarded). If you set this argument it will overrrule the value from the chosen design.",
-                    "default": null
+                    "type": "integer",
+                    "description": "The minimum length (bases) of a read (shorter reads will be discarded). If you set this argument it will overrrule the value from the chosen design."
                 },
                 "max_n_bases": {
                     "description": "The maximum number of Ns allowed in a read",
@@ -93,13 +91,11 @@
                 },
                 "pbs1": {
                     "description": "The PBS1 sequence that must be present in the reads. If you set this argument it will overrrule the value from the chosen design",
-                    "type": ["string", "null"],
-                    "default": null
+                    "type": "string"
                 },
                 "pbs2": {
                     "description": "The PBS2 sequence that must be present in the reads. If you set this argument it will overrrule the value from the chosen design",
-                    "type": ["string", "null"],
-                    "default": null
+                    "type": ["string", "null"]
                 }
             }
         },
@@ -114,9 +110,8 @@
                     "maximum": 0.9
                 },
                 "demux_min_length": {
-                    "type": ["integer", "null"],
-                    "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design",
-                    "default": null
+                    "type": "integer",
+                    "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design"
                 }
             }
         },
@@ -131,43 +126,35 @@
                 },
                 "upi1_start": {
                     "description": "The start position (0-based) of UPI1. If you set this argument it will overrrule the value from the chosen design",
-                    "type": ["integer", "null"],
-                    "default": null
+                    "type": "integer"
                 },
                 "upi1_end": {
                     "description": "The end position (1-based) of UPI1. If you set this argument it will overrrule the  value from the chosen design",
-                    "type": ["integer", "null"],
-                    "default": null
+                    "type": "integer"
                 },
                 "upi2_start": {
                     "description": "The start position (0-based) of UPI@. If you set this argument it will overrrule the value from the chosen design",
-                    "type": ["integer", "null"],
-                    "default": null
+                    "type": "integer"
                 },
                 "upi2_end": {
                     "description": "The end position (1-based) of UPI2. If you set this argument it will overrrule the  value from the chosen design",
-                    "type": ["integer", "null"],
-                    "default": null
+                    "type": "integer"
                 },
                 "umi1_start": {
                     "description": "The start position (0-based) of UMI1 (disabled by default). If you set this argument it will overrrule the value from the chosen design",
-                    "type": ["integer", "null"],
-                    "default": null
+                    "type": "integer"
                 },
                 "umi1_end": {
                     "description": "The end position (1-based) of UMI1 (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
-                    "type": ["integer", "null"],
-                    "default": null
+                    "type": "integer"
                 },
                 "umi2_start": {
                     "description": "The start position (0-based) of UMI2 (disabled by default). If you set this argument it will overrrule the value from the chosen design",
-                    "type": ["integer", "null"],
-                    "default": null
+                    "type": "integer"
                 },
                 "umi2_end": {
                     "description": "The end position (1-based) of UMI2 (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
-                    "type": ["integer", "null"],
-                    "default": null
+                    "type": "integer"
                 },
                 "neighbours": {
                     "description": "The number of neighbours to use when searching for similar sequences (adjacency) This number depends on the sequence depth and the ratio of erronous molecules expected. A high value can make the algoritthm slower.  [default: 60; 1<=x<=250]",
@@ -202,13 +189,11 @@
             "properties": {
                 "min_size": {
                     "description": "The minimum size (pixels) a cluster/cell must have (default is no filtering)",
-                    "type": ["integer", "null"],
-                    "default": null
+                    "type": "integer"
                 },
                 "max_size": {
                     "description": "The maximum size (pixels) a cluster/cell must have (default is no filtering)",
-                    "type": ["integer", "null"],
-                    "default": null
+                    "type": "integer"
                 },
                 "max_size_recover": {
                     "description": "The maximum size cutoff to use in the recovery (--big-clusters-recover) [default: 10000]",

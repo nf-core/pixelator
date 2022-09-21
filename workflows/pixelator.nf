@@ -94,6 +94,7 @@ workflow PIXELATOR {
     RENAME_READS ( ch_reads )
     ch_renamed_reads = RENAME_READS.out.reads
     ch_renamed_reads.dump(tag: "ch_renamed_reads")
+    ch_versions = ch_versions.mix(RENAME_READS.out.versions.first())
 
     ch_renamed_branched = ch_renamed_reads.branch {
         single_end: it[0].single_end
