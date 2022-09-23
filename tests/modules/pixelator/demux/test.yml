@@ -1,0 +1,33 @@
+- name: pixelator_demux test_pixelator_demux
+  command: nextflow -C tests/modules/pixelator/demux/nextflow.config run tests/modules/pixelator/demux -entry test_pixelator_demux
+  tags:
+    - pixelator
+    - pixelator-demux
+  files:
+    - path: output/pixelator/test_data.pixelator-demux.log
+      contains:
+        - "Finish pixelator demux"
+    - path: output/pixelator/demux/test_data.report.json
+    - path: output/pixelator/demux/test_data.failed.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD14.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD162.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD19.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD20.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD26.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD3.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD45.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD45RA.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD45RO.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD4.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD62L.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD63.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD69.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD70.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD72.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD7.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD82.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-CD8.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-hashtag.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-HLA-DR.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-IgG1ctrl.fastq.gz
+    - path: output/pixelator/demux/test_data.processed-IsoT_ctrl.fastq.gz

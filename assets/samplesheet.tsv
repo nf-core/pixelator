@@ -1,0 +1,3 @@
+sample	design	barcodes	fastq_1	fastq_2
+test_data_1	D12	D12_v1	/path/to/test_data_R1.fastq.gz	/path/to/test_data_R2.fastq.gz
+test_data_2	D12	D12_v1	/path/to/test_data_R1.fastq.gz	/path/to/test_data_R2.fastq.gz

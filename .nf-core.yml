@@ -1,0 +1,8 @@
+repository_type: pipeline
+lint:
+  actions_awsfulltest: false
+  actions_awstest: false
+  actions_ci: false
+  template_strings: false
+  nextflow_config:
+    manifest.homePage: false
