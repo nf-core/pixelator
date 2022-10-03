@@ -10,7 +10,7 @@
 ## Parameters
 
 {% for group in schema["definitions"].values() -%}
-<a name="{{group.title | slugify }}"\>
+<a name="{{group.title | slugify }}"/>
 {% if group.fa_icon %}
     {%- set icon_name = group.fa_icon.removeprefix('fas ').strip().replace('fa-', '') -%}
 ## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/{{icon_name}}.svg" width=32 height=32 />    {{group.title}}
@@ -25,9 +25,9 @@
 
 {% if param_data.fa_icon -%}
     {%- set icon_name = param_data.fa_icon.removeprefix('fas ').strip().replace('fa-', '') -%}
-### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/{{icon_name}}.svg" width=16 height=16 /> ``--{{param_name}}``
+### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/{{icon_name}}.svg" width=16 height=16 /> `--{{param_name}}`
 {% else -%}
-### ``--{{param_name}}``
+### `--{{param_name}}`
 {% endif %}
 
 **Type:** {% if param_data.type %}{{param_data.type}}{% else %}enum{% endif %}
@@ -41,7 +41,6 @@
 {% if param_data.help_text -%}
 {{ param_data.help_text}}
 {% endif -%}
-
 
 {% if loop.index != (group["properties"] | length) %}
 ---
