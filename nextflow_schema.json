@@ -335,6 +335,22 @@
                 }
             }
         },
+        "global_options": {
+            "title": "Global options",
+            "type": "object",
+            "fa_icon": "fas fa-file-import",
+            "description": "Less common options for the pipeline (specific to nf-core-pixelator), typically set in a config file.",
+            "help_text": "These options allow you to customize some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
+            "properties": {
+                "pixelator_tag": {
+                    "type": "string",
+                    "description": "Override which container tag of pixelator to use. Use carefully!",
+                    "help_text": "This option allows you to use a different container tag for the pixelator tool.\nThis is intended for developers and power-users and can break the pipeline. Use on your own risk!",
+                    "fa_icon": "fas fa-question-circle",
+                    "hidden": true
+                }
+            }
+        },
         "generic_options": {
             "title": "Generic options",
             "type": "object",
@@ -454,6 +470,9 @@
         },
         {
             "$ref": "#/definitions/max_job_request_options"
+        },
+        {
+            "$ref": "#/definitions/global_options"
         },
         {
             "$ref": "#/definitions/generic_options"
