@@ -9,16 +9,15 @@
 - 5. [Collapse options](#collapse-options)
 - 6. [Options for pixelator cluster command.](#options-for-pixelator-cluster-command)
 - 7. [Options for pixelator report command.](#options-for-pixelator-report-command)
-- 8. [Reference genome options](#reference-genome-options)
-- 9. [Institutional config options](#institutional-config-options)
-- 10. [Max job request options](#max-job-request-options)
+- 8. [Institutional config options](#institutional-config-options)
+- 9. [Max job request options](#max-job-request-options)
+- 10. [Global options](#global-options)
 - 11. [Generic options](#generic-options)
 
 ## Parameters
 
-<a name="input-output-options"\>
-
-## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/terminal.svg" width=32 height=32 /> Input/output options
+<a name="input-output-options"/>
+## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/terminal.svg" width=32 height=32 />    Input/output options
 
 Define where the pipeline should find input data and save output data.### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-tsv.svg" width=16 height=16 /> `--input`
 
@@ -32,6 +31,7 @@ You will need to create a design file with information about the samples in your
 ### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/folder-open.svg" width=16 height=16 /> `--outdir`
 
 **Type:** string
+**Default:** ./results
 
 The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.
 
@@ -44,17 +44,8 @@ The output directory where the results will be saved. You have to use absolute p
 Email address for completion summary.
 Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then you don't need to specify this on the command line for every run.
 
----
-
-### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-signature.svg" width=16 height=16 /> `--multiqc_title`
-
-**Type:** string
-
-MultiQC report title. Printed as page header, used for filename if not otherwise specified.
-
-<a name="qc-filtering-trimming-options"\>
-
-## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/terminal.svg" width=32 height=32 /> QC/Filtering/Trimming options
+<a name="qc-filtering-trimming-options"/>
+## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/terminal.svg" width=32 height=32 />    QC/Filtering/Trimming options
 
 ### `--trim_front`
 
@@ -74,7 +65,7 @@ Trim N bases from the tail of the reads
 
 ### `--max_length`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The maximum length (bases) of a read (longer reads will be trimmed off). If you set this argument it will overrrule the value from the chosen design
 
@@ -82,7 +73,7 @@ The maximum length (bases) of a read (longer reads will be trimmed off). If you 
 
 ### `--min_length`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The minimum length (bases) of a read (shorter reads will be discarded). If you set this argument it will overrrule the value from the chosen design.
 
@@ -120,7 +111,7 @@ Remove duplicated reads (exact same sequence)
 
 Remove PolyG sequences (length of 10 or more)
 
-<a name="adapter-qc-options"\>
+<a name="adapter-qc-options"/>
 
 ## Adapter QC Options
 
@@ -143,11 +134,11 @@ The PBS1 sequence that must be present in the reads. If you set this argument it
 
 ### `--pbs2`
 
-**Type:** string
+**Type:** ['string', 'null']
 
 The PBS2 sequence that must be present in the reads. If you set this argument it will overrrule the value from the chosen design
 
-<a name="demux-options"\>
+<a name="demux-options"/>
 
 ## Demux options
 
@@ -162,17 +153,17 @@ The number of mismatches allowed (in percentage) [default: 0.1; 0.0<=x<=0.9]
 
 ### `--demux_min_length`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design
 
-<a name="collapse-options"\>
+<a name="collapse-options"/>
 
 ## Collapse options
 
 ### `--algorithm`
 
-**Type:** enum
+**Type:** string
 **Options:** [adjacency|unique]
 **Default:** adjacency
 
@@ -182,7 +173,7 @@ The algorithm to use for collapsing (adjacency will peform error correction usin
 
 ### `--upi1_start`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The start position (0-based) of UPI1. If you set this argument it will overrrule the value from the chosen design
 
@@ -190,7 +181,7 @@ The start position (0-based) of UPI1. If you set this argument it will overrrule
 
 ### `--upi1_end`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The end position (1-based) of UPI1. If you set this argument it will overrrule the value from the chosen design
 
@@ -198,7 +189,7 @@ The end position (1-based) of UPI1. If you set this argument it will overrrule t
 
 ### `--upi2_start`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The start position (0-based) of UPI@. If you set this argument it will overrrule the value from the chosen design
 
@@ -206,7 +197,7 @@ The start position (0-based) of UPI@. If you set this argument it will overrrule
 
 ### `--upi2_end`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The end position (1-based) of UPI2. If you set this argument it will overrrule the value from the chosen design
 
@@ -214,7 +205,7 @@ The end position (1-based) of UPI2. If you set this argument it will overrrule t
 
 ### `--umi1_start`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The start position (0-based) of UMI1 (disabled by default). If you set this argument it will overrrule the value from the chosen design
 
@@ -222,7 +213,7 @@ The start position (0-based) of UMI1 (disabled by default). If you set this argu
 
 ### `--umi1_end`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The end position (1-based) of UMI1 (disabled by default). If you set this argument it will overrrule the value from the chosen design
 
@@ -230,7 +221,7 @@ The end position (1-based) of UMI1 (disabled by default). If you set this argume
 
 ### `--umi2_start`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The start position (0-based) of UMI2 (disabled by default). If you set this argument it will overrrule the value from the chosen design
 
@@ -238,7 +229,7 @@ The start position (0-based) of UMI2 (disabled by default). If you set this argu
 
 ### `--umi2_end`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The end position (1-based) of UMI2 (disabled by default). If you set this argument it will overrrule the value from the chosen design
 
@@ -277,13 +268,13 @@ Discard molecules with with a count (reads) lower than this value [default: 1; 0
 
 Use counts when collapsing (the difference in counts between two molecules must be more than double in order to be collapsed)
 
-<a name="options-for-pixelator-cluster-command"\>
+<a name="options-for-pixelator-cluster-command"/>
 
 ## Options for pixelator cluster command.
 
 ### `--min_size`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The minimum size (pixels) a cluster/cell must have (default is no filtering)
 
@@ -291,7 +282,7 @@ The minimum size (pixels) a cluster/cell must have (default is no filtering)
 
 ### `--max_size`
 
-**Type:** ['integer', 'null']
+**Type:** integer
 
 The maximum size (pixels) a cluster/cell must have (default is no filtering)
 
@@ -316,7 +307,7 @@ Enable the recovery of big clusters/cells (above --max-size-recover) by using th
 
 ### `--condition`
 
-**Type:** enum
+**Type:** string
 **Options:** [optimal|max-size]
 **Default:** optimal
 
@@ -363,7 +354,7 @@ Compute coabundance scores matrix (clusters by markers)
 
 The percentile value (0-1) to use when binarizing counts in the polarization and co-localization algorithms [default: 0.0; 0.0<=x<=1.0]
 
-<a name="options-for-pixelator-report-command"\>
+<a name="options-for-pixelator-report-command"/>
 
 ## Options for pixelator report command.
 
@@ -374,49 +365,8 @@ The percentile value (0-1) to use when binarizing counts in the polarization and
 
 The name for the report
 
-<a name="reference-genome-options"\>
-
-## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/dna.svg" width=32 height=32 /> Reference genome options
-
-Reference genome related files and options required for the workflow.### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/book.svg" width=16 height=16 /> `--genome`
-
-**Type:** string
-
-Name of iGenomes reference.
-If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`.
-
-See the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details.
-
----
-
-### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/far file-code.svg" width=16 height=16 /> `--fasta`
-
-**Type:** string
-
-Path to FASTA genome file.
-This parameter is _mandatory_ if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.
-
----
-
-### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/cloud-download-alt.svg" width=16 height=16 /> `--igenomes_base`
-
-**Type:** string
-**Default:** s3://ngi-igenomes/igenomes
-
-Directory / URL base for iGenomes references.
-
----
-
-### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/ban.svg" width=16 height=16 /> `--igenomes_ignore`
-
-**Type:** boolean
-
-Do not load the iGenomes reference config.
-Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`.
-
-<a name="institutional-config-options"\>
-
-## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/university.svg" width=32 height=32 /> Institutional config options
+<a name="institutional-config-options"/>
+## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/university.svg" width=32 height=32 />    Institutional config options
 
 Parameters used to describe centralised config profiles. These should not be edited.### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/users-cog.svg" width=16 height=16 /> `--custom_config_version`
 
@@ -467,9 +417,8 @@ Institutional config contact information.
 
 Institutional config URL link.
 
-<a name="max-job-request-options"\>
-
-## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/fab acquisitions-incorporated.svg" width=32 height=32 /> Max job request options
+<a name="max-job-request-options"/>
+## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/fab acquisitions-incorporated.svg" width=32 height=32 />    Max job request options
 
 Set the top limit for requested resources for any single job.### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/microchip.svg" width=16 height=16 /> `--max_cpus`
 
@@ -499,9 +448,19 @@ Use to set an upper-limit for the memory requirement for each process. Should be
 Maximum amount of time that can be requested for any single job.
 Use to set an upper-limit for the time requirement for each process. Should be a string in the format integer-unit e.g. `--max_time '2.h'`
 
-<a name="generic-options"\>
+<a name="global-options"/>
+## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-import.svg" width=32 height=32 />    Global options
 
-## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-import.svg" width=32 height=32 /> Generic options
+Less common options for the pipeline (specific to nf-core-pixelator), typically set in a config file.### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/question-circle.svg" width=16 height=16 /> `--pixelator_tag`
+
+**Type:** string
+
+Override which container tag of pixelator to use. Use carefully!
+This option allows you to use a different container tag for the pixelator tool.
+This is intended for developers and power-users and can break the pipeline. Use on your own risk!
+
+<a name="generic-options"/>
+## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-import.svg" width=32 height=32 />    Generic options
 
 Less common options for the pipeline, typically set in a config file.### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/question-circle.svg" width=16 height=16 /> `--help`
 

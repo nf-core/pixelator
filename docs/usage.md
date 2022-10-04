@@ -207,6 +207,9 @@ The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementatio
   }
   ```
 
+  Alternatively, you can use the `--pixelator_tag` option to modify the container for pixelator on the commandline.
+  See the GitHub container registry for a list of [available tags](https://github.com/PixelgenTechnologies/pixelator/pkgs/container/pixelator).
+
 - For Singularity:
 
   ```nextflow
