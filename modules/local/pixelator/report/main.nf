@@ -7,12 +7,7 @@ process PIXELATOR_REPORT {
 
     // TODO: Enable conda support
     // conda (params.enable_conda ? "YOUR-TOOL-HERE" : null)
-
-    // TODO: make pixelator available on galaxyproject and quay.io support
-    // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    //     'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':
-    //     'quay.io/biocontainers/YOUR-TOOL-HERE' }"
-    container "ghcr.io/pixelgentechnologies/pixelator:0.2.3"
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
 
     input:
     val meta
@@ -24,11 +19,13 @@ process PIXELATOR_REPORT {
     path "cluster/*"
 
     output:
-    path("reports/report/report.html"),            emit: report
-    path("reports/report/summary_stats.html"),     emit: summary_stats
-    path("reports/report/antibody_counts.html"),   emit: antibody_counts
-    path("reports/report/clusters_dist.html"),     emit: clusters_dist
-    path "versions.yml",                       emit: versions
+    path("reports/report/report.html"),                     emit: report
+    path("reports/report/summary_histograms.html"),         emit: summary_histograms
+    path("reports/report/antibody_counts_barplot.html"),    emit: antibody_counts_barplot
+    path("reports/report/antibody_counts_histogram.html"),  emit: antibody_counts_histogram
+    path("reports/report/cluster_size_dist.html"),         emit: clusters_size_dist
+    path("reports/report/*.csv"),                           emit: data
+    path "versions.yml",                                    emit: versions
 
     when:
     task.ext.when == null || task.ext.when

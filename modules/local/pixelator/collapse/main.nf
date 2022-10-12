@@ -7,15 +7,11 @@ process PIXELATOR_COLLAPSE {
 
     // TODO: Enable conda support
     // conda (params.enable_conda ? "YOUR-TOOL-HERE" : null)
-
-    // TODO: make pixelator available on galaxyproject and quay.io support
-    // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    //     'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':
-    //     'quay.io/biocontainers/YOUR-TOOL-HERE' }"
-    container "ghcr.io/pixelgentechnologies/pixelator:0.2.3"
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
 
     input:
     tuple val(meta), path(reads)
+    path antibody_panel
 
     output:
     tuple val(meta), path("collapse/*.collapsed.csv"),        emit: collapsed
@@ -43,6 +39,7 @@ process PIXELATOR_COLLAPSE {
         --samples "${meta.id}" \\
         --output . \\
         --design ${meta.design} \\
+        --panel-file ${antibody_panel} \\
         $args \\
         ${readsArg}
 

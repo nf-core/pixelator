@@ -9,15 +9,17 @@ workflow INPUT_CHECK {
     samplesheet // file: /path/to/samplesheet.csv
 
     main:
-    SAMPLESHEET_CHECK ( samplesheet, samplesheet.toUri() )
+    ch_samplesheet_rows = SAMPLESHEET_CHECK ( samplesheet, samplesheet.toUri() )
         .csv
         .splitCsv ( header:true, sep:',' )
-        .dump(tag: "samplesheet_csv_split")
-        .map { create_fastq_channel(it) }
-        .set { reads }
+
+    ch_samplesheet_rows.dump(tag: "samplesheet_csv_split")
+    reads = ch_samplesheet_rows.map { create_fastq_channel(it) }
+    barcodes = ch_samplesheet_rows.map { create_barcodes_channel(it) }
 
     emit:
     reads                                     // channel: [ val(meta), [ reads ] ]
+    barcodes                                  // channel: [ val(meta), barcodes ]
     versions = SAMPLESHEET_CHECK.out.versions // channel: [ versions.yml ]
 }
 
@@ -29,7 +31,6 @@ def create_fastq_channel(LinkedHashMap row) {
     meta.id           = row.sample
     meta.single_end   = row.single_end.toBoolean()
     meta.design       = row.design
-    meta.barcodes     = row.barcodes
 
     // add path(s) of the fastq file(s) to the meta map
     def fastq_meta = []
@@ -53,4 +54,26 @@ def create_fastq_channel(LinkedHashMap row) {
         fastq_meta = [ meta, [ file(row.fastq_1), file(row.fastq_2) ] ]
     }
     return fastq_meta
+}
+
+
+def create_barcodes_channel(LinkedHashMap row) {
+     // create meta map
+    def meta = [:]
+    def barcode       = row.barcodes
+    meta.id           = row.sample
+    meta.single_end   = row.single_end.toBoolean()
+    meta.design       = row.design
+
+    def f = file("${projectDir}/assets/barcodes/${barcode}.fa")
+
+    if (f.exists()) {
+        return  [ meta, f ]
+    }
+
+    if (file(barcode).exists()) {
+        return [ meta, file(barcode) ]
+    }
+
+    exit 1, "ERROR: Please check barcode: ${barcode}: Not a basename of a file under assets/barcodes or a fasta file (.fa)"
 }

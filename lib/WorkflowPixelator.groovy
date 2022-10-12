@@ -7,13 +7,8 @@ class WorkflowPixelator {
     //
     // Check and validate parameters
     //
-    public static void initialise(params, log) {
+    public static void initialise(workflow, params, log) {
         // genomeExistsError(params, log)
-
-        // if (!params.design) {
-        //     log.error "No design with e.g. '--fasta genome.fa' or via a detectable config file."
-        //     System.exit(1)
-        // }
     }
 
     //
@@ -53,5 +48,30 @@ class WorkflowPixelator {
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
             System.exit(1)
         }
+    }
+
+    public static String loadPanelFile(panel_file, projectDir, log) {
+        String check_panel_file
+
+        if (!panel_file.endsWith(".csv")) {
+            check_panel_file = "${projectDir}/assets/panels/${panel_file}.csv"
+        }
+        else {
+            check_panel_file = "${projectDir}/assets/panels/${panel_file}"
+        }
+
+        def f = new File(check_panel_file)
+
+        if (f.exists()) {
+            return check_panel_file
+        }
+
+        def original_panel_file = new File(panel_file)
+
+        if (original_panel_file.exists()) {
+            return panel_file
+        }
+        log.error "ERROR: Please check panel_file path: ${panel_file}: Not a csv file or the basename of a csv file under assets/panels"
+        System.exit(1)
     }
 }

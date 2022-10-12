@@ -7,15 +7,15 @@
 def summary_params = NfcoreSchema.paramsSummaryMap(workflow, params)
 
 // Validate input parameters
-WorkflowPixelator.initialise(params, log)
+WorkflowPixelator.initialise(workflow, params, log)
 
-// TODO nf-core: Add all file path parameters for the pipeline to the list below
-// Check input path parameters to see if they exist
-def checkPathParamList = [ params.input ]
-for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
 
 // Check mandatory parameters
 if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input samplesheet not specified!' }
+if (params.panel) {
+    def panel_file = WorkflowPixelator.loadPanelFile(params.panel, projectDir, log)
+    ch_panel = file(panel_file)
+}
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -89,6 +89,9 @@ workflow PIXELATOR {
     ch_reads = INPUT_CHECK.out.reads
     ch_reads.dump(tag: "ch_reads")
 
+    ch_barcodes = INPUT_CHECK.out.barcodes
+    ch_barcodes.dump(tag: "ch_barcodes")
+
     // We need to rename to make all reads match the sample name,
     // since pixelator extracts sample_names from read namaes
     RENAME_READS ( ch_reads )
@@ -129,12 +132,16 @@ workflow PIXELATOR {
     ch_adapterqc.dump(tag: "ch_adapterqc")
     ch_versions = ch_versions.mix(PIXELATOR_ADAPTERQC.out.versions.first())
 
-    PIXELATOR_DEMUX ( ch_adapterqc )
+    ch_adapterqc_and_barcodes = ch_adapterqc.join(ch_barcodes)
+    ch_adapterqc_and_barcodes.dump(tag: "ch_adapterqc_and_barcodes")
+
+    PIXELATOR_DEMUX ( ch_adapterqc_and_barcodes )
+
     ch_demuxed = PIXELATOR_DEMUX.out.processed
     ch_demuxed.dump(tag: "ch_demuxed")
     ch_versions = ch_versions.mix(PIXELATOR_DEMUX.out.versions.first())
 
-    PIXELATOR_COLLAPSE ( ch_demuxed )
+    PIXELATOR_COLLAPSE ( ch_demuxed, ch_panel )
     ch_collapsed = PIXELATOR_COLLAPSE.out.collapsed
     ch_collapsed.dump(tag: "ch_collapsed")
     ch_versions = ch_versions.mix(PIXELATOR_COLLAPSE.out.versions.first())
@@ -151,7 +158,7 @@ workflow PIXELATOR {
     ch_collapse_col    = PIXELATOR_COLLAPSE.out.results_dir.map { meta, data -> [ meta.id, data] }
     ch_cluster_col     = PIXELATOR_CLUSTER.out.results_dir.map { meta, data -> [ meta.id, data] }
 
-    ch_report_data    = ch_concatenate_col
+    ch_report_data     = ch_concatenate_col
         .concat ( ch_preqc_col )
         .concat ( ch_adapterqc_col )
         .concat ( ch_demux_col )
@@ -167,8 +174,10 @@ workflow PIXELATOR {
     ch_demux_grouped        = ch_report_data.map { id, data -> data[3] }.collect()
     ch_collapse_grouped     = ch_report_data.map { id, data -> data[4] }.collect()
     ch_cluster_grouped      = ch_report_data.map { id, data -> data[5] }.collect()
-    ch_report_meta          = ch_report_data.map { it -> it[0] }.collect()
-                                            .map { [ id: params.report_name , samples: it] }
+
+    ch_report_meta = ch_report_data
+        .map { it -> it[0] }.collect()
+        .map { [ id: params.report_name , samples: it] }
 
     ch_concatenate_grouped.dump(tag: "ch_concatenate_grouped")
     ch_preqc_grouped.dump(tag: "ch_preqc_grouped")

@@ -7,15 +7,10 @@ process PIXELATOR_DEMUX {
 
     // TODO: Enable conda support
     // conda (params.enable_conda ? "YOUR-TOOL-HERE" : null)
-
-    // TODO: make pixelator available on galaxyproject and quay.io support
-    // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    //     'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':
-    //     'quay.io/biocontainers/YOUR-TOOL-HERE' }"
-    container "ghcr.io/pixelgentechnologies/pixelator:0.2.3"
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
 
     input:
-    tuple val(meta), path(reads)
+    tuple val(meta), path(reads), path(barcodes)
 
     output:
     tuple val(meta), path("demux/*processed*.fastq.gz"),    emit: processed
@@ -31,7 +26,6 @@ process PIXELATOR_DEMUX {
 
     script:
     assert meta.design != null
-    assert meta.barcodes != null
 
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
@@ -42,9 +36,9 @@ process PIXELATOR_DEMUX {
         demux \\
         --output . \\
         --design ${meta.design} \\
-        --barcodes ${meta.barcodes} \\
+        --barcodes ${barcodes} \\
         $args \\
-        ${reads} \\
+        ${reads}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

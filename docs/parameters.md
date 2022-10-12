@@ -115,7 +115,7 @@ Remove PolyG sequences (length of 10 or more)
 
 ## Adapter QC Options
 
-### `--mismatches`
+### `--adapterqc_mismatches`
 
 **Type:** number
 **Default:** 0.1
