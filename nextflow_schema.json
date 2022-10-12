@@ -84,7 +84,7 @@
         "adapterqc_options": {
             "title": "Adapter QC Options",
             "properties": {
-                "mismatches": {
+                "adapterqc_mismatches": {
                     "description": "The number of mismatches allowed (in percentage)  [default: 0.1; 0.0<=x<=0.9]",
                     "type": "number",
                     "default": 0.1
