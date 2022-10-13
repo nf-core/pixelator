@@ -58,7 +58,7 @@ def create_fastq_channel(LinkedHashMap row) {
 
 
 def create_barcodes_channel(LinkedHashMap row) {
-     // create meta map
+    // create meta map
     def meta = [:]
     def barcode       = row.barcodes
     meta.id           = row.sample
