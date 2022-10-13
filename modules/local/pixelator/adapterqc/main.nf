@@ -5,8 +5,7 @@ process PIXELATOR_ADAPTERQC {
     tag "$meta.id"
     label 'process_medium'
 
-    // TODO: Enable conda support
-    // conda (params.enable_conda ? "YOUR-TOOL-HERE" : null)
+    conda (params.enable_conda ? "local::pixelator=0.2.3" : null)
 
     // TODO: make pixelator available on galaxyproject and quay.io support
     container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
