@@ -29,13 +29,13 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 <!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
-1. (Optional) Concatenate paired end data ([`pixelator concatenate`](https://gitlab.com/pixelgen-technologies/pixelator))
-2. Read QC and filtering ([`pixelator preqc`](https://gitlab.com/pixelgen-technologies/pixelator))
-3. Check Correctness/presence of PBS1/2 sequences ([`pixelator adapterqc`](https://gitlab.com/pixelgen-technologies/pixelator))
-4. Assign a marker (barcode) to each read ([`pixelator demux`](https://gitlab.com/pixelgen-technologies/pixelator))
-5. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://gitlab.com/pixelgen-technologies/pixelator))
-6. Compute the components/clusters of the graph from the edge list matrix.([`pixelator cluster`](https://gitlab.com/pixelgen-technologies/pixelator))
-7. Report generation ([`pixelator report`](https://gitlab.com/pixelgen-technologies/pixelator))
+1. (Optional) Concatenate paired end data ([`pixelator concatenate`](https://github.com/PixelgenTechnologies/pixelator))
+2. Read QC and filtering ([`pixelator preqc`](https://github.com/PixelgenTechnologies/pixelator))
+3. Check Correctness/presence of PBS1/2 sequences ([`pixelator adapterqc`](https://github.com/PixelgenTechnologies/pixelator))
+4. Assign a marker (barcode) to each read ([`pixelator demux`](https://github.com/PixelgenTechnologies/pixelator))
+5. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://github.com/PixelgenTechnologies/pixelator))
+6. Compute the components/clusters of the graph from the edge list matrix.([`pixelator cluster`](https://github.com/PixelgenTechnologies/pixelator))
+7. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
 
 ## Quick Start
 
@@ -43,12 +43,12 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 1. Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=22.04.5`)
 
-2. Install any of [`Docker`](https://docs.docker.com/engine/installation/), [`Singularity`](https://www.sylabs.io/guides/3.0/user-guide/) (you can follow [this tutorial](https://singularity-tutorial.github.io/01-installation/)), [`Podman`](https://podman.io/), [`Shifter`](https://nersc.gitlab.io/development/shifter/how-to-use/) or [`Charliecloud`](https://hpc.github.io/charliecloud/) for full pipeline reproducibility _(you can use [`Conda`](https://conda.io/miniconda.html) both to install Nextflow itself and also to manage software within pipelines. Please only use it within pipelines as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_.
+2. Install any of [`Docker`](https://docs.docker.com/engine/installation/), [`Singularity`](https://www.sylabs.io/guides/3.0/user-guide/) (you can follow [this tutorial](https://singularity-tutorial.github.io/01-installation/)), [`Podman`](https://podman.io/), [`Shifter`](https://nersc.github.io/development/shifter/how-to-use/) or [`Charliecloud`](https://hpc.github.io/charliecloud/) for full pipeline reproducibility _(you can use [`Conda`](https://conda.io/miniconda.html) both to install Nextflow itself and also to manage software within pipelines. Please only use it within pipelines as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_.
 
-3. Provide GitLab credentials to nextflow
+3. Provide github credentials to nextflow
 
 Create or edit the file: $HOME/.nextflow/scm
-and add the `gitlab` block under the providers section.
+and add the `github` block under the providers section.
 
 ```
 providers {
@@ -89,7 +89,7 @@ echo <github PAT token with read_repository scope> | docker login ghcr.io -u <gi
   <!-- TODO nf-core: Update the example "typical command" below used to run the pipeline -->
 
 ```bash
-nextflow run PixelgenTechnologies/nf-core-pixelator--input samplesheet.tsv --outdir <OUTDIR> -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
+nextflow run PixelgenTechnologies/nf-core-pixelator --input samplesheet.tsv --outdir <OUTDIR> -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
 ```
 
 ## Documentation

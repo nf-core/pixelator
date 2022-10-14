@@ -7,13 +7,8 @@ class WorkflowPixelator {
     //
     // Check and validate parameters
     //
-    public static void initialise(params, log) {
+    public static void initialise(workflow, params, log) {
         // genomeExistsError(params, log)
-
-        // if (!params.design) {
-        //     log.error "No design with e.g. '--fasta genome.fa' or via a detectable config file."
-        //     System.exit(1)
-        // }
     }
 
     //

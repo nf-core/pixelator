@@ -5,14 +5,9 @@ process PIXELATOR_PREQC {
     tag "$meta.id"
     label 'process_medium'
 
-    // TODO: Enable conda support
-    // conda (params.enable_conda ? "YOUR-TOOL-HERE" : null)
+    conda (params.enable_conda ? "local::pixelator=0.2.3" : null)
 
-    // TODO: make pixelator available on galaxyproject and quay.io support
-    // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    //     'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':
-    //     'quay.io/biocontainers/YOUR-TOOL-HERE' }"
-    container "ghcr.io/pixelgentechnologies/pixelator:0.2.3"
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
 
     input:
     tuple val(meta), path(reads)
@@ -45,7 +40,7 @@ process PIXELATOR_PREQC {
         --output . \\
         --design ${meta.design} \\
         ${args} \\
-        ${reads} \\
+        ${reads}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

@@ -10,15 +10,15 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "outdir"],
+            "required": ["input", "panel", "outdir"],
             "properties": {
                 "input": {
                     "type": "string",
                     "format": "file-path",
                     "schema": "assets/schema_input.json",
-                    "description": "Path to tab-separated file containing information about the samples in the experiment.",
+                    "description": "Path to comma-separated file containing information about the samples in the experiment.",
                     "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/pixelator/usage#samplesheet-input).",
-                    "fa_icon": "fas fa-file-tsv"
+                    "fa_icon": "fas fa-file-csv"
                 },
                 "outdir": {
                     "type": "string",
@@ -84,7 +84,7 @@
         "adapterqc_options": {
             "title": "Adapter QC Options",
             "properties": {
-                "mismatches": {
+                "adapterqc_mismatches": {
                     "description": "The number of mismatches allowed (in percentage)  [default: 0.1; 0.0<=x<=0.9]",
                     "type": "number",
                     "default": 0.1

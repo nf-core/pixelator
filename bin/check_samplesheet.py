@@ -132,21 +132,6 @@ class RowChecker:
 
 class PixelatorRowChecker(RowChecker):
     VALID_DESIGNS = {"D12", "D12PE", "D19", "D21PE"}
-    VALID_BARCODES = {
-        "D12_v1",
-        "D12_v2",
-        "D12_v3",
-        "D12_v4",
-        "D12_v5",
-        "D19_v1",
-        "D19_v1A",
-        "D19_v2",
-        "D19_v2A",
-        "D21_v1",
-        "D21_v2",
-        "D21_v3",
-        "TBS_v1",
-    }
 
     def __init__(
         self,
@@ -156,16 +141,18 @@ class PixelatorRowChecker(RowChecker):
         single_col="single_end",
         design_col="design",
         barcodes_col="barcodes",
+        panel_col="panel",
         samplesheet_path=None,
         **kwargs,
     ):
         super().__init__(
-            sample_col="sample", first_col="fastq_1", second_col="fastq_2", single_col="single_end", **kwargs
+            sample_col=sample_col, first_col=first_col, second_col=second_col, single_col=single_col, **kwargs
         )
 
         self._design_col = design_col
         self._barcodes_col = barcodes_col
         self._samplesheet_path = samplesheet_path
+        self._panel_col = panel_col
 
     def _validate_design(self, row):
         """Assert that the design column exists and has supported values."""
@@ -178,16 +165,19 @@ class PixelatorRowChecker(RowChecker):
 
     def _validate_barcodes(self, row):
         """Assert that the design column exists and has supported values."""
-        if len(row[self._design_col]) <= 0:
-            raise AssertionError("At least the first FASTQ file is required.")
+        if len(row[self._barcodes_col]) <= 0:
+            raise AssertionError("The barcodes field is required.")
 
-        barcodes = row[self._barcodes_col]
-        if barcodes not in self.VALID_BARCODES:
-            raise AssertionError(f"Unsupported value for '{self._barcodes_col}' field.")
+    def _validate_panelfile(self, row):
+        """Assert that the panel column exists and has supported values."""
+        if len(row[self._barcodes_col]) <= 0:
+            raise AssertionError("The panel field is required.")
 
     def _resolve_relative_paths(self, row):
         first = row[self._first_col]
         second = row[self._second_col]
+        barcodes = row[self._barcodes_col]
+        panel = row[self._panel_col]
 
         first_path = PurePath(first)
         if not first_path.is_absolute() and self._samplesheet_path is not None:
@@ -197,8 +187,18 @@ class PixelatorRowChecker(RowChecker):
         if not second_path.is_absolute() and self._samplesheet_path is not None:
             second = str(PurePath(self._samplesheet_path).parent / second_path)
 
+        barcodes_path = PurePath(barcodes)
+        if not barcodes_path.is_absolute() and self._samplesheet_path is not None:
+            barcodes = str(PurePath(self._samplesheet_path).parent / barcodes_path)
+
+        panel_path = PurePath(panel)
+        if not panel_path.is_absolute() and self._samplesheet_path is not None:
+            panel = str(PurePath(self._samplesheet_path).parent / panel_path)
+
         row[self._first_col] = first
         row[self._second_col] = second
+        row[self._barcodes_col] = barcodes
+        row[self._panel_col] = panel
 
     def validate_and_transform(self, row):
         """

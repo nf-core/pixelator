@@ -20,7 +20,10 @@ indent_size = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-# These files are edited and tested upstream in nf-core/modules
+[*.{fa,fasta}]
+indent_size = unset
+insert_final_newline = false
+
 [/modules/nf-core/**]
 charset = unset
 end_of_line = unset
