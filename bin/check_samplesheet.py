@@ -141,16 +141,18 @@ class PixelatorRowChecker(RowChecker):
         single_col="single_end",
         design_col="design",
         barcodes_col="barcodes",
+        panel_col="panel",
         samplesheet_path=None,
         **kwargs,
     ):
         super().__init__(
-            sample_col="sample", first_col="fastq_1", second_col="fastq_2", single_col="single_end", **kwargs
+            sample_col=sample_col, first_col=first_col, second_col=second_col, single_col=single_col, **kwargs
         )
 
         self._design_col = design_col
         self._barcodes_col = barcodes_col
         self._samplesheet_path = samplesheet_path
+        self._panel_col = panel_col
 
     def _validate_design(self, row):
         """Assert that the design column exists and has supported values."""
@@ -166,10 +168,16 @@ class PixelatorRowChecker(RowChecker):
         if len(row[self._barcodes_col]) <= 0:
             raise AssertionError("The barcodes field is required.")
 
+    def _validate_panelfile(self, row):
+        """Assert that the panel column exists and has supported values."""
+        if len(row[self._barcodes_col]) <= 0:
+            raise AssertionError("The panel field is required.")
+
     def _resolve_relative_paths(self, row):
         first = row[self._first_col]
         second = row[self._second_col]
         barcodes = row[self._barcodes_col]
+        panel = row[self._panel_col]
 
         first_path = PurePath(first)
         if not first_path.is_absolute() and self._samplesheet_path is not None:
@@ -183,9 +191,14 @@ class PixelatorRowChecker(RowChecker):
         if not barcodes_path.is_absolute() and self._samplesheet_path is not None:
             barcodes = str(PurePath(self._samplesheet_path).parent / barcodes_path)
 
+        panel_path = PurePath(panel)
+        if not panel_path.is_absolute() and self._samplesheet_path is not None:
+            panel = str(PurePath(self._samplesheet_path).parent / panel_path)
+
         row[self._first_col] = first
         row[self._second_col] = second
         row[self._barcodes_col] = barcodes
+        row[self._panel_col] = panel
 
     def validate_and_transform(self, row):
         """

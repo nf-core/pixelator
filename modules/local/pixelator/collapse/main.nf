@@ -11,8 +11,7 @@ process PIXELATOR_COLLAPSE {
     container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
 
     input:
-    tuple val(meta), path(reads)
-    path antibody_panel
+    tuple val(meta), path(reads), path(antibody_panel)
 
     output:
     tuple val(meta), path("collapse/*.collapsed.csv"),        emit: collapsed

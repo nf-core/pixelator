@@ -12,7 +12,6 @@ WorkflowPixelator.initialise(workflow, params, log)
 
 // Check mandatory parameters
 if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input samplesheet not specified!' }
-if (params.panel) { ch_panel = file(params.panel) }  else { exit 1, 'Panel file not specified!' }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -88,6 +87,9 @@ workflow PIXELATOR {
     ch_barcodes = INPUT_CHECK.out.barcodes
     ch_barcodes.dump(tag: "ch_barcodes")
 
+    ch_panels = INPUT_CHECK.out.panels
+    ch_panels.dump(tag: "ch_panels")
+
     // We need to rename to make all reads match the sample name,
     // since pixelator extracts sample_names from read namaes
     RENAME_READS ( ch_reads )
@@ -137,7 +139,11 @@ workflow PIXELATOR {
     ch_demuxed.dump(tag: "ch_demuxed")
     ch_versions = ch_versions.mix(PIXELATOR_DEMUX.out.versions.first())
 
-    PIXELATOR_COLLAPSE ( ch_demuxed, ch_panel )
+
+    ch_demuxed_and_panel = ch_demuxed.join(ch_panels)
+    ch_demuxed_and_panel.dump(tag: "ch_demuxed_and_panel")
+
+    PIXELATOR_COLLAPSE ( ch_demuxed_and_panel )
     ch_collapsed = PIXELATOR_COLLAPSE.out.collapsed
     ch_collapsed.dump(tag: "ch_collapsed")
     ch_versions = ch_versions.mix(PIXELATOR_COLLAPSE.out.versions.first())

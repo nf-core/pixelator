@@ -23,7 +23,7 @@ process PIXELATOR_REPORT {
     path("reports/report/summary_histograms.html"),         emit: summary_histograms
     path("reports/report/antibody_counts_barplot.html"),    emit: antibody_counts_barplot
     path("reports/report/antibody_counts_histogram.html"),  emit: antibody_counts_histogram
-    path("reports/report/cluster_size_dist.html"),         emit: clusters_size_dist
+    path("reports/report/cluster_size_dist.html"),          emit: clusters_size_dist
     path("reports/report/*.csv"),                           emit: data
     path "versions.yml",                                    emit: versions
 
