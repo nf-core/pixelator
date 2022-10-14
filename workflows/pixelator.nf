@@ -12,10 +12,7 @@ WorkflowPixelator.initialise(workflow, params, log)
 
 // Check mandatory parameters
 if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input samplesheet not specified!' }
-if (params.panel) {
-    def panel_file = WorkflowPixelator.loadPanelFile(params.panel, projectDir, log)
-    ch_panel = file(panel_file)
-}
+if (params.panel) { ch_panel = file(params.panel) }  else { exit 1, 'Panel file not specified!' }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

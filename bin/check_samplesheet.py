@@ -132,21 +132,6 @@ class RowChecker:
 
 class PixelatorRowChecker(RowChecker):
     VALID_DESIGNS = {"D12", "D12PE", "D19", "D21PE"}
-    VALID_BARCODES = {
-        "D12_v1",
-        "D12_v2",
-        "D12_v3",
-        "D12_v4",
-        "D12_v5",
-        "D19_v1",
-        "D19_v1A",
-        "D19_v2",
-        "D19_v2A",
-        "D21_v1",
-        "D21_v2",
-        "D21_v3",
-        "TBS_v1",
-    }
 
     def __init__(
         self,
@@ -178,16 +163,13 @@ class PixelatorRowChecker(RowChecker):
 
     def _validate_barcodes(self, row):
         """Assert that the design column exists and has supported values."""
-        if len(row[self._design_col]) <= 0:
-            raise AssertionError("At least the first FASTQ file is required.")
-
-        barcodes = row[self._barcodes_col]
-        if barcodes not in self.VALID_BARCODES:
-            raise AssertionError(f"Unsupported value for '{self._barcodes_col}' field.")
+        if len(row[self._barcodes_col]) <= 0:
+            raise AssertionError("The barcodes field is required.")
 
     def _resolve_relative_paths(self, row):
         first = row[self._first_col]
         second = row[self._second_col]
+        barcodes = row[self._barcodes_col]
 
         first_path = PurePath(first)
         if not first_path.is_absolute() and self._samplesheet_path is not None:
@@ -197,8 +179,14 @@ class PixelatorRowChecker(RowChecker):
         if not second_path.is_absolute() and self._samplesheet_path is not None:
             second = str(PurePath(self._samplesheet_path).parent / second_path)
 
+
+        barcodes_path = PurePath(barcodes)
+        if not barcodes_path.is_absolute() and self._samplesheet_path is not None:
+            barcodes = str(PurePath(self._samplesheet_path).parent / barcodes_path)
+
         row[self._first_col] = first
         row[self._second_col] = second
+        row[self._barcodes_col] = barcodes
 
     def validate_and_transform(self, row):
         """

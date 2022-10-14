@@ -65,12 +65,6 @@ def create_barcodes_channel(LinkedHashMap row) {
     meta.single_end   = row.single_end.toBoolean()
     meta.design       = row.design
 
-    def f = file("${projectDir}/assets/barcodes/${barcode}.fa")
-
-    if (f.exists()) {
-        return  [ meta, f ]
-    }
-
     if (file(barcode).exists()) {
         return [ meta, file(barcode) ]
     }
