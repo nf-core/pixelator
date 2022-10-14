@@ -179,7 +179,6 @@ class PixelatorRowChecker(RowChecker):
         if not second_path.is_absolute() and self._samplesheet_path is not None:
             second = str(PurePath(self._samplesheet_path).parent / second_path)
 
-
         barcodes_path = PurePath(barcodes)
         if not barcodes_path.is_absolute() and self._samplesheet_path is not None:
             barcodes = str(PurePath(self._samplesheet_path).parent / barcodes_path)
