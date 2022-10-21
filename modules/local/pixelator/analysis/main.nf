@@ -27,8 +27,8 @@ process PIXELATOR_ANALYSIS {
     def args = task.ext.args ?: ''
 
     """
-    mkdir cluster
-    cp -r cluster-results*/* cluster/
+    mkdir -p "cluster/$meta.id"
+    cp -r cluster-results*/* "cluster/$meta.id"
 
     pixelator \\
         --cores $task.cpus \\
