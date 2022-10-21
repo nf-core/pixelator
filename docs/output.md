@@ -16,7 +16,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [`pixelator adapterqc`](#pixelator-adapterqc)) - Check Correctness/presence of PBS1/2 sequences
 - [`pixelator demux`](#pixelator-demux)) - Assign a marker (barcode) to each read
 - [`pixelator collapse`](#pixelator-collapse)) - Error correction, duplicate removal, compute read counts
-- [`pixelator cluster`](#pixelator-cluster)) -  Compute graph, clusters and other metrics
+- [`pixelator cluster`](#pixelator-cluster)) - Compute graph, clusters and other metrics
 - [`pixelator analysis`](#pixelator-analysis)) - Analyse results from cluster
 - [`pixelator report`](#pixelator-report)) - Report generation
 
@@ -107,7 +107,6 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
     - `*.report.json`:
   - `/logs` - `*pixelator-cluster.log`: Pixelator cluster log output.
   </details>
-
 
 ### pixelator analysis
 

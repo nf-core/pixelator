@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.2.0 - [date]
 
 - Support new analysis command
+
 ## 0.1.0 - [date]
 
 First alpha release of nf-core-pixelator.
