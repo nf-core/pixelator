@@ -6,7 +6,7 @@
   files:
     - path: output/pixelator/test_data.pixelator-demux.log
       contains:
-        - "Finish pixelator demux"
+        - "Finished pixelator demux"
     - path: output/pixelator/demux/test_data.report.json
     - path: output/pixelator/demux/test_data.failed.fastq.gz
     - path: output/pixelator/demux/test_data.processed-CD14.fastq.gz

@@ -1,0 +1,10 @@
+- name: pixelator_analysis test_pixelator_analysis
+  command: nextflow -C tests/modules/pixelator/analysis/nextflow.config run tests/modules/pixelator/analysis -entry test_pixelator_analysis
+  tags:
+    - pixelator
+    - pixelator-analysis
+
+  files:
+    - path: output/pixelator/test_data.pixelator-analysis.log
+      contains:
+        - "Finished pixelator analysis"

@@ -8,22 +8,23 @@
 - 4. [Demux options](#demux-options)
 - 5. [Collapse options](#collapse-options)
 - 6. [Options for pixelator cluster command.](#options-for-pixelator-cluster-command)
-- 7. [Options for pixelator report command.](#options-for-pixelator-report-command)
-- 8. [Institutional config options](#institutional-config-options)
-- 9. [Max job request options](#max-job-request-options)
-- 10. [Global options](#global-options)
-- 11. [Generic options](#generic-options)
+- 7. [Options for pixelator analysis command.](#options-for-pixelator-analysis-command)
+- 8. [Options for pixelator report command.](#options-for-pixelator-report-command)
+- 9. [Institutional config options](#institutional-config-options)
+- 10. [Max job request options](#max-job-request-options)
+- 11. [Global options](#global-options)
+- 12. [Generic options](#generic-options)
 
 ## Parameters
 
 <a name="input-output-options"/>
 ## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/terminal.svg" width=32 height=32 />    Input/output options
 
-Define where the pipeline should find input data and save output data.### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-tsv.svg" width=16 height=16 /> `--input`
+Define where the pipeline should find input data and save output data.### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-csv.svg" width=16 height=16 /> `--input`
 
 **Type:** string
 
-Path to tab-separated file containing information about the samples in the experiment.
+Path to comma-separated file containing information about the samples in the experiment.
 You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/pixelator/usage#samplesheet-input).
 
 ---
@@ -324,6 +325,16 @@ Discard molecules (edges) with with a count (reads) lower than this [default: 2;
 
 ---
 
+### `--min_size_markers`
+
+**Type:** integer
+
+The minimum number of detected markers a cluster/cell must have (default is no filtering)
+
+<a name="options-for-pixelator-analysis-command"/>
+
+## Options for pixelator analysis command.
+
 ### `--compute_polarization`
 
 **Type:** boolean
@@ -348,11 +359,37 @@ Compute coabundance scores matrix (clusters by markers)
 
 ---
 
+### `--use_full_bipartite`
+
+**Type:** boolean
+
+Use the bipartite graph instead of the one-node projection when computing polarization, coabundance and colocalization scores
+
+---
+
+### `--binarization`
+
+**Type:** string
+**Options:** [percentile|denoise]
+**Default:** percentile
+
+Use the bipartite graph instead of the one-node projection when computing polarization, coabundance and colocalization scores
+
+---
+
 ### `--percentile`
 
 **Type:** number
 
 The percentile value (0-1) to use when binarizing counts in the polarization and co-localization algorithms [default: 0.0; 0.0<=x<=1.0]
+
+---
+
+### `--antibody_control`
+
+**Type:** string
+
+A comma separated list of antibodies to use as control for the denoise binarization method (--binarization). The antibody(s) must be present in the data with the same names
 
 <a name="options-for-pixelator-report-command"/>
 

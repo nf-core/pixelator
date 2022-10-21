@@ -6,7 +6,7 @@
   files:
     - path: output/pixelator/test_data.pixelator-concatenate.log
       contains:
-        - "Finish pixelator concatenate"
+        - "Finished pixelator concatenate"
     - path: output/pixelator/concatenate/test_data.merged.fastq.gz
 
 - name: pixelator_concatenate test_pixelator_concatenate_single_end

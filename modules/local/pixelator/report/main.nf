@@ -17,6 +17,7 @@ process PIXELATOR_REPORT {
     path "staged-demux??"
     path "staged-collapse??"
     path "cluster/*"
+    path "analysis/*"
 
     output:
     path("reports/report/report.html"),                     emit: report
@@ -53,6 +54,8 @@ process PIXELATOR_REPORT {
     cp -r staged-collapse*/* results/collapse/
 
     cp -r cluster results/cluster
+
+    cp -r analysis results/analysis
 
     pixelator \\
         report \\

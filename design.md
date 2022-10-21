@@ -203,46 +203,78 @@
 
 ## Cluster
 
-    Usage: pixelator cluster <options> COLLAPSED_FILES
+Usage: pixelator cluster <options> COLLAPSED_FILES
 
-    Compute graph, clusters and other metrics from a edge list matrix (CSV)
+Compute graph, clusters and other metrics from a edge list matrix (CSV)
 
-    Options:
-    --min-size INTEGER              The minimum size (pixels) a cluster/cell
-                                    must have (default is no filtering)
-    --max-size INTEGER              The maximum size (pixels) a cluster/cell
-                                    must have (default is no filtering)
-    --max-size-recover INTEGER      The maximum size cutoff to use in the
-                                    recovery (--big-clusters-recover)  [default:
-                                    10000]
-    --big-clusters-recover          Enable the recovery of big clusters/cells
-                                    (above --max-size-recover) by using the
-                                    community modularity approach to remove
-                                    problematic edges
-    --condition [optimal|max-size]  Which approach to use to select the best
-                                    community (--big-clusters-recover) optimal
-                                    will use the community that maximizes the
-                                    modularity max-size will iterate until the
-                                    biggest component in the community is below
-                                    --max-size/2 or the maximum number of
-                                    iterations is reached  [default: optimal]
-    --min-count INTEGER RANGE       Discard molecules (edges) with with a count
-                                    (reads) lower than this  [default: 2;
-                                    1<=x<=50]
-    --compute-polarization          Compute polarization scores matrix (clusters
-                                    by markers)
-    --compute-colocalization        Compute colocalization scores matrix
-                                    (clusters by markers)
-    --compute-coabundance           Compute coabundance scores matrix (clusters
-                                    by markers)
-    --percentile FLOAT RANGE        The percentile value (0-1) to use when
-                                    binarizing counts in the polarization and
-                                    co-localization algorithms  [default: 0.0;
-                                    0.0<=x<=1.0]
-    --output PATH                   The path where the results will be placed
-                                    (it is created if it does not exist)
-                                    [required]
-    --help                          Show this message and exit.
+Options:
+--min-size INTEGER The minimum size (pixels) a cluster/cell
+must have (default is no filtering)
+--max-size INTEGER The maximum size (pixels) a cluster/cell
+must have (default is no filtering)
+--max-size-recover INTEGER The maximum size cutoff to use in the
+recovery (--big-clusters-recover) [default:
+10000]
+--big-clusters-recover Enable the recovery of big clusters/cells
+(above --max-size-recover) by using the
+community modularity approach to remove
+problematic edges
+--condition [optimal|max-size] Which approach to use to select the best
+community (--big-clusters-recover) optimal
+will use the community that maximizes the
+modularity max-size will iterate until the
+biggest component in the community is below
+--max-size/2 or the maximum number of
+iterations is reached [default: optimal]
+--min-count INTEGER RANGE Discard molecules (edges) with with a count
+(reads) lower than this [default: 2;
+1<=x<=50]
+--min-size-markers INTEGER The minimum number of detected markers a
+cluster/cell must have (default is no
+filtering)
+--output PATH The path where the results will be placed
+(it is created if it does not exist)
+[required]
+--help Show this message and exit.
+
+## Analysis
+
+Usage: pixelator analysis <options> RESULTS_FOLDER
+
+Analyse samples (edge list from pixelator cluster) into a single one
+
+Options:
+--compute-polarization Compute polarization scores matrix (clusters
+by markers)
+--compute-colocalization Compute colocalization scores matrix
+(clusters by markers)
+--compute-coabundance Compute coabundance scores matrix (clusters
+by markers)
+--use-full-bipartite Use the bipartite graph instead of the one-
+node projection when computing polarization,
+coabundance and colocalization scores
+--binarization [percentile|denoise]
+Which approach to use to binarize counts
+(polarization, coabundance and
+colocalization) percentile will use the
+percentile of the raw counts given in
+(--percentile) denoise will use CLR
+normalization and substract the counts of
+the antibodies given in (--antibody-control)
+[default: percentile]
+--percentile FLOAT RANGE The percentile value (0-1) to use for the
+percentile binarization method
+(--binarization) [default: 0.0;
+0.0<=x<=1.0]
+--antibody-control TEXT A comma separated list of antibodies to use
+as control for the denoise binarization
+method (--binarization). The antibody(s)
+must be present in the data with the same
+names
+--output PATH The path where the results will be placed
+(it is created if it does not exist)
+[required]
+--help Show this message and exit.
 
 ## Report
 

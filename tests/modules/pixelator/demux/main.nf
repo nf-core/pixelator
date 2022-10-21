@@ -12,9 +12,8 @@ workflow test_pixelator_demux {
             design: "D12",
             barcodes: "D12_v1"
         ],
-        [
-            file(params.test_data['pixelator']['micro']['adapterqc'], checkIfExists: true),
-        ]
+        file(params.test_data['pixelator']['micro']['adapterqc'], checkIfExists: true),
+        file(params.test_data['pixelator']['micro']['barcodes'], checkIfExists: true)
     ]
 
     PIXELATOR_DEMUX ( input )
