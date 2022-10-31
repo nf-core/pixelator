@@ -218,6 +218,15 @@
                     "minimum": 1,
                     "maximum": 50
                 },
+                "min_size_markers": {
+                    "description": "The minimum number of detected markers a cluster/cell must have (default is no filtering)",
+                    "type": "integer"
+                }
+            }
+        },
+        "analysis_options": {
+            "title": "Options for pixelator analysis command.",
+            "properties": {
                 "compute_polarization": {
                     "description": "Compute polarization scores matrix (clusters by markers)",
                     "type": "boolean",
@@ -233,12 +242,27 @@
                     "type": "boolean",
                     "default": false
                 },
+                "use_full_bipartite": {
+                    "description": "Use the bipartite graph instead of the one-node projection when computing polarization, coabundance and colocalization scores",
+                    "type": "boolean",
+                    "default": false
+                },
+                "binarization": {
+                    "description": "Use the bipartite graph instead of the one-node projection when computing polarization, coabundance and colocalization scores",
+                    "type": "string",
+                    "enum": ["percentile", "denoise"],
+                    "default": "percentile"
+                },
                 "percentile": {
                     "description": "The percentile value (0-1) to use when binarizing counts in the polarization and co-localization algorithms [default: 0.0; 0.0<=x<=1.0]",
                     "type": "number",
                     "default": 0.0,
                     "minimum": 0.0,
                     "maximum": 1.0
+                },
+                "antibody_control": {
+                    "description": "A comma separated list of antibodies to use as control for the denoise binarization method (--binarization). The antibody(s) must be present in the data with the same names",
+                    "type": "string"
                 }
             }
         },
@@ -461,6 +485,9 @@
         },
         {
             "$ref": "#/definitions/cluster_options"
+        },
+        {
+            "$ref": "#/definitions/analysis_options"
         },
         {
             "$ref": "#/definitions/report_options"

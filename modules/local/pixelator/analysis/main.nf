@@ -1,21 +1,18 @@
 
-
-process PIXELATOR_CONCATENATE {
+process PIXELATOR_ANALYSIS {
     tag "$meta.id"
-    label 'process_low'
-
+    label 'process_medium'
 
     conda (params.enable_conda ? "local::pixelator=0.2.3" : null)
-
     container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
 
     input:
-    tuple val(meta), path(reads)
+    tuple val(meta), path("cluster-results??")
 
     output:
-    tuple val(meta), path("concatenate/*.merged.fastq.gz"),       emit: merged
-    tuple val(meta), path("concatenate"),                         emit: results_dir
-    tuple val(meta), path("*pixelator-concatenate.log"),          emit: log
+    tuple val(meta), path("analysis/$meta.id/*"),        emit: results
+    tuple val(meta), path("analysis/$meta.id"),          emit: results_dir
+    tuple val(meta), path("*pixelator-analysis.log"),    emit: log
 
     path "versions.yml"           , emit: versions
 
@@ -23,22 +20,21 @@ process PIXELATOR_CONCATENATE {
     task.ext.when == null || task.ext.when
 
     script:
+
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
 
-    if ( meta.single_end && meta.single_end == true ) {
-        exit 1, "pixelator concatenate requires paired-end input"
-    }
-
     """
+    mkdir -p "cluster/$meta.id"
+    cp -r cluster-results*/* "cluster/$meta.id"
+
     pixelator \\
         --cores $task.cpus \\
-        --log-file ${prefix}.pixelator-concatenate.log \\
-        concatenate \\
+        --log-file ${prefix}.pixelator-analysis.log \\
+        analysis \\
         --output . \\
         $args \\
-        ${reads[0]} \\
-        ${reads[1]}
+        .
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

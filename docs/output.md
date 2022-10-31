@@ -13,9 +13,11 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 - [`pixelator concatenate`](#pixelator-concatenate)(Optional) - Concatenate paired end data
 - [`pixelator preqc`](#pixelator-preqc)) - Read QC and filtering
-- [`pixelator adapterqc`](#pixelator-adapterqc)) - Check Correctness/presence of PBS1/2 sequences
+- [`pixelator adapterqc`](#pixelator-adapterqc)) - Check correctness/presence of PBS1/2 sequences
 - [`pixelator demux`](#pixelator-demux)) - Assign a marker (barcode) to each read
 - [`pixelator collapse`](#pixelator-collapse)) - Error correction, duplicate removal, compute read counts
+- [`pixelator cluster`](#pixelator-cluster)) - Compute undirected graphs and basic size filtering
+- [`pixelator analysis`](#pixelator-analysis)) - Downstream analysis for each cell
 - [`pixelator report`](#pixelator-report)) - Report generation
 
 ### pixelator concatenate
@@ -87,22 +89,45 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 - `pixelator`
   - `<sample-name>`
-    - `antibody_metrics.csv`:
     - `antibody_metrics_filtered.csv`:
     - `antibody_metrics_filtered.png`:
+    - `antibody_metrics.csv`:
     - `antibody_metrics.png`:
-    - `clusters_antibody.csv`:
+    - `clusters_antibody_filtered_normalized.csv`:
     - `clusters_antibody_filtered.csv`:
+    - `clusters_antibody_normalized.csv`:
+    - `clusters_antibody.csv`:
     - `clusters_dist_filtered.png`:
     - `clusters_dist.png`:
+    - `clusters_metrics_filtered`"
     - `clusters_metrics.csv`:
-    - `clusters_metrics_filtered.csv`:
     - `data_summary.png`:
-    - `pixel_data.csv`:
     - `pixel_data_filtered.csv`:
+    - `pixel_data.csv`:
     - `*.report.json`:
   - `/logs` - `*pixelator-cluster.log`: Pixelator cluster log output.
   </details>
+
+### pixelator analysis
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `pixelator`
+  - `<sample-name>`
+    - `coabundance_boxplot.png`:
+    - `coabundance_heatmap.png`:
+    - `coabundance_matrix.csv`:
+    - `colocalization_boxplot.png`:
+    - `colocalization_heatmap.png`:
+    - `colocalization_matrix.csv`:
+    - `polarization_boxplot.png`:
+    - `polarization_heatmap.png`:
+    - `polarization_matrix.csv`:
+    - `*.report.json`:
+  - `/logs` - `*pixelator-analysis.log`: Pixelator analysis log output.
+
+</details>
 
 ### pixelator report
 

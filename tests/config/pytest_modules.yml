@@ -22,6 +22,10 @@ pixelator-cluster:
   - modules/pixelator/cluster/**
   - tests/modules/pixelator/cluster/**
 
+pixelator-analysis:
+  - modules/pixelator/analysis/**
+  - tests/modules/pixelator/analysis/**
+
 pixelator-report:
   - modules/pixelator/report/**
   - tests/modules/pixelator/report/**

@@ -7,6 +7,6 @@
   files:
     - path: output/pixelator/test_data.pixelator-collapse.log
       contains:
-        - "Finish pixelator collapse"
+        - "Finished pixelator collapse"
     - path: output/pixelator/collapse/test_data.collapsed.csv
     - path: output/pixelator/collapse/test_data.report.json

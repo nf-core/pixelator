@@ -6,7 +6,7 @@
   files:
     - path: output/pixelator/test_data.pixelator-preqc.log
       contains:
-        - "Finish pixelator fastp"
+        - "Finished pixelator preqc"
     - path: output/pixelator/preqc/test_data.failed.fastq.gz
     - path: output/pixelator/preqc/test_data.processed.fastq.gz
     - path: output/pixelator/preqc/test_data.report.html

@@ -6,7 +6,7 @@
   files:
     - path: output/pixelator/test_data.pixelator-adapterqc.log
       contains:
-        - "Finish pixelator adapterqc"
+        - "Finished pixelator adapterqc"
     - path: output/pixelator/adapterqc/test_data.failed.fastq.gz
     - path: output/pixelator/adapterqc/test_data.processed.fastq.gz
     - path: output/pixelator/adapterqc/test_data.report.json

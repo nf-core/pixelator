@@ -1,5 +1,4 @@
-// TODO nf-core: Optional inputs are not currently supported by Nextflow. However, using an empty
-//               list (`[]`) instead of a file can be used to work around this issue.
+
 
 process PIXELATOR_REPORT {
     tag "$meta.id"
@@ -17,6 +16,7 @@ process PIXELATOR_REPORT {
     path "staged-demux??"
     path "staged-collapse??"
     path "cluster/*"
+    path "analysis/*"
 
     output:
     path("reports/report/report.html"),                     emit: report
@@ -53,6 +53,8 @@ process PIXELATOR_REPORT {
     cp -r staged-collapse*/* results/collapse/
 
     cp -r cluster results/cluster
+
+    cp -r analysis results/analysis
 
     pixelator \\
         report \\
