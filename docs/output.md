@@ -13,11 +13,11 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 - [`pixelator concatenate`](#pixelator-concatenate)(Optional) - Concatenate paired end data
 - [`pixelator preqc`](#pixelator-preqc)) - Read QC and filtering
-- [`pixelator adapterqc`](#pixelator-adapterqc)) - Check Correctness/presence of PBS1/2 sequences
+- [`pixelator adapterqc`](#pixelator-adapterqc)) - Check correctness/presence of PBS1/2 sequences
 - [`pixelator demux`](#pixelator-demux)) - Assign a marker (barcode) to each read
 - [`pixelator collapse`](#pixelator-collapse)) - Error correction, duplicate removal, compute read counts
-- [`pixelator cluster`](#pixelator-cluster)) - Compute graph, clusters and other metrics
-- [`pixelator analysis`](#pixelator-analysis)) - Analyse results from cluster
+- [`pixelator cluster`](#pixelator-cluster)) - Compute undirected graphs and basic size filtering
+- [`pixelator analysis`](#pixelator-analysis)) - Downstream analysis for each cell
 - [`pixelator report`](#pixelator-report)) - Report generation
 
 ### pixelator concatenate
