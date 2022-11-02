@@ -10,7 +10,7 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "panel", "outdir"],
+            "required": ["input", "outdir"],
             "properties": {
                 "input": {
                     "type": "string",
@@ -19,6 +19,13 @@
                     "description": "Path to comma-separated file containing information about the samples in the experiment.",
                     "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/pixelator/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
+                },
+                "mode": {
+                    "type": "string",
+                    "format": "file-path",
+                    "enum": ["main", "aggregate"],
+                    "default": "main",
+                    "description": "Mode to run the pipeline in [default: main]"
                 },
                 "outdir": {
                     "type": "string",
@@ -110,8 +117,19 @@
                     "maximum": 0.9
                 },
                 "demux_min_length": {
-                    "type": "integer",
-                    "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design"
+                    "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design",
+                    "type": ["integer", "null"],
+                    "default": null
+                },
+                "demux_anchored": {
+                    "type": "boolean",
+                    "description": "Enforce the barcodes to be anchored (at the end of the read)",
+                    "default": false
+                },
+                "demux_rev_complement": {
+                    "type": "boolean",
+                    "description": "Use the reverse complement of the barcodes sequences",
+                    "default": false
                 }
             }
         },

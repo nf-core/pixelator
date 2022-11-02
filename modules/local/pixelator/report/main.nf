@@ -15,8 +15,8 @@ process PIXELATOR_REPORT {
     path "staged-adapterqc??"
     path "staged-demux??"
     path "staged-collapse??"
-    path "cluster/*"
-    path "analysis/*"
+    path "staged-cluster??"
+    path "staged-analysis??"
 
     output:
     path("reports/report/report.html"),                     emit: report
@@ -38,23 +38,25 @@ process PIXELATOR_REPORT {
     mkdir results
 
     mkdir results/concatenate
-    cp -r staged-concatenate*/* results/concatenate
+    mv staged-concatenate*/* results/concatenate
 
     mkdir results/preqc
-    cp -r staged-preqc*/* results/preqc
+    mv staged-preqc*/* results/preqc
 
     mkdir results/adapterqc
-    cp -r staged-adapterqc*/* results/adapterqc/
+    mv staged-adapterqc*/* results/adapterqc/
 
     mkdir results/demux
-    cp -r staged-demux*/* results/demux
+    mv staged-demux*/* results/demux
 
     mkdir results/collapse
-    cp -r staged-collapse*/* results/collapse/
+    mv staged-collapse*/* results/collapse/
 
-    cp -r cluster results/cluster
+    mkdir results/cluster
+    mv staged-cluster*/* results/cluster/
 
-    cp -r analysis results/analysis
+    mkdir results/analysis
+    mv staged-analysis*/* results/analysis/
 
     pixelator \\
         report \\

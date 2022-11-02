@@ -15,13 +15,11 @@ workflow INPUT_CHECK {
 
     ch_samplesheet_rows.dump(tag: "samplesheet_csv_split")
     reads = ch_samplesheet_rows.map { create_fastq_channel(it) }
-    barcodes = ch_samplesheet_rows.map { create_barcodes_channel(it) }
     panels = ch_samplesheet_rows.map { create_panels_channel(it) }
 
     emit:
     reads                                     // channel: [ val(meta), [ reads ] ]
-    barcodes                                  // channel: [ val(meta), barcodes ]
-    panels                                    // channel: [ val(meta), panel ]
+    panels                                     // channel: [ val(meta), panel ]
 
     versions = SAMPLESHEET_CHECK.out.versions // channel: [ versions.yml ]
 }
@@ -32,7 +30,7 @@ def get_meta(LinkedHashMap row) {
     meta.id           = row.sample
     meta.single_end   = row.single_end.toBoolean()
     meta.design       = row.design
-
+    meta.group        = row.group
     return meta
 }
 
@@ -46,12 +44,6 @@ def create_fastq_channel(LinkedHashMap row) {
     if (!file(row.fastq_1).exists()) {
         exit 1, "ERROR: Please check input samplesheet -> Read 1 FastQ file does not exist!\n${row.fastq_1}"
     }
-    if (!meta.single_end && !meta.design.endsWith("PE")) {
-        exit 1, "ERROR: Please check input samplesheet -> Non paired-end design with paired-end input! Consider adding 'PE' suffix to the design.\n${row.fastq_1}"
-    }
-    if (meta.single_end && meta.design.endsWith("PE")) {
-        exit 1, "ERROR: Please check input samplesheet -> Paired-end design with single-end input! Consider removing 'PE' suffix from the design.\n${row.fastq_1}"
-    }
 
     if (meta.single_end) {
         fastq_meta = [ meta, [ file(row.fastq_1) ] ]
@@ -62,17 +54,6 @@ def create_fastq_channel(LinkedHashMap row) {
         fastq_meta = [ meta, [ file(row.fastq_1), file(row.fastq_2) ] ]
     }
     return fastq_meta
-}
-
-
-def create_barcodes_channel(LinkedHashMap row) {
-    def meta = get_meta(row)
-
-    if (file(row.barcodes).exists()) {
-        return [ meta, file(row.barcodes) ]
-    }
-
-    exit 1, "ERROR: Please check barcode field: ${row.barcode}: Could not find existing fasta file (.fa)"
 }
 
 

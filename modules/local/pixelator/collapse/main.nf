@@ -10,7 +10,7 @@ process PIXELATOR_COLLAPSE {
     container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
 
     input:
-    tuple val(meta), path(reads), path(antibody_panel)
+    tuple val(meta), path(reads)
 
     output:
     tuple val(meta), path("collapse/*.collapsed.csv"),        emit: collapsed
@@ -38,7 +38,6 @@ process PIXELATOR_COLLAPSE {
         --samples "${meta.id}" \\
         --output . \\
         --design ${meta.design} \\
-        --panel-file ${antibody_panel} \\
         $args \\
         ${readsArg}
 

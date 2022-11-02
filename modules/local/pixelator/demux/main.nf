@@ -9,7 +9,7 @@ process PIXELATOR_DEMUX {
     container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
 
     input:
-    tuple val(meta), path(reads), path(barcodes)
+    tuple val(meta), path(reads), path(antibody_panel)
 
     output:
     tuple val(meta), path("demux/*processed*.fastq.gz"),    emit: processed
@@ -34,8 +34,8 @@ process PIXELATOR_DEMUX {
         --log-file ${prefix}.pixelator-demux.log \\
         demux \\
         --output . \\
+        --panel-file ${antibody_panel} \\
         --design ${meta.design} \\
-        --barcodes ${barcodes} \\
         $args \\
         ${reads}
 

@@ -1,0 +1,10 @@
+- name: pixelator_aggregate test_pixelator_aggregate
+  command: nextflow -C tests/modules/pixelator/aggregate/nextflow.config run tests/modules/pixelator/aggregate -entry test_pixelator_aggregate
+  tags:
+    - pixelator
+    - pixelator-aggregate
+
+  files:
+    - path: output/pixelator/test_data.pixelator-aggregate.log
+      contains:
+        - "Finished pixelator aggregate"
