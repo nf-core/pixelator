@@ -118,8 +118,7 @@
                 },
                 "demux_min_length": {
                     "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design",
-                    "type": ["integer", "null"],
-                    "default": null
+                    "type": ["integer", "null"]
                 }
             }
         },
@@ -500,7 +499,7 @@
             "$ref": "#/definitions/cluster_options"
         },
         {
-            "$href": "##/definitions/annotate_options"
+            "$ref": "#/definitions/annotate_options"
         },
         {
             "$ref": "#/definitions/analysis_options"
