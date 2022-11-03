@@ -10,7 +10,7 @@
 
 ## Pipeline tools
 
-- [pixelator}](https://gitlab.com/pixelgen-technologies/pixelator)
+- [pixelator}](https://github.com/PixelgenTechnologies/pixelator)
 
 ## Software packaging/containerisation tools
 

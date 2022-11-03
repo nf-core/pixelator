@@ -120,16 +120,6 @@
                     "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design",
                     "type": ["integer", "null"],
                     "default": null
-                },
-                "demux_anchored": {
-                    "type": "boolean",
-                    "description": "Enforce the barcodes to be anchored (at the end of the read)",
-                    "default": false
-                },
-                "demux_rev_complement": {
-                    "type": "boolean",
-                    "description": "Use the reverse complement of the barcodes sequences",
-                    "default": false
                 }
             }
         },
@@ -205,14 +195,6 @@
         "cluster_options": {
             "title": "Options for pixelator cluster command.",
             "properties": {
-                "min_size": {
-                    "description": "The minimum size (pixels) a cluster/cell must have (default is no filtering)",
-                    "type": "integer"
-                },
-                "max_size": {
-                    "description": "The maximum size (pixels) a cluster/cell must have (default is no filtering)",
-                    "type": "integer"
-                },
                 "max_size_recover": {
                     "description": "The maximum size cutoff to use in the recovery (--big-clusters-recover) [default: 10000]",
                     "type": "integer",
@@ -235,9 +217,22 @@
                     "default": 2,
                     "minimum": 1,
                     "maximum": 50
+                }
+            }
+        },
+        "annotate_options": {
+            "title": "Options for pixelator annotate command.",
+            "properties": {
+                "min_size": {
+                    "description": "TThe minimum size (pixels) a component/cell can have (default is no filtering)",
+                    "type": "integer"
                 },
-                "min_size_markers": {
-                    "description": "The minimum number of detected markers a cluster/cell must have (default is no filtering)",
+                "max_size": {
+                    "description": "The maximum size (pixels) a component/cell can have (default is no filtering)",
+                    "type": "integer"
+                },
+                "min_num_markers": {
+                    "description": "The minimum number of detected markers a component/cell can have (default is no filtering)",
                     "type": "integer"
                 }
             }
@@ -503,6 +498,9 @@
         },
         {
             "$ref": "#/definitions/cluster_options"
+        },
+        {
+            "$href": "##/definitions/annotate_options"
         },
         {
             "$ref": "#/definitions/analysis_options"

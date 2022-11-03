@@ -19,9 +19,6 @@ if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input sample
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-// ch_multiqc_config        = file("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
-// ch_multiqc_custom_config = params.multiqc_config ? Channel.fromPath(params.multiqc_config) : Channel.empty()
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT LOCAL MODULES/SUBWORKFLOWS
@@ -60,6 +57,7 @@ include { PIXELATOR_DEMUX               } from '../modules/local/pixelator/demux
 include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/collapse/main'
 include { PIXELATOR_CLUSTER             } from '../modules/local/pixelator/cluster/main'
 include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/analysis/main'
+include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/annotate/main'
 include { PIXELATOR_REPORT              } from '../modules/local/pixelator/report/main'
 include { RENAME_READS                  } from '../modules/local/rename_reads'
 
@@ -143,18 +141,23 @@ workflow PIXELATOR_MAIN {
     ch_versions = ch_versions.mix(PIXELATOR_COLLAPSE.out.versions.first())
 
     PIXELATOR_CLUSTER( ch_collapsed )
-    ch_clustered = PIXELATOR_CLUSTER.out.filtered_h5ad
+    ch_clustered = PIXELATOR_CLUSTER.out.h5ad
     ch_clustered.dump(tag: "ch_clustered")
     ch_versions = ch_versions.mix(PIXELATOR_CLUSTER.out.versions.first())
 
-    // Group h5ad by group and aggregate
-    RUN_PIXELATOR_AGGREGATE ( ch_clustered )
-    ch_analysis_inputs = RUN_PIXELATOR_AGGREGATE.out.matrices
-    ch_versions = ch_versions.mix(RUN_PIXELATOR_AGGREGATE.out.versions)
+    PIXELATOR_ANNOTATE ( ch_clustered )
+    ch_annotated = PIXELATOR_ANNOTATE.out.h5ad
+    ch_clustered.dump(tag: "ch_annotated")
+    ch_versions = ch_versions.mix(PIXELATOR_ANNOTATE.out.versions.first())
 
     // TODO: We only pass cluster to this for now
-    PIXELATOR_ANALYSIS ( ch_analysis_inputs )
+    PIXELATOR_ANALYSIS ( ch_annotated )
+    ch_analysed = PIXELATOR_ANALYSIS.out.h5ad
     ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())
+
+    RUN_PIXELATOR_AGGREGATE ( ch_analysed )
+    ch_aggregated = RUN_PIXELATOR_AGGREGATE.out.matrices
+    ch_versions = ch_versions.mix(RUN_PIXELATOR_AGGREGATE.out.versions)
 
     ch_concatenate_col = ch_concat_results.map { meta, data -> [meta.id, data] }
     ch_preqc_col       = PIXELATOR_PREQC.out.results_dir.map { meta, data -> [ meta.id, data] }
@@ -162,6 +165,7 @@ workflow PIXELATOR_MAIN {
     ch_demux_col       = PIXELATOR_DEMUX.out.results_dir.map { meta, data -> [ meta.id, data] }
     ch_collapse_col    = PIXELATOR_COLLAPSE.out.results_dir.map { meta, data -> [ meta.id, data] }
     ch_cluster_col     = PIXELATOR_CLUSTER.out.results_dir.map { meta, data -> [ meta.id, data] }
+    ch_annotate_col    = PIXELATOR_ANNOTATE.out.results_dir.map { meta, data -> [ meta.id, data] }
     ch_analysis_col    = PIXELATOR_ANALYSIS.out.results_dir.map { meta, data -> [ meta.id, data] }
 
     ch_report_data     = ch_concatenate_col
@@ -170,6 +174,7 @@ workflow PIXELATOR_MAIN {
         .concat ( ch_demux_col )
         .concat ( ch_collapse_col )
         .concat ( ch_cluster_col )
+        .concat ( ch_annotate_col )
         .concat ( ch_analysis_col )
         .groupTuple ()
 
@@ -181,7 +186,8 @@ workflow PIXELATOR_MAIN {
     ch_demux_grouped        = ch_report_data.map { id, data -> data[3] }.collect()
     ch_collapse_grouped     = ch_report_data.map { id, data -> data[4] }.collect()
     ch_cluster_grouped      = ch_report_data.map { id, data -> data[5] }.collect()
-    ch_analysis_grouped     = ch_report_data.map { id, data -> data[6] }.collect()
+    ch_annotate_grouped     = ch_report_data.map { id, data -> data[6] }.collect()
+    ch_analysis_grouped     = ch_report_data.map { id, data -> data[7] }.collect()
 
     ch_report_meta = ch_report_data
         .map { it -> it[0] }.collect()
@@ -193,6 +199,7 @@ workflow PIXELATOR_MAIN {
     ch_demux_grouped.dump(tag: "ch_demux_grouped")
     ch_collapse_grouped.dump(tag: "ch_collapse_grouped")
     ch_cluster_grouped.dump(tag: "ch_cluster_grouped")
+    ch_annotate_grouped.dump(tag: "ch_annotate_grouped")
     ch_analysis_grouped.dump(tag: "ch_analysis_grouped")
     ch_report_meta.dump(tag: "ch_report_meta")
 
@@ -204,10 +211,12 @@ workflow PIXELATOR_MAIN {
         ch_demux_grouped,
         ch_collapse_grouped,
         ch_cluster_grouped,
-        ch_analysis_grouped
+        ch_annotate_grouped,
+        ch_analysis_grouped,
     )
 
     ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions)
+
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')

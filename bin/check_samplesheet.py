@@ -16,7 +16,6 @@ import enum
 logger = logging.getLogger()
 
 
-
 class RowChecker:
     """
     Define a service that can validate and transform each given row.
@@ -215,9 +214,6 @@ class PixelatorRowChecker(RowChecker):
         self.modified.append(row)
 
 
-
-
-
 class PixelatorAggregateRowChecker:
     """
     Define a service that can validate and transform each given row.
@@ -316,7 +312,6 @@ class PixelatorAggregateRowChecker:
             raise AssertionError("The sample name must be unique.")
 
 
-
 def read_head(handle, num_lines=10):
     """Read the specified number of lines from the current position in the file."""
     lines = []
@@ -378,7 +373,7 @@ def check_samplesheet(file_in, file_out, samplesheet_path, mode: str):
         https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv
 
     """
-    if (mode == "main"):
+    if mode == "main":
         required_columns = {"sample", "design", "fastq_1", "fastq_2"}
         # See https://docs.python.org/3.9/library/csv.html#id3 to read up on `newline=""`.
         with file_in.open(newline="") as in_handle:
@@ -501,9 +496,6 @@ def check_samplesheet_aggregate_mode(file_in, file_out, samplesheet_path):
             writer.writerow(row)
 
 
-
-
-
 def parse_args(argv=None):
     """Define and immediately parse command line arguments."""
     parser = argparse.ArgumentParser(
@@ -534,7 +526,7 @@ def parse_args(argv=None):
         type=str,
         choices=("main", "aggregate"),
         default="main",
-        help="Type of samplesheet (default: default)"
+        help="Type of samplesheet (default: default)",
     )
     parser.add_argument(
         "-l",

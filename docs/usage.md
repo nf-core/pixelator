@@ -39,13 +39,13 @@ S1,D12PE,D12_v1,S1_R1.fastq.gz,S1_R2.fastq.gz
 S2,D12,D12_v1,S2_R1.fastq.gz
 ```
 
-| Column     | Description                                                                                                                                                                            |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`   | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `design`   | The name of the pixelator design configuration.                                                                                                                                        |
-| `panel`    | Path to a csv file with antibody panel information.                                                                                                                                    |
-| `fastq_1`  | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
-| `fastq_2`  | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
+| Column    | Description                                                                                                                                                                            |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`  | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
+| `design`  | The name of the pixelator design configuration.                                                                                                                                        |
+| `panel`   | Path to a csv file with antibody panel information.                                                                                                                                    |
+| `fastq_1` | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
+| `fastq_2` | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
 
 An [example samplesheet](../assets/samplesheet.tsv) has been provided with the pipeline.
 

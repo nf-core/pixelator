@@ -4,18 +4,16 @@ process PIXELATOR_CLUSTER {
     tag "$meta.id"
     label 'process_low'
 
-    conda (params.enable_conda ? "local::pixelator=0.2.3" : null)
+    conda (params.enable_conda ? "local::pixelator=0.3.0" : null)
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.3.0'
 
     input:
     tuple val(meta), path(reads)
 
     output:
     tuple val(meta), path("cluster"),                           emit: results_dir
-    tuple val(meta), path("cluster/*anndata.h5ad"),             emit: raw_h5ad
-    tuple val(meta), path("cluster/*filtered_anndata.h5ad"),    emit: filtered_h5ad
-
+    tuple val(meta), path("cluster/*raw_anndata.h5ad"),         emit: h5ad
     tuple val(meta), path("*pixelator-cluster.log"),     emit: log
 
     path "versions.yml"           , emit: versions

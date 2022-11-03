@@ -19,8 +19,8 @@
             },
             "panel": {
                 "type": "string",
-                "pattern": "^\\S+$",
-                "errorMessage": "Panel file must be provided."
+                "pattern": "^\\S+.csv$",
+                "errorMessage": "Panel file must be provided, cannot contain spaces and must have extension '.csv'"
             },
             "fastq_1": {
                 "type": "string",
@@ -41,6 +41,6 @@
                 ]
             }
         },
-        "required": ["sample", "design", "fastq_1"]
+        "required": ["sample", "design", "panel", "fastq_1"]
     }
 }

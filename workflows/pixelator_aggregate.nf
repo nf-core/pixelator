@@ -78,8 +78,8 @@ workflow PIXELATOR_AGGREGATE {
     ch_matrices = INPUT_CHECK_AGGREGATE.out.matrices
     ch_matrices.dump(tag: "ch_matrices")
 
-       // We need to rename to make all reads match the sample name,
-    // since pixelator extracts sample_names from read namaes
+    // We need to rename to make all matrices match the sample name,
+    // otherwise we can have staging conflicts
     RENAME_MATRICES ( ch_matrices )
     ch_renamed_matrices = RENAME_MATRICES.out.matrices
     ch_renamed_matrices.dump(tag: "ch_renamed_matrices")
@@ -88,34 +88,6 @@ workflow PIXELATOR_AGGREGATE {
     RUN_PIXELATOR_AGGREGATE ( ch_renamed_matrices )
     ch_analysis_inputs = RUN_PIXELATOR_AGGREGATE.out.matrices
     ch_versions = ch_versions.mix(RUN_PIXELATOR_AGGREGATE.out.versions)
-
-    PIXELATOR_ANALYSIS ( ch_analysis_inputs )
-    ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())
-    ch_analysis_col    = PIXELATOR_ANALYSIS.out.results_dir.map { meta, data -> [ meta.id, data] }
-
-    ch_report_data     = ch_analysis_col.groupTuple ()
-    ch_report_data.dump(tag: "ch_report_data")
-    ch_analysis_grouped     = ch_report_data.map { id, data -> data[6] }.collect()
-
-    ch_report_meta = ch_report_data
-        .map { it -> it[0] }.collect()
-        .map { [ id: params.report_name , samples: it] }
-
-    ch_analysis_grouped.dump(tag: "ch_analysis_grouped")
-    ch_report_meta.dump(tag: "ch_report_meta")
-
-    PIXELATOR_REPORT (
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        ch_analysis_grouped
-    )
-
-    ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions)
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')

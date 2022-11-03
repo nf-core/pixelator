@@ -9,7 +9,7 @@ The directories listed below will be created in the results directory after the 
 
 ## Pipeline overview
 
-The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using multiple subcommands of the [`pixelator`](https://gitlab.com/pixelgen-technologies/pixelator) tool.
+The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using multiple subcommands of the [`pixelator`](https://github.com/PixelgenTechnologies/pixelator) tool.
 
 - [`pixelator concatenate`](#pixelator-concatenate)(Optional) - Concatenate paired end data
 - [`pixelator preqc`](#pixelator-preqc)) - Read QC and filtering
@@ -18,6 +18,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [`pixelator collapse`](#pixelator-collapse)) - Error correction, duplicate removal, compute read counts
 - [`pixelator cluster`](#pixelator-cluster)) - Compute undirected graphs and basic size filtering
 - [`pixelator analysis`](#pixelator-analysis)) - Downstream analysis for each cell
+- [`pixelator annotate`](#pixelator-annotate)) - Filter, annotate and call cells on samples
+- [`pixelator aggregate`](#pixelator-aggregate)) - Aggregate results
 - [`pixelator report`](#pixelator-report)) - Report generation
 
 ### pixelator concatenate
@@ -88,24 +90,37 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
-  - `<sample-name>`
-    - `antibody_metrics_filtered.csv`:
-    - `antibody_metrics_filtered.png`:
-    - `antibody_metrics.csv`:
-    - `antibody_metrics.png`:
-    - `clusters_antibody_filtered_normalized.csv`:
-    - `clusters_antibody_filtered.csv`:
-    - `clusters_antibody_normalized.csv`:
-    - `clusters_antibody.csv`:
-    - `clusters_dist_filtered.png`:
-    - `clusters_dist.png`:
-    - `clusters_metrics_filtered`"
-    - `clusters_metrics.csv`:
-    - `data_summary.png`:
-    - `pixel_data_filtered.csv`:
-    - `pixel_data.csv`:
-    - `*.report.json`:
+  - `cluster`
+    - `<sample-id>.components_recovered.csv`
+    - `<sample-id>.data_summary.png`
+    - `<sample-id>.raw_anndata.h5ad`
+    - `<sample-id>.raw_antibody_metrics.csv`
+    - `<sample-id>.raw_antibody_metrics.png`
+    - `<sample-id>.raw_components_antibody.csv`
+    - `<sample-id>.raw_components_dist.png`
+    - `<sample-id>.raw_components_metrics.csv`
+    - `<sample-id>.raw_pixel_data.csv`
+    - `<sample-id>.report.json`
   - `/logs` - `*pixelator-cluster.log`: Pixelator cluster log output.
+  </details>
+
+### pixelator annotate
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `pixelator`
+  - `annotate`
+  - `<sample-id>.data_summary.png`
+  - `<sample-id>.filtered_anndata.h5ad`
+  - `<sample-id>.filtered_antibody_metrics.csv`
+  - `<sample-id>.filtered_antibody_metrics.png`
+  - `<sample-id>.filtered_components_antibody.csv`
+  - `<sample-id>.filtered_components_dist.png`
+  - `<sample-id>.filtered_components_metrics.csv`
+  - `<sample-id>.filtered_pixel_data.csv`
+  - `<sample-id>.report.json`
+  - `/logs` - `*pixelator-annotate.log`: Pixelator cluster log output.
   </details>
 
 ### pixelator analysis
@@ -114,20 +129,26 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
-  - `<sample-name>`
-    - `coabundance_boxplot.png`:
-    - `coabundance_heatmap.png`:
-    - `coabundance_matrix.csv`:
-    - `colocalization_boxplot.png`:
-    - `colocalization_heatmap.png`:
-    - `colocalization_matrix.csv`:
-    - `polarization_boxplot.png`:
-    - `polarization_heatmap.png`:
-    - `polarization_matrix.csv`:
-    - `*.report.json`:
+  - `analysis`
+    - `<sample-name>.anndata.h5ad`
+    - `<sample-name>.polarization_boxplot.png`
+    - `<sample-name>.polarization_heatmap.png`
+    - `<sample-name>.polarization_matrix.csv`
+    - `<sample-name>.report.json`
   - `/logs` - `*pixelator-analysis.log`: Pixelator analysis log output.
 
 </details>
+
+### pixelator aggregate
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `pixelator`
+  - `aggregate`
+    - `<sample-name>.merged_anndata.h5ad`: Anndata object with aggregated data of multiple samples
+  - `/logs` - `*pixelator-report.log`: Pixelator report log output.
+  </details>
 
 ### pixelator report
 
