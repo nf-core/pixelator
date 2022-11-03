@@ -5,6 +5,7 @@
     - pixelator-aggregate
 
   files:
-    - path: output/pixelator/test_data.pixelator-aggregate.log
+    - path: output/pixelator/aggregate_1.pixelator-aggregate.log
       contains:
         - "Finished pixelator aggregate"
+    - path: output/pixelator/aggregate/aggregate_1.merged_anndata.h5ad
