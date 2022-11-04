@@ -9,6 +9,7 @@ import argparse
 import csv
 import logging
 import sys
+import urllib.parse
 from collections import Counter
 from pathlib import Path, PurePath
 import re
@@ -18,13 +19,17 @@ from os import PathLike
 logger = logging.getLogger()
 
 
-def make_absolute_path(path: PathLike, base: PathLike = None) -> PurePath:
-    """If `path` is relative, resolve it as relative to `base`"""
+def make_absolute_path(path: str, base: PathLike = None) -> str:
+    """If `path` is a relative path without a scheme, resolve it as a local filesystem path relative to `base`"""
+    url = urllib.parse.urlparse(path)
+    if url.scheme and url.netloc:
+        return path
+
     in_path = PurePath(path)
     if not in_path.is_absolute() and base is not None:
-        return PurePath(base) / in_path
+        return str(PurePath(base) / in_path)
 
-    return in_path
+    return str(in_path)
 
 
 def validate_whitespace(row: MutableMapping[str, str], index: int):
