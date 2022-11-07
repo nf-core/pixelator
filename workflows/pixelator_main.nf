@@ -29,7 +29,6 @@ if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input sample
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK                 } from '../subworkflows/local/input_check'
-include { RUN_PIXELATOR_AGGREGATE     } from '../subworkflows/local/run_pixelator_aggregate'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -154,10 +153,6 @@ workflow PIXELATOR_MAIN {
     PIXELATOR_ANALYSIS ( ch_annotated )
     ch_analysed = PIXELATOR_ANALYSIS.out.h5ad
     ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())
-
-    RUN_PIXELATOR_AGGREGATE ( ch_analysed )
-    ch_aggregated = RUN_PIXELATOR_AGGREGATE.out.matrices
-    ch_versions = ch_versions.mix(RUN_PIXELATOR_AGGREGATE.out.versions)
 
     ch_concatenate_col = ch_concat_results.map { meta, data -> [meta.id, data] }
     ch_preqc_col       = PIXELATOR_PREQC.out.results_dir.map { meta, data -> [ meta.id, data] }

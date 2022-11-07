@@ -8,7 +8,7 @@ include { PIXELATOR_ANALYSIS } from '../../../../modules/local/pixelator/analysi
 workflow test_pixelator_analysis {
     input = [
         [ id: "${params.test_data['pixelator']['micro']['id']}"], // meta map
-        file(params.test_data['pixelator']['micro']['cluster'], checkIfExists: true),
+        file(params.test_data['pixelator']['micro']['cluster_h5ad'], checkIfExists: true),
     ]
 
     PIXELATOR_ANALYSIS( input )

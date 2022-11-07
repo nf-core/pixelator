@@ -2,12 +2,12 @@
 
 process PIXELATOR_COLLAPSE {
     tag "$meta.id"
-    label 'process_low'
+    label 'process_medium'
 
 
-    conda (params.enable_conda ? "local::pixelator=0.3.0" : null)
+    conda (params.enable_conda ? "local::pixelator=0.4.0" : null)
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.3.0'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.4.0'
 
     input:
     tuple val(meta), path(reads)

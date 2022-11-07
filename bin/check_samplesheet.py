@@ -36,7 +36,7 @@ def validate_whitespace(row: MutableMapping[str, str], index: int):
     for k, v in row.items():
         if re.search("^\s+|s+$", v):
             raise AssertionError(
-                f"The sample sheet contains leading or trailing whitespaces in for field {k}. "
+                f"The sample sheet contains leading or trailing whitespaces on row {index+1} and column {k}. "
                 "Remove whitespace or enclose with quotes!"
             )
 
@@ -175,17 +175,16 @@ class RowChecker(BaseChecker):
 
 class PixelatorRowChecker(RowChecker):
     DEFAULT_GROUP = "default"
-    REQUIRED_COLUMNS = {"sample", "design", "fastq_1", "fastq_2"}
+    REQUIRED_COLUMNS = {"sample", "design", "panel", "fastq_1", "fastq_2"}
 
     def __init__(
         self,
         sample_col="sample",
+        design_col="design",
+        panel_col="panel",
         first_col="fastq_1",
         second_col="fastq_2",
         single_col="single_end",
-        design_col="design",
-        panel_col="panel",
-        group_col="group",
         samplesheet_path=None,
         **kwargs,
     ):
@@ -197,14 +196,10 @@ class PixelatorRowChecker(RowChecker):
         self._samplesheet_path = samplesheet_path
         self._base_dir = PurePath(self._samplesheet_path).parent if self._samplesheet_path else None
         self._panel_col = panel_col
-        self._group_col = group_col
 
     @classmethod
     def output_headers(cls, headers: Iterable[str]) -> List[str]:
         headers = list(headers)
-        if not "group" in headers:
-            headers.insert(1, "group")
-
         headers.insert(1, "single_end")
         return headers
 
@@ -226,10 +221,6 @@ class PixelatorRowChecker(RowChecker):
         row[self._first_col] = first
         row[self._second_col] = second
         row[self._panel_col] = panel
-
-    def _validate_group(self, row):
-        if not self._group_col in row:
-            row[self._group_col] = self.DEFAULT_GROUP
 
     def validate_and_transform(self, row):
         """
