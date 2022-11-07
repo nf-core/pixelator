@@ -6,9 +6,9 @@ name: nf-core AWS full size tests
 # These permissions are needed to interact with GitHub's OIDC Token endpoint.
 permissions:
   id-token: write
+  contents: read
 
 on:
-  push:
   release:
     types: [published]
   workflow_dispatch:
