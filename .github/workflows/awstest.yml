@@ -8,6 +8,7 @@ permissions:
   id-token: write
 
 on:
+  push:
   release:
     types: [published]
   workflow_dispatch:
@@ -39,5 +40,5 @@ jobs:
           role-session-name: github-actions-nextflow-session
 
       - name: Launch workflow
-      - run: |
+        run: |
           nextflow run ${GITHUB_WORKSPACE} -profile aws_test,docker --runName ${{ github.sha }}
