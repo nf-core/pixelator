@@ -16,7 +16,7 @@ jobs:
   run-aws-full:
     name: Run AWS tests
     # Only run on main repo, not on forks
-    if: github.repository == 'PixelgenTechnologies/nf-core-pixelator'
+    if: ${{ github.repository == 'PixelgenTechnologies/nf-core-pixelator' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
