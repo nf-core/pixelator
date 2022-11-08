@@ -32,6 +32,7 @@ process PIXELATOR_DEMUX {
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-demux.log \\
+        --verbose \\
         demux \\
         --output . \\
         --panel-file ${antibody_panel} \\

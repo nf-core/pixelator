@@ -28,6 +28,7 @@ process PIXELATOR_ANALYSIS {
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-analysis.log \\
+        --verbose \\
         analysis \\
         --output . \\
         $args \\

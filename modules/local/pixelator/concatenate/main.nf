@@ -34,6 +34,7 @@ process PIXELATOR_CONCATENATE {
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-concatenate.log \\
+        --verbose \\
         concatenate \\
         --output . \\
         $args \\

@@ -30,6 +30,7 @@ process PIXELATOR_CLUSTER {
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-cluster.log \\
+        --verbose \\
         cluster \\
         --output . \\
         $args \\

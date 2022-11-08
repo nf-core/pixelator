@@ -34,6 +34,7 @@ process PIXELATOR_COLLAPSE {
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-collapse.log \\
+        --verbose \\
         collapse \\
         --samples "${meta.id}" \\
         --output . \\

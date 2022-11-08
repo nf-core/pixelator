@@ -36,6 +36,7 @@ process PIXELATOR_ADAPTERQC {
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-adapterqc.log \\
+        --verbose \\
         adapterqc \\
         --output . \\
         --design ${meta.design} \\

@@ -28,6 +28,7 @@ process PIXELATOR_ANNOTATE {
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-annotate.log \\
+        --verbose \\
         annotate \\
         --output . \\
         $args \\
