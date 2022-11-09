@@ -378,6 +378,12 @@
             "description": "Less common options for the pipeline (specific to nf-core-pixelator), typically set in a config file.",
             "help_text": "These options allow you to customize some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
             "properties": {
+                "pixelator_container_source": {
+                    "type": "string",
+                    "description": "The source repository for the pixelator docker container.",
+                    "enum": ["aws-ecr", "ghcr"],
+                    "hidden": true
+                },
                 "pixelator_tag": {
                     "type": "string",
                     "description": "Override which container tag of pixelator to use. Use carefully!",
