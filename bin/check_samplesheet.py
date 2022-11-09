@@ -258,7 +258,7 @@ class PixelatorAggregateRowChecker(BaseChecker):
 
     """
 
-    REQUIRED_COLUMNS = ["sample", "group", "matrix"]
+    REQUIRED_COLUMNS = ["sample", "matrix"]
 
     VALID_FORMATS = (
         ".h5ad",
@@ -324,8 +324,8 @@ class PixelatorAggregateRowChecker(BaseChecker):
 
     def _validate_group(self, row):
         """Assert that the group entry is non-empty."""
-        if len(row[self._group_col]) <= 0:
-            raise AssertionError("The group field is required")
+        if not self._group_col in row:
+            row[self._group_col] = 0
 
     def _validate_matrix(self, row):
         """Assert that the matrix entry has the right format if it exists."""
