@@ -12,9 +12,11 @@ process PIXELATOR_CLUSTER {
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("cluster"),                           emit: results_dir
     tuple val(meta), path("cluster/*raw_anndata.h5ad"),         emit: h5ad
-    tuple val(meta), path("*pixelator-cluster.log"),     emit: log
+    tuple val(meta), path("cluster/*.csv"),                     emit: csv
+    tuple val(meta), path("cluster/*.png"),                     emit: png
+    tuple val(meta), path("cluster/*.report.json"),             emit: report_json
+    tuple val(meta), path("*pixelator-cluster.log"),            emit: log
 
     path "versions.yml"           , emit: versions
 

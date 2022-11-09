@@ -14,7 +14,6 @@ process PIXELATOR_CONCATENATE {
 
     output:
     tuple val(meta), path("concatenate/*.merged.fastq.gz"),       emit: merged
-    tuple val(meta), path("concatenate"),                         emit: results_dir
     tuple val(meta), path("*pixelator-concatenate.log"),          emit: log
 
     path "versions.yml"           , emit: versions
