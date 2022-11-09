@@ -30,7 +30,7 @@ workflow RUN_PIXELATOR_AGGREGATE {
                 return [ meta, values.flatten() ]
             multiple: values.size() > 1
                 return [ meta, values.flatten() ]
-        }
+    }
 
     ch_matrices_grouped.single.dump(tag: "ch_matrices_grouped_single")
     ch_matrices_grouped.multiple.dump(tag: "ch_matrices_grouped_multiple")
