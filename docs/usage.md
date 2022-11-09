@@ -47,7 +47,7 @@ S2,D12,D12_v1,S2_R1.fastq.gz
 | `fastq_1` | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
 | `fastq_2` | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
 
-An [example samplesheet](../assets/samplesheet.tsv) has been provided with the pipeline.
+An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
 > **_NOTE:_** When using relative paths in the samplesheet these will be resolved against the parent directory of the samplesheet.
 > This makes a directory of files together with a samplesheet with relative paths relocatable
