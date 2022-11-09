@@ -33,10 +33,11 @@ def make_absolute_path(path: str, base: PathLike = None) -> str:
 
 
 def validate_whitespace(row: MutableMapping[str, str], index: int):
+    sample_name = row["sample"]
     for k, v in row.items():
         if re.search("^\s+|s+$", v):
             raise AssertionError(
-                f"The sample sheet contains leading or trailing whitespaces on row {index+1} and column {k}. "
+                f'The sample sheet contains leading or trailing whitespaces in column "{k}" for sample "{sample_name}". '
                 "Remove whitespace or enclose with quotes!"
             )
 
@@ -46,7 +47,7 @@ class BaseChecker(metaclass=abc.ABCMeta):
 
     @classmethod
     def check_headers(cls, headers) -> bool:
-        return cls.REQUIRED_COLUMNS.issubset(headers)
+        return set(cls.REQUIRED_COLUMNS).issubset(headers)
 
     @abc.abstractmethod
     def validate_and_transform(self, row):
@@ -175,7 +176,8 @@ class RowChecker(BaseChecker):
 
 class PixelatorRowChecker(RowChecker):
     DEFAULT_GROUP = "default"
-    REQUIRED_COLUMNS = {"sample", "design", "panel", "fastq_1", "fastq_2"}
+    VALID_DESIGNS = {"D12", "D12PE", "D19", "D21PE"}
+    REQUIRED_COLUMNS = ["sample", "design", "panel", "fastq_1", "fastq_2"]
 
     def __init__(
         self,
@@ -205,8 +207,13 @@ class PixelatorRowChecker(RowChecker):
 
     def _validate_design(self, row):
         """Assert that the design column exists and has supported values."""
-        if len(row[self._design_col]) <= 0:
+        val = row[self._design_col]
+        if len(val) <= 0:
             raise AssertionError(f"The {self._design_col} field is required.")
+
+        if val not in self.VALID_DESIGNS:
+            supported_designs = ",".join(self.VALID_DESIGNS)
+            raise AssertionError(f'Unsupported design: "{val}", expected one of: {supported_designs}')
 
     def _validate_panelfile(self, row):
         """Assert that the panel column exists and has supported values."""
@@ -232,6 +239,7 @@ class PixelatorRowChecker(RowChecker):
 
         """
         self._validate_sample(row)
+        self._validate_design(row)
         self._validate_first(row)
         self._validate_second(row)
         self._validate_pair(row)
@@ -250,7 +258,7 @@ class PixelatorAggregateRowChecker(BaseChecker):
 
     """
 
-    REQUIRED_COLUMNS = {"sample", "group", "matrix"}
+    REQUIRED_COLUMNS = ["sample", "group", "matrix"]
 
     VALID_FORMATS = (
         ".h5ad",
@@ -346,7 +354,7 @@ class PixelatorAggregateRowChecker(BaseChecker):
             raise AssertionError("The sample name must be unique.")
 
 
-def read_head(handle, num_lines=10):
+def read_head(handle, num_lines=5):
     """Read the specified number of lines from the current position in the file."""
     lines = []
     for idx, line in enumerate(handle):
