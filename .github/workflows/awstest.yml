@@ -22,23 +22,10 @@ jobs:
       - name: Check out pipeline code
         uses: actions/checkout@v2
 
-      - name: Check out testdata repository
-        uses: actions/checkout@v3
-        with:
-          repository: "PixelgenTechnologies/nf-core-pixelator-datasets"
-          path: "nf-core-pixelator-datasets"
-
       - name: Install Nextflow
         uses: nf-core/setup-nextflow@v1
         with:
           version: "${{ matrix.NXF_VER }}"
-
-      - name: Debug secrets
-        run: |
-          echo "secrets.NF_AWS_ACCESS_KEY_ID"
-          echo "${{ secrets.NF_AWS_ACCESS_KEY_ID }}"
-          echo "secrets.NF_AWS_SECRET_ACCESS_KEY"
-          echo "${{ secrets.NF_AWS_SECRET_ACCESS_KEY }}"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -51,4 +38,4 @@ jobs:
         run: |
           nextflow run ${GITHUB_WORKSPACE} -profile aws_test,docker \
             --runName ${{ github.sha }} \
-            --testdata_root ./nf-core-pixelator-datasets
+            --testdata_root s3://pixelgen-nf-input/nf-core-pixelator-datasets
