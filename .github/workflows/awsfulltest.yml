@@ -15,7 +15,8 @@ on:
 jobs:
   run-aws-full:
     name: Run AWS full tests
-    # Only run on main repo, not on forks
+    # Temporarily disable this until AWS batch is fully up and running
+    # replace with:     if: ${{ github.repository == 'PixelgenTechnologies/nf-core-pixelator' }}
     if: ${{ false }}
     runs-on: ubuntu-latest
     strategy:
