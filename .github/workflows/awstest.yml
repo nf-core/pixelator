@@ -27,13 +27,6 @@ jobs:
         with:
           version: "${{ matrix.NXF_VER }}"
 
-      - name: Debug secrets
-        run: |
-          echo "secrets.NF_AWS_ACCESS_KEY_ID"
-          echo "${{ secrets.NF_AWS_ACCESS_KEY_ID }}"
-          echo "secrets.NF_AWS_SECRET_ACCESS_KEY"
-          echo "${{ secrets.NF_AWS_SECRET_ACCESS_KEY }}"
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
