@@ -13,7 +13,7 @@ process RENAME_READS {
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("${meta.id}_*"), emit: reads
+    tuple val(meta), path("${meta.id}*"),  emit: reads
     path "versions.yml",                   emit: versions
     when:
     task.ext.when == null || task.ext.when
@@ -31,7 +31,7 @@ process RENAME_READS {
         """
     } else {
         """
-        mv ${reads} ${meta.id}_R1.fastq.gz
+        mv ${reads} ${meta.id}.fastq.gz
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}": {}

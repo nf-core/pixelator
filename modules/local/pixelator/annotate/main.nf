@@ -11,7 +11,9 @@ process PIXELATOR_ANNOTATE {
 
     output:
     tuple val(meta), path("annotate/*filtered_anndata.h5ad"),    emit: h5ad
-    tuple val(meta), path("annotate"),                           emit: results_dir
+    tuple val(meta), path("annotate/*.report.json"),             emit: report_json
+    tuple val(meta), path("annotate/*.csv"),                     emit: csv
+    tuple val(meta), path("annotate/*.png"),                     emit: png
     tuple val(meta), path("*pixelator-annotate.log"),            emit: log
 
     path "versions.yml"           , emit: versions

@@ -109,7 +109,7 @@ workflow PIXELATOR_MAIN {
     // Return concatenate ouput but with [] placeholder for single_end reads
     ch_concat_results = ch_renamed_branched.single_end
         .map { meta, _ -> [meta, []] }
-        .mix(PIXELATOR_CONCATENATE.out.results_dir)
+        .mix(PIXELATOR_CONCATENATE.out.merged)
     ch_concat_results.dump(tag: "ch_concat_results")
 
     ch_input_reads = ch_renamed_branched.single_end.mix(ch_merged)
@@ -158,17 +158,23 @@ workflow PIXELATOR_MAIN {
     // Collect outputs from all stages and samples into a set of single value channels
     // to pass to the report generation step.
     //
-    ch_concatenate_col = ch_concat_results.map { meta, data -> [meta.id, data] }
-    ch_preqc_col       = PIXELATOR_PREQC.out.results_dir.map { meta, data -> [ meta.id, data] }
-    ch_adapterqc_col   = PIXELATOR_ADAPTERQC.out.results_dir.map { meta, data -> [ meta.id, data] }
-    ch_demux_col       = PIXELATOR_DEMUX.out.results_dir.map { meta, data -> [ meta.id, data] }
-    ch_collapse_col    = PIXELATOR_COLLAPSE.out.results_dir.map { meta, data -> [ meta.id, data] }
-    ch_cluster_col     = PIXELATOR_CLUSTER.out.results_dir.map { meta, data -> [ meta.id, data] }
-    ch_annotate_col    = PIXELATOR_ANNOTATE.out.results_dir.map { meta, data -> [ meta.id, data] }
-    ch_analysis_col    = PIXELATOR_ANALYSIS.out.results_dir.map { meta, data -> [ meta.id, data] }
+    ch_preqc_col           = PIXELATOR_PREQC.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_adapterqc_col       = PIXELATOR_ADAPTERQC.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_demux_col           = PIXELATOR_DEMUX.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_collapse_col        = PIXELATOR_COLLAPSE.out.report_json.map { meta, data -> [ meta.id, data] }
 
-    ch_report_data     = ch_concatenate_col
-        .concat ( ch_preqc_col )
+    ch_cluster_json_report = PIXELATOR_CLUSTER.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_cluster_csv_data    = PIXELATOR_CLUSTER.out.csv.map { meta, data -> [ meta.id, data] }
+    ch_cluster_col         = ch_cluster_json_report.concat(ch_cluster_csv_data).groupTuple()
+
+    ch_annotate_json_report = PIXELATOR_ANNOTATE.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_annotate_csv_data    = PIXELATOR_ANNOTATE.out.csv.map { meta, data -> [ meta.id, data] }
+    ch_annotate_col         = ch_annotate_json_report.concat(ch_annotate_csv_data).groupTuple()
+
+    ch_analysis_col         = PIXELATOR_ANALYSIS.out.report_json.map { meta, data -> [ meta.id, data] }
+
+
+    ch_report_data     = ch_preqc_col
         .concat ( ch_adapterqc_col )
         .concat ( ch_demux_col )
         .concat ( ch_collapse_col )
@@ -179,20 +185,18 @@ workflow PIXELATOR_MAIN {
 
     ch_report_data.dump(tag: "ch_report_data")
 
-    ch_concatenate_grouped  = ch_report_data.map { id, data -> data[0] }.collect()
-    ch_preqc_grouped        = ch_report_data.map { id, data -> data[1] }.collect()
-    ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[2] }.collect()
-    ch_demux_grouped        = ch_report_data.map { id, data -> data[3] }.collect()
-    ch_collapse_grouped     = ch_report_data.map { id, data -> data[4] }.collect()
-    ch_cluster_grouped      = ch_report_data.map { id, data -> data[5] }.collect()
-    ch_annotate_grouped     = ch_report_data.map { id, data -> data[6] }.collect()
-    ch_analysis_grouped     = ch_report_data.map { id, data -> data[7] }.collect()
+    ch_preqc_grouped        = ch_report_data.map { id, data -> data[0] }.collect()
+    ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[1] }.collect()
+    ch_demux_grouped        = ch_report_data.map { id, data -> data[2] }.collect()
+    ch_collapse_grouped     = ch_report_data.map { id, data -> data[3] }.collect()
+    ch_cluster_grouped      = ch_report_data.map { id, data -> data[4].flatten() }.collect()
+    ch_annotate_grouped     = ch_report_data.map { id, data -> data[5].flatten() }.collect()
+    ch_analysis_grouped     = ch_report_data.map { id, data -> data[6] }.collect()
 
     ch_report_meta = ch_report_data
         .map { it -> it[0] }.collect()
         .map { [ id: params.report_name , samples: it] }
 
-    ch_concatenate_grouped.dump(tag: "ch_concatenate_grouped")
     ch_preqc_grouped.dump(tag: "ch_preqc_grouped")
     ch_adapterqc_grouped.dump(tag: "ch_adapterqc_grouped")
     ch_demux_grouped.dump(tag: "ch_demux_grouped")
@@ -204,7 +208,6 @@ workflow PIXELATOR_MAIN {
 
     PIXELATOR_REPORT (
         ch_report_meta,
-        ch_concatenate_grouped,
         ch_preqc_grouped,
         ch_adapterqc_grouped,
         ch_demux_grouped,

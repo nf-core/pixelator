@@ -10,9 +10,11 @@ process PIXELATOR_ANALYSIS {
     tuple val(meta), path(h5ad)
 
     output:
-    tuple val(meta), path("analysis/*anndata.h5ad"),     emit: h5ad
-    tuple val(meta), path("analysis"),                   emit: results_dir
-    tuple val(meta), path("*pixelator-analysis.log"),    emit: log
+    tuple val(meta), path("analysis/*anndata.h5ad"),   emit: h5ad
+    tuple val(meta), path("analysis/*report.json"),    emit: report_json
+    tuple val(meta), path("analysis/*.csv"),           emit: csv
+    tuple val(meta), path("analysis/*.png"),           emit: png
+    tuple val(meta), path("*pixelator-analysis.log"),  emit: log
 
     path "versions.yml"           , emit: versions
 
