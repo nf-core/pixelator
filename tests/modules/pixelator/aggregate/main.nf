@@ -7,7 +7,7 @@ include { PIXELATOR_AGGREGATE } from '../../../../modules/local/pixelator/aggreg
 
 workflow test_pixelator_aggregate {
     input = [
-        [ id: "aggregate_1", sample_ids: [ "${params.test_data['pixelator']['micro']['id']}", "${params.test_data['pixelator']['micro']['id']}2"]],
+        [ id: "aggregate_1", sample_ids: [ "${params.test_data['pixelator']['micro']['id']}1", "${params.test_data['pixelator']['micro']['id']}2"]],
         [
             file(params.test_data['pixelator']['micro']['annotate_h5ad'], checkIfExists: true),
             file(params.test_data['pixelator']['micro']['annotate2_h5ad'], checkIfExists: true)
