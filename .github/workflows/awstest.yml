@@ -1,4 +1,4 @@
-name: nf-core AWS full size tests
+name: AWS micro tests
 # This workflow is triggered on published releases.
 # It can be additionally triggered manually with GitHub actions workflow dispatch button.
 # It runs the -profile 'test_full' on AWS batch
@@ -22,10 +22,23 @@ jobs:
       - name: Check out pipeline code
         uses: actions/checkout@v2
 
+      - name: Check out testdata repository
+        uses: actions/checkout@v3
+        with:
+          repository: "PixelgenTechnologies/nf-core-pixelator-datasets"
+          path: "nf-core-pixelator-datasets"
+
       - name: Install Nextflow
         uses: nf-core/setup-nextflow@v1
         with:
           version: "${{ matrix.NXF_VER }}"
+
+      - name: Debug secrets
+        run: |
+          echo "secrets.NF_AWS_ACCESS_KEY_ID"
+          echo "${{ secrets.NF_AWS_ACCESS_KEY_ID }}"
+          echo "secrets.NF_AWS_SECRET_ACCESS_KEY"
+          echo "${{ secrets.NF_AWS_SECRET_ACCESS_KEY }}"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -36,4 +49,6 @@ jobs:
 
       - name: Launch workflow
         run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile aws_test,docker --runName ${{ github.sha }}
+          nextflow run ${GITHUB_WORKSPACE} -profile aws_test,docker \
+            --runName ${{ github.sha }} \
+            --testdata_root ./nf-core-pixelator-datasets
