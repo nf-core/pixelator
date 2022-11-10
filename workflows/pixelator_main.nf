@@ -109,7 +109,7 @@ workflow PIXELATOR_MAIN {
     // Return concatenate ouput but with [] placeholder for single_end reads
     ch_concat_results = ch_renamed_branched.single_end
         .map { meta, _ -> [meta, []] }
-        .mix(PIXELATOR_CONCATENATE.out.results_dir)
+        .mix(PIXELATOR_CONCATENATE.out.merged)
     ch_concat_results.dump(tag: "ch_concat_results")
 
     ch_input_reads = ch_renamed_branched.single_end.mix(ch_merged)
