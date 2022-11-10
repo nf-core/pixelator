@@ -26,6 +26,14 @@ pixelator-analysis:
   - modules/pixelator/analysis/**
   - tests/modules/pixelator/analysis/**
 
+pixelator-annotate:
+  - modules/pixelator/annotate/**
+  - tests/modules/pixelator/annotate/**
+
+pixelator-aggregate:
+  - modules/pixelator/aggregate/**
+  - tests/modules/pixelator/aggregate/**
+
 pixelator-report:
   - modules/pixelator/report/**
   - tests/modules/pixelator/report/**

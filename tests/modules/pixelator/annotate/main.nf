@@ -2,14 +2,14 @@
 
 nextflow.enable.dsl = 2
 
-include { PIXELATOR_ANALYSIS } from '../../../../modules/local/pixelator/analysis/main.nf'
+include { PIXELATOR_ANNOTATE } from '../../../../modules/local/pixelator/annotate/main.nf'
 
 
-workflow test_pixelator_analysis {
+workflow test_pixelator_annotate{
     input = [
         [ id: "${params.test_data['pixelator']['micro']['id']}"], // meta map
         file(params.test_data['pixelator']['micro']['cluster_h5ad'], checkIfExists: true),
     ]
 
-    PIXELATOR_ANALYSIS( input )
+    PIXELATOR_ANNOTATE ( input )
 }

@@ -2,8 +2,8 @@
 
 ## On this page
 
-- 1. [Input/output options](#input-output-options)
-- 2. [QC/Filtering/Trimming options](#qc-filtering-trimming-options)
+- 1. [Input/output options](#inputoutput-options)
+- 2. [QC/Filtering/Trimming options](#qcfilteringtrimming-options)
 - 3. [Adapter QC Options](#adapter-qc-options)
 - 4. [Demux options](#demux-options)
 - 5. [Collapse options](#collapse-options)
@@ -17,7 +17,7 @@
 
 ## Parameters
 
-<a name="input-output-options"/>
+<a name="inputoutput-options"/>
 ## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/terminal.svg" width=32 height=32 />    Input/output options
 
 Define where the pipeline should find input data and save output data.### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-csv.svg" width=16 height=16 /> `--input`
@@ -26,6 +26,16 @@ Define where the pipeline should find input data and save output data.### <img s
 
 Path to comma-separated file containing information about the samples in the experiment.
 You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/pixelator/usage#samplesheet-input).
+
+---
+
+### `--mode`
+
+**Type:** string
+**Options:** [main|aggregate]
+**Default:** main
+
+Mode to run the pipeline in [default: main]
 
 ---
 
@@ -45,7 +55,7 @@ The output directory where the results will be saved. You have to use absolute p
 Email address for completion summary.
 Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then you don't need to specify this on the command line for every run.
 
-<a name="qc-filtering-trimming-options"/>
+<a name="qcfilteringtrimming-options"/>
 ## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/terminal.svg" width=32 height=32 />    QC/Filtering/Trimming options
 
 ### `--trim_front`
@@ -154,9 +164,25 @@ The number of mismatches allowed (in percentage) [default: 0.1; 0.0<=x<=0.9]
 
 ### `--demux_min_length`
 
-**Type:** integer
+**Type:** ['integer', 'null']
 
 The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design
+
+---
+
+### `--demux_anchored`
+
+**Type:** boolean
+
+Enforce the barcodes to be anchored (at the end of the read)
+
+---
+
+### `--demux_rev_complement`
+
+**Type:** boolean
+
+Use the reverse complement of the barcodes sequences
 
 <a name="collapse-options"/>
 

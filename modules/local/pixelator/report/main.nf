@@ -4,9 +4,9 @@ process PIXELATOR_REPORT {
     tag "$meta.id"
     label 'process_low'
 
-    conda (params.enable_conda ? "local::pixelator=0.2.3" : null)
+    conda (params.enable_conda ? "local::pixelator=0.4.0" : null)
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.4.0'
 
     input:
     val meta
@@ -15,8 +15,9 @@ process PIXELATOR_REPORT {
     path "staged-adapterqc??"
     path "staged-demux??"
     path "staged-collapse??"
-    path "cluster/*"
-    path "analysis/*"
+    path "staged-cluster??"
+    path "staged-annotate??"
+    path "staged-analysis??"
 
     output:
     path("reports/report/report.html"),                     emit: report
@@ -52,9 +53,14 @@ process PIXELATOR_REPORT {
     mkdir results/collapse
     cp -r staged-collapse*/* results/collapse/
 
-    cp -r cluster results/cluster
+    mkdir results/cluster
+    cp -r staged-cluster*/* results/cluster/
 
-    cp -r analysis results/analysis
+    mkdir results/annotate
+    cp -r staged-annotate*/* results/annotate/
+
+    mkdir results/analysis
+    cp -r staged-analysis*/* results/analysis/
 
     pixelator \\
         report \\

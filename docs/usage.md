@@ -21,9 +21,9 @@ You will need to create a samplesheet with information about the samples you wou
 The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 2 lanes:
 
 ```console
-sample	design	barcodes	panel	fastq_1	fastq_2
-test_data_1	D12	D12_v1	/path/to/panel.csv	/path/to/test_data1_R1.fastq.gz	/path/to/test_data1_R2.fastq.gz
-test_data_2	D12	D12_v1	/path/to/panel.csv	/path/to/test_data2_R1.fastq.gz	/path/to/test_data2_R2.fastq.gz
+sample	design	panel	fastq_1	fastq_2
+test_data_1	D12	path/to/panel.csv	/path/to/test_data1_R1.fastq.gz	/path/to/test_data1_R2.fastq.gz
+test_data_2	D12	path/to/panel.csv	/path/to/test_data2_R1.fastq.gz	/path/to/test_data2_R2.fastq.gz
 ```
 -->
 
@@ -39,16 +39,15 @@ S1,D12PE,D12_v1,S1_R1.fastq.gz,S1_R2.fastq.gz
 S2,D12,D12_v1,S2_R1.fastq.gz
 ```
 
-| Column     | Description                                                                                                                                                                            |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`   | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `design`   | The name of the pixelator design configuration.                                                                                                                                        |
-| `barcodes` | Path to a fasta file with barcode sequences.                                                                                                                                           |
-| `panel`    | Path to a csv file with antibody panel information.                                                                                                                                    |
-| `fastq_1`  | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
-| `fastq_2`  | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
+| Column    | Description                                                                                                                                                                            |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`  | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
+| `design`  | The name of the pixelator design configuration.                                                                                                                                        |
+| `panel`   | Path to a csv file with antibody panel information.                                                                                                                                    |
+| `fastq_1` | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
+| `fastq_2` | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
 
-An [example samplesheet](../assets/samplesheet.tsv) has been provided with the pipeline.
+An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
 > **_NOTE:_** When using relative paths in the samplesheet these will be resolved against the parent directory of the samplesheet.
 > This makes a directory of files together with a samplesheet with relative paths relocatable

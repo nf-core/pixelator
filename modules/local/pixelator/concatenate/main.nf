@@ -2,12 +2,12 @@
 
 process PIXELATOR_CONCATENATE {
     tag "$meta.id"
-    label 'process_low'
+    label 'process_medium'
 
 
-    conda (params.enable_conda ? "local::pixelator=0.2.3" : null)
+    conda (params.enable_conda ? "local::pixelator=0.4.0" : null)
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.4.0'
 
     input:
     tuple val(meta), path(reads)
@@ -34,6 +34,7 @@ process PIXELATOR_CONCATENATE {
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-concatenate.log \\
+        --verbose \\
         concatenate \\
         --output . \\
         $args \\

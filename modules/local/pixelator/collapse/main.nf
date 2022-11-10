@@ -2,15 +2,15 @@
 
 process PIXELATOR_COLLAPSE {
     tag "$meta.id"
-    label 'process_low'
+    label 'process_medium'
 
 
-    conda (params.enable_conda ? "local::pixelator=0.2.3" : null)
+    conda (params.enable_conda ? "local::pixelator=0.4.0" : null)
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.4.0'
 
     input:
-    tuple val(meta), path(reads), path(antibody_panel)
+    tuple val(meta), path(reads)
 
     output:
     tuple val(meta), path("collapse/*.collapsed.csv"),        emit: collapsed
@@ -34,11 +34,11 @@ process PIXELATOR_COLLAPSE {
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-collapse.log \\
+        --verbose \\
         collapse \\
         --samples "${meta.id}" \\
         --output . \\
         --design ${meta.design} \\
-        --panel-file ${antibody_panel} \\
         $args \\
         ${readsArg}
 

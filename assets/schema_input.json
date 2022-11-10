@@ -17,10 +17,10 @@
                 "pattern": "^\\S+$",
                 "errorMessage": "Design profile must be provided."
             },
-            "barcodes": {
+            "panel": {
                 "type": "string",
-                "pattern": "^\\S+$",
-                "errorMessage": "Barcode sequences profile must be provided."
+                "pattern": "^\\S+.csv$",
+                "errorMessage": "Panel file must be provided, cannot contain spaces and must have extension '.csv'"
             },
             "fastq_1": {
                 "type": "string",
@@ -41,6 +41,6 @@
                 ]
             }
         },
-        "required": ["sample", "design", "barcodes", "fastq_1"]
+        "required": ["sample", "design", "panel", "fastq_1"]
     }
 }

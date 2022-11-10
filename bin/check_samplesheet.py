@@ -4,17 +4,61 @@
 """Provide a command line tool to validate and transform tabular samplesheets."""
 
 
+import abc
 import argparse
 import csv
 import logging
 import sys
+import urllib.parse
 from collections import Counter
 from pathlib import Path, PurePath
+import re
+from typing import Iterable, List, MutableMapping, Set
+from os import PathLike
 
 logger = logging.getLogger()
 
 
-class RowChecker:
+def make_absolute_path(path: str, base: PathLike = None) -> str:
+    """If `path` is a relative path without a scheme, resolve it as a local filesystem path relative to `base`"""
+    url = urllib.parse.urlparse(path)
+    if url.scheme and url.netloc:
+        return path
+
+    in_path = PurePath(path)
+    if not in_path.is_absolute() and base is not None:
+        return str(PurePath(base) / in_path)
+
+    return str(in_path)
+
+
+def validate_whitespace(row: MutableMapping[str, str], index: int):
+    sample_name = row["sample"]
+    for k, v in row.items():
+        if re.search("^\s+|s+$", v):
+            raise AssertionError(
+                f'The sample sheet contains leading or trailing whitespaces in column "{k}" for sample "{sample_name}". '
+                "Remove whitespace or enclose with quotes!"
+            )
+
+
+class BaseChecker(metaclass=abc.ABCMeta):
+    REQUIRED_COLUMNS: Set[str] = {}
+
+    @classmethod
+    def check_headers(cls, headers) -> bool:
+        return set(cls.REQUIRED_COLUMNS).issubset(headers)
+
+    @abc.abstractmethod
+    def validate_and_transform(self, row):
+        return NotImplemented
+
+    @classmethod
+    def output_headers(cls, headers: Iterable[str]) -> List[str]:
+        return list(headers)
+
+
+class RowChecker(BaseChecker):
     """
     Define a service that can validate and transform each given row.
 
@@ -131,17 +175,18 @@ class RowChecker:
 
 
 class PixelatorRowChecker(RowChecker):
+    DEFAULT_GROUP = "default"
     VALID_DESIGNS = {"D12", "D12PE", "D19", "D21PE"}
+    REQUIRED_COLUMNS = ["sample", "design", "panel", "fastq_1", "fastq_2"]
 
     def __init__(
         self,
         sample_col="sample",
+        design_col="design",
+        panel_col="panel",
         first_col="fastq_1",
         second_col="fastq_2",
         single_col="single_end",
-        design_col="design",
-        barcodes_col="barcodes",
-        panel_col="panel",
         samplesheet_path=None,
         **kwargs,
     ):
@@ -150,54 +195,38 @@ class PixelatorRowChecker(RowChecker):
         )
 
         self._design_col = design_col
-        self._barcodes_col = barcodes_col
         self._samplesheet_path = samplesheet_path
+        self._base_dir = PurePath(self._samplesheet_path).parent if self._samplesheet_path else None
         self._panel_col = panel_col
+
+    @classmethod
+    def output_headers(cls, headers: Iterable[str]) -> List[str]:
+        headers = list(headers)
+        headers.insert(1, "single_end")
+        return headers
 
     def _validate_design(self, row):
         """Assert that the design column exists and has supported values."""
-        if len(row[self._design_col]) <= 0:
-            raise AssertionError("At least the first FASTQ file is required.")
+        val = row[self._design_col]
+        if len(val) <= 0:
+            raise AssertionError(f"The {self._design_col} field is required.")
 
-        design = row[self._design_col]
-        if design not in self.VALID_DESIGNS:
-            raise AssertionError(f"Unsupported value for {self._design_col} field.")
-
-    def _validate_barcodes(self, row):
-        """Assert that the design column exists and has supported values."""
-        if len(row[self._barcodes_col]) <= 0:
-            raise AssertionError("The barcodes field is required.")
+        if val not in self.VALID_DESIGNS:
+            supported_designs = ",".join(self.VALID_DESIGNS)
+            raise AssertionError(f'Unsupported design: "{val}", expected one of: {supported_designs}')
 
     def _validate_panelfile(self, row):
         """Assert that the panel column exists and has supported values."""
-        if len(row[self._barcodes_col]) <= 0:
-            raise AssertionError("The panel field is required.")
+        if len(row[self._panel_col]) <= 0:
+            raise AssertionError(f"The {self._panel_col} field is required.")
 
     def _resolve_relative_paths(self, row):
-        first = row[self._first_col]
-        second = row[self._second_col]
-        barcodes = row[self._barcodes_col]
-        panel = row[self._panel_col]
-
-        first_path = PurePath(first)
-        if not first_path.is_absolute() and self._samplesheet_path is not None:
-            first = str(PurePath(self._samplesheet_path).parent / first_path)
-
-        second_path = PurePath(second)
-        if not second_path.is_absolute() and self._samplesheet_path is not None:
-            second = str(PurePath(self._samplesheet_path).parent / second_path)
-
-        barcodes_path = PurePath(barcodes)
-        if not barcodes_path.is_absolute() and self._samplesheet_path is not None:
-            barcodes = str(PurePath(self._samplesheet_path).parent / barcodes_path)
-
-        panel_path = PurePath(panel)
-        if not panel_path.is_absolute() and self._samplesheet_path is not None:
-            panel = str(PurePath(self._samplesheet_path).parent / panel_path)
+        first = make_absolute_path(row[self._first_col], self._base_dir)
+        second = make_absolute_path(row[self._second_col], self._base_dir)
+        panel = make_absolute_path(row[self._panel_col], self._base_dir)
 
         row[self._first_col] = first
         row[self._second_col] = second
-        row[self._barcodes_col] = barcodes
         row[self._panel_col] = panel
 
     def validate_and_transform(self, row):
@@ -210,6 +239,7 @@ class PixelatorRowChecker(RowChecker):
 
         """
         self._validate_sample(row)
+        self._validate_design(row)
         self._validate_first(row)
         self._validate_second(row)
         self._validate_pair(row)
@@ -218,7 +248,113 @@ class PixelatorRowChecker(RowChecker):
         self.modified.append(row)
 
 
-def read_head(handle, num_lines=10):
+class PixelatorAggregateRowChecker(BaseChecker):
+    """
+    Define a service that can validate and transform each given row.
+
+    Attributes:
+        modified (list): A list of dicts, where each dict corresponds to a previously
+            validated and transformed row. The order of rows is maintained.
+
+    """
+
+    REQUIRED_COLUMNS = ["sample", "group", "matrix"]
+
+    VALID_FORMATS = (
+        ".h5ad",
+        ".h5ad.gz",
+    )
+
+    def __init__(
+        self,
+        sample_col="sample",
+        group_col="group",
+        matrix_col="matrix",
+        samplesheet_path=None,
+        **kwargs,
+    ):
+        """
+        Initialize the row checker with the expected column names.
+
+        Args:
+            sample_col (str): The name of the column that contains the sample name
+                (default "sample").
+            group_col (str): The name of the column that contains the group
+                assignment
+            second_col (str): The name of the column that contains the matrix file
+                in .h5ad or .h5ad.gz format
+        """
+        self._sample_col = sample_col
+        self._group_col = group_col
+        self._matrix_col = matrix_col
+        self._samplesheet_path = samplesheet_path
+        self._base_dir = PurePath(self._samplesheet_path).parent
+        self._seen = set()
+        self.modified = []
+
+    @classmethod
+    def output_headers(cls, headers: Iterable[str]) -> List[str]:
+        headers = list(headers)
+        if not "group" in headers:
+            headers.insert(1, "group")
+
+        return headers
+
+    def validate_and_transform(self, row):
+        """
+        Perform all validations on the given row and insert the read pairing status.
+
+        Args:
+            row (dict): A mapping from column headers (keys) to elements of that row
+                (values).
+
+        """
+        self._validate_sample(row)
+        self._validate_group(row)
+        self._validate_matrix(row)
+        self._seen.add(row[self._sample_col])
+        self.modified.append(row)
+
+    def _validate_sample(self, row):
+        """Assert that the sample name exists and convert spaces to underscores."""
+        if len(row[self._sample_col]) <= 0:
+            raise AssertionError("Sample input is required.")
+        # Sanitize samples slightly.
+        row[self._sample_col] = row[self._sample_col].replace(" ", "_")
+
+    def _validate_group(self, row):
+        """Assert that the group entry is non-empty."""
+        if len(row[self._group_col]) <= 0:
+            raise AssertionError("The group field is required")
+
+    def _validate_matrix(self, row):
+        """Assert that the matrix entry has the right format if it exists."""
+        if len(row[self._matrix_col]) <= 0:
+            raise AssertionError("The matrix field is required")
+
+        self._validate_h5ad_format(row[self._matrix_col])
+        matrix_path = make_absolute_path(row[self._matrix_col], self._base_dir)
+
+        row[self._matrix_col] = matrix_path
+
+    def _validate_h5ad_format(self, filename):
+        """Assert that a given filename has one of the expected H5AD extensions."""
+
+        if not any(filename.endswith(extension) for extension in self.VALID_FORMATS):
+            raise AssertionError(
+                f"The matrix file has an unrecognized extension: {filename}\n"
+                f"It should be one of: {', '.join(self.VALID_FORMATS)}"
+            )
+
+    def validate_unique_samples(self):
+        """
+        Assert that the sample name is unique.
+        """
+        if len(self._seen) != len(self.modified):
+            raise AssertionError("The sample name must be unique.")
+
+
+def read_head(handle, num_lines=5):
     """Read the specified number of lines from the current position in the file."""
     lines = []
     for idx, line in enumerate(handle):
@@ -253,7 +389,7 @@ def sniff_format(handle):
     return dialect
 
 
-def check_samplesheet(file_in, file_out, samplesheet_path):
+def check_samplesheet(file_in, file_out, checker: BaseChecker):
     """
     Check that the tabular samplesheet has the structure expected by nf-core pipelines.
 
@@ -265,42 +401,29 @@ def check_samplesheet(file_in, file_out, samplesheet_path):
             CSV, TSV, or any other format automatically recognized by ``csv.Sniffer``.
         file_out (pathlib.Path): Where the validated and transformed samplesheet should
             be created; always in CSV format.
-
-    Example:
-        This function checks that the samplesheet follows the following structure,
-        see also the `viral recon samplesheet`_::
-
-            sample,fastq_1,fastq_2
-            SAMPLE_PE,SAMPLE_PE_RUN1_1.fastq.gz,SAMPLE_PE_RUN1_2.fastq.gz
-            SAMPLE_PE,SAMPLE_PE_RUN2_1.fastq.gz,SAMPLE_PE_RUN2_2.fastq.gz
-            SAMPLE_SE,SAMPLE_SE_RUN1_1.fastq.gz,
-
-    .. _viral recon samplesheet:
-        https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv
-
     """
-    required_columns = {"sample", "design", "barcodes", "fastq_1", "fastq_2"}
     # See https://docs.python.org/3.9/library/csv.html#id3 to read up on `newline=""`.
     with file_in.open(newline="") as in_handle:
         reader = csv.DictReader(in_handle, dialect=sniff_format(in_handle))
+
         # Validate the existence of the expected header columns.
-        if not required_columns.issubset(reader.fieldnames):
-            req_cols = ", ".join(required_columns)
+        if not checker.check_headers(reader.fieldnames):
+            req_cols = ", ".join(checker.REQUIRED_COLUMNS)
             logger.critical(f"The sample sheet **must** contain these column headers: {req_cols}.")
             sys.exit(1)
-        # Validate each row.
-        checker = PixelatorRowChecker(barcodes_col="barcodes", design_col="design", samplesheet_path=samplesheet_path)
 
         for i, row in enumerate(reader):
             try:
+                validate_whitespace(row, i)
                 checker.validate_and_transform(row)
             except AssertionError as error:
                 logger.critical(f"{str(error)} On line {i + 2}.")
                 sys.exit(1)
+
         checker.validate_unique_samples()
 
-    header = list(reader.fieldnames)
-    header.insert(1, "single_end")
+    header = checker.output_headers(reader.fieldnames)
+
     # See https://docs.python.org/3.9/library/csv.html#id3 to read up on `newline=""`.
     with file_out.open(mode="w", newline="") as out_handle:
         writer = csv.DictWriter(out_handle, header, delimiter=",")
@@ -334,6 +457,14 @@ def parse_args(argv=None):
         help="Local or remote location of the samplesheet",
     )
     parser.add_argument(
+        "--mode",
+        metavar="SampleSheetType",
+        type=str,
+        choices=("main", "aggregate"),
+        default="main",
+        help="Type of samplesheet (default: main)",
+    )
+    parser.add_argument(
         "-l",
         "--log-level",
         help="The desired log level (default WARNING).",
@@ -347,11 +478,22 @@ def main(argv=None):
     """Coordinate argument parsing and program execution."""
     args = parse_args(argv)
     logging.basicConfig(level=args.log_level, format="[%(levelname)s] %(message)s")
+
     if not args.file_in.is_file():
         logger.error(f"The given input file {args.file_in} was not found!")
         sys.exit(2)
     args.file_out.parent.mkdir(parents=True, exist_ok=True)
-    check_samplesheet(args.file_in, args.file_out, args.samplesheet_path)
+
+    checker = None
+    if args.mode == "main":
+        checker = PixelatorRowChecker(samplesheet_path=args.samplesheet_path)
+    elif args.mode == "aggregate":
+        checker = PixelatorAggregateRowChecker(samplesheet_path=args.samplesheet_path)
+    else:
+        logger.error(f"The given samplesheet mode {args.mode} is invalid!")
+        sys.exit(2)
+
+    check_samplesheet(args.file_in, args.file_out, checker)
 
 
 if __name__ == "__main__":

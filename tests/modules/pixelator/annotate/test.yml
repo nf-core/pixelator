@@ -1,0 +1,19 @@
+- name: pixelator_annotate test_pixelator_annotate
+  command: nextflow -C tests/modules/pixelator/annotate/nextflow.config run tests/modules/pixelator/annotate -entry test_pixelator_annotate
+  tags:
+    - pixelator
+    - pixelator-annotate
+
+  files:
+    - path: output/pixelator/test_data.pixelator-annotate.log
+      contains:
+        - "Finished pixelator annotate"
+    - path: output/pixelator/annotate/test_data.data_summary.png
+    - path: output/pixelator/annotate/test_data.filtered_anndata.h5ad
+    - path: output/pixelator/annotate/test_data.filtered_antibody_metrics.csv
+    - path: output/pixelator/annotate/test_data.filtered_antibody_metrics.png
+    - path: output/pixelator/annotate/test_data.filtered_components_antibody.csv
+    - path: output/pixelator/annotate/test_data.filtered_components_dist.png
+    - path: output/pixelator/annotate/test_data.filtered_components_metrics.csv
+    - path: output/pixelator/annotate/test_data.filtered_pixel_data.csv
+    - path: output/pixelator/annotate/test_data.report.json

@@ -1,5 +1,5 @@
 
-process PIXELATOR_ANALYSIS {
+process PIXELATOR_ANNOTATE {
     tag "$meta.id"
     label 'process_medium'
 
@@ -10,9 +10,9 @@ process PIXELATOR_ANALYSIS {
     tuple val(meta), path(h5ad)
 
     output:
-    tuple val(meta), path("analysis/*anndata.h5ad"),     emit: h5ad
-    tuple val(meta), path("analysis"),                   emit: results_dir
-    tuple val(meta), path("*pixelator-analysis.log"),    emit: log
+    tuple val(meta), path("annotate/*filtered_anndata.h5ad"),    emit: h5ad
+    tuple val(meta), path("annotate"),                           emit: results_dir
+    tuple val(meta), path("*pixelator-annotate.log"),            emit: log
 
     path "versions.yml"           , emit: versions
 
@@ -27,9 +27,9 @@ process PIXELATOR_ANALYSIS {
     """
     pixelator \\
         --cores $task.cpus \\
-        --log-file ${prefix}.pixelator-analysis.log \\
+        --log-file ${prefix}.pixelator-annotate.log \\
         --verbose \\
-        analysis \\
+        annotate \\
         --output . \\
         $args \\
         $h5ad

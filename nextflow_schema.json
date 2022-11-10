@@ -10,7 +10,7 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "panel", "outdir"],
+            "required": ["input", "outdir"],
             "properties": {
                 "input": {
                     "type": "string",
@@ -19,6 +19,13 @@
                     "description": "Path to comma-separated file containing information about the samples in the experiment.",
                     "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/pixelator/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
+                },
+                "mode": {
+                    "type": "string",
+                    "format": "file-path",
+                    "enum": ["main", "aggregate"],
+                    "default": "main",
+                    "description": "Mode to run the pipeline in [default: main]"
                 },
                 "outdir": {
                     "type": "string",
@@ -110,8 +117,8 @@
                     "maximum": 0.9
                 },
                 "demux_min_length": {
-                    "type": "integer",
-                    "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design"
+                    "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design",
+                    "type": ["integer", "null"]
                 }
             }
         },
@@ -187,14 +194,6 @@
         "cluster_options": {
             "title": "Options for pixelator cluster command.",
             "properties": {
-                "min_size": {
-                    "description": "The minimum size (pixels) a cluster/cell must have (default is no filtering)",
-                    "type": "integer"
-                },
-                "max_size": {
-                    "description": "The maximum size (pixels) a cluster/cell must have (default is no filtering)",
-                    "type": "integer"
-                },
                 "max_size_recover": {
                     "description": "The maximum size cutoff to use in the recovery (--big-clusters-recover) [default: 10000]",
                     "type": "integer",
@@ -217,9 +216,22 @@
                     "default": 2,
                     "minimum": 1,
                     "maximum": 50
+                }
+            }
+        },
+        "annotate_options": {
+            "title": "Options for pixelator annotate command.",
+            "properties": {
+                "min_size": {
+                    "description": "TThe minimum size (pixels) a component/cell can have (default is no filtering)",
+                    "type": "integer"
                 },
-                "min_size_markers": {
-                    "description": "The minimum number of detected markers a cluster/cell must have (default is no filtering)",
+                "max_size": {
+                    "description": "The maximum size (pixels) a component/cell can have (default is no filtering)",
+                    "type": "integer"
+                },
+                "min_num_markers": {
+                    "description": "The minimum number of detected markers a component/cell can have (default is no filtering)",
                     "type": "integer"
                 }
             }
@@ -366,6 +378,12 @@
             "description": "Less common options for the pipeline (specific to nf-core-pixelator), typically set in a config file.",
             "help_text": "These options allow you to customize some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
             "properties": {
+                "pixelator_container_source": {
+                    "type": "string",
+                    "description": "The source repository for the pixelator docker container.",
+                    "enum": ["aws-ecr", "ghcr"],
+                    "hidden": true
+                },
                 "pixelator_tag": {
                     "type": "string",
                     "description": "Override which container tag of pixelator to use. Use carefully!",
@@ -485,6 +503,9 @@
         },
         {
             "$ref": "#/definitions/cluster_options"
+        },
+        {
+            "$ref": "#/definitions/annotate_options"
         },
         {
             "$ref": "#/definitions/analysis_options"

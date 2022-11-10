@@ -4,10 +4,10 @@ process PIXELATOR_ADAPTERQC {
     tag "$meta.id"
     label 'process_medium'
 
-    conda (params.enable_conda ? "local::pixelator=0.2.3" : null)
+    conda (params.enable_conda ? "local::pixelator=0.4.0" : null)
 
     // TODO: make pixelator available on galaxyproject and quay.io support
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.4.0'
 
     input:
     tuple val(meta), path(reads)
@@ -36,6 +36,7 @@ process PIXELATOR_ADAPTERQC {
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-adapterqc.log \\
+        --verbose \\
         adapterqc \\
         --output . \\
         --design ${meta.design} \\

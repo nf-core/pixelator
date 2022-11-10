@@ -36,7 +36,9 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 5. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://github.com/PixelgenTechnologies/pixelator))
 6. Compute the components/clusters of the graph from the edge list matrix.([`pixelator cluster`](https://github.com/PixelgenTechnologies/pixelator))
 7. Analyze components/clusters of the graph.([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
-8. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
+8. Filter, annotate and call cells on samples ([`pixelator annotate`](#pixelator-annotate)))
+9. Result aggregation ([`pixelator aggregate`](https://github.com/PixelgenTechnologies/pixelator))
+10. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
 
 ## Quick Start
 

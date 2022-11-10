@@ -4,9 +4,9 @@ process PIXELATOR_PREQC {
     tag "$meta.id"
     label 'process_medium'
 
-    conda (params.enable_conda ? "local::pixelator=0.2.3" : null)
+    conda (params.enable_conda ? "local::pixelator=0.4.0" : null)
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.2.3'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.4.0'
 
     input:
     tuple val(meta), path(reads)
@@ -35,6 +35,7 @@ process PIXELATOR_PREQC {
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-preqc.log \\
+        --verbose \\
         preqc \\
         --output . \\
         --design ${meta.design} \\

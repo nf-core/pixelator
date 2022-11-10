@@ -11,8 +11,7 @@ workflow test_pixelator_collapse {
 
     input = [
         [ id: "${params.test_data['pixelator']['micro']['id']}", design: "D12" ], // meta map
-        files,
-        file("${params.test_data['pixelator']['micro']['antibody_panel']}")
+        files
     ]
 
     PIXELATOR_COLLAPSE ( input )
