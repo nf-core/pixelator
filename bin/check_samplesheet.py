@@ -328,7 +328,7 @@ class PixelatorAggregateRowChecker(BaseChecker):
             raise AssertionError("The group field is required")
 
     def _validate_matrix(self, row):
-        """Assert that the second FASTQ entry has the right format if it exists."""
+        """Assert that the matrix entry has the right format if it exists."""
         if len(row[self._matrix_col]) <= 0:
             raise AssertionError("The matrix field is required")
 
@@ -348,7 +348,7 @@ class PixelatorAggregateRowChecker(BaseChecker):
 
     def validate_unique_samples(self):
         """
-        Assert that the combination of sample name and FASTQ filename is unique.
+        Assert that the sample name is unique.
         """
         if len(self._seen) != len(self.modified):
             raise AssertionError("The sample name must be unique.")

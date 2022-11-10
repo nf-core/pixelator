@@ -125,11 +125,11 @@ workflow PIXELATOR_MAIN {
     ch_adapterqc.dump(tag: "ch_adapterqc")
     ch_versions = ch_versions.mix(PIXELATOR_ADAPTERQC.out.versions.first())
 
+    // Combine filtered input reads with panel files for input to PIXELATOR_DEMUX
     ch_adapterqc_and_panel = ch_adapterqc.join(ch_panels)
     ch_adapterqc_and_panel.dump(tag: "ch_adapterqc_and_panel")
 
     PIXELATOR_DEMUX ( ch_adapterqc_and_panel )
-
     ch_demuxed = PIXELATOR_DEMUX.out.processed
     ch_demuxed.dump(tag: "ch_demuxed")
     ch_versions = ch_versions.mix(PIXELATOR_DEMUX.out.versions.first())
@@ -149,11 +149,15 @@ workflow PIXELATOR_MAIN {
     ch_clustered.dump(tag: "ch_annotated")
     ch_versions = ch_versions.mix(PIXELATOR_ANNOTATE.out.versions.first())
 
-    // TODO: We only pass cluster to this for now
+    // TODO: We only pass annotate output to this for now
     PIXELATOR_ANALYSIS ( ch_annotated )
     ch_analysed = PIXELATOR_ANALYSIS.out.h5ad
     ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())
 
+    //
+    // Collect outputs from all stages and samples into a set of single value channels
+    // to pass to the report generation step.
+    //
     ch_concatenate_col = ch_concat_results.map { meta, data -> [meta.id, data] }
     ch_preqc_col       = PIXELATOR_PREQC.out.results_dir.map { meta, data -> [ meta.id, data] }
     ch_adapterqc_col   = PIXELATOR_ADAPTERQC.out.results_dir.map { meta, data -> [ meta.id, data] }
