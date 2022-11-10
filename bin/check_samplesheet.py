@@ -323,7 +323,7 @@ class PixelatorAggregateRowChecker(BaseChecker):
         row[self._sample_col] = row[self._sample_col].replace(" ", "_")
 
     def _validate_group(self, row):
-        """Assert that the group entry is non-empty."""
+        """Add default group entry if not set."""
         if not self._group_col in row:
             row[self._group_col] = 0
 
