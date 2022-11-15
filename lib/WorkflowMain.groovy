@@ -55,7 +55,7 @@ class WorkflowMain {
 
         // Validate workflow parameters via the JSON schema
         if (params.validate_params) {
-            NfcoreSchema.validateParameters(workflow, params, log)
+            CustomNfcoreSchema.validateParameters(workflow, params, log, /*nextflow_schema=*/ 'nextflow_schema.json', /*strict=*/ true)
         }
 
         // Print parameter summary log to screen
