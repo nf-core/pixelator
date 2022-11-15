@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   pre_job:
-    # continue-on-error: true # Uncomment once integration is finished
+    continue-on-error: true
     runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
@@ -28,6 +28,7 @@ jobs:
           skip_after_successful_duplicate: "true"
 
   EditorConfig:
+    needs: pre_job
     if: needs.pre_job.outputs.should_skip != 'true'
     runs-on: ubuntu-latest
     steps:
@@ -42,6 +43,7 @@ jobs:
         run: editorconfig-checker -exclude README.md $(find .* -type f | grep -v '.git\|.py\|.md\|json\|yml\|yaml\|html\|css\|work\|.nextflow\|build\|nf_core.egg-info\|log.txt\|Makefile')
 
   Prettier:
+    needs: pre_job
     if: needs.pre_job.outputs.should_skip != 'true'
     runs-on: ubuntu-latest
     steps:
@@ -56,6 +58,7 @@ jobs:
         run: prettier --check ${GITHUB_WORKSPACE}
 
   PythonBlack:
+    needs: pre_job
     if: needs.pre_job.outputs.should_skip != 'true'
     runs-on: ubuntu-latest
     steps:
@@ -87,6 +90,7 @@ jobs:
           allow-repeats: false
 
   nf-core:
+    needs: pre_job
     if: needs.pre_job.outputs.should_skip != 'true'
     runs-on: ubuntu-latest
     steps:
