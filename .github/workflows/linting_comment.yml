@@ -11,11 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download lint results
+        id: lint_results
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: linting.yml
           workflow_conclusion: completed
+          if_no_artifact_found: ignore
 
+  post-results:
+    if: needs.lint_results.outputs.artifacts[0] != null
+    runs-on: ubuntu-latest
+    steps:
       - name: Get PR number
         id: pr_number
         run: echo "::set-output name=pr_number::$(cat linting-logs/PR_number.txt)"
