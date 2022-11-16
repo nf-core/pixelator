@@ -1,11 +1,7 @@
 name: nf-core AWS full size tests
 # This workflow is triggered on published releases.
 # It can be additionally triggered manually with GitHub actions workflow dispatch button.
-# It runs the -profile 'test_full' on AWS batch
-
-# These permissions are needed to interact with GitHub's OIDC Token endpoint.
-permissions:
-  id-token: write
+# It runs the -profile 'aws_test_full' on AWS batch
 
 on:
   release:
@@ -15,9 +11,7 @@ on:
 jobs:
   run-aws-full:
     name: Run AWS full tests
-    # Temporarily disable this until AWS batch is fully up and running
-    # replace with:     if: ${{ github.repository == 'PixelgenTechnologies/nf-core-pixelator' }}
-    if: ${{ false }}
+    if: ${{ github.repository == 'PixelgenTechnologies/nf-core-pixelator' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -36,9 +30,11 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: eu-north-1
-          role-to-assume: arn:aws:iam::890888997283:role/GithubActionsNextflowRole
-          role-session-name: github-actions-nextflow-session
+          aws-access-key-id: ${{ secrets.NF_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.NF_AWS_SECRET_ACCESS_KEY }}
 
       - name: Launch workflow
-      - run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile aws_test,docker --runName ${{ github.sha }}
+        run: |
+          nextflow run ${GITHUB_WORKSPACE} -profile aws_test_full,docker \
+            --runName full-${{ github.run_id }} \
+            --testdata_root s3://pixelgen-nf-input/nf-core-pixelator-datasets

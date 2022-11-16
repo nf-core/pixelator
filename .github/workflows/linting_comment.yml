@@ -9,13 +9,22 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.lint_results.outputs.artifacts[0] != null }}
     steps:
       - name: Download lint results
+        id: lint_results
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: linting.yml
           workflow_conclusion: completed
+          if_no_artifact_found: ignore
 
+  post-results:
+    needs: test
+    if: needs.test.outputs.should_skip != 'true'
+    runs-on: ubuntu-latest
+    steps:
       - name: Get PR number
         id: pr_number
         run: echo "::set-output name=pr_number::$(cat linting-logs/PR_number.txt)"
