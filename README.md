@@ -102,12 +102,14 @@ nextflow run PixelgenTechnologies/nf-core-pixelator --input samplesheet.tsv --ou
 <!-- The nf-core/pixelator pipeline comes with documentation about the pipeline [usage](https://nf-co.re/pixelator/usage), [parameters](https://nf-co.re/pixelator/parameters) and [output](https://nf-co.re/pixelator/output). -->
 
 The PixelgenTechnologies/nf-core-pixelator pipeline comes with documentation about the pipeline [usage](./docs/usage.md), [parameters](./docs/parameters.md) and [output](./docs/output.md).
+There is also a section for running on [AWS Batch](./docs/running-on-aws.md).
 
 ## Credits
 
 nf-core/pixelator was originally written for [Pixelgen Technologies AB](https://www.pixelgen.tech/) by:
 
 - Florian De Temmerman
+- Alvaro Martinez Barrio
 - Jose Fernandez Navarro
 
 <!-- We thank the following people for their extensive assistance in the development of this pipeline: -->
