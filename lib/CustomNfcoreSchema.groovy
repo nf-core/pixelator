@@ -11,7 +11,7 @@ import org.json.JSONArray
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
 
-class NfcoreSchema {
+class CustomNfcoreSchema {
 
     //
     // Resolve Schema path relative to main workflow directory
