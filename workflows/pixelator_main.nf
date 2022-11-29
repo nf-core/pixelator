@@ -29,7 +29,6 @@ if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input sample
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK                 } from '../subworkflows/local/input_check'
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -59,6 +58,7 @@ include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/analy
 include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/annotate/main'
 include { PIXELATOR_REPORT              } from '../modules/local/pixelator/report/main'
 include { RENAME_READS                  } from '../modules/local/rename_reads'
+include { COLLECT_METADATA              } from '../modules/local/collect_metadata'
 
 /*
 ========================================================================================
@@ -70,8 +70,9 @@ include { RENAME_READS                  } from '../modules/local/rename_reads'
 def multiqc_report = []
 
 workflow PIXELATOR_MAIN {
-
     ch_versions = Channel.empty()
+
+    COLLECT_METADATA()
 
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     INPUT_CHECK (
@@ -240,7 +241,13 @@ workflow.onComplete {
         NfcoreTemplate.email(workflow, params, summary_params, projectDir, log, multiqc_report)
     }
     NfcoreTemplate.summary(workflow, params, log)
+    WorkflowMain.writeMetrics(workflow, params)
 }
+
+// workflow.onError {
+//     WorkflowMain.writeMetrics(workflow, params)
+// }
+
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
