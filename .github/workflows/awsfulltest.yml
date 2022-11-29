@@ -36,5 +36,5 @@ jobs:
       - name: Launch workflow
         run: |
           nextflow run ${GITHUB_WORKSPACE} -profile aws_test_full,docker \
-            --runName full-${{ github.run_id }} \
+            --run_name full-${{ github.run_id }} \
             --testdata_root s3://pixelgen-nf-input/nf-core-pixelator-datasets
