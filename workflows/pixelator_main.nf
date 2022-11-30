@@ -244,11 +244,6 @@ workflow.onComplete {
     WorkflowMain.writeMetrics(workflow, params)
 }
 
-// workflow.onError {
-//     WorkflowMain.writeMetrics(workflow, params)
-// }
-
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     THE END
