@@ -1,6 +1,8 @@
 //
 // This file holds several functions specific to the main.nf workflow in the nf-core/pixelator pipeline
 //
+import groovy.json.JsonSlurper
+import groovy.json.JsonBuilder
 
 class WorkflowMain {
 
@@ -89,5 +91,79 @@ class WorkflowMain {
             }
         }
         return null
+    }
+
+    public static void writeMetrics(workflow, params) {
+        // Write detailed pipeline metrics
+        def output_d = new File("${params.outdir}/pipeline_info/")
+        if (!output_d.exists()) {
+            output_d.mkdirs()
+        }
+
+        final nextflow_dict = [
+            version: workflow.nextflow.version,
+            build: workflow.nextflow.build,
+            timestamp: workflow.nextflow.timestamp?.toString(),
+        ]
+        final manifest_dict = [
+            author: workflow.manifest.getAuthor(),
+            defaultBranch: workflow.manifest.getDefaultBranch(),
+            description: workflow.manifest.getDescription(),
+            homePage: workflow.manifest.getHomePage(),
+            gitmodules: workflow.manifest.getGitmodules(),
+            mainScript: workflow.manifest.getMainScript(),
+            version: workflow.manifest.getVersion(),
+            nextflowVersion: workflow.manifest.getNextflowVersion(),
+            doi: workflow.manifest.getDoi(),
+        ]
+
+        final workflow_dict = [
+            scriptId: workflow.scriptId,
+            scriptName: workflow.scriptName,
+            scriptFile: workflow.scriptFile.toString(),
+            repository: workflow.repository,
+            commitId: workflow.commitId,
+            revision: workflow.revision,
+            projectDir: workflow.projectDir.toString(),
+            launchDir: workflow.launchDir.toString(),
+            workDir: workflow.workDir.toString(),
+            homeDir: workflow.homeDir.toString(),
+            userName: workflow.userName,
+            configFiles: workflow.configFiles.collect { it.toString() },
+            container: workflow.container.collectEntries { [it.key, it.value?.toString()] },
+            containerEngine: workflow.containerEngine,
+            commandLine: workflow.commandLine,
+            profile: workflow.profile,
+            runName: workflow.runName,
+            sessionId: workflow.sessionId,
+            resume: workflow.resume,
+            stubRun: workflow.stubRun,
+            start: workflow.start?.toString(),
+            complete: workflow.complete?.toString(),
+            duration: workflow.duration?.toString(),
+            success: workflow?.success,
+            exitStatus: workflow?.exitStatus,
+            errorMessage: workflow?.errorMessage,
+            errorReport: workflow?.errorReport,
+        ]
+
+        def metadata_file = new File(output_d, "metadata.json")
+        Map metadata = [:]
+
+        if (metadata_file.exists() && metadata_file.text.length() > 0) {
+            metadata = (Map) new JsonSlurper().parseText(metadata_file.text)
+        }
+
+        metadata += [
+            nextflow: nextflow_dict,
+            manifest: manifest_dict,
+            workflow : workflow_dict,
+        ]
+
+        def builder = new JsonBuilder(metadata)
+
+        def file_writer = new FileWriter(metadata_file)
+        file_writer.write(builder.toPrettyString())
+        file_writer.close()
     }
 }

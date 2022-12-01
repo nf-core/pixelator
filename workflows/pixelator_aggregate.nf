@@ -57,6 +57,8 @@ include { PIXELATOR_AGGREGATE           } from '../modules/local/pixelator/aggre
 include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/analysis/main'
 include { PIXELATOR_REPORT              } from '../modules/local/pixelator/report/main'
 include { RENAME_MATRICES               } from '../modules/local/rename_matrices'
+include { COLLECT_METADATA              } from '../modules/local/collect_metadata'
+
 
 /*
 ========================================================================================
@@ -70,6 +72,8 @@ def multiqc_report = []
 workflow PIXELATOR_AGGREGATE {
 
     ch_versions = Channel.empty()
+
+    COLLECT_METADATA()
 
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     INPUT_CHECK_AGGREGATE ( ch_input )
@@ -109,6 +113,7 @@ workflow.onComplete {
         NfcoreTemplate.email(workflow, params, summary_params, projectDir, log, multiqc_report)
     }
     NfcoreTemplate.summary(workflow, params, log)
+    WorkflowMain.writeMetrics(workflow, params)
 }
 
 /*

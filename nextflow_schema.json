@@ -482,6 +482,10 @@
                     "description": "Root path to testdata for running local tests",
                     "hidden": true,
                     "fa_icon": "fas fa-folder-tree"
+                },
+                "schema_ignore_params": {
+                    "type": "string",
+                    "description": "A comma separated string of inputs the schema validation should ignore."
                 }
             }
         }
