@@ -13,8 +13,9 @@ process RENAME_READS {
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("${meta.id}*"),  emit: reads
-    path "versions.yml",                   emit: versions
+    tuple val(meta), path("${meta.id}{,_R1,_R2}*"),   emit: reads
+    path "versions.yml",                              emit: versions
+
     when:
     task.ext.when == null || task.ext.when
 
@@ -22,8 +23,11 @@ process RENAME_READS {
 
     if (reads in List) {
         """
-        mv ${reads[0]} ${meta.id}_R1.fastq.gz
-        mv ${reads[1]} ${meta.id}_R2.fastq.gz
+        r1_ext=\$(echo ${reads[0]} | grep -E -o "f(ast)?q.gz")
+        r2_ext=\$(echo ${reads[1]} | grep -E -o "f(ast)?q.gz")
+
+        mv ${reads[0]} ${meta.id}_R1.\${r1_ext}
+        mv ${reads[1]} ${meta.id}_R2.\${r2_ext}
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}": {}
@@ -31,7 +35,8 @@ process RENAME_READS {
         """
     } else {
         """
-        mv ${reads} ${meta.id}.fastq.gz
+        r1_ext=\$(echo ${reads} | grep -E -o "f(ast)?q.gz")
+        mv ${reads} ${meta.id}.\${r1_ext}
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}": {}

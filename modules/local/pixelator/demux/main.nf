@@ -4,19 +4,19 @@ process PIXELATOR_DEMUX {
     tag "$meta.id"
     label 'process_medium'
 
-    conda (params.enable_conda ? "local::pixelator=0.4.0" : null)
+    conda (params.enable_conda ? "local::pixelator=0.5.0" : null)
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.4.0'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.5.0'
 
     input:
     tuple val(meta), path(reads), path(antibody_panel)
 
     output:
-    tuple val(meta), path("demux/*processed*.fastq.gz"),    emit: processed
-    tuple val(meta), path("demux/*failed.fastq.gz"),        emit: failed
-    tuple val(meta), path("demux/*.report.json"),           emit: report_json
-    tuple val(meta), path("demux"),                         emit: results_dir
-    tuple val(meta), path("*pixelator-demux.log"),          emit: log
+    tuple val(meta), path("demux/*processed*.{fq,fastq}.gz"), emit: processed
+    tuple val(meta), path("demux/*failed.{fq,fastq}.gz"),     emit: failed
+    tuple val(meta), path("demux/*.report.json"),             emit: report_json
+    tuple val(meta), path("demux"),                           emit: results_dir
+    tuple val(meta), path("*pixelator-demux.log"),            emit: log
 
     path "versions.yml"           , emit: versions
 

@@ -4,18 +4,19 @@ process PIXELATOR_CLUSTER {
     tag "$meta.id"
     label 'process_high'
 
-    conda (params.enable_conda ? "local::pixelator=0.4.0" : null)
+    conda (params.enable_conda ? "local::pixelator=0.5.0" : null)
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.4.0'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.5.0'
 
     input:
-    tuple val(meta), path(reads)
+    tuple val(meta), path(edge_list), path(antibody_panel)
 
     output:
-    tuple val(meta), path("cluster/*raw_anndata.h5ad"),         emit: h5ad
+    tuple val(meta), path("cluster/*anndata.h5ad"),             emit: h5ad
+    tuple val(meta), path("cluster/*pixel_data.csv"),           emit: pixel_data
+    tuple val(meta), path("cluster/*.report.json"),             emit: report_json
     tuple val(meta), path("cluster/*.csv"),                     emit: csv
     tuple val(meta), path("cluster/*.png"),                     emit: png
-    tuple val(meta), path("cluster/*.report.json"),             emit: report_json
     tuple val(meta), path("*pixelator-cluster.log"),            emit: log
 
     path "versions.yml"           , emit: versions
@@ -35,8 +36,9 @@ process PIXELATOR_CLUSTER {
         --verbose \\
         cluster \\
         --output . \\
+        --panel-file $antibody_panel \\
         $args \\
-        ${reads}
+        ${edge_list}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
