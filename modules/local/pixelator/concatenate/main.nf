@@ -5,15 +5,15 @@ process PIXELATOR_CONCATENATE {
     label 'process_medium'
 
 
-    conda (params.enable_conda ? "local::pixelator=0.4.0" : null)
+    conda (params.enable_conda ? "local::pixelator=0.5.0" : null)
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.4.0'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.5.0'
 
     input:
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("concatenate/*.merged.fastq.gz"),       emit: merged
+    tuple val(meta), path("concatenate/*.merged.{fq,fastq}.gz"),  emit: merged
     tuple val(meta), path("*pixelator-concatenate.log"),          emit: log
 
     path "versions.yml"           , emit: versions

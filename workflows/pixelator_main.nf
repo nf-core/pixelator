@@ -140,17 +140,19 @@ workflow PIXELATOR_MAIN {
     ch_collapsed.dump(tag: "ch_collapsed")
     ch_versions = ch_versions.mix(PIXELATOR_COLLAPSE.out.versions.first())
 
-    PIXELATOR_CLUSTER( ch_collapsed )
+    ch_collapsed_and_panel = ch_collapsed.join(ch_panels)
+    ch_collapsed_and_panel.dump(tag: "ch_collapsed_and_panel")
+
+    PIXELATOR_CLUSTER ( ch_collapsed_and_panel )
     ch_clustered = PIXELATOR_CLUSTER.out.h5ad
     ch_clustered.dump(tag: "ch_clustered")
     ch_versions = ch_versions.mix(PIXELATOR_CLUSTER.out.versions.first())
 
     PIXELATOR_ANNOTATE ( ch_clustered )
     ch_annotated = PIXELATOR_ANNOTATE.out.h5ad
-    ch_clustered.dump(tag: "ch_annotated")
+    ch_annotated.dump(tag: "ch_annotated")
     ch_versions = ch_versions.mix(PIXELATOR_ANNOTATE.out.versions.first())
 
-    // TODO: We only pass annotate output to this for now
     PIXELATOR_ANALYSIS ( ch_annotated )
     ch_analysed = PIXELATOR_ANALYSIS.out.h5ad
     ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())

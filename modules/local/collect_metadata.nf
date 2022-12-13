@@ -3,8 +3,8 @@ process COLLECT_METADATA {
     label "process_single"
     cache false
 
-    conda (params.enable_conda ? "local::pixelator=0.4.0" : null)
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.4.0'
+    conda (params.enable_conda ? "local::pixelator=0.5.0" : null)
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.5.0'
 
     input:
 
@@ -14,9 +14,9 @@ process COLLECT_METADATA {
     when:
     task.ext.when == null || task.ext.when
 
-    script: // This script is bundled with the pipeline, in nf-core/pixelator/bin/
+    script:
     """
-    #!/usr/bin/python
+    #!/usr/bin/env python
 
     import sys
     import subprocess

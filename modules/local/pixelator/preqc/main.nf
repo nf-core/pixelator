@@ -4,20 +4,20 @@ process PIXELATOR_PREQC {
     tag "$meta.id"
     label 'process_medium'
 
-    conda (params.enable_conda ? "local::pixelator=0.4.0" : null)
+    conda (params.enable_conda ? "local::pixelator=0.5.0" : null)
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.4.0'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.5.0'
 
     input:
     tuple val(meta), path(reads)
 
     output:
 
-    tuple val(meta), path("preqc/*.processed.fastq.gz"),   emit: processed
-    tuple val(meta), path("preqc/*.failed.fastq.gz"),      emit: failed
-    tuple val(meta), path("preqc/*.report.html"),          emit: report_html
-    tuple val(meta), path("preqc/*.report.json"),          emit: report_json
-    tuple val(meta), path("*pixelator-preqc.log"),         emit: log
+    tuple val(meta), path("preqc/*.processed.{fq,fastq}.gz"),   emit: processed
+    tuple val(meta), path("preqc/*.failed.{fq,fastq}.gz"),      emit: failed
+    tuple val(meta), path("preqc/*.report.html"),               emit: report_html
+    tuple val(meta), path("preqc/*.report.json"),               emit: report_json
+    tuple val(meta), path("*pixelator-preqc.log"),              emit: log
 
     path "versions.yml"           , emit: versions
 
