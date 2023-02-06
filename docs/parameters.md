@@ -359,6 +359,11 @@ The minimum number of detected markers a cluster/cell must have (default is no f
 
 <a name="options-for-pixelator-analysis-command"/>
 
+
+## Options for pixelator annotate command.
+
+TODO Add new options here!
+
 ## Options for pixelator analysis command.
 
 ### `--compute_polarization`

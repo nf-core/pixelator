@@ -24,6 +24,7 @@ class WorkflowMain {
     // Print help to screen if required
     //
     public static String help(workflow, params, log) {
+        // TODO Clean this up to corrent command?
         def command = "nextflow run ${workflow.manifest.name} --input samplesheet.csv --genome GRCh37 -profile docker"
         def help_string = ''
         help_string += NfcoreTemplate.logo(workflow, params.monochrome_logs)

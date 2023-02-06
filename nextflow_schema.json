@@ -224,7 +224,7 @@
             "title": "Options for pixelator annotate command.",
             "properties": {
                 "min_size": {
-                    "description": "TThe minimum size (pixels) a component/cell can have (default is no filtering)",
+                    "description": "The minimum size (pixels) a component/cell can have (default is no filtering)",
                     "type": "integer"
                 },
                 "max_size": {
@@ -234,6 +234,26 @@
                 "min_num_markers": {
                     "description": "The minimum number of detected markers a component/cell can have (default is no filtering)",
                     "type": "integer"
+                },
+                "dynamic_filter": {
+                    "description": "TODO",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "no_cell_type_assignments": {
+                    "description": "TODO",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "no_cell_type_cluster": {
+                    "description": "TODO",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "no_doublet_calling": {
+                    "description": "TODO",
+                    "default": false,
+                    "type": "boolean"
                 }
             }
         },
@@ -260,22 +280,15 @@
                     "type": "boolean",
                     "default": false
                 },
-                "binarization": {
-                    "description": "Use the bipartite graph instead of the one-node projection when computing polarization, coabundance and colocalization scores",
+                "normalization": {
+                    "description": "TODO",
                     "type": "string",
-                    "enum": ["percentile", "denoise"],
-                    "default": "percentile"
+                    "default": "CLR"
                 },
-                "percentile": {
-                    "description": "The percentile value (0-1) to use when binarizing counts in the polarization and co-localization algorithms [default: 0.0; 0.0<=x<=1.0]",
+                "pvalue_cutoff": {
+                    "description": "TODO",
                     "type": "number",
-                    "default": 0.0,
-                    "minimum": 0.0,
-                    "maximum": 1.0
-                },
-                "antibody_control": {
-                    "description": "A comma separated list of antibodies to use as control for the denoise binarization method (--binarization). The antibody(s) must be present in the data with the same names",
-                    "type": "string"
+                    "default": null
                 }
             }
         },
