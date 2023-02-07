@@ -1,0 +1,6 @@
+{
+    "dependencies": {
+        "editorconfig-checker": "^5.0.1",
+        "prettier": "^2.8.3"
+    }
+}
