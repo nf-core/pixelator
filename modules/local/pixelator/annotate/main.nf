@@ -10,8 +10,8 @@ process PIXELATOR_ANNOTATE {
     tuple val(meta), path(h5ad)
 
     output:
-    tuple val(meta), path("annotate/*anndata.h5ad"),             emit: h5ad
-    tuple val(meta), path("annotate/*raw_anndata.h5ad"),         emit: raw_h5ad
+    tuple val(meta), path("annotate/*.anndata.h5ad"),            emit: h5ad
+    tuple val(meta), path("annotate/*.raw_anndata.h5ad"),        emit: raw_h5ad
     tuple val(meta), path("annotate/*pixel_data.csv"),           emit: pixel_data
     tuple val(meta), path("annotate/*.report.json"),             emit: report_json
     tuple val(meta), path("annotate/*.csv"),                     emit: csv
