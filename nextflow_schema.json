@@ -246,12 +246,12 @@
                     "type": "boolean"
                 },
                 "no_cell_type_cluster": {
-                    "description": "Disable component doublet calling, no information on potential doublets will be added to output data",
+                    "description": "Disable cell type majority voting for cell types using clustering of components",
                     "default": false,
                     "type": "boolean"
                 },
                 "no_doublet_calling": {
-                    "description": "TODO",
+                    "description": "Disable component doublet calling, no information on potential doublets will be added to output data",
                     "default": false,
                     "type": "boolean"
                 }
@@ -281,7 +281,7 @@
                     "default": false
                 },
                 "normalization": {
-                    "description": "Which approach to use to normalize the antibody counts: aw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and substract the counts of control antibodies[default: CLR]",
+                    "description": "Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and substract the counts of control antibodies[default: CLR]",
                     "type": "string",
                     "default": "CLR"
                 }
