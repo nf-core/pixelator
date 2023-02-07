@@ -33,7 +33,7 @@ Create a python virtual environment:
 ```
 conda create --name nf-core-pixelator python=3.8
 conda activate nf-core-pixelator
-pip install nf-core
+pip install nf-core black
 ```
 
 Install the needed npm packages:
