@@ -18,18 +18,18 @@ If you'd like to write some code for nf-core/pixelator, the standard workflow is
 1. Check that there isn't already an issue about your idea in the [nf-core/pixelator issues](https://github.com/nf-core/pixelator/issues) to avoid duplicating work. If there isn't one already, please create one so that others know you're working on this
 2. [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) the [nf-core/pixelator repository](https://github.com/nf-core/pixelator) to your GitHub account
 3. Setup the development environment (see: [Setup the development environment](#setup-the-development-environmentet))
-
-3. Make the necessary changes / additions within your forked repository following [Pipeline conventions](#pipeline-contribution-conventions)
-4. Use `nf-core schema build` and add any new parameters to the pipeline JSON schema (requires [nf-core tools](https://github.com/nf-core/tools) >= 1.10).
-5. Submit a Pull Request against the `dev` branch and wait for the code to be reviewed and merged
+4. Make the necessary changes / additions within your forked repository following [Pipeline conventions](#pipeline-contribution-conventions)
+5. Use `nf-core schema build` and add any new parameters to the pipeline JSON schema (requires [nf-core tools](https://github.com/nf-core/tools) >= 1.10).
+6. Submit a Pull Request against the `dev` branch and wait for the code to be reviewed and merged
 
 If you're not used to this workflow with git, you can start with some [docs from GitHub](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests) or even their [excellent `git` resources](https://try.github.io/).
 
 ## Setup the development environment
 
-These instructions assume that you have setup [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) and [node/npm](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04) installed.
+These instructions assume that you have setup [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html), [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) and [node/npm](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04) installed.
 
 Create a python virtual environment:
+
 ```
 conda create --name nf-core-pixelator python=3.8
 conda activate nf-core-pixelator
@@ -37,6 +37,7 @@ pip install nf-core
 ```
 
 Install the needed npm packages:
+
 ```
 npm install
 ```
@@ -46,14 +47,15 @@ npm install
 When you create a pull request with changes, [GitHub Actions](https://github.com/features/actions) will run automatic tests.
 Typically, pull-requests are only fully reviewed when these tests are passing, though of course we can help out before then.
 
-There are typically two types of tests that run:
-
 ### Lint tests
 
-`nf-core` has a [set of guidelines](https://nf-co.re/developers/guidelines) which all pipelines must adhere to.
-To enforce these and ensure that all pipelines stay in sync, we have developed a helper tool which runs checks on the pipeline code. This is in the [nf-core/tools repository](https://github.com/nf-core/tools) and once installed can be run locally with the `nf-core lint <pipeline-directory>` command.
+To run all linting in the project you can run:
 
-If any failures or warnings are encountered, please follow the listed URL for more documentation.
+```
+make lint
+```
+
+This will run nf-core linting, as well as run some basic formatting checks on the rest of the code.
 
 ### Pipeline tests
 
