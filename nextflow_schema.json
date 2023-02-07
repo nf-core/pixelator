@@ -236,17 +236,17 @@
                     "type": "integer"
                 },
                 "dynamic_filter": {
-                    "description": "TODO",
+                    "description": "Enable the estimation of dynamic size filters (--min-size) using a log-rank approach",
                     "default": false,
                     "type": "boolean"
                 },
                 "no_cell_type_assignments": {
-                    "description": "TODO",
+                    "description": "Disable cell type assignment using pre-trained models",
                     "default": false,
                     "type": "boolean"
                 },
                 "no_cell_type_cluster": {
-                    "description": "TODO",
+                    "description": "Disable component doublet calling, no information on potential doublets will be added to output data",
                     "default": false,
                     "type": "boolean"
                 },
@@ -281,14 +281,9 @@
                     "default": false
                 },
                 "normalization": {
-                    "description": "TODO",
+                    "description": "Which approach to use to normalize the antibody counts: aw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and substract the counts of control antibodies[default: CLR]",
                     "type": "string",
                     "default": "CLR"
-                },
-                "pvalue_cutoff": {
-                    "description": "TODO",
-                    "type": "number",
-                    "default": null
                 }
             }
         },
