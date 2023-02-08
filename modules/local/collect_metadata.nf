@@ -3,7 +3,7 @@ process COLLECT_METADATA {
     label "process_single"
     cache false
 
-    conda (params.enable_conda ? "local::pixelator=0.6.3" : null)
+    conda "local::pixelator=0.6.3"
     container 'ghcr.io/pixelgentechnologies/pixelator:0.6.3'
 
     input:

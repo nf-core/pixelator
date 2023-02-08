@@ -5,7 +5,7 @@ process PIXELATOR_COLLAPSE {
     label 'process_medium'
 
 
-    conda (params.enable_conda ? "local::pixelator=0.6.3" : null)
+    conda "local::pixelator=0.6.3"
 
     container 'ghcr.io/pixelgentechnologies/pixelator:0.6.3'
 

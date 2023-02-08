@@ -4,7 +4,7 @@ process PIXELATOR_CLUSTER {
     tag "$meta.id"
     label 'process_high'
 
-    conda (params.enable_conda ? "local::pixelator=0.6.3" : null)
+    conda "local::pixelator=0.6.3"
 
     container 'ghcr.io/pixelgentechnologies/pixelator:0.6.3'
 
