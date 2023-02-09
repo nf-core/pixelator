@@ -3,14 +3,15 @@ process PIXELATOR_ANNOTATE {
     tag "$meta.id"
     label 'process_medium'
 
-    conda (params.enable_conda ? "local::pixelator=0.5.0" : null)
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.5.0'
+    conda "local::pixelator=0.6.3"
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.6.3'
 
     input:
     tuple val(meta), path(h5ad)
 
     output:
-    tuple val(meta), path("annotate/*anndata.h5ad"),             emit: h5ad
+    tuple val(meta), path("annotate/*.anndata.h5ad"),            emit: h5ad
+    tuple val(meta), path("annotate/*.raw_anndata.h5ad"),        emit: raw_h5ad
     tuple val(meta), path("annotate/*pixel_data.csv"),           emit: pixel_data
     tuple val(meta), path("annotate/*.report.json"),             emit: report_json
     tuple val(meta), path("annotate/*.csv"),                     emit: csv

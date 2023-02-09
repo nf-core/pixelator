@@ -224,7 +224,7 @@
             "title": "Options for pixelator annotate command.",
             "properties": {
                 "min_size": {
-                    "description": "TThe minimum size (pixels) a component/cell can have (default is no filtering)",
+                    "description": "The minimum size (pixels) a component/cell can have (default is no filtering)",
                     "type": "integer"
                 },
                 "max_size": {
@@ -234,6 +234,26 @@
                 "min_num_markers": {
                     "description": "The minimum number of detected markers a component/cell can have (default is no filtering)",
                     "type": "integer"
+                },
+                "dynamic_filter": {
+                    "description": "Enable the estimation of dynamic size filters (--min-size) using a log-rank approach",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "no_cell_type_assignments": {
+                    "description": "Disable cell type assignment using pre-trained models",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "no_cell_type_cluster": {
+                    "description": "Disable cell type majority voting for cell types using clustering of components",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "no_doublet_calling": {
+                    "description": "Disable component doublet calling, no information on potential doublets will be added to output data",
+                    "default": false,
+                    "type": "boolean"
                 }
             }
         },
@@ -260,22 +280,10 @@
                     "type": "boolean",
                     "default": false
                 },
-                "binarization": {
-                    "description": "Use the bipartite graph instead of the one-node projection when computing polarization, coabundance and colocalization scores",
+                "normalization": {
+                    "description": "Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and substract the counts of control antibodies[default: CLR]",
                     "type": "string",
-                    "enum": ["percentile", "denoise"],
-                    "default": "percentile"
-                },
-                "percentile": {
-                    "description": "The percentile value (0-1) to use when binarizing counts in the polarization and co-localization algorithms [default: 0.0; 0.0<=x<=1.0]",
-                    "type": "number",
-                    "default": 0.0,
-                    "minimum": 0.0,
-                    "maximum": 1.0
-                },
-                "antibody_control": {
-                    "description": "A comma separated list of antibodies to use as control for the denoise binarization method (--binarization). The antibody(s) must be present in the data with the same names",
-                    "type": "string"
+                    "default": "CLR"
                 }
             }
         },
@@ -470,12 +478,6 @@
                     "description": "Show all params when using `--help`",
                     "hidden": true,
                     "help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters."
-                },
-                "enable_conda": {
-                    "type": "boolean",
-                    "description": "Run this workflow with Conda. You can also use '-profile conda' instead of providing this parameter.",
-                    "hidden": true,
-                    "fa_icon": "fas fa-bacon"
                 },
                 "testdata_root": {
                     "type": "string",
