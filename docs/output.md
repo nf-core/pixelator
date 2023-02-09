@@ -112,13 +112,14 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - `pixelator`
   - `annotate`
   - `<sample-id>.data_summary.png`
-  - `<sample-id>.filtered_anndata.h5ad`
-  - `<sample-id>.filtered_antibody_metrics.csv`
-  - `<sample-id>.filtered_antibody_metrics.png`
-  - `<sample-id>.filtered_components_antibody.csv`
-  - `<sample-id>.filtered_components_dist.png`
-  - `<sample-id>.filtered_components_metrics.csv`
-  - `<sample-id>.filtered_pixel_data.csv`
+  - `<sample-id>.anndata.h5ad`
+  - `<sample-id>.raw_anndata.h5ad`
+  - `<sample-id>.antibody_metrics.csv`
+  - `<sample-id>.antibody_metrics.png`
+  - `<sample-id>.components_antibody.csv`
+  - `<sample-id>.components_dist.png`
+  - `<sample-id>.components_metrics.csv`
+  - `<sample-id>.pixel_data.csv`
   - `<sample-id>.report.json`
   - `/logs` - `*pixelator-annotate.log`: Pixelator cluster log output.
   </details>
@@ -133,6 +134,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
     - `<sample-name>.anndata.h5ad`
     - `<sample-name>.polarization_boxplot.png`
     - `<sample-name>.polarization_heatmap.png`
+    - `<sample-name>.polarization_matrix.csv`
+    - `<sample-name>.polarization_scores.csv`
     - `<sample-name>.polarization_matrix.csv`
     - `<sample-name>.report.json`
   - `/logs` - `*pixelator-analysis.log`: Pixelator analysis log output.
