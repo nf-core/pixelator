@@ -363,14 +363,15 @@ The minimum number of detected markers a cluster/cell must have (default is no f
 
 ### `--min_size`
 
-**Type:** integer 
+**Type:** integer
 
 The minimum size (pixels) a component/cell can have (default is no filtering).
 
 ---
+
 ### `--max_size`
 
-**Type:** integer 
+**Type:** integer
 
 The maximum size (pixels) a component/cell can have (default is no filtering)"
 
@@ -391,6 +392,7 @@ The maximum size (pixels) a component/cell can have (default is no filtering)"
 "The minimum number of detected markers a component/cell can have (default is no filtering)"
 
 ---
+
 ### `dynamic_filter`
 
 **Type:** boolean
@@ -467,9 +469,7 @@ Use the bipartite graph instead of the one-node projection when computing polari
 **Options:** [raw|CLR|denoise]
 **Default:** CLR
 
-
 Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and subtract the counts of control antibodies
-
 
 <a name="options-for-pixelator-report-command"/>
 
