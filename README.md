@@ -111,6 +111,7 @@ nf-core/pixelator was originally written for [Pixelgen Technologies AB](https://
 - Florian De Temmerman
 - Alvaro Martinez Barrio
 - Jose Fernandez Navarro
+- Johan Dahlberg
 
 <!-- We thank the following people for their extensive assistance in the development of this pipeline: -->
 
