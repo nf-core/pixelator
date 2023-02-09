@@ -281,7 +281,7 @@
                     "default": false
                 },
                 "normalization": {
-                    "description": "Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and substract the counts of control antibodies[default: CLR]",
+                    "description": "Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and subtract the counts of control antibodies",
                     "type": "string",
                     "default": "CLR"
                 }
