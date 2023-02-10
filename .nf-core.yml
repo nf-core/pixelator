@@ -6,3 +6,4 @@ lint:
   files_unchanged:
     - .github/workflows/linting_comment.yml
     - .github/workflows/linting.yml
+    - .github/CONTRIBUTING.md
