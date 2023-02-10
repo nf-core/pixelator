@@ -28,6 +28,23 @@ jobs:
           concurrent_skipping: "same_content_newer"
           skip_after_successful_duplicate: "true"
 
+  commitlint:
+    needs: pre_job
+    if: needs.pre_job.outputs.should_skip != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+
+      - name: Install commitlint
+        run: npm install -g @commitlint/cli @commitlint/config-conventional
+
+      - name: Run commitlint checks
+        run: commitlint --from=HEAD~1
+
   EditorConfig:
     needs: pre_job
     if: needs.pre_job.outputs.should_skip != 'true'
