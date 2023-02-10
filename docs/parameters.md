@@ -615,12 +615,12 @@ Send plain-text email instead of HTML.
 
 ---
 
-### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-upload.svg" width=16 height=16 /> `--max_multiqc_email_size`
+### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-upload.svg" width=16 height=16 /> `--max_email_size`
 
 **Type:** string
 **Default:** 25.MB
 
-File size limit when attaching MultiQC reports to summary emails.
+File size limit when attaching reports to summary emails.
 
 ---
 
