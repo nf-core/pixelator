@@ -10,6 +10,7 @@ process COLLECT_METADATA {
 
     output:
     path "metadata.json", emit: metadata
+    path "versions.yml",  emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -53,5 +54,13 @@ process COLLECT_METADATA {
 
     with open("metadata.json", 'w') as f:
         json.dump(root, f)
+
+    with open("versions.yml", 'w') as f:
+        f.write(
+f'''
+"${task.process}":
+    python: {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}
+'''
+        )
     """
 }
