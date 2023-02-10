@@ -36,7 +36,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 5. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://github.com/PixelgenTechnologies/pixelator))
 6. Compute the components/clusters of the graph from the edge list matrix.([`pixelator cluster`](https://github.com/PixelgenTechnologies/pixelator))
 7. Analyze components/clusters of the graph.([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
-8. Filter, annotate and call cells on samples ([`pixelator annotate`](#pixelator-annotate)))
+8. Filter, annotate and call cells on samples ([`pixelator annotate`](https://github.com/PixelgenTechnologies/pixelator))
 9. Result aggregation ([`pixelator aggregate`](https://github.com/PixelgenTechnologies/pixelator))
 10. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
 
@@ -44,25 +44,14 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 > **_NOTE:_** Only docker and local profile are currently supported
 
+This quick start guide covers running nf-core/pixelator as a user. If you are a developer looking
+to run and develop nf-core/pixelator look in the [developer documentation](docs/developer-docs.md).
+
 1. Install [`Nextflow`](https://www.nextflow.io/docs/latest/getstarted.html#installation) (`>=22.04.5`)
 
 2. Install any of [`Docker`](https://docs.docker.com/engine/installation/), [`Singularity`](https://www.sylabs.io/guides/3.0/user-guide/) (you can follow [this tutorial](https://singularity-tutorial.github.io/01-installation/)), [`Podman`](https://podman.io/), [`Shifter`](https://nersc.github.io/development/shifter/how-to-use/) or [`Charliecloud`](https://hpc.github.io/charliecloud/) for full pipeline reproducibility _(you can use [`Conda`](https://conda.io/miniconda.html) both to install Nextflow itself and also to manage software within pipelines. Please only use it within pipelines as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))_.
 
-3. Provide github credentials to nextflow
-
-Create or edit the file: $HOME/.nextflow/scm
-and add the `github` block under the providers section.
-
-```
-providers {
-  github {
-    user = 'GitHub username'
-    password = '<GitHub Access token (select Classic when creating it) with repo (full), and read:packages scope>'
-  }
-}
-```
-
-4. Download the pipeline and test it on a minimal dataset with a single command:
+3. Download the pipeline and test it on a minimal dataset with a single command:
 
 ```bash
 nextflow run PixelgenTechnologies/nf-core-pixelator -profile test,<selected profile, e.g. docker, see instructions below> --outdir "./results"  --testdata_root "<root directory of nf-core-pixelator-datasets>"
@@ -80,12 +69,6 @@ Note that some form of configuration will be needed so that Nextflow knows how t
 > - Please check [nf-core/configs](https://github.com/nf-core/configs#documentation) to see if a custom config file to run nf-core pipelines already exists for your Institute. If so, you can simply use `-profile <institute>` in your command. This will enable either `docker` or `singularity` and set the appropriate execution settings for your local compute environment.
 > - If you are using `singularity`, please use the [`nf-core download`](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) command to download images first, before running the pipeline. Setting the [`NXF_SINGULARITY_CACHEDIR` or `singularity.cacheDir`](https://www.nextflow.io/docs/latest/singularity.html?#singularity-docker-hub) Nextflow options enables you to store and re-use the images from a central location for future pipeline runs.
 > - If you are using `conda`, it is highly recommended to use the [`NXF_CONDA_CACHEDIR` or `conda.cacheDir`](https://www.nextflow.io/docs/latest/conda.html) settings to store the environments in a central location for future pipeline runs.
-
-When running with docker you will also have to authenticate your Docker client with the Github Container Registry.
-
-```bash
-echo <github PAT token with read_repository scope> | docker login ghcr.io -u <github username> --password-stdin
-```
 
 4. Start running your own analysis!
 

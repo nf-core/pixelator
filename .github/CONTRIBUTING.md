@@ -3,6 +3,9 @@
 Hi there!
 Many thanks for taking an interest in improving nf-core/pixelator.
 
+Here you will find information on how to contribute to nf-core/pixelator. If you are interested in reading
+some general developer documentation you can find it [here](../docs/developer-docs.md).
+
 We try to manage the required tasks for nf-core/pixelator using GitHub issues, you probably came to this page when creating one.
 Please use the pre-filled template to save time.
 
@@ -43,12 +46,6 @@ Each `nf-core` pipeline should be set up with a minimal set of test-data.
 `GitHub Actions` then runs the pipeline on this data to ensure that it exits successfully.
 If there are any failures then the automated tests fail.
 These tests are run both with the latest available version of `Nextflow` and also the minimum required version that is stated in the pipeline code.
-
-### pre-commit hooks
-
-Linting tests and formatting can be run automatically before each commit using pre-commit.
-You can install pre-commit into your environment with `pip install pre-commit`.
-To register the hooks you can run `pre-commit install --install-hooks`
 
 ## Patch
 
