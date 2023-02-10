@@ -57,10 +57,10 @@ process COLLECT_METADATA {
 
     with open("versions.yml", 'w') as f:
         f.write(
-f'''
-"${task.process}":
-    python: {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}
-'''
+    f'''
+    "${task.process}":
+        python: {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}
+    '''
         )
     """
 }
