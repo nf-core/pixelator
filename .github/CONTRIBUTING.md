@@ -44,13 +44,11 @@ Each `nf-core` pipeline should be set up with a minimal set of test-data.
 If there are any failures then the automated tests fail.
 These tests are run both with the latest available version of `Nextflow` and also the minimum required version that is stated in the pipeline code.
 
-
 ### pre-commit hooks
 
 Linting tests and formatting can be run automatically before each commit using pre-commit.
 You can install pre-commit into your environment with `pip install pre-commit`.
 To register the hooks you can run `pre-commit install --install-hooks`
-
 
 ## Patch
 
