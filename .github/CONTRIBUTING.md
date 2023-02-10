@@ -44,6 +44,12 @@ Each `nf-core` pipeline should be set up with a minimal set of test-data.
 If there are any failures then the automated tests fail.
 These tests are run both with the latest available version of `Nextflow` and also the minimum required version that is stated in the pipeline code.
 
+### pre-commit hooks
+
+Linting tests and formatting can be run automatically before each commit using pre-commit.
+You can install pre-commit into your environment with `pip install pre-commit`.
+To register the hooks you can run `pre-commit install --install-hooks`
+
 ## Patch
 
 :warning: Only in the unlikely and regretful event of a release happening with a bug.
@@ -101,6 +107,12 @@ If you are using a new feature from core Nextflow, you may bump the minimum requ
 ### Images and figures
 
 For overview images and other documents we follow the nf-core [style guidelines and examples](https://nf-co.re/developers/design_guidelines).
+
+### Commit messages
+
+We are following the the [conventional commits specification](https://www.conventionalcommits.org/en/v1.0.0/).
+The CI will check you commit messages and fail if they do not adhere to the standard.
+It is recommended to install the Git hooks with [pre-commit](#pre-commit-hooks) so that your commit messages will be checked on your local machine before the commit is executed.
 
 ## GitHub Codespaces
 
