@@ -57,7 +57,7 @@ and add the `github` block under the providers section.
 providers {
   github {
     user = 'GitHub username'
-    password = '<GitHub Access token with read_api, read_registry and read_repository scope>'
+    password = '<GitHub Access token (select Classic when creating it) with repo (full), and read:packages scope>'
   }
 }
 ```
@@ -65,7 +65,7 @@ providers {
 4. Download the pipeline and test it on a minimal dataset with a single command:
 
 ```bash
-nextflow run PixelgenTechnologies/nf-core-pixelator -profile test,YOURPROFILE --outdir "./results"  --testdata_root "<root directory of nf-core-pixelator-datasets>"
+nextflow run PixelgenTechnologies/nf-core-pixelator -profile test,<selected profile, e.g. docker, see instructions below> --outdir "./results"  --testdata_root "<root directory of nf-core-pixelator-datasets>"
 ```
 
 Note that you will first have to clone the testdata repository and then pass the path to the cloned repository with `--testdata_root`
@@ -111,6 +111,7 @@ nf-core/pixelator was originally written for [Pixelgen Technologies AB](https://
 - Florian De Temmerman
 - Alvaro Martinez Barrio
 - Jose Fernandez Navarro
+- Johan Dahlberg
 
 <!-- We thank the following people for their extensive assistance in the development of this pipeline: -->
 

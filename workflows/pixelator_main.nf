@@ -73,6 +73,7 @@ workflow PIXELATOR_MAIN {
     ch_versions = Channel.empty()
 
     COLLECT_METADATA()
+    ch_versions = ch_versions.mix(COLLECT_METADATA.out.versions)
 
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     INPUT_CHECK (

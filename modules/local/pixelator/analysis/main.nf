@@ -3,8 +3,8 @@ process PIXELATOR_ANALYSIS {
     tag "$meta.id"
     label 'process_medium'
 
-    conda (params.enable_conda ? "local::pixelator=0.5.0" : null)
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.5.0'
+    conda "local::pixelator=0.6.3"
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.6.3'
 
     input:
     tuple val(meta), path(h5ad)

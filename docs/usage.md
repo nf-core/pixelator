@@ -57,6 +57,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
+# TODO Update usage string here, no genome needed for example?
 nextflow run PixelgenTechnologies/nf-core-pixelator --input samplesheet.csv --outdir <OUTDIR> --genome GRCh37 -profile docker
 ```
 

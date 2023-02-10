@@ -4,9 +4,9 @@ process PIXELATOR_CLUSTER {
     tag "$meta.id"
     label 'process_high'
 
-    conda (params.enable_conda ? "local::pixelator=0.5.0" : null)
+    conda "local::pixelator=0.6.3"
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.5.0'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.6.3'
 
     input:
     tuple val(meta), path(edge_list), path(antibody_panel)

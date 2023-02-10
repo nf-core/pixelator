@@ -4,9 +4,9 @@ process PIXELATOR_REPORT {
     tag "$meta.id"
     label 'process_low'
 
-    conda (params.enable_conda ? "local::pixelator=0.5.0" : null)
+    conda "local::pixelator=0.6.3"
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.5.0'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.6.3'
 
     input:
     val meta
@@ -19,16 +19,17 @@ process PIXELATOR_REPORT {
     path analysis_report_json,          stageAs: "results/analysis/*"
 
     output:
-    path("reports/report/report.html"),                              emit: report
-    path("reports/report/summary_histograms.html"),                  emit: summary_histograms
-    path("reports/report/antibody_counts_barplot.html"),             emit: antibody_counts_barplot
-    path("reports/report/antibody_counts_barplot_filtered.html"),    emit: antibody_counts_barplot_filtered
-    path("reports/report/antibody_counts_histogram.html"),           emit: antibody_counts_histogram
-    path("reports/report/antibody_counts_histogram_filtered.html"),  emit: antibody_counts_histogram_filtered
-    path("reports/report/cluster_size_dist.html"),                   emit: clusters_size_dist
-    path("reports/report/cluster_size_dist_filtered.html"),          emit: clusters_size_dist_filtered
-    path("reports/report/*.csv"),                                    emit: data
-    path "versions.yml",                                             emit: versions
+    path("reports/report/report.html"),                                     emit: report
+    path("reports/report/summary_histograms_raw.html"),                     emit: summary_histograms_raw
+    path("reports/report/summary_histograms_filtered.html"),                emit: summary_histograms_filtered
+    path("reports/report/antibody_counts_barplot_log_filtered.html"),       emit: antibody_counts_barplot_log_filtered
+    path("reports/report/antibody_counts_barplot_log_raw.html"),            emit: antibody_counts_barplot_raw_filtered
+    path("reports/report/antibody_counts_barplot_rel_filtered.html"),       emit: antibody_counts_barplot_rel_filtered
+    path("reports/report/antibody_counts_barplot_rel_raw.html"),            emit: antibody_counts_barplot_rel_raw
+    path("reports/report/cluster_size_dist_raw.html"),                      emit: clusters_size_dist_raw
+    path("reports/report/cluster_size_dist_filtered.html"),                 emit: clusters_size_dist_filtered
+    path("reports/report/*.csv"),                                           emit: data
+    path "versions.yml",                                                    emit: versions
 
     when:
     task.ext.when == null || task.ext.when

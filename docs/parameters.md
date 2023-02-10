@@ -359,6 +359,76 @@ The minimum number of detected markers a cluster/cell must have (default is no f
 
 <a name="options-for-pixelator-analysis-command"/>
 
+## Options for pixelator annotate command.
+
+### `--min_size`
+
+**Type:** integer
+
+The minimum size (pixels) a component/cell can have (default is no filtering).
+
+---
+
+### `--max_size`
+
+**Type:** integer
+
+The maximum size (pixels) a component/cell can have (default is no filtering)"
+
+---
+
+### `min_num_markers`
+
+**Type:** integer
+
+"The minimum number of detected markers a component/cell can have (default is no filtering)"
+
+---
+
+### `min_num_markers`
+
+**Type:** integer
+
+"The minimum number of detected markers a component/cell can have (default is no filtering)"
+
+---
+
+### `dynamic_filter`
+
+**Type:** boolean
+**Default:** false
+
+Enable the estimation of dynamic size filters (--min-size) using a log-rank approach
+
+---
+
+### `no_cell_type_assignments`
+
+**Type:** boolean
+**Default:** false
+
+Disable cell type assignment using pre-trained models
+
+---
+
+### `no_cell_type_cluster`
+
+**Type:** boolean
+**Default:** false
+
+Disable cell type majority voting for cell types using clustering of components
+
+---
+
+### `no_doublet_calling`
+
+**Type:** boolean
+**Default:** false
+
+Disable component doublet calling, no information on potential doublets will be added to output data
+
+---
+
 ## Options for pixelator analysis command.
 
 ### `--compute_polarization`
@@ -393,29 +463,13 @@ Use the bipartite graph instead of the one-node projection when computing polari
 
 ---
 
-### `--binarization`
+### `--normalization`
 
 **Type:** string
-**Options:** [percentile|denoise]
-**Default:** percentile
+**Options:** [raw|CLR|denoise]
+**Default:** CLR
 
-Use the bipartite graph instead of the one-node projection when computing polarization, coabundance and colocalization scores
-
----
-
-### `--percentile`
-
-**Type:** number
-
-The percentile value (0-1) to use when binarizing counts in the polarization and co-localization algorithms [default: 0.0; 0.0<=x<=1.0]
-
----
-
-### `--antibody_control`
-
-**Type:** string
-
-A comma separated list of antibodies to use as control for the denoise binarization method (--binarization). The antibody(s) must be present in the data with the same names
+Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and subtract the counts of control antibodies
 
 <a name="options-for-pixelator-report-command"/>
 
@@ -561,12 +615,12 @@ Send plain-text email instead of HTML.
 
 ---
 
-### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-upload.svg" width=16 height=16 /> `--max_multiqc_email_size`
+### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/file-upload.svg" width=16 height=16 /> `--max_email_size`
 
 **Type:** string
 **Default:** 25.MB
 
-File size limit when attaching MultiQC reports to summary emails.
+File size limit when attaching reports to summary emails.
 
 ---
 

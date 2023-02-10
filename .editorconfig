@@ -15,7 +15,7 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = tab
 
-[*.{md,yml,yaml,html,css,scss,js,cff}]
+[*.{md,md,yml,yaml,html,css,scss,js,cff,html,css,scss,js,cff}]
 indent_size = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
