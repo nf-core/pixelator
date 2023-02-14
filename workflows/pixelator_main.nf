@@ -162,20 +162,23 @@ workflow PIXELATOR_MAIN {
     // Collect outputs from all stages and samples into a set of single value channels
     // to pass to the report generation step.
     //
-    ch_preqc_col           = PIXELATOR_PREQC.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_adapterqc_col       = PIXELATOR_ADAPTERQC.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_demux_col           = PIXELATOR_DEMUX.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_collapse_col        = PIXELATOR_COLLAPSE.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_preqc_col                 = PIXELATOR_PREQC.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_adapterqc_col             = PIXELATOR_ADAPTERQC.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_demux_col                 = PIXELATOR_DEMUX.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_collapse_col              = PIXELATOR_COLLAPSE.out.report_json.map { meta, data -> [ meta.id, data] }
 
-    ch_cluster_json_report = PIXELATOR_CLUSTER.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_cluster_csv_data    = PIXELATOR_CLUSTER.out.csv.map { meta, data -> [ meta.id, data] }
-    ch_cluster_col         = ch_cluster_json_report.concat(ch_cluster_csv_data).groupTuple()
+    ch_cluster_json_report       = PIXELATOR_CLUSTER.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_cluster_csv_data          = PIXELATOR_CLUSTER.out.csv.map { meta, data -> [ meta.id, data] }
+    ch_cluster_col               = ch_cluster_json_report.concat(ch_cluster_csv_data).groupTuple()
 
-    ch_annotate_json_report = PIXELATOR_ANNOTATE.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_annotate_csv_data    = PIXELATOR_ANNOTATE.out.csv.map { meta, data -> [ meta.id, data] }
-    ch_annotate_col         = ch_annotate_json_report.concat(ch_annotate_csv_data).groupTuple()
+    ch_annotate_json_report      = PIXELATOR_ANNOTATE.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_annotate_csv_data         = PIXELATOR_ANNOTATE.out.csv.map { meta, data -> [ meta.id, data] }
+    ch_annotate_raw_h5ad_data    = PIXELATOR_ANNOTATE.out.raw_h5ad.map { meta, data -> [ meta.id, data] }
+    ch_annotate_col              = ch_annotate_json_report.concat(ch_annotate_csv_data).concat(ch_annotate_raw_h5ad_data).groupTuple()
 
-    ch_analysis_col         = PIXELATOR_ANALYSIS.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_analysis_json_report      = PIXELATOR_ANALYSIS.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_analysis_h5ad_data        = PIXELATOR_ANALYSIS.out.h5ad.map { meta, data -> [ meta.id, data] }
+    ch_analysis_col              = ch_analysis_json_report.concat(ch_analysis_h5ad_data).groupTuple()
 
 
     ch_report_data     = ch_preqc_col

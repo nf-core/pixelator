@@ -4,9 +4,9 @@ process PIXELATOR_CLUSTER {
     tag "$meta.id"
     label 'process_high'
 
-    conda "local::pixelator=0.6.3"
+    conda "local::pixelator=${pixelator_tag}"
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.6.3'
+    container "ghcr.io/pixelgentechnologies/pixelator:${pixelator_tag}"
 
     input:
     tuple val(meta), path(edge_list), path(antibody_panel)
@@ -42,7 +42,7 @@ process PIXELATOR_CLUSTER {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>&1) | sed 's/pixelator, version //g' )
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
 }
