@@ -4,9 +4,9 @@ process PIXELATOR_REPORT {
     tag "$meta.id"
     label 'process_low'
 
-    conda "local::pixelator=0.6.3"
+    conda "local::pixelator=${pixelator_tag}"
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.6.3'
+    container "ghcr.io/pixelgentechnologies/pixelator:${pixelator_tag}"
 
     input:
     val meta

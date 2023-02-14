@@ -397,7 +397,8 @@
                     "description": "Override which container tag of pixelator to use. Use carefully!",
                     "help_text": "This option allows you to use a different container tag for the pixelator tool.\nThis is intended for developers and power-users and can break the pipeline. Use on your own risk!",
                     "fa_icon": "fas fa-question-circle",
-                    "hidden": true
+                    "hidden": true,
+                    "default": "0.7.0"
                 }
             }
         },
