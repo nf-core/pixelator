@@ -43,7 +43,7 @@ process PIXELATOR_ADAPTERQC {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>&1) | sed 's/pixelator, version //g' )
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
 }
