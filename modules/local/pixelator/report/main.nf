@@ -4,9 +4,9 @@ process PIXELATOR_REPORT {
     tag "$meta.id"
     label 'process_low'
 
-    conda "local::pixelator=0.6.3"
+    conda "local::pixelator=${pixelator_tag}"
 
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.6.3'
+    container "ghcr.io/pixelgentechnologies/pixelator:${pixelator_tag}"
 
     input:
     val meta
@@ -49,7 +49,7 @@ process PIXELATOR_REPORT {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>&1) | sed 's/pixelator, version //g' )
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
 }

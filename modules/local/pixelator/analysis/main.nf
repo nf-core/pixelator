@@ -3,8 +3,8 @@ process PIXELATOR_ANALYSIS {
     tag "$meta.id"
     label 'process_medium'
 
-    conda "local::pixelator=0.6.3"
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.6.3'
+    conda "local::pixelator=${pixelator_tag}"
+    container "ghcr.io/pixelgentechnologies/pixelator:${pixelator_tag}"
 
     input:
     tuple val(meta), path(h5ad)
@@ -38,7 +38,7 @@ process PIXELATOR_ANALYSIS {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>&1) | sed 's/pixelator, version //g' )
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
 }
