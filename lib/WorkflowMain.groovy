@@ -3,6 +3,7 @@
 //
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
+import nextflow.Nextflow
 
 class WorkflowMain {
 
@@ -99,11 +100,41 @@ class WorkflowMain {
         return null
     }
 
-    public static void writeMetrics(workflow, params) {
+    private static String pixelgenOutputDir(workflow, params) {
+        // Function used to generate the an output path on the form:
+        // <flowcell identifer>/<nf-core-pixelator version>-<pixelator version>/<date>-<sha>/
+
+        // TODO This duplicates the function in `pixelgen.config`. It's ugly, but I've
+        // not figured out any better way to do this so far.
+
+        // TODO Do we want to assume that the dir one start the pipeline in is the
+        // flowcell?
+        def flowcellName = workflow.launchDir.getFileName()
+        def pipelineVersion = workflow.manifest.version
+        def pixelatorVersion = params.pixelator_tag ?: "unknown"
+        def today = new Date().format("yyyy-MM-dd")
+
+        def samplesheet = Nextflow.file(params.input)
+        def samplesheetSha = samplesheet.bytes.digest('sha-1')
+        def parameterSha = params.sort().toString().digest('sha-1')
+        def combinedSha = "${samplesheetSha}${parameterSha}".digest("sha-1").substring(0, 6)
+
+        return "${flowcellName}/${pipelineVersion}/${pixelatorVersion}/${today}/${combinedSha}"
+    }
+
+    public static void writeMetadata(workflow, params) {
         // Write detailed pipeline metrics
-        def output_d = new File("${params.outdir}/pipeline_info/")
-        if (!output_d.exists()) {
-            output_d.mkdirs()
+
+        def outputDir = new File("${params.outdir}/pipeline_info")
+
+        // If we load the custom pixelgen conf write to the custom directory
+        def pixelgenConfPath = System.getenv('CUSTOM_PIXELGEN_CONF')
+        if (pixelgenConfPath?.trim()){
+            outputDir = new File("${params.outdir}/${WorkflowMain.pixelgenOutputDir(workflow, params)}/pipeline_info")
+        }
+
+        if (!outputDir.exists()) {
+            outputDir.mkdirs()
         }
 
         final nextflow_dict = [
@@ -153,7 +184,7 @@ class WorkflowMain {
             errorReport: workflow?.errorReport,
         ]
 
-        def metadata_file = new File(output_d, "metadata.json")
+        def metadata_file = new File(outputDir, "metadata.json")
         Map metadata = [:]
 
         if (metadata_file.exists() && metadata_file.text.length() > 0) {
@@ -164,6 +195,7 @@ class WorkflowMain {
             nextflow: nextflow_dict,
             manifest: manifest_dict,
             workflow : workflow_dict,
+            parameters: params
         ]
 
         def builder = new JsonBuilder(metadata)
