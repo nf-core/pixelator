@@ -102,14 +102,11 @@ class WorkflowMain {
 
     private static String pixelgenOutputDir(workflow, params) {
         // Function used to generate the an output path on the form:
-        // <flowcell identifer>/<nf-core-pixelator version>-<pixelator version>/<date>-<sha>/
+        // /<nf-core-pixelator version>-<pixelator version>/<date>-<sha>/
 
         // TODO This duplicates the function in `pixelgen.config`. It's ugly, but I've
         // not figured out any better way to do this so far.
 
-        // TODO Do we want to assume that the dir one start the pipeline in is the
-        // flowcell?
-        def flowcellName = workflow.launchDir.getFileName()
         def pipelineVersion = workflow.manifest.version
         def pixelatorVersion = params.pixelator_tag ?: "unknown"
         def today = new Date().format("yyyy-MM-dd")
@@ -119,7 +116,7 @@ class WorkflowMain {
         def parameterSha = params.sort().toString().digest('sha-1')
         def combinedSha = "${samplesheetSha}${parameterSha}".digest("sha-1").substring(0, 6)
 
-        return "${flowcellName}/${pipelineVersion}/${pixelatorVersion}/${today}/${combinedSha}"
+        return "${pipelineVersion}/${pixelatorVersion}/${today}/${combinedSha}"
     }
 
     public static void writeMetadata(workflow, params) {
