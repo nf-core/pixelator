@@ -141,21 +141,21 @@ workflow PIXELATOR_MAIN {
     ch_collapsed.dump(tag: "ch_collapsed")
     ch_versions = ch_versions.mix(PIXELATOR_COLLAPSE.out.versions.first())
 
-    ch_collapsed_and_panel = ch_collapsed.join(ch_panels)
-    ch_collapsed_and_panel.dump(tag: "ch_collapsed_and_panel")
-
-    PIXELATOR_CLUSTER ( ch_collapsed_and_panel )
-    ch_clustered = PIXELATOR_CLUSTER.out.h5ad
+    PIXELATOR_CLUSTER ( ch_collapsed )
+    ch_clustered = PIXELATOR_CLUSTER.out.edgelist
     ch_clustered.dump(tag: "ch_clustered")
     ch_versions = ch_versions.mix(PIXELATOR_CLUSTER.out.versions.first())
 
-    PIXELATOR_ANNOTATE ( ch_clustered )
-    ch_annotated = PIXELATOR_ANNOTATE.out.h5ad
+    ch_clustered_and_panel = ch_clustered.join(ch_panels)
+    ch_clustered_and_panel.dump(tag: "ch_clustered_and_panel")
+
+    PIXELATOR_ANNOTATE ( ch_clustered_and_panel )
+    ch_annotated = PIXELATOR_ANNOTATE.out.dataset
     ch_annotated.dump(tag: "ch_annotated")
     ch_versions = ch_versions.mix(PIXELATOR_ANNOTATE.out.versions.first())
 
     PIXELATOR_ANALYSIS ( ch_annotated )
-    ch_analysed = PIXELATOR_ANALYSIS.out.h5ad
+    ch_analysed = PIXELATOR_ANALYSIS.out.dataset
     ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())
 
     //
@@ -166,22 +166,11 @@ workflow PIXELATOR_MAIN {
     ch_adapterqc_col             = PIXELATOR_ADAPTERQC.out.report_json.map { meta, data -> [ meta.id, data] }
     ch_demux_col                 = PIXELATOR_DEMUX.out.report_json.map { meta, data -> [ meta.id, data] }
     ch_collapse_col              = PIXELATOR_COLLAPSE.out.report_json.map { meta, data -> [ meta.id, data] }
+    ch_cluster_col               = PIXELATOR_CLUSTER.out.all_results.map { meta, data -> [ meta.id, data] }
+    ch_annotate_col              = PIXELATOR_ANNOTATE.out.all_results.map { meta, data -> [ meta.id, data] }
+    ch_analysis_col              = PIXELATOR_ANALYSIS.out.all_results.map { meta, data -> [ meta.id, data] }
 
-    ch_cluster_json_report       = PIXELATOR_CLUSTER.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_cluster_csv_data          = PIXELATOR_CLUSTER.out.csv.map { meta, data -> [ meta.id, data] }
-    ch_cluster_col               = ch_cluster_json_report.concat(ch_cluster_csv_data).groupTuple()
-
-    ch_annotate_json_report      = PIXELATOR_ANNOTATE.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_annotate_csv_data         = PIXELATOR_ANNOTATE.out.csv.map { meta, data -> [ meta.id, data] }
-    ch_annotate_raw_h5ad_data    = PIXELATOR_ANNOTATE.out.raw_h5ad.map { meta, data -> [ meta.id, data] }
-    ch_annotate_col              = ch_annotate_json_report.concat(ch_annotate_csv_data).concat(ch_annotate_raw_h5ad_data).groupTuple()
-
-    ch_analysis_json_report      = PIXELATOR_ANALYSIS.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_analysis_h5ad_data        = PIXELATOR_ANALYSIS.out.h5ad.map { meta, data -> [ meta.id, data] }
-    ch_analysis_col              = ch_analysis_json_report.concat(ch_analysis_h5ad_data).groupTuple()
-
-
-    ch_report_data     = ch_preqc_col
+    ch_report_data = ch_preqc_col
         .concat ( ch_adapterqc_col )
         .concat ( ch_demux_col )
         .concat ( ch_collapse_col )
@@ -198,7 +187,7 @@ workflow PIXELATOR_MAIN {
     ch_collapse_grouped     = ch_report_data.map { id, data -> data[3] }.collect()
     ch_cluster_grouped      = ch_report_data.map { id, data -> data[4].flatten() }.collect()
     ch_annotate_grouped     = ch_report_data.map { id, data -> data[5].flatten() }.collect()
-    ch_analysis_grouped     = ch_report_data.map { id, data -> data[6] }.collect()
+    ch_analysis_grouped     = ch_report_data.map { id, data -> data[6].flatten() }.collect()
 
     ch_report_meta = ch_report_data
         .map { it -> it[0] }.collect()

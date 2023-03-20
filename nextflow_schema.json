@@ -399,6 +399,12 @@
                     "fa_icon": "fas fa-question-circle",
                     "hidden": true,
                     "default": "0.7.0"
+                },
+                "pixelator_container": {
+                    "type": "string",
+                    "description": "The exact container to use. Overrides container defined by pixelator_container_source and pixelator_tag.",
+                    "hidden": true,
+                    "default": null
                 }
             }
         },

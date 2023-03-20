@@ -13,7 +13,7 @@ process PIXELATOR_COLLAPSE {
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("collapse/*.collapsed.csv"),        emit: collapsed
+    tuple val(meta), path("collapse/*.collapsed.csv.gz"),     emit: collapsed
     tuple val(meta), path("collapse/*.report.json"),          emit: report_json
     tuple val(meta), path("collapse"),                        emit: results_dir
     tuple val(meta), path("*pixelator-collapse.log"),         emit: log
