@@ -119,6 +119,16 @@
                 "demux_min_length": {
                     "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design",
                     "type": ["integer", "null"]
+                },
+                "anchored": {
+                    "description": "Enforce the barcodes to be anchored (at the end of the read)",
+                    "type": "boolean",
+                    "default": false
+                },
+                "rev_complement": {
+                    "description": "Use the reverse complement of the barcodes sequences",
+                    "type": "boolean",
+                    "default": false
                 }
             }
         },
@@ -253,6 +263,11 @@
                     "description": "Disable component doublet calling, no information on potential doublets will be added to output data",
                     "default": false,
                     "type": "boolean"
+                },
+                "no_aggregate_calling": {
+                    "description": "Disable aggregate calling, no information on potential aggregates will be added to output data",
+                    "default": false,
+                    "type": "boolean"
                 }
             }
         },
@@ -282,7 +297,13 @@
                 "normalization": {
                     "description": "Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and subtract the counts of control antibodies",
                     "type": "string",
+                    "enum": ["raw", "CLR", "denoise"],
                     "default": "CLR"
+                },
+                "binarization": {
+                    "description": "Transform the antibody counts to 0-1 (binarize) when computing polarization",
+                    "type": "boolean",
+                    "default": false
                 }
             }
         },
@@ -399,6 +420,12 @@
                     "fa_icon": "fas fa-question-circle",
                     "hidden": true,
                     "default": "0.7.0"
+                },
+                "pixelator_container": {
+                    "type": "string",
+                    "description": "The exact container to use. Overrides container defined by pixelator_container_source and pixelator_tag.",
+                    "hidden": true,
+                    "default": null
                 }
             }
         },

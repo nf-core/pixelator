@@ -9,15 +9,15 @@ process PIXELATOR_CLUSTER {
     container "ghcr.io/pixelgentechnologies/pixelator:${pixelator_tag}"
 
     input:
-    tuple val(meta), path(edge_list), path(antibody_panel)
+    tuple val(meta), path(edge_list)
 
     output:
-    tuple val(meta), path("cluster/*anndata.h5ad"),             emit: h5ad
-    tuple val(meta), path("cluster/*pixel_data.csv"),           emit: pixel_data
-    tuple val(meta), path("cluster/*.report.json"),             emit: report_json
-    tuple val(meta), path("cluster/*.csv"),                     emit: csv
-    tuple val(meta), path("cluster/*.png"),                     emit: png
-    tuple val(meta), path("*pixelator-cluster.log"),            emit: log
+    tuple val(meta), path("cluster/*.edgelist.csv.gz"),             emit: edgelist
+    tuple val(meta), path("cluster/*.raw_edgelist.csv.gz"),         emit: raw_edgelist
+    tuple val(meta), path("cluster/*.components_recovered.csv"),    emit: components_recovered
+    tuple val(meta), path("cluster/*.report.json"),                 emit: report_json
+    tuple val(meta), path("cluster/*"),                             emit: all_results
+    tuple val(meta), path("*pixelator-cluster.log"),                emit: log
 
     path "versions.yml"           , emit: versions
 
@@ -36,7 +36,6 @@ process PIXELATOR_CLUSTER {
         --verbose \\
         cluster \\
         --output . \\
-        --panel-file $antibody_panel \\
         $args \\
         ${edge_list}
 
