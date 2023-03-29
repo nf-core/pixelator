@@ -297,7 +297,13 @@
                 "normalization": {
                     "description": "Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and subtract the counts of control antibodies",
                     "type": "string",
+                    "enum": ["raw", "CLR", "denoise"],
                     "default": "CLR"
+                },
+                "binarization": {
+                    "description": "Transform the antibody counts to 0-1 (binarize) when computing polarization",
+                    "type": "boolean",
+                    "default": false
                 }
             }
         },
