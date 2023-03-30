@@ -251,23 +251,23 @@
                     "default": false,
                     "type": "boolean"
                 },
-                "no_cell_type_assignments": {
-                    "description": "Disable cell type assignment using pre-trained models",
+                "cell_type_assignments": {
+                    "description": "Enable cell type assignment using pre-trained models",
                     "default": false,
                     "type": "boolean"
                 },
-                "no_cell_type_cluster": {
-                    "description": "Disable cell type majority voting for cell types using clustering of components",
+                "majority_vote": {
+                    "description": "Enable cell type majority voting using clustering of components",
                     "default": false,
                     "type": "boolean"
                 },
-                "no_doublet_calling": {
-                    "description": "Disable component doublet calling, no information on potential doublets will be added to output data",
+                "doublet_calling": {
+                    "description": "Enable component doublet calling, information on potential doublets will be added to output data",
                     "default": false,
                     "type": "boolean"
                 },
-                "no_aggregate_calling": {
-                    "description": "Disable aggregate calling, no information on potential aggregates will be added to output data",
+                "aggregate_calling": {
+                    "description": "Enable aggregate calling, information on potential aggregates will be added to the output data",
                     "default": false,
                     "type": "boolean"
                 }
