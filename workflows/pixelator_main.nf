@@ -185,9 +185,9 @@ workflow PIXELATOR_MAIN {
     ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[1] }.collect()
     ch_demux_grouped        = ch_report_data.map { id, data -> data[2] }.collect()
     ch_collapse_grouped     = ch_report_data.map { id, data -> data[3] }.collect()
-    ch_cluster_grouped      = ch_report_data.map { id, data -> data[4].flatten() }.collect()
-    ch_annotate_grouped     = ch_report_data.map { id, data -> data[5].flatten() }.collect()
-    ch_analysis_grouped     = ch_report_data.map { id, data -> data[6].flatten() }.collect()
+    ch_cluster_grouped      = ch_report_data.map { id, data -> data[4] }.collect()
+    ch_annotate_grouped     = ch_report_data.map { id, data -> data[5] }.collect()
+    ch_analysis_grouped     = ch_report_data.map { id, data -> data[6] }.collect()
 
     ch_report_meta = ch_report_data
         .map { it -> it[0] }.collect()
