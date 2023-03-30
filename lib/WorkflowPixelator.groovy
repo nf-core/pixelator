@@ -10,6 +10,15 @@ class WorkflowPixelator {
     // Check and validate parameters
     //
     public static void initialise(workflow, params, log) {
+        // Check for required options depending on custom config
+        def pixelgenConfPath = System.getenv('CUSTOM_PIXELGEN_CONF')
+
+        if (pixelgenConfPath?.trim()) {
+            if (!params.containsKey("project_name")) {
+                log.error "Missing project name (set with `--project_name` option)"
+            }
+        }
+
         // genomeExistsError(params, log)
     }
 
