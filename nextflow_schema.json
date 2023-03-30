@@ -60,10 +60,12 @@
                 },
                 "max_length": {
                     "type": "integer",
+                    "default": null,
                     "description": "The maximum length (bases) of a read (longer reads will be trimmed off). If you set this argument it will overrrule the value from the chosen design"
                 },
                 "min_length": {
                     "type": "integer",
+                    "default": null,
                     "description": "The minimum length (bases) of a read (shorter reads will be discarded). If you set this argument it will overrrule the value from the chosen design."
                 },
                 "max_n_bases": {
