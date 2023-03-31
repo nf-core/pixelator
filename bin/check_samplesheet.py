@@ -177,11 +177,12 @@ class RowChecker(BaseChecker):
 class PixelatorRowChecker(RowChecker):
     DEFAULT_GROUP = "default"
     VALID_DESIGNS = {"D12", "D12PE", "D19", "D21PE"}
-    REQUIRED_COLUMNS = ["sample", "design", "panel", "fastq_1", "fastq_2"]
+    REQUIRED_COLUMNS = ["sample", "assay", "design", "panel", "fastq_1", "fastq_2"]
 
     def __init__(
         self,
         sample_col="sample",
+        assay_col="assay",
         design_col="design",
         panel_col="panel",
         first_col="fastq_1",
@@ -198,12 +199,19 @@ class PixelatorRowChecker(RowChecker):
         self._samplesheet_path = samplesheet_path
         self._base_dir = PurePath(self._samplesheet_path).parent if self._samplesheet_path else None
         self._panel_col = panel_col
+        self._assay_col = assay_col
 
     @classmethod
     def output_headers(cls, headers: Iterable[str]) -> List[str]:
         headers = list(headers)
         headers.insert(1, "single_end")
         return headers
+
+    def _validate_assay(self, row):
+        """Assert that the assay column exists and has supported values."""
+        val = row[self._assay_col]
+        if len(val) <= 0:
+            raise AssertionError(f"The {self._assay_col} field is required.")
 
     def _validate_design(self, row):
         """Assert that the design column exists and has supported values."""
@@ -239,6 +247,7 @@ class PixelatorRowChecker(RowChecker):
 
         """
         self._validate_sample(row)
+        self._validate_assay(row)
         self._validate_design(row)
         self._validate_first(row)
         self._validate_second(row)

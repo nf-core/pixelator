@@ -31,6 +31,7 @@ def get_meta(LinkedHashMap row) {
     meta.single_end   = row.single_end.toBoolean()
     meta.design       = row.design
     meta.group        = row.group
+    meta.assay        = row.assay
     return meta
 }
 
