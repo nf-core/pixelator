@@ -240,10 +240,6 @@
                     "description": "The maximum size (pixels) a component/cell can have (default is no filtering)",
                     "type": "integer"
                 },
-                "min_num_markers": {
-                    "description": "The minimum number of detected markers a component/cell can have (default is no filtering)",
-                    "type": "integer"
-                },
                 "dynamic_filter": {
                     "description": "Enable the estimation of dynamic size filters (--min-size) using a log-rank approach",
                     "default": false,

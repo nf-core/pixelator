@@ -18,14 +18,14 @@
 ## off). If you set this argument it will overrrule the value from the
 ## chosen design
 ## ---------------------------------------------
-# max_length: null
+# max_length:
 
 ## ---------------------------------------------
 ## The minimum length (bases) of a read (shorter reads will be
 ## discarded). If you set this argument it will overrrule the value from
 ## the chosen design.
 ## ---------------------------------------------
-# min_length: null
+# min_length:
 
 ## ---------------------------------------------
 ## The maximum number of Ns allowed in a read
@@ -219,39 +219,32 @@
 # max_size:
 
 ## ---------------------------------------------
-## The minimum number of detected markers a component/cell can have
-## (default is no filtering)
-## ---------------------------------------------
-# min_num_markers:
-
-## ---------------------------------------------
 ## Enable the estimation of dynamic size filters (--min-size) using a
 ## log-rank approach
 ## ---------------------------------------------
 # dynamic_filter: false
 
 ## ---------------------------------------------
-## Disable cell type assignment using pre-trained models
+## Enable cell type assignment using pre-trained models
 ## ---------------------------------------------
-# no_cell_type_assignments: false
+# cell_type_assignments: false
 
 ## ---------------------------------------------
-## Disable cell type majority voting for cell types using clustering
-## of components
+## Enable cell type majority voting using clustering of components
 ## ---------------------------------------------
-# no_cell_type_cluster: false
+# majority_vote: false
 
 ## ---------------------------------------------
-## Disable component doublet calling, no information on potential
-## doublets will be added to output data
-## ---------------------------------------------
-# no_doublet_calling: false
-
-## ---------------------------------------------
-## Disable aggregate calling, no information on potential aggregates
+## Enable component doublet calling, information on potential doublets
 ## will be added to output data
 ## ---------------------------------------------
-# no_aggregate_calling: false
+# doublet_calling: false
+
+## ---------------------------------------------
+## Enable aggregate calling, information on potential aggregates will
+## be added to the output data
+## ---------------------------------------------
+# aggregate_calling: false
 
 ### analysis_options
 
