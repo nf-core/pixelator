@@ -2,7 +2,7 @@
 
 process PIXELATOR_CLUSTER {
     tag "$meta.id"
-    label 'process_high'
+    label 'process_medium'
 
     conda "local::pixelator=${pixelator_tag}"
 
