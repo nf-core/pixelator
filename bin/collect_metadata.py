@@ -22,7 +22,6 @@ def subtool_versions():
 
 
 def main(args):
-
     dep_versions = subtool_versions()
     root = {
         "platform": sys.platform,
