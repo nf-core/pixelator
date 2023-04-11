@@ -25,9 +25,18 @@ def make_absolute_path(path: str, base: PathLike = None) -> str:
     if url.scheme and url.netloc:
         return path
 
+    # If the base url has a scheme we need to keep that
+    # purepath will remove double slashes and this invalidates the base scheme
+    base_url = urllib.parse.urlparse(str(base))
+    base_scheme = base_url.scheme or "file"
+    # Url path contains root slash.
+    # We will add this while adding the scheme so strip it here
+    base_path = base_url.path.lstrip("/")
+
     in_path = PurePath(path)
     if not in_path.is_absolute() and base is not None:
-        return str(PurePath(base) / in_path)
+        resolved_path = PurePath(base_path) / in_path
+        return f"{base_scheme}://{str(resolved_path)}"
 
     return str(in_path)
 
