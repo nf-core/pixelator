@@ -13,6 +13,9 @@ WorkflowPixelator.initialise(workflow, params, log)
 // Check mandatory parameters
 if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input samplesheet not specified!' }
 
+// Inject the samplesheet SHA into the params object
+params.samplesheet_sha = ch_input.bytes.digest('sha-1')
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     CONFIG FILES
