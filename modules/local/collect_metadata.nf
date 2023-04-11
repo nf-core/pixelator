@@ -10,7 +10,7 @@ process COLLECT_METADATA {
     cache false
 
     conda "local::pixelator=${pixelator_tag}"
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.5.0'
+    container 'ghcr.io/pixelgentechnologies/pixelator:0.9.0'
 
     input:
 
