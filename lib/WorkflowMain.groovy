@@ -57,7 +57,7 @@ class WorkflowMain {
         }
 
         // Print workflow version and exit on --version
-        if (params.version) {
+        if (params.containsKey("version") && params.version) {
             String workflow_version = NfcoreTemplate.version(workflow)
             log.info "${workflow.manifest.name} ${workflow_version}"
             System.exit(0)
