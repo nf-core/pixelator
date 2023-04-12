@@ -6,6 +6,7 @@ from pathlib import Path
 import pkg_resources
 import json
 import argparse
+import yaml
 
 
 installed_packages = {i.key: i.version for i in pkg_resources.working_set}
@@ -51,11 +52,13 @@ def main(args):
         json.dump(root, f, indent=4)
 
     with open("versions.yml", "w") as f:
-        f.write(
-            f"""
-"{args.process_name}":
-    python: {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}
-"""
+        yaml.dump(
+            f,
+            {
+                "args.process_name": {
+                    "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+                }
+            },
         )
 
 
