@@ -7,7 +7,7 @@ process PIXELATOR_COLLAPSE {
 
     conda "local::pixelator=${pixelator_tag}"
 
-    container "ghcr.io/pixelgentechnologies/pixelator:${pixelator_tag}"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.9.0"
 
     input:
     tuple val(meta), path(reads)
@@ -36,7 +36,6 @@ process PIXELATOR_COLLAPSE {
         --log-file ${prefix}.pixelator-collapse.log \\
         --verbose \\
         collapse \\
-        --samples "${meta.id}" \\
         --output . \\
         --design ${meta.design} \\
         $args \\

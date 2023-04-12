@@ -2,11 +2,11 @@
 
 process PIXELATOR_CLUSTER {
     tag "$meta.id"
-    label 'process_high'
+    label 'process_medium'
 
     conda "local::pixelator=${pixelator_tag}"
 
-    container "ghcr.io/pixelgentechnologies/pixelator:${pixelator_tag}"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.9.0"
 
     input:
     tuple val(meta), path(edge_list)
@@ -14,7 +14,7 @@ process PIXELATOR_CLUSTER {
     output:
     tuple val(meta), path("cluster/*.edgelist.csv.gz"),             emit: edgelist
     tuple val(meta), path("cluster/*.raw_edgelist.csv.gz"),         emit: raw_edgelist
-    tuple val(meta), path("cluster/*.components_recovered.csv"),    emit: components_recovered
+    tuple val(meta), path("cluster/*.components_recovered.csv"),    emit: components_recovered, optional: true
     tuple val(meta), path("cluster/*.report.json"),                 emit: report_json
     tuple val(meta), path("cluster/*"),                             emit: all_results
     tuple val(meta), path("*pixelator-cluster.log"),                emit: log

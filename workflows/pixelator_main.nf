@@ -13,6 +13,9 @@ WorkflowPixelator.initialise(workflow, params, log)
 // Check mandatory parameters
 if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input samplesheet not specified!' }
 
+// Inject the samplesheet SHA into the params object
+params.samplesheet_sha = ch_input.bytes.digest('sha-1')
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     CONFIG FILES
@@ -185,9 +188,9 @@ workflow PIXELATOR_MAIN {
     ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[1] }.collect()
     ch_demux_grouped        = ch_report_data.map { id, data -> data[2] }.collect()
     ch_collapse_grouped     = ch_report_data.map { id, data -> data[3] }.collect()
-    ch_cluster_grouped      = ch_report_data.map { id, data -> data[4].flatten() }.collect()
-    ch_annotate_grouped     = ch_report_data.map { id, data -> data[5].flatten() }.collect()
-    ch_analysis_grouped     = ch_report_data.map { id, data -> data[6].flatten() }.collect()
+    ch_cluster_grouped      = ch_report_data.map { id, data -> data[4] }.collect()
+    ch_annotate_grouped     = ch_report_data.map { id, data -> data[5] }.collect()
+    ch_analysis_grouped     = ch_report_data.map { id, data -> data[6] }.collect()
 
     ch_report_meta = ch_report_data
         .map { it -> it[0] }.collect()
@@ -236,7 +239,6 @@ workflow.onComplete {
         NfcoreTemplate.email(workflow, params, summary_params, projectDir, log, multiqc_report)
     }
     NfcoreTemplate.summary(workflow, params, log)
-    WorkflowMain.writeMetadata(workflow, params)
 }
 
 /*

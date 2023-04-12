@@ -4,14 +4,13 @@ process PIXELATOR_ANNOTATE {
     label 'process_medium'
 
     conda "local::pixelator=${pixelator_tag}"
-    container "ghcr.io/pixelgentechnologies/pixelator:${pixelator_tag}"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.9.0"
 
     input:
     tuple val(meta), path(h5ad), path(panel)
 
     output:
     tuple val(meta), path("annotate/*.dataset.pxl"),             emit: dataset
-    tuple val(meta), path("annotate/*.raw_dataset.pxl"),         emit: raw_dataset
     tuple val(meta), path("annotate/*.report.json"),             emit: report_json
     tuple val(meta), path("annotate/*.png"),                     emit: png
     tuple val(meta), path("*pixelator-annotate.log"),            emit: log

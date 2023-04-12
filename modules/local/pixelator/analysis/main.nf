@@ -4,7 +4,7 @@ process PIXELATOR_ANALYSIS {
     label 'process_medium'
 
     conda "local::pixelator=${pixelator_tag}"
-    container "ghcr.io/pixelgentechnologies/pixelator:${pixelator_tag}"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.9.0"
 
     input:
     tuple val(meta), path(h5ad)

@@ -5,12 +5,25 @@
 import groovy.text.SimpleTemplateEngine
 
 class WorkflowPixelator {
+    //
+    // Check if a custom Pixelgen config is used
+    //
+    public static boolean usesPixelgenConfig() {
+        def pixelgenConfPath = System.getenv('CUSTOM_PIXELGEN_CONF')
+        boolean hasConfig = pixelgenConfPath?.trim()
+        return hasConfig
+    }
 
     //
     // Check and validate parameters
     //
     public static void initialise(workflow, params, log) {
-        // genomeExistsError(params, log)
+        if (WorkflowPixelator.usesPixelgenConfig()) {
+            if (!params.containsKey("project_name") || params["project_name"] == null) {
+                log.error "Missing project name (set with `--project_name` option)"
+                System.exit(1)
+            }
+        }
     }
 
     //

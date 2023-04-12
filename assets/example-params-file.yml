@@ -1,0 +1,292 @@
+## This is an example params-file.yaml for the `-params-file` option of nf-core/pixelator
+## Uncomment yaml keys if you want to modify the default parameters.
+
+### preqc_options
+
+## ---------------------------------------------
+## Trim N bases from the front of the reads
+## ---------------------------------------------
+# trim_front: 0
+
+## ---------------------------------------------
+## Trim N bases from the tail of the reads
+## ---------------------------------------------
+# trim_tail: 0
+
+## ---------------------------------------------
+## The maximum length (bases) of a read (longer reads will be trimmed
+## off). If you set this argument it will overrrule the value from the
+## chosen design
+## ---------------------------------------------
+# max_length:
+
+## ---------------------------------------------
+## The minimum length (bases) of a read (shorter reads will be
+## discarded). If you set this argument it will overrrule the value from
+## the chosen design.
+## ---------------------------------------------
+# min_length:
+
+## ---------------------------------------------
+## The maximum number of Ns allowed in a read
+## ---------------------------------------------
+# max_n_bases: 3
+
+## ---------------------------------------------
+## Minimum avg. quality a read must have (0 will disable the filter)
+## ---------------------------------------------
+# avg_qual: 20
+
+## ---------------------------------------------
+## Remove duplicated reads (exact same sequence)
+## ---------------------------------------------
+# dedup: false
+
+## ---------------------------------------------
+## Remove PolyG sequences (length of 10 or more)
+## ---------------------------------------------
+# remove_polyg: false
+
+### adapterqc_options
+
+## ---------------------------------------------
+## The number of mismatches allowed (in percentage)  [default: 0.1;
+## 0.0<=x<=0.9]
+## ---------------------------------------------
+# adapterqc_mismatches: 0.1
+
+## ---------------------------------------------
+## The PBS1 sequence that must be present in the reads. If you set
+## this argument it will overrrule the value from the chosen design
+## ---------------------------------------------
+# pbs1:
+
+## ---------------------------------------------
+## The PBS2 sequence that must be present in the reads. If you set
+## this argument it will overrrule the value from the chosen design
+## ---------------------------------------------
+# pbs2:
+
+### demux_options
+
+## ---------------------------------------------
+## The number of mismatches allowed (in percentage)  [default: 0.1;
+## 0.0<=x<=0.9]
+## ---------------------------------------------
+# demux_mismatches: 0.1
+
+## ---------------------------------------------
+## The minimum length of the barcode that must overlap when matching.
+## If you set this argument it will overrrule the value from the chosen
+## design
+## ---------------------------------------------
+# demux_min_length:
+
+## ---------------------------------------------
+## Enforce the barcodes to be anchored (at the end of the read)
+## ---------------------------------------------
+# anchored: false
+
+## ---------------------------------------------
+## Use the reverse complement of the barcodes sequences
+## ---------------------------------------------
+# rev_complement: false
+
+### collapse_options
+
+## ---------------------------------------------
+## The algorithm to use for collapsing (adjacency will peform error
+## correction using the number of mismatches given) [default: adjacency]
+## ---------------------------------------------
+# algorithm: adjacency
+
+## ---------------------------------------------
+## The start position (0-based) of UPI1. If you set this argument it
+## will overrrule the value from the chosen design
+## ---------------------------------------------
+# upi1_start:
+
+## ---------------------------------------------
+## The end position (1-based) of UPI1. If you set this argument it
+## will overrrule the  value from the chosen design
+## ---------------------------------------------
+# upi1_end:
+
+## ---------------------------------------------
+## The start position (0-based) of UPI@. If you set this argument it
+## will overrrule the value from the chosen design
+## ---------------------------------------------
+# upi2_start:
+
+## ---------------------------------------------
+## The end position (1-based) of UPI2. If you set this argument it
+## will overrrule the  value from the chosen design
+## ---------------------------------------------
+# upi2_end:
+
+## ---------------------------------------------
+## The start position (0-based) of UMI1 (disabled by default). If you
+## set this argument it will overrrule the value from the chosen design
+## ---------------------------------------------
+# umi1_start:
+
+## ---------------------------------------------
+## The end position (1-based) of UMI1 (disabled by default). If you
+## set this argument it will overrrule the  value from the chosen design
+## ---------------------------------------------
+# umi1_end:
+
+## ---------------------------------------------
+## The start position (0-based) of UMI2 (disabled by default). If you
+## set this argument it will overrrule the value from the chosen design
+## ---------------------------------------------
+# umi2_start:
+
+## ---------------------------------------------
+## The end position (1-based) of UMI2 (disabled by default). If you
+## set this argument it will overrrule the  value from the chosen design
+## ---------------------------------------------
+# umi2_end:
+
+## ---------------------------------------------
+## The number of neighbours to use when searching for similar
+## sequences (adjacency) This number depends on the sequence depth and
+## the ratio of erronous molecules expected. A high value can make the
+## algoritthm slower.  [default: 60; 1<=x<=250]
+## ---------------------------------------------
+# neighbours: 60
+
+## ---------------------------------------------
+## The number of mismatches allowed when collapsing (adjacency)
+## [default: 2; 0<=x<=5]
+## ---------------------------------------------
+# collapse_mismatches: 2
+
+## ---------------------------------------------
+## Discard molecules with with a count (reads) lower than this value
+## [default: 1; 0<=x<=5]
+## ---------------------------------------------
+# collapse_min_count: 1
+
+## ---------------------------------------------
+## Use counts when collapsing (the difference in counts between two
+## molecules must be more than double in order to be collapsed)
+## ---------------------------------------------
+# use_counts: false
+
+### cluster_options
+
+## ---------------------------------------------
+## The maximum size cutoff to use in the recovery (--big-clusters-
+## recover) [default: 10000]
+## ---------------------------------------------
+# max_size_recover: 10000
+
+## ---------------------------------------------
+## Enable the recovery of big clusters/cells (above --max-size-
+## recover) by using the community modularity approach to remove
+## problematic edges
+## ---------------------------------------------
+# big_clusters_recover: false
+
+## ---------------------------------------------
+## Which approach to use to select the best community (--big-clusters-
+## recover) optimal will use the community that maximizes the modularity
+## max-size will iterate until the biggest component in the community is
+## below --max-size/2 or the maximum number of iterations is reached
+## [default: optimal]
+## ---------------------------------------------
+# condition: optimal
+
+## ---------------------------------------------
+## Discard molecules (edges) with with a count (reads) lower than this
+## [default: 2; 1<=x<=50]
+## ---------------------------------------------
+# cluster_min_count: 2
+
+### annotate_options
+
+## ---------------------------------------------
+## The minimum size (pixels) a component/cell can have (default is no
+## filtering)
+## ---------------------------------------------
+# min_size:
+
+## ---------------------------------------------
+## The maximum size (pixels) a component/cell can have (default is no
+## filtering)
+## ---------------------------------------------
+# max_size:
+
+## ---------------------------------------------
+## Enable the estimation of dynamic size filters (--min-size) using a
+## log-rank approach
+## ---------------------------------------------
+# dynamic_filter: false
+
+## ---------------------------------------------
+## Enable cell type assignment using pre-trained models
+## ---------------------------------------------
+# cell_type_assignments: false
+
+## ---------------------------------------------
+## Enable cell type majority voting using clustering of components
+## ---------------------------------------------
+# majority_vote: false
+
+## ---------------------------------------------
+## Enable component doublet calling, information on potential doublets
+## will be added to output data
+## ---------------------------------------------
+# doublet_calling: false
+
+## ---------------------------------------------
+## Enable aggregate calling, information on potential aggregates will
+## be added to the output data
+## ---------------------------------------------
+# aggregate_calling: false
+
+### analysis_options
+
+## ---------------------------------------------
+## Compute polarization scores matrix (clusters by markers)
+## ---------------------------------------------
+# compute_polarization: false
+
+## ---------------------------------------------
+## Compute colocalization scores matrix (clusters by markers)
+## ---------------------------------------------
+# compute_colocalization: false
+
+## ---------------------------------------------
+## Compute coabundance scores matrix (clusters by markers)
+## ---------------------------------------------
+# compute_coabundance: false
+
+## ---------------------------------------------
+## Use the bipartite graph instead of the one-node projection when
+## computing polarization, coabundance and colocalization scores
+## ---------------------------------------------
+# use_full_bipartite: false
+
+## ---------------------------------------------
+## Which approach to use to normalize the antibody counts: raw will
+## use the raw counts CLR will use the CLR-transformed counts denoise
+## will use CLR-transformed counts and subtract the counts of control
+## antibodies
+## ---------------------------------------------
+# normalization: CLR
+
+## ---------------------------------------------
+## Transform the antibody counts to 0-1 (binarize) when computing
+## polarization
+## ---------------------------------------------
+# binarization: false
+
+### report_options
+
+## ---------------------------------------------
+## The name for the report
+## ---------------------------------------------
+# report_name: report
+

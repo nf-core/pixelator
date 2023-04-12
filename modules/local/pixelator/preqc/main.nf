@@ -6,7 +6,7 @@ process PIXELATOR_PREQC {
 
     conda "local::pixelator=${pixelator_tag}"
 
-    container "ghcr.io/pixelgentechnologies/pixelator:${pixelator_tag}"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.9.0"
 
     input:
     tuple val(meta), path(reads)

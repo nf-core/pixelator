@@ -6,7 +6,7 @@ process PIXELATOR_REPORT {
 
     conda "local::pixelator=${pixelator_tag}"
 
-    container "ghcr.io/pixelgentechnologies/pixelator:${pixelator_tag}"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.9.0"
 
     input:
     val meta
@@ -34,7 +34,6 @@ process PIXELATOR_REPORT {
     pixelator \\
         report \\
         --output reports \\
-        --samples "${samples}" \\
         --name "${meta.id}" \\
         $args \\
         results
