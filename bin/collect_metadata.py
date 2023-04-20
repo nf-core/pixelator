@@ -53,12 +53,12 @@ def main(args):
 
     with open("versions.yml", "w") as f:
         yaml.dump(
-            f,
-            {
+            data={
                 "args.process_name": {
                     "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
                 }
             },
+            stream=f,
         )
 
 
