@@ -6,7 +6,7 @@ process PIXELATOR_DEMUX {
 
     conda "local::pixelator=${pixelator_tag}"
 
-    container "ghcr.io/pixelgentechnologies/pixelator:0.9.0"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.10.0"
 
     input:
     tuple val(meta), path(reads), path(antibody_panel)
