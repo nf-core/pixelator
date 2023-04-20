@@ -204,24 +204,13 @@
         "cluster_options": {
             "title": "Options for pixelator cluster command.",
             "properties": {
-                "max_size_recover": {
-                    "description": "The maximum size cutoff to use in the recovery (--big-clusters-recover) [default: 10000]",
-                    "type": "integer",
-                    "default": 10000
-                },
-                "big_clusters_recover": {
-                    "description": "Enable the recovery of big clusters/cells (above --max-size-recover) by using the community modularity approach to remove problematic edges",
+                "multiplet_recovery": {
+                    "description": " Enable the recovery of technical multiplets using the Leiden community detection algorithm to find and remove problematic edges",
                     "type": "boolean",
                     "default": false
                 },
-                "condition": {
-                    "description": "Which approach to use to select the best community (--big-clusters-recover) optimal will use the community that maximizes the modularity max-size will iterate until the biggest component in the community is below --max-size/2 or the maximum number of iterations is reached  [default: optimal]",
-                    "default": "optimal",
-                    "enum": ["optimal", "max-size"],
-                    "type": "string"
-                },
                 "cluster_min_count": {
-                    "description": "Discard molecules (edges) with with a count (reads) lower than this  [default: 2; 1<=x<=50]",
+                    "description": "Discard edges (pixels) with a count (reads) lower than this [default: 2; 1<=x<=50] use 1 to disable",
                     "type": "integer",
                     "default": 2,
                     "minimum": 1,

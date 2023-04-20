@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         NXF_VER:
-          - "22.04.5"
+          - "22.10.1"
           - "latest-everything"
     steps:
       - name: Check out pipeline code
