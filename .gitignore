@@ -8,3 +8,5 @@ testing*
 *.pyc
 node_modules/
 .idea
+
+.vscode/**
