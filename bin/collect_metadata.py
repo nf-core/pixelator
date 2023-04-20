@@ -6,7 +6,7 @@ from pathlib import Path
 import pkg_resources
 import json
 import argparse
-import yaml
+import ruamel.yaml as yaml
 
 
 installed_packages = {i.key: i.version for i in pkg_resources.working_set}
