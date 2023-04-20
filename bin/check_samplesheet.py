@@ -20,25 +20,36 @@ logger = logging.getLogger()
 
 
 def make_absolute_path(path: str, base: PathLike = None) -> str:
-    """If `path` is a relative path without a scheme, resolve it as a local filesystem path relative to `base`"""
+    """If `path` is a relative path without a scheme, resolve it as relative to `base`"""
     url = urllib.parse.urlparse(path)
-    if url.scheme and url.netloc:
+    if url.scheme:
         return path
+
+    if base is None:
+        url_props = list(url)
+        url_props[0] = "file"
+        path_component = PurePath(url_props[2])
+        url_props[2] = str(path_component) if path_component.is_absolute() else str(PurePath("/", str(path_component)))
+        urllib.parse.urlunparse(url_props)
+        return urllib.parse.urlunparse(url_props)
 
     # If the base url has a scheme we need to keep that
     # purepath will remove double slashes and this invalidates the base scheme
     base_url = urllib.parse.urlparse(str(base))
-    base_scheme = f"{base_url.scheme}://" or "file:///"
-    # Url path contains root slash.
-    # We will add this while adding the scheme so strip it here
-    base_path = base_url.path.lstrip("/")
+    scheme = base_url[0] or "file"
+    resolved_path = PurePath(base_url.path) / path
+    url = list(base_url)
+    url[0] = base_url[0] or "file"
+    url[2] = str(resolved_path)
 
-    in_path = PurePath(path)
-    if not in_path.is_absolute() and base is not None:
-        resolved_path = PurePath(base_path) / in_path
-        return f"{base_scheme}{str(resolved_path)}"
+    # Make sure there are three /// (hidden netloc) in urls.
+    # other schemes [s3, gs, az] only use two //
+    if scheme == "file":
+        resolved_path = str(resolved_path) if resolved_path.is_absolute() else str(PurePath("/", str(resolved_path)))
+    else:
+        resolved_path = str(resolved_path).lstrip("/")
 
-    return str(in_path)
+    return f"{scheme}://{resolved_path}"
 
 
 def validate_whitespace(row: MutableMapping[str, str], index: int):
@@ -112,6 +123,12 @@ class RowChecker(BaseChecker):
         self._single_col = single_col
         self._seen = set()
         self.modified = []
+
+    @staticmethod
+    def get_base_dir(path: str) -> str:
+        url = urllib.parse.urlparse(path)
+        parent_path = PurePath(url.path).parent
+        return f"{url.scheme}://{str(parent_path)}"
 
     def validate_and_transform(self, row):
         """
@@ -206,7 +223,7 @@ class PixelatorRowChecker(RowChecker):
 
         self._design_col = design_col
         self._samplesheet_path = samplesheet_path
-        self._base_dir = PurePath(self._samplesheet_path).parent if self._samplesheet_path else None
+        self._base_dir = self.get_base_dir(samplesheet_path) if samplesheet_path else None
         self._panel_col = panel_col
         self._assay_col = assay_col
 
@@ -471,7 +488,7 @@ def parse_args(argv=None):
     parser.add_argument(
         "--samplesheet-path",
         metavar="PATH",
-        type=PurePath,
+        type=str,
         help="Local or remote location of the samplesheet",
     )
     parser.add_argument(
