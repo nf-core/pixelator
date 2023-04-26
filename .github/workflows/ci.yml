@@ -3,6 +3,7 @@ name: nf-core CI
 on:
   push:
     branches:
+      - main
       - dev
   pull_request:
   release:
@@ -12,11 +13,23 @@ env:
   NXF_ANSI_LOG: false
 
 jobs:
+  pre_job:
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v5
+        with:
+          concurrent_skipping: "same_content_newer"
+          skip_after_successful_duplicate: "true"
+
   test:
     name: Run pipeline with test data
     # Only run on pus${{ false }}"
-    if: ${{ false }}
-    # if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'nf-core/pixelator') }}"
+    if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'nf-core/pixelator') }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -25,12 +38,31 @@ jobs:
           - "latest-everything"
     steps:
       - name: Check out pipeline code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Nextflow
         uses: nf-core/setup-nextflow@v1
         with:
           version: "${{ matrix.NXF_VER }}"
+
+      - name: Hash Github Workspace
+        id: hash_workspace
+        run: |
+          echo "digest=$(echo RNA_3.10.1_${{ github.workspace }} | md5sum | cut -c 1-25)" >> $GITHUB_OUTPUT
+      - name: Cache test data
+        id: cache-testdata
+        uses: actions/cache@v3
+        with:
+          path: test-datasets/
+          key: ${{ steps.hash_workspace.outputs.digest }}
+
+      - name: Check out test data
+        if: steps.cache-testdata.outputs.cache-hit != 'true'
+        uses: actions/checkout@v3
+        with:
+          repository: PixelgenTechnologies/nf-core-pixelator-datasets
+          ref: main
+          path: test-datasets/
 
       - name: Run pipeline with test data
         # TODO nf-core: You can customise CI pipeline run tests as required
