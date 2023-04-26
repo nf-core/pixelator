@@ -141,57 +141,57 @@
                     "enum": ["adjacency", "unique"],
                     "type": "string"
                 },
-                "upi1_start": {
-                    "description": "The start position (0-based) of UPI1. If you set this argument it will overrrule the value from the chosen design",
+                "upia_start": {
+                    "description": "The start position (0-based) of UPIA. If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
-                "upi1_end": {
-                    "description": "The end position (1-based) of UPI1. If you set this argument it will overrrule the  value from the chosen design",
+                "upia_end": {
+                    "description": "The end position (1-based) of UPIA. If you set this argument it will overrrule the  value from the chosen design",
                     "type": "integer"
                 },
-                "upi2_start": {
-                    "description": "The start position (0-based) of UPI@. If you set this argument it will overrrule the value from the chosen design",
+                "upib_start": {
+                    "description": "The start position (0-based) of UPIB. If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
-                "upi2_end": {
-                    "description": "The end position (1-based) of UPI2. If you set this argument it will overrrule the  value from the chosen design",
+                "upib_end": {
+                    "description": "The end position (1-based) of UPIB. If you set this argument it will overrrule the  value from the chosen design",
                     "type": "integer"
                 },
-                "umi1_start": {
-                    "description": "The start position (0-based) of UMI1 (disabled by default). If you set this argument it will overrrule the value from the chosen design",
+                "umia_start": {
+                    "description": "The start position (0-based) of UMIA (disabled by default). If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
-                "umi1_end": {
-                    "description": "The end position (1-based) of UMI1 (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
+                "umia_end": {
+                    "description": "The end position (1-based) of UMIA (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
                     "type": "integer"
                 },
-                "umi2_start": {
-                    "description": "The start position (0-based) of UMI2 (disabled by default). If you set this argument it will overrrule the value from the chosen design",
+                "umib_start": {
+                    "description": "The start position (0-based) of UMIB (disabled by default). If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
-                "umi2_end": {
-                    "description": "The end position (1-based) of UMI2 (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
+                "umib_end": {
+                    "description": "The end position (1-based) of UMIB (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
                     "type": "integer"
                 },
                 "neighbours": {
                     "description": "The number of neighbours to use when searching for similar sequences (adjacency) This number depends on the sequence depth and the ratio of erronous molecules expected. A high value can make the algoritthm slower.  [default: 60; 1<=x<=250]",
                     "default": 60,
-                    "min": 1,
-                    "max": 250,
+                    "minimum": 1,
+                    "maximum": 250,
                     "type": "integer"
                 },
                 "collapse_mismatches": {
                     "description": "The number of mismatches allowed when collapsing (adjacency)  [default: 2; 0<=x<=5]",
                     "default": 2,
-                    "min": 0,
-                    "max": 5,
+                    "minimum": 0,
+                    "maximum": 5,
                     "type": "integer"
                 },
                 "collapse_min_count": {
                     "description": "Discard molecules with with a count (reads) lower than this value  [default: 1; 0<=x<=5]",
                     "default": 1,
-                    "min": 0,
-                    "max": 5,
+                    "minimum": 1,
+                    "maximum": 10,
                     "type": "integer"
                 },
                 "use_counts": {
@@ -205,9 +205,28 @@
             "title": "Options for pixelator cluster command.",
             "properties": {
                 "multiplet_recovery": {
-                    "description": " Enable the recovery of technical multiplets using the Leiden community detection algorithm to find and remove problematic edges",
-                    "type": "boolean",
-                    "default": false
+                    "description": "Activate the multiplet recovery (leiden or fast-greedy): leiden: use the leiden algorithm (whole graph)  fast-greedy: use fast greedy algorithm (per-component)",
+                    "type": "string",
+                    "enum": ["leiden", "fast-greedy"]
+                },
+                "fast_greedy_fraction": {
+                    "description": "Maximum fraction of edges allowed to be removed in a component for the fast-greedy algorithm  [default: 0.05; 0.0<=x<=1.0]",
+                    "type": "number",
+                    "default": 0.5,
+                    "minimum": 0.0,
+                    "maximum": 1.0
+                },
+                "fast_greedy_cutoff": {
+                    "description": "Minimum size (edges) of a component to be considered for the fast-greedy algorithm [default: 5000]",
+                    "type": "integer",
+                    "default": 5000
+                },
+                "leiden_iterations": {
+                    "description": "Number of iterations for the leiden algorithm, high values will decrease the variance of the results but increase the runtime  [default: 10; 1<=x<=100]",
+                    "type": "integer",
+                    "default": 10,
+                    "minimum": 1,
+                    "maximum": 100
                 },
                 "cluster_min_count": {
                     "description": "Discard edges (pixels) with a count (reads) lower than this [default: 2; 1<=x<=50] use 1 to disable",
@@ -230,9 +249,9 @@
                     "type": "integer"
                 },
                 "dynamic_filter": {
-                    "description": "Enable the estimation of dynamic size filters (--min-size) using a log-rank approach",
-                    "default": false,
-                    "type": "boolean"
+                    "description": " Enable the estimation of dynamic size filters using a log-rank approach both: estimate both min and max size, min: estimate min size (--min-size), max: estimate max size (--max-size)",
+                    "type": "string",
+                    "enum": ["both", "min", "max"]
                 },
                 "cell_type_assignments": {
                     "description": "Enable cell type assignment using pre-trained models",
@@ -241,11 +260,6 @@
                 },
                 "majority_vote": {
                     "description": "Enable cell type majority voting using clustering of components",
-                    "default": false,
-                    "type": "boolean"
-                },
-                "doublet_calling": {
-                    "description": "Enable component doublet calling, information on potential doublets will be added to output data",
                     "default": false,
                     "type": "boolean"
                 },
@@ -265,12 +279,7 @@
                     "default": false
                 },
                 "compute_colocalization": {
-                    "description": "Compute colocalization scores matrix (clusters by markers)",
-                    "type": "boolean",
-                    "default": false
-                },
-                "compute_coabundance": {
-                    "description": "Compute coabundance scores matrix (clusters by markers)",
+                    "description": " Compute colocalization scores (marker by marker) for each component",
                     "type": "boolean",
                     "default": false
                 },
@@ -282,8 +291,8 @@
                 "normalization": {
                     "description": "Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and subtract the counts of control antibodies",
                     "type": "string",
-                    "enum": ["raw", "CLR", "denoise"],
-                    "default": "CLR"
+                    "enum": ["raw", "clr", "denoise"],
+                    "default": "clr"
                 },
                 "binarization": {
                     "description": "Transform the antibody counts to 0-1 (binarize) when computing polarization",
