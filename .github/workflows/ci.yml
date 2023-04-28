@@ -65,7 +65,7 @@ jobs:
         if: steps.cache-testdata.outputs.cache-hit != 'true'
         uses: actions/checkout@v3
         with:
-          repository: PixelgenTechnologies/nf-core-pixelator-dataset
+          repository: PixelgenTechnologies/nf-core-pixelator-datasets
           ref: main
           path: test-datasets/
 
