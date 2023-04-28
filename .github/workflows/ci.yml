@@ -66,11 +66,6 @@ jobs:
           ref: main
           path: testdata
 
-      - name: Hash Github Workspace
-        id: hash_workspace
-        run: |
-          echo "digest=$(echo NF_CORE_PIXELATOR_${{ github.workspace }} | md5sum | cut -c 1-25)" >> $GITHUB_OUTPUT
-
       - name: Run pipeline with test data
         # TODO nf-core: You can customise CI pipeline run tests as required
         # For example: adding multiple test runs with different parameters
