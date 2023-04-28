@@ -101,7 +101,7 @@
             "properties": {
                 "adapterqc_mismatches": {
                     "fa_icon": "fas not-equal",
-                    "description": "The number of mismatches allowed (in percentage)  [default: 0.1; 0.0<=x<=0.9]",
+                    "description": "The number of mismatches allowed (in percentage) [default: 0.1; 0.0<=x<=0.9]",
                     "type": "number",
                     "default": 0.1
                 },
@@ -120,7 +120,7 @@
             "properties": {
                 "demux_mismatches": {
                     "fa_icon": "fas not-equal",
-                    "description": "The number of mismatches allowed (in percentage)  [default: 0.1; 0.0<=x<=0.9]",
+                    "description": "The number of mismatches allowed (in percentage) [default: 0.1; 0.0<=x<=0.9]",
                     "type": "number",
                     "default": 0.1,
                     "minimum": 0.0,
@@ -162,7 +162,7 @@
                 },
                 "upia_end": {
                     "fa_icon": "fas forward-step",
-                    "description": "The end position (1-based) of UPIA. If you set this argument it will overrrule the  value from the chosen design",
+                    "description": "The end position (1-based) of UPIA. If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
                 "upib_start": {
@@ -172,7 +172,7 @@
                 },
                 "upib_end": {
                     "fa_icon": "fas forward-step",
-                    "description": "The end position (1-based) of UPIB. If you set this argument it will overrrule the  value from the chosen design",
+                    "description": "The end position (1-based) of UPIB. If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
                 "umia_start": {
@@ -182,7 +182,7 @@
                 },
                 "umia_end": {
                     "fa_icon": "fas forward-step",
-                    "description": "The end position (1-based) of UMIA (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
+                    "description": "The end position (1-based) of UMIA (disabled by default). If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
                 "umib_start": {
@@ -192,12 +192,12 @@
                 },
                 "umib_end": {
                     "fa_icon": "fas backward-step",
-                    "description": "The end position (1-based) of UMIB (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
+                    "description": "The end position (1-based) of UMIB (disabled by default). If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
                 "neighbours": {
                     "fa_icon": "fas circle-nodes",
-                    "description": "The number of neighbours to use when searching for similar sequences (adjacency) This number depends on the sequence depth and the ratio of erronous molecules expected. A high value can make the algoritthm slower.  [default: 60; 1<=x<=250]",
+                    "description": "The number of neighbours to use when searching for similar sequences (adjacency) This number depends on the sequence depth and the ratio of erronous molecules expected. A high value can make the algoritthm slower. [default: 60; 1<=x<=250]",
                     "default": 60,
                     "minimum": 1,
                     "maximum": 250,
@@ -205,7 +205,7 @@
                 },
                 "collapse_mismatches": {
                     "fa_icon": "fas not-equal",
-                    "description": "The number of mismatches allowed when collapsing (adjacency)  [default: 2; 0<=x<=5]",
+                    "description": "The number of mismatches allowed when collapsing (adjacency) [default: 2; 0<=x<=5]",
                     "default": 2,
                     "minimum": 0,
                     "maximum": 5,
@@ -213,7 +213,7 @@
                 },
                 "collapse_min_count": {
                     "fa_icon": "fas less-than-equal",
-                    "description": "Discard molecules with with a count (reads) lower than this value  [default: 1; 0<=x<=5]",
+                    "description": "Discard molecules with with a count (reads) lower than this value [default: 1; 0<=x<=5]",
                     "default": 1,
                     "minimum": 1,
                     "maximum": 10,
@@ -230,12 +230,12 @@
             "title": "Options for pixelator cluster command.",
             "properties": {
                 "multiplet_recovery": {
-                    "description": "Activate the multiplet recovery (leiden or fast-greedy): leiden: use the leiden algorithm (whole graph)  fast-greedy: use fast greedy algorithm (per-component)",
+                    "description": "Activate the multiplet recovery (leiden or fast-greedy): leiden: use the leiden algorithm (whole graph) fast-greedy: use fast greedy algorithm (per-component)",
                     "type": "string",
                     "enum": ["leiden", "fast-greedy"]
                 },
                 "fast_greedy_fraction": {
-                    "description": "Maximum fraction of edges allowed to be removed in a component for the fast-greedy algorithm  [default: 0.05; 0.0<=x<=1.0]",
+                    "description": "Maximum fraction of edges allowed to be removed in a component for the fast-greedy algorithm [default: 0.05; 0.0<=x<=1.0]",
                     "type": "number",
                     "default": 0.5,
                     "minimum": 0.0,
@@ -249,7 +249,7 @@
                 },
                 "leiden_iterations": {
                     "fa_icon": "fas repeat",
-                    "description": "Number of iterations for the leiden algorithm, high values will decrease the variance of the results but increase the runtime  [default: 10; 1<=x<=100]",
+                    "description": "Number of iterations for the leiden algorithm, high values will decrease the variance of the results but increase the runtime [default: 10; 1<=x<=100]",
                     "type": "integer",
                     "default": 10,
                     "minimum": 1,
