@@ -4,7 +4,7 @@ process PIXELATOR_AGGREGATE {
     tag "$meta.id"
     label 'process_low'
 
-    conda "local::pixelator=${pixelator_tag}"
+    conda "local::pixelator=0.10.0"
 
     // TODO: make pixelator available on galaxyproject and quay.io support
     container "ghcr.io/pixelgentechnologies/pixelator:0.10.0"
