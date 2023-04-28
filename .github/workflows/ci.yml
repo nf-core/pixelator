@@ -25,6 +25,18 @@ jobs:
         with:
           concurrent_skipping: "same_content_newer"
           skip_after_successful_duplicate: "true"
+          paths: |
+            [
+              "main.nf",
+              "nextflow.config",
+              "nextflow_schema.json",
+              "bin/**",
+              "conf/**",
+              "workflows/**",
+              "subworkflows/**",
+              "modules/**",
+              "lib/**"
+            ]
 
   test:
     name: Run pipeline with test data
