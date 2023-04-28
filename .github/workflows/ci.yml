@@ -39,39 +39,34 @@ jobs:
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@v3
-
-      - name: Install Nextflow
-        uses: nf-core/setup-nextflow@v1
         with:
-          version: "${{ matrix.NXF_VER }}"
-
-      - name: Hash Github Workspace
-        id: hash_workspace
-        run: |
-          echo "digest=$(echo RNA_3.10.1_${{ github.workspace }} | md5sum | cut -c 1-25)" >> $GITHUB_OUTPUT
-      - name: Cache test data
-        id: cache-testdata
-        uses: actions/cache@v3
-        with:
-          path: test-datasets/
-          key: ${{ steps.hash_workspace.outputs.digest }}
+          path: nf-core-pixelator
 
       - name: Setup SSH Agent
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.GH_NF_CORE_DATASETS_DEPLOY_KEY }}
 
+      - name: Install Nextflow
+        uses: nf-core/setup-nextflow@v1
+        with:
+          version: "${{ matrix.NXF_VER }}"
+
       - name: Check out test data
-        if: steps.cache-testdata.outputs.cache-hit != 'true'
         uses: actions/checkout@v3
         with:
           repository: PixelgenTechnologies/nf-core-pixelator-datasets
           ref: main
-          path: test-datasets/
+          path: testdata
+
+      - name: Hash Github Workspace
+        id: hash_workspace
+        run: |
+          echo "digest=$(echo NF_CORE_PIXELATOR_${{ github.workspace }} | md5sum | cut -c 1-25)" >> $GITHUB_OUTPUT
 
       - name: Run pipeline with test data
         # TODO nf-core: You can customise CI pipeline run tests as required
         # For example: adding multiple test runs with different parameters
         # Remember that you can parallelise this by using strategy.matrix
         run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile test,docker --outdir ./results
+          nextflow run ${GITHUB_WORKSPACE}/nf-core-pixelator -profile test,docker --outdir ${GITHUB_WORKSPACE}/results --testdata_root ${GITHUB_WORKSPACE}/testdata
