@@ -5,7 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v0.10.0 - [date]
 
-Sync with pixelator 0.10.0
+- Bump pixelator to 0.10.0
+- Re-enable test profile runs in CI
+- Support concatenation of sequence files with same sample id
 
 ## v0.9.0 - [date]
 
