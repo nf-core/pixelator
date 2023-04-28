@@ -26,7 +26,11 @@ jobs:
           concurrent_skipping: "same_content_newer"
           skip_after_successful_duplicate: "true"
           paths: |
+<<<<<<< HEAD
             [
+=======
+            '[
+>>>>>>> 2a5d7f2 (feat: skip test profile run for non relevant edits)
               "main.nf",
               "nextflow.config",
               "nextflow_schema.json",
@@ -36,7 +40,11 @@ jobs:
               "subworkflows/**",
               "modules/**",
               "lib/**"
+<<<<<<< HEAD
             ]
+=======
+            ]'
+>>>>>>> 2a5d7f2 (feat: skip test profile run for non relevant edits)
 
   test:
     name: Run pipeline with test data
