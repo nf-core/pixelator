@@ -56,6 +56,11 @@ jobs:
           path: test-datasets/
           key: ${{ steps.hash_workspace.outputs.digest }}
 
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.GH_NF_CORE_DATASETS_DEPLOY_KEY }}
+
       - name: Check out test data
         if: steps.cache-testdata.outputs.cache-hit != 'true'
         uses: actions/checkout@v3
