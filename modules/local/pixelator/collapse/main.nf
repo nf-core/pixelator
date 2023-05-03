@@ -35,6 +35,7 @@ process PIXELATOR_COLLAPSE {
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-collapse.log \\
         --verbose \\
+        single-cell \\
         collapse \\
         --output . \\
         --design ${meta.design} \\

@@ -34,6 +34,7 @@ process PIXELATOR_CLUSTER {
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-cluster.log \\
         --verbose \\
+        single-cell \\
         cluster \\
         --output . \\
         $args \\

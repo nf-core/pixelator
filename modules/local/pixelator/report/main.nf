@@ -32,6 +32,7 @@ process PIXELATOR_REPORT {
 
     """
     pixelator \\
+        rnd \\
         report \\
         --output reports \\
         --name "${meta.id}" \\

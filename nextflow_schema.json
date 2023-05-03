@@ -433,7 +433,7 @@
                 "pixelator_container_source": {
                     "type": "string",
                     "description": "The source repository for the pixelator docker container.",
-                    "enum": ["aws-ecr", "ghcr"],
+                    "enum": ["aws-ecr", "ghcr", "internal"],
                     "hidden": true
                 },
                 "pixelator_tag": {
