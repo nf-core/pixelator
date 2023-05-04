@@ -1,6 +1,6 @@
 
 
-process PIXELATOR_REPORT {
+process PIXELATOR_RND_REPORT {
     tag "$meta.id"
     label 'process_low'
 
@@ -32,7 +32,7 @@ process PIXELATOR_REPORT {
 
     """
     pixelator \\
-        single-cell \\
+        rnd \\
         report \\
         --output reports \\
         --name "${meta.id}" \\

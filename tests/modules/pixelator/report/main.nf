@@ -2,7 +2,7 @@
 
 nextflow.enable.dsl = 2
 
-include { PIXELATOR_REPORT } from '../../../../modules/local/pixelator/report/main.nf'
+include { PIXELATOR_RND_REPORT } from '../../../../modules/local/pixelator/report/main.nf'
 
 
 workflow test_pixelator_report {
@@ -17,7 +17,7 @@ workflow test_pixelator_report {
     annotate = file("${params.test_data['pixelator']['micro']["result_dirs"]["annotate"]}/*", checkIfExists: true)
     analysis = file("${params.test_data['pixelator']['micro']["result_dirs"]["analysis"]}/*", checkIfExists: true)
 
-    PIXELATOR_REPORT (
+    PIXELATOR_RND_REPORT (
         input,
         preqc,
         adapterqc,
