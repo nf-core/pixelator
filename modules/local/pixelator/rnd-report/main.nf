@@ -19,8 +19,8 @@ process PIXELATOR_RND_REPORT {
     path analysis_report_json,          stageAs: "results/analysis/*"
 
     output:
-    path "reports/rnd-report/*.html",                                           emit: reports
-    path "reports/rnd-report/*.csv",                                            emit: data
+    path "rnd-report/report/*.html",                                        emit: reports
+    path "rnd-report/report/*.csv",                                         emit: data
     path "versions.yml",                                                    emit: versions
 
     when:
