@@ -212,11 +212,10 @@
                     "type": "integer"
                 },
                 "collapse_min_count": {
-                    "fa_icon": "fas less-than-equal",
-                    "description": "Discard molecules with with a count (reads) lower than this value [default: 1; 0<=x<=5]",
-                    "default": 1,
+                    "fa_icon": "fas more-than-equal",
+                    "description": "Discard molecules with with a count (reads) lower than this value [default: 2]",
+                    "default": 2,
                     "minimum": 1,
-                    "maximum": 10,
                     "type": "integer"
                 },
                 "use_counts": {
