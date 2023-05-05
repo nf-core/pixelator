@@ -19,8 +19,8 @@ process PIXELATOR_RND_REPORT {
     path analysis_report_json,          stageAs: "results/analysis/*"
 
     output:
-    path "reports/report/*.html",                                           emit: reports
-    path "reports/report/*.csv",                                            emit: data
+    path "reports/rnd-report/*.html",                                           emit: reports
+    path "reports/rnd-report/*.csv",                                            emit: data
     path "versions.yml",                                                    emit: versions
 
     when:
@@ -34,7 +34,7 @@ process PIXELATOR_RND_REPORT {
     pixelator \\
         rnd \\
         report \\
-        --output reports \\
+        --output rnd-report \\
         --name "${meta.id}" \\
         $args \\
         results
