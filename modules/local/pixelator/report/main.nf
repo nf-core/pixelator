@@ -20,7 +20,6 @@ process PIXELATOR_REPORT {
 
     output:
     path "reports/report/*.html",                                           emit: reports
-    path "reports/report/*.csv",                                            emit: data
     path "versions.yml",                                                    emit: versions
 
     when:
