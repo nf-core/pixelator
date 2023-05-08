@@ -35,7 +35,6 @@ process PIXELATOR_REPORT {
         single-cell \\
         report \\
         --output reports \\
-        --name "${meta.id}" \\
         $args \\
         results
 
