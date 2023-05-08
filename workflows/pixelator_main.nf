@@ -42,6 +42,7 @@ include { INPUT_CHECK                 } from '../subworkflows/local/input_check'
 // MODULE: Installed directly from nf-core/modules
 //
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
+include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 /*
 ========================================================================================
     IMPORT CUSTOM MODULES/SUBWORKFLOWS
@@ -78,11 +79,38 @@ workflow PIXELATOR_MAIN {
     COLLECT_METADATA()
     ch_versions = ch_versions.mix(COLLECT_METADATA.out.versions)
 
+    //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
-    INPUT_CHECK (
-        ch_input
-    )
+    //
+    ch_fastq  = INPUT_CHECK ( ch_input ).reads
+    ch_fastq.dump(tag: 'ch_fastq')
+
+    ch_fastq_split = ch_fastq
+        .map {
+            meta, fastq ->
+                new_id = meta.id - ~/_T\d+/
+                [ meta + [id: new_id], fastq ]
+        }
+        .groupTuple()
+        .branch {
+            meta, fastq ->
+                single  : fastq.size() == 1
+                    return [ meta, fastq.flatten() ]
+                multiple: fastq.size() > 1
+                    return [ meta, fastq.flatten() ]
+        }
+
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
+
+    //
+    // MODULE: Concatenate FastQ files from same sample if required
+    //
+    ch_cat_fastq = CAT_FASTQ ( ch_fastq_split.multiple )
+        .reads
+        .mix(ch_fastq_split.single)
+
+    ch_cat_fastq.dump(tag: 'ch_cat_fastq')
+    ch_versions = ch_versions.mix(CAT_FASTQ.out.versions.first().ifEmpty(null))
 
     ch_reads = INPUT_CHECK.out.reads
     ch_reads.dump(tag: "ch_reads")

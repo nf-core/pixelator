@@ -5,9 +5,9 @@ process PIXELATOR_CONCATENATE {
     label 'process_medium'
 
 
-    conda "local::pixelator=${pixelator_tag}"
+    conda "local::pixelator=0.10.0"
 
-    container "ghcr.io/pixelgentechnologies/pixelator:0.9.0"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.10.0"
 
     input:
     tuple val(meta), path(reads)

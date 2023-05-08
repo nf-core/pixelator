@@ -3,6 +3,7 @@ name: nf-core CI
 on:
   push:
     branches:
+      - main
       - dev
   pull_request:
   release:
@@ -12,29 +13,74 @@ env:
   NXF_ANSI_LOG: false
 
 jobs:
+  pre_job:
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v5
+        with:
+          concurrent_skipping: "same_content_newer"
+          skip_after_successful_duplicate: "true"
+          paths: |
+            [
+              "main.nf",
+              "nextflow.config",
+              "nextflow_schema.json",
+              "bin/**",
+              "conf/**",
+              "workflows/**",
+              "subworkflows/**",
+              "modules/**",
+              "lib/**"
+            ]
+
   test:
     name: Run pipeline with test data
     # Only run on pus${{ false }}"
-    if: ${{ false }}
-    # if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'nf-core/pixelator') }}"
+    if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'nf-core/pixelator') }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         NXF_VER:
-          - "22.04.5"
+          - "22.10.8"
           - "latest-everything"
     steps:
       - name: Check out pipeline code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          path: nf-core-pixelator
 
       - name: Install Nextflow
         uses: nf-core/setup-nextflow@v1
         with:
           version: "${{ matrix.NXF_VER }}"
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.GH_NF_CORE_DATASETS_DEPLOY_KEY }}
+
+      - name: Check out test data
+        uses: actions/checkout@v3
+        with:
+          repository: PixelgenTechnologies/nf-core-pixelator-datasets
+          ref: main
+          path: testdata
+
       - name: Run pipeline with test data
         # TODO nf-core: You can customise CI pipeline run tests as required
         # For example: adding multiple test runs with different parameters
         # Remember that you can parallelise this by using strategy.matrix
         run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile test,docker --outdir ./results
+          nextflow run ${GITHUB_WORKSPACE}/nf-core-pixelator -profile test,docker --outdir ${GITHUB_WORKSPACE}/results --testdata_root ${GITHUB_WORKSPACE}/testdata

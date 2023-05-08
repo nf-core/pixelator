@@ -49,39 +49,47 @@
             "fa_icon": "fas fa-terminal",
             "properties": {
                 "trim_front": {
+                    "fa_icon": "fas backward-step",
                     "type": "integer",
                     "description": "Trim N bases from the front of the reads",
                     "default": 0
                 },
                 "trim_tail": {
+                    "fa_icon": "fas forward-step",
                     "type": "integer",
                     "description": "Trim N bases from the tail of the reads",
                     "default": 0
                 },
                 "max_length": {
+                    "fa_icon": "fas up-right-and-down-left-from-center",
                     "type": "integer",
                     "description": "The maximum length (bases) of a read (longer reads will be trimmed off). If you set this argument it will overrrule the value from the chosen design"
                 },
                 "min_length": {
+                    "fa_icon": "fas down-left-and-up-right-to-center",
                     "type": "integer",
                     "description": "The minimum length (bases) of a read (shorter reads will be discarded). If you set this argument it will overrrule the value from the chosen design."
                 },
                 "max_n_bases": {
+                    "fa_icon": "fas n",
                     "description": "The maximum number of Ns allowed in a read",
                     "type": "integer",
                     "default": 3
                 },
                 "avg_qual": {
+                    "fa_icon": "fas gauge",
                     "description": "Minimum avg. quality a read must have (0 will disable the filter)",
                     "type": "integer",
                     "default": 20
                 },
                 "dedup": {
+                    "fa_icon": "fas clone",
                     "description": "Remove duplicated reads (exact same sequence)",
                     "type": "boolean",
                     "default": false
                 },
                 "remove_polyg": {
+                    "fa_icon": "fas g",
                     "description": "Remove PolyG sequences (length of 10 or more)",
                     "type": "boolean",
                     "default": false
@@ -92,7 +100,8 @@
             "title": "Adapter QC Options",
             "properties": {
                 "adapterqc_mismatches": {
-                    "description": "The number of mismatches allowed (in percentage)  [default: 0.1; 0.0<=x<=0.9]",
+                    "fa_icon": "fas not-equal",
+                    "description": "The number of mismatches allowed (in percentage) [default: 0.1; 0.0<=x<=0.9]",
                     "type": "number",
                     "default": 0.1
                 },
@@ -110,22 +119,26 @@
             "title": "Demux options",
             "properties": {
                 "demux_mismatches": {
-                    "description": "The number of mismatches allowed (in percentage)  [default: 0.1; 0.0<=x<=0.9]",
+                    "fa_icon": "fas not-equal",
+                    "description": "The number of mismatches allowed (in percentage) [default: 0.1; 0.0<=x<=0.9]",
                     "type": "number",
                     "default": 0.1,
                     "minimum": 0.0,
                     "maximum": 0.9
                 },
                 "demux_min_length": {
+                    "fa_icon": "fas down-left-and-up-right-to-center",
                     "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design",
                     "type": ["integer", "null"]
                 },
                 "anchored": {
+                    "fa_icon": "fas anchor",
                     "description": "Enforce the barcodes to be anchored (at the end of the read)",
                     "type": "boolean",
                     "default": false
                 },
                 "rev_complement": {
+                    "fa_icon": "fas right-left",
                     "description": "Use the reverse complement of the barcodes sequences",
                     "type": "boolean",
                     "default": false
@@ -136,62 +149,74 @@
             "title": "Collapse options",
             "properties": {
                 "algorithm": {
+                    "fa_icon": "fas code-fork",
                     "description": "The algorithm to use for collapsing (adjacency will peform error correction using the number of mismatches given) [default: adjacency]",
                     "default": "adjacency",
                     "enum": ["adjacency", "unique"],
                     "type": "string"
                 },
-                "upi1_start": {
-                    "description": "The start position (0-based) of UPI1. If you set this argument it will overrrule the value from the chosen design",
+                "upia_start": {
+                    "fa_icon": "fas backward-step",
+                    "description": "The start position (0-based) of UPIA. If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
-                "upi1_end": {
-                    "description": "The end position (1-based) of UPI1. If you set this argument it will overrrule the  value from the chosen design",
+                "upia_end": {
+                    "fa_icon": "fas forward-step",
+                    "description": "The end position (1-based) of UPIA. If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
-                "upi2_start": {
-                    "description": "The start position (0-based) of UPI@. If you set this argument it will overrrule the value from the chosen design",
+                "upib_start": {
+                    "fa_icon": "fas backward-step",
+                    "description": "The start position (0-based) of UPIB. If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
-                "upi2_end": {
-                    "description": "The end position (1-based) of UPI2. If you set this argument it will overrrule the  value from the chosen design",
+                "upib_end": {
+                    "fa_icon": "fas forward-step",
+                    "description": "The end position (1-based) of UPIB. If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
-                "umi1_start": {
-                    "description": "The start position (0-based) of UMI1 (disabled by default). If you set this argument it will overrrule the value from the chosen design",
+                "umia_start": {
+                    "fa_icon": "fas backward-step",
+                    "description": "The start position (0-based) of UMIA (disabled by default). If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
-                "umi1_end": {
-                    "description": "The end position (1-based) of UMI1 (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
+                "umia_end": {
+                    "fa_icon": "fas forward-step",
+                    "description": "The end position (1-based) of UMIA (disabled by default). If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
-                "umi2_start": {
-                    "description": "The start position (0-based) of UMI2 (disabled by default). If you set this argument it will overrrule the value from the chosen design",
+                "umib_start": {
+                    "fa_icon": "fas forward-step",
+                    "description": "The start position (0-based) of UMIB (disabled by default). If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
-                "umi2_end": {
-                    "description": "The end position (1-based) of UMI2 (disabled by default). If you set this argument it will overrrule the  value from the chosen design",
+                "umib_end": {
+                    "fa_icon": "fas backward-step",
+                    "description": "The end position (1-based) of UMIB (disabled by default). If you set this argument it will overrrule the value from the chosen design",
                     "type": "integer"
                 },
                 "neighbours": {
-                    "description": "The number of neighbours to use when searching for similar sequences (adjacency) This number depends on the sequence depth and the ratio of erronous molecules expected. A high value can make the algoritthm slower.  [default: 60; 1<=x<=250]",
+                    "fa_icon": "fas circle-nodes",
+                    "description": "The number of neighbours to use when searching for similar sequences (adjacency) This number depends on the sequence depth and the ratio of erronous molecules expected. A high value can make the algoritthm slower. [default: 60; 1<=x<=250]",
                     "default": 60,
-                    "min": 1,
-                    "max": 250,
+                    "minimum": 1,
+                    "maximum": 250,
                     "type": "integer"
                 },
                 "collapse_mismatches": {
-                    "description": "The number of mismatches allowed when collapsing (adjacency)  [default: 2; 0<=x<=5]",
+                    "fa_icon": "fas not-equal",
+                    "description": "The number of mismatches allowed when collapsing (adjacency) [default: 2; 0<=x<=5]",
                     "default": 2,
-                    "min": 0,
-                    "max": 5,
+                    "minimum": 0,
+                    "maximum": 5,
                     "type": "integer"
                 },
                 "collapse_min_count": {
-                    "description": "Discard molecules with with a count (reads) lower than this value  [default: 1; 0<=x<=5]",
+                    "fa_icon": "fas less-than-equal",
+                    "description": "Discard molecules with with a count (reads) lower than this value [default: 1; 0<=x<=5]",
                     "default": 1,
-                    "min": 0,
-                    "max": 5,
+                    "minimum": 1,
+                    "maximum": 10,
                     "type": "integer"
                 },
                 "use_counts": {
@@ -204,24 +229,35 @@
         "cluster_options": {
             "title": "Options for pixelator cluster command.",
             "properties": {
-                "max_size_recover": {
-                    "description": "The maximum size cutoff to use in the recovery (--big-clusters-recover) [default: 10000]",
+                "multiplet_recovery": {
+                    "description": "Activate the multiplet recovery (leiden or fast-greedy): leiden: use the leiden algorithm (whole graph) fast-greedy: use fast greedy algorithm (per-component)",
+                    "type": "string",
+                    "enum": ["leiden", "fast-greedy"]
+                },
+                "fast_greedy_fraction": {
+                    "description": "Maximum fraction of edges allowed to be removed in a component for the fast-greedy algorithm [default: 0.05; 0.0<=x<=1.0]",
+                    "type": "number",
+                    "default": 0.5,
+                    "minimum": 0.0,
+                    "maximum": 1.0
+                },
+                "fast_greedy_cutoff": {
+                    "fa_icon": "fas less-than-equal",
+                    "description": "Minimum size (edges) of a component to be considered for the fast-greedy algorithm [default: 5000]",
                     "type": "integer",
-                    "default": 10000
+                    "default": 5000
                 },
-                "big_clusters_recover": {
-                    "description": "Enable the recovery of big clusters/cells (above --max-size-recover) by using the community modularity approach to remove problematic edges",
-                    "type": "boolean",
-                    "default": false
-                },
-                "condition": {
-                    "description": "Which approach to use to select the best community (--big-clusters-recover) optimal will use the community that maximizes the modularity max-size will iterate until the biggest component in the community is below --max-size/2 or the maximum number of iterations is reached  [default: optimal]",
-                    "default": "optimal",
-                    "enum": ["optimal", "max-size"],
-                    "type": "string"
+                "leiden_iterations": {
+                    "fa_icon": "fas repeat",
+                    "description": "Number of iterations for the leiden algorithm, high values will decrease the variance of the results but increase the runtime [default: 10; 1<=x<=100]",
+                    "type": "integer",
+                    "default": 10,
+                    "minimum": 1,
+                    "maximum": 100
                 },
                 "cluster_min_count": {
-                    "description": "Discard molecules (edges) with with a count (reads) lower than this  [default: 2; 1<=x<=50]",
+                    "fa_icon": "fas less-than-equal",
+                    "description": "Discard edges (pixels) with a count (reads) lower than this [default: 2; 1<=x<=50] use 1 to disable",
                     "type": "integer",
                     "default": 2,
                     "minimum": 1,
@@ -241,9 +277,9 @@
                     "type": "integer"
                 },
                 "dynamic_filter": {
-                    "description": "Enable the estimation of dynamic size filters (--min-size) using a log-rank approach",
-                    "default": false,
-                    "type": "boolean"
+                    "description": " Enable the estimation of dynamic size filters using a log-rank approach both: estimate both min and max size, min: estimate min size (--min-size), max: estimate max size (--max-size)",
+                    "type": "string",
+                    "enum": ["both", "min", "max"]
                 },
                 "cell_type_assignments": {
                     "description": "Enable cell type assignment using pre-trained models",
@@ -252,11 +288,6 @@
                 },
                 "majority_vote": {
                     "description": "Enable cell type majority voting using clustering of components",
-                    "default": false,
-                    "type": "boolean"
-                },
-                "doublet_calling": {
-                    "description": "Enable component doublet calling, information on potential doublets will be added to output data",
                     "default": false,
                     "type": "boolean"
                 },
@@ -276,12 +307,7 @@
                     "default": false
                 },
                 "compute_colocalization": {
-                    "description": "Compute colocalization scores matrix (clusters by markers)",
-                    "type": "boolean",
-                    "default": false
-                },
-                "compute_coabundance": {
-                    "description": "Compute coabundance scores matrix (clusters by markers)",
+                    "description": " Compute colocalization scores (marker by marker) for each component",
                     "type": "boolean",
                     "default": false
                 },
@@ -293,10 +319,11 @@
                 "normalization": {
                     "description": "Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and subtract the counts of control antibodies",
                     "type": "string",
-                    "enum": ["raw", "CLR", "denoise"],
-                    "default": "CLR"
+                    "enum": ["raw", "clr", "denoise"],
+                    "default": "clr"
                 },
                 "binarization": {
+                    "fa_icon": "fas binary",
                     "description": "Transform the antibody counts to 0-1 (binarize) when computing polarization",
                     "type": "boolean",
                     "default": false

@@ -3,17 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.3.0 - [date]
+## v0.10.0 - [date]
 
-- Update to support pixelator 0.6.3
+- Bump pixelator to 0.10.0
+- Re-enable test profile runs in CI
+- Support concatenation of sequence files with same sample id
 
-## 0.2.0 - [date]
+## v0.9.0 - [date]
 
-- Support new analysis command
-
-## 0.1.0 - [date]
-
-First alpha release of nf-core-pixelator.
+Initial release of nf-core/pixelator, created with the [nf-core](https://nf-co.re/) template.
 
 ### `Added`
 
