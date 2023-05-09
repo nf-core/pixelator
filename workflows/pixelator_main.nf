@@ -154,7 +154,7 @@ workflow PIXELATOR_MAIN {
     ch_preqc.dump(tag: "ch_preqc")
     ch_versions = ch_versions.mix(PIXELATOR_PREQC.out.versions.first())
 
-    PIXELATOR_ADAPTERQC ( ch_input_reads )
+    PIXELATOR_ADAPTERQC ( ch_preqc )
     ch_adapterqc = PIXELATOR_ADAPTERQC.out.processed
     ch_adapterqc.dump(tag: "ch_adapterqc")
     ch_versions = ch_versions.mix(PIXELATOR_ADAPTERQC.out.versions.first())
