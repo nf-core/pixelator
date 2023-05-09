@@ -39,3 +39,5 @@ jobs:
             -c ./conf/pixelgen.config \
             -profile test_full
             --project_name full-${{ github.run_id }} \
+            --pixelator_container_source internal \
+            --pixelator_tag main-3b04a51eee936025adcdc1d3886b40a1a6315ca7
