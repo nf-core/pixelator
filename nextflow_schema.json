@@ -232,7 +232,7 @@
                     "description": "Activate the multiplet recovery (leiden or fast-greedy): leiden: use the leiden algorithm (whole graph) fast-greedy: use fast greedy algorithm (per-component)",
                     "type": "string",
                     "enum": ["leiden", "fast-greedy"],
-                    "default": ["leiden"]
+                    "default": "leiden"
                 },
                 "fast_greedy_fraction": {
                     "description": "Maximum fraction of edges allowed to be removed in a component for the fast-greedy algorithm [default: 0.05; 0.0<=x<=1.0]",
