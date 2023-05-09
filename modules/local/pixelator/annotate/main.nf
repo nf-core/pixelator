@@ -31,6 +31,7 @@ process PIXELATOR_ANNOTATE {
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-annotate.log \\
         --verbose \\
+        single-cell \\
         annotate \\
         --output . \\
         $args \\

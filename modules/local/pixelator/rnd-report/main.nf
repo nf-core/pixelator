@@ -1,6 +1,6 @@
 
 
-process PIXELATOR_REPORT {
+process PIXELATOR_RND_REPORT {
     tag "$meta.id"
     label 'process_low'
 
@@ -19,7 +19,8 @@ process PIXELATOR_REPORT {
     path analysis_report_json,          stageAs: "results/analysis/*"
 
     output:
-    path "report/*.html",               emit: reports
+    path "rnd-report/*.html",           emit: reports
+    path "rnd-report/*.csv",            emit: data
     path "versions.yml",                emit: versions
 
     when:
@@ -31,9 +32,10 @@ process PIXELATOR_REPORT {
 
     """
     pixelator \\
-        single-cell \\
+        rnd \\
         report \\
         --output . \\
+        --name "${meta.id}" \\
         $args \\
         results
 

@@ -30,6 +30,7 @@ process PIXELATOR_ANALYSIS {
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-analysis.log \\
         --verbose \\
+        single-cell \\
         analysis \\
         --output . \\
         $args \\

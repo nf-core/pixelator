@@ -35,6 +35,7 @@ process PIXELATOR_ADAPTERQC {
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-adapterqc.log \\
         --verbose \\
+        single-cell \\
         adapterqc \\
         --output . \\
         --design ${meta.design} \\
