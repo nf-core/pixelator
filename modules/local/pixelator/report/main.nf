@@ -19,8 +19,8 @@ process PIXELATOR_REPORT {
     path analysis_report_json,          stageAs: "results/analysis/*"
 
     output:
-    path "reports/report/*.html",                                           emit: reports
-    path "versions.yml",                                                    emit: versions
+    path "report/*.html",               emit: reports
+    path "versions.yml",                emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -33,7 +33,7 @@ process PIXELATOR_REPORT {
     pixelator \\
         single-cell \\
         report \\
-        --output reports \\
+        --output . \\
         $args \\
         results
 
