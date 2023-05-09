@@ -74,7 +74,7 @@
                     "fa_icon": "fas n",
                     "description": "The maximum number of Ns allowed in a read",
                     "type": "integer",
-                    "default": 3
+                    "default": 0
                 },
                 "avg_qual": {
                     "fa_icon": "fas gauge",
@@ -135,7 +135,7 @@
                     "fa_icon": "fas anchor",
                     "description": "Enforce the barcodes to be anchored (at the end of the read)",
                     "type": "boolean",
-                    "default": false
+                    "default": true
                 },
                 "rev_complement": {
                     "fa_icon": "fas right-left",
@@ -212,11 +212,10 @@
                     "type": "integer"
                 },
                 "collapse_min_count": {
-                    "fa_icon": "fas less-than-equal",
-                    "description": "Discard molecules with with a count (reads) lower than this value [default: 1; 0<=x<=5]",
-                    "default": 1,
+                    "fa_icon": "fas more-than-equal",
+                    "description": "Discard molecules with with a count (reads) lower than this value [default: 2]",
+                    "default": 2,
                     "minimum": 1,
-                    "maximum": 10,
                     "type": "integer"
                 },
                 "use_counts": {
@@ -232,7 +231,8 @@
                 "multiplet_recovery": {
                     "description": "Activate the multiplet recovery (leiden or fast-greedy): leiden: use the leiden algorithm (whole graph) fast-greedy: use fast greedy algorithm (per-component)",
                     "type": "string",
-                    "enum": ["leiden", "fast-greedy"]
+                    "enum": ["leiden", "fast-greedy"],
+                    "default": ["leiden"]
                 },
                 "fast_greedy_fraction": {
                     "description": "Maximum fraction of edges allowed to be removed in a component for the fast-greedy algorithm [default: 0.05; 0.0<=x<=1.0]",
@@ -279,7 +279,8 @@
                 "dynamic_filter": {
                     "description": " Enable the estimation of dynamic size filters using a log-rank approach both: estimate both min and max size, min: estimate min size (--min-size), max: estimate max size (--max-size)",
                     "type": "string",
-                    "enum": ["both", "min", "max"]
+                    "enum": ["both", "min", "max"],
+                    "default": "min"
                 },
                 "cell_type_assignments": {
                     "description": "Enable cell type assignment using pre-trained models",
@@ -293,7 +294,7 @@
                 },
                 "aggregate_calling": {
                     "description": "Enable aggregate calling, information on potential aggregates will be added to the output data",
-                    "default": false,
+                    "default": true,
                     "type": "boolean"
                 }
             }
@@ -304,12 +305,12 @@
                 "compute_polarization": {
                     "description": "Compute polarization scores matrix (clusters by markers)",
                     "type": "boolean",
-                    "default": false
+                    "default": true
                 },
                 "compute_colocalization": {
                     "description": " Compute colocalization scores (marker by marker) for each component",
                     "type": "boolean",
-                    "default": false
+                    "default": true
                 },
                 "use_full_bipartite": {
                     "description": "Use the bipartite graph instead of the one-node projection when computing polarization, coabundance and colocalization scores",
@@ -433,7 +434,7 @@
                 "pixelator_container_source": {
                     "type": "string",
                     "description": "The source repository for the pixelator docker container.",
-                    "enum": ["aws-ecr", "ghcr"],
+                    "enum": ["aws-ecr", "ghcr", "internal"],
                     "hidden": true
                 },
                 "pixelator_tag": {
