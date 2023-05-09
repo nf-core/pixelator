@@ -12,6 +12,12 @@ on:
 env:
   NXF_ANSI_LOG: false
 
+permissions:
+  id-token: write
+  actions: write
+  contents: read
+  packages: read
+
 jobs:
   pre_job:
     continue-on-error: true
