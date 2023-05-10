@@ -12,6 +12,12 @@ on:
 env:
   NXF_ANSI_LOG: false
 
+permissions:
+  id-token: write
+  actions: write
+  contents: read
+  packages: read
+
 jobs:
   pre_job:
     continue-on-error: true
@@ -83,4 +89,9 @@ jobs:
         # For example: adding multiple test runs with different parameters
         # Remember that you can parallelise this by using strategy.matrix
         run: |
-          nextflow run ${GITHUB_WORKSPACE}/nf-core-pixelator -profile test,docker --outdir ${GITHUB_WORKSPACE}/results --testdata_root ${GITHUB_WORKSPACE}/testdata
+          nextflow run ${GITHUB_WORKSPACE}/nf-core-pixelator \
+            -profile test,docker \
+            --outdir ${GITHUB_WORKSPACE}/results \
+            --testdata_root ${GITHUB_WORKSPACE}/testdata \
+            --pixelator_container_source internal \
+            --pixelator_tag main-3b04a51eee936025adcdc1d3886b40a1a6315ca7

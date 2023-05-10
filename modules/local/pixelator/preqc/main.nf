@@ -35,6 +35,7 @@ process PIXELATOR_PREQC {
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-preqc.log \\
         --verbose \\
+        single-cell \\
         preqc \\
         --output . \\
         --design ${meta.design} \\

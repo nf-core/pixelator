@@ -60,6 +60,7 @@ include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/colla
 include { PIXELATOR_CLUSTER             } from '../modules/local/pixelator/cluster/main'
 include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/analysis/main'
 include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/annotate/main'
+include { PIXELATOR_RND_REPORT          } from '../modules/local/pixelator/rnd-report/main'
 include { PIXELATOR_REPORT              } from '../modules/local/pixelator/report/main'
 include { RENAME_READS                  } from '../modules/local/rename_reads'
 include { COLLECT_METADATA              } from '../modules/local/collect_metadata'
@@ -153,7 +154,7 @@ workflow PIXELATOR_MAIN {
     ch_preqc.dump(tag: "ch_preqc")
     ch_versions = ch_versions.mix(PIXELATOR_PREQC.out.versions.first())
 
-    PIXELATOR_ADAPTERQC ( ch_input_reads )
+    PIXELATOR_ADAPTERQC ( ch_preqc )
     ch_adapterqc = PIXELATOR_ADAPTERQC.out.processed
     ch_adapterqc.dump(tag: "ch_adapterqc")
     ch_versions = ch_versions.mix(PIXELATOR_ADAPTERQC.out.versions.first())
@@ -246,6 +247,18 @@ workflow PIXELATOR_MAIN {
 
     ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions)
 
+    PIXELATOR_RND_REPORT (
+        ch_report_meta,
+        ch_preqc_grouped,
+        ch_adapterqc_grouped,
+        ch_demux_grouped,
+        ch_collapse_grouped,
+        ch_cluster_grouped,
+        ch_annotate_grouped,
+        ch_analysis_grouped,
+    )
+
+    ch_versions = ch_versions.mix(PIXELATOR_RND_REPORT.out.versions)
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')

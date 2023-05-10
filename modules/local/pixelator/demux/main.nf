@@ -33,6 +33,7 @@ process PIXELATOR_DEMUX {
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-demux.log \\
         --verbose \\
+        single-cell \\
         demux \\
         --output . \\
         --panel-file ${antibody_panel} \\

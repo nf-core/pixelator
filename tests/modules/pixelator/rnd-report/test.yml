@@ -1,0 +1,5 @@
+- name: pixelator_rnd_report test_pixelator_rnd_report
+  command: nextflow run tests/modules/pixelator/rnd-report -entry test_pixelator_rnd_report -c tests/modules/pixelator/report/nextflow.config -c tests/config/nextflow.config
+  tags:
+    - pixelator
+    - pixelator-rnd-report

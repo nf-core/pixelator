@@ -471,17 +471,6 @@ Use the bipartite graph instead of the one-node projection when computing polari
 
 Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and subtract the counts of control antibodies
 
-<a name="options-for-pixelator-report-command"/>
-
-## Options for pixelator report command.
-
-### `--report_name`
-
-**Type:** ['string']
-**Default:** report
-
-The name for the report
-
 <a name="institutional-config-options"/>
 ## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/university.svg" width=32 height=32 />    Institutional config options
 

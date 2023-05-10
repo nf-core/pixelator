@@ -159,11 +159,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
-  - `reports/report`
-    - `antibody_counts.html`:
-    - `clusters_dist.html`:
+  - `report/`
     - `report.html`:
-    - `summary_stats.html`:
   - `/logs` - `*pixelator-report.log`: Pixelator report log output.
   </details>
 

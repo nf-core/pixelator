@@ -32,6 +32,7 @@ process PIXELATOR_AGGREGATE {
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-aggregate.log \\
         --verbose \\
+        single-cell \\
         aggregate \\
         --output . \\
         ${anndata}

@@ -20,7 +20,7 @@ and create and install the pre-requisites:
 ```
 conda create --name nf-core-pixelator python=3.8
 conda activate nf-core-pixelator
-pip install -r requierments.txt
+pip install -r requirements.txt
 ```
 
 ### pre-commit hooks
