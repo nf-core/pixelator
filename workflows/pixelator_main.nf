@@ -135,19 +135,12 @@ workflow PIXELATOR_MAIN {
     ch_renamed_branched.paired_end.dump(tag: "ch_renamed_branched.paired_end")
 
 
-    PIXELATOR_CONCATENATE ( ch_renamed_branched.paired_end )
+    PIXELATOR_CONCATENATE ( ch_renamed_reads )
     ch_merged = PIXELATOR_CONCATENATE.out.merged
     ch_merged.dump(tag: "ch_merged")
     ch_versions = ch_versions.mix(PIXELATOR_CONCATENATE.out.versions.first())
 
-    // Return concatenate ouput but with [] placeholder for single_end reads
-    ch_concat_results = ch_renamed_branched.single_end
-        .map { meta, _ -> [meta, []] }
-        .mix(PIXELATOR_CONCATENATE.out.merged)
-    ch_concat_results.dump(tag: "ch_concat_results")
-
-    ch_input_reads = ch_renamed_branched.single_end.mix(ch_merged)
-    ch_input_reads.dump(tag: "ch_input_reads")
+    ch_input_reads = ch_merged
 
     PIXELATOR_PREQC ( ch_input_reads )
     ch_preqc = PIXELATOR_PREQC.out.processed
@@ -190,52 +183,81 @@ workflow PIXELATOR_MAIN {
     ch_analysed = PIXELATOR_ANALYSIS.out.dataset
     ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())
 
-    //
-    // Collect outputs from all stages and samples into a set of single value channels
-    // to pass to the report generation step.
-    //
-    ch_preqc_col                 = PIXELATOR_PREQC.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_adapterqc_col             = PIXELATOR_ADAPTERQC.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_demux_col                 = PIXELATOR_DEMUX.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_collapse_col              = PIXELATOR_COLLAPSE.out.report_json.map { meta, data -> [ meta.id, data] }
-    ch_cluster_col               = PIXELATOR_CLUSTER.out.all_results.map { meta, data -> [ meta.id, data] }
-    ch_annotate_col              = PIXELATOR_ANNOTATE.out.all_results.map { meta, data -> [ meta.id, data] }
-    ch_analysis_col              = PIXELATOR_ANALYSIS.out.all_results.map { meta, data -> [ meta.id, data] }
+    // Do some heroic transformations to split the inputs into their stages
+    // and have all these "stage output" channel output their files list in the same order
+    // Note that we need to split inout per stage to stage those files in the right subdirs
+    // as expected by pixelator single-cell report
 
-    ch_report_data = ch_preqc_col
+    ch_meta_col                  = ch_panels.map { meta, data -> [ meta.id, meta] }
+    ch_panels_col                = ch_panels.map { meta, data -> [ meta.id, data] }
+
+    ch_concatenate_col = PIXELATOR_CONCATENATE.out.report_json.mix(PIXELATOR_CONCATENATE.out.input_params)
+        .map { meta, data -> [ meta.id, data] }.groupTuple()
+
+    ch_preqc_col = PIXELATOR_PREQC.out.report_json.mix(PIXELATOR_PREQC.out.input_params)
+        .map { meta, data -> [ meta.id, data] }
+        .groupTuple()
+
+    ch_adapterqc_col = PIXELATOR_ADAPTERQC.out.report_json.mix(PIXELATOR_ADAPTERQC.out.input_params)
+        .map { meta, data -> [ meta.id, data] }
+        .groupTuple()
+
+    ch_demux_col = PIXELATOR_DEMUX.out.report_json.mix(PIXELATOR_DEMUX.out.input_params)
+        .map { meta, data -> [ meta.id, data] }
+        .groupTuple()
+
+    ch_collapse_col = PIXELATOR_COLLAPSE.out.report_json.mix(PIXELATOR_COLLAPSE.out.input_params)
+        .map { meta, data -> [ meta.id, data] }
+        .groupTuple()
+
+    ch_cluster_col = PIXELATOR_CLUSTER.out.all_results
+        .map { meta, data -> [meta.id, data] }
+        .groupTuple()
+
+    ch_annotate_col = PIXELATOR_ANNOTATE.out.all_results
+        .map { meta, data -> [meta.id, data] }
+        .groupTuple()
+
+    ch_analysis_col = PIXELATOR_ANALYSIS.out.all_results
+        .map { meta, data -> [meta.id, data] }
+        .groupTuple()
+
+
+    // Combine all input and group it so we are sure that the per-stage channels will have their output in the same order
+    // ch_report_data: [[
+    //      id, meta, panels_file,
+    //      [concatenate files...], [preqc files...], [adapterqc files...], [demux files...],
+    //      [collapse files...], [cluster files], [annotate files...], [analsysis files...]
+    // ], ...]
+    ch_report_data = ch_meta_col
+        .concat ( ch_panels_col )
+        .concat ( ch_concatenate_col )
+        .concat ( ch_preqc_col )
         .concat ( ch_adapterqc_col )
         .concat ( ch_demux_col )
         .concat ( ch_collapse_col )
         .concat ( ch_cluster_col )
         .concat ( ch_annotate_col )
         .concat ( ch_analysis_col )
-        .groupTuple ()
+        .groupTuple()
 
     ch_report_data.dump(tag: "ch_report_data")
 
-    ch_preqc_grouped        = ch_report_data.map { id, data -> data[0] }.collect()
-    ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[1] }.collect()
-    ch_demux_grouped        = ch_report_data.map { id, data -> data[2] }.collect()
-    ch_collapse_grouped     = ch_report_data.map { id, data -> data[3] }.collect()
-    ch_cluster_grouped      = ch_report_data.map { id, data -> data[4] }.collect()
-    ch_annotate_grouped     = ch_report_data.map { id, data -> data[5] }.collect()
-    ch_analysis_grouped     = ch_report_data.map { id, data -> data[6] }.collect()
-
-    ch_report_meta = ch_report_data
-        .map { it -> it[0] }.collect()
-        .map { [ id: params.report_name , samples: it] }
-
-    ch_preqc_grouped.dump(tag: "ch_preqc_grouped")
-    ch_adapterqc_grouped.dump(tag: "ch_adapterqc_grouped")
-    ch_demux_grouped.dump(tag: "ch_demux_grouped")
-    ch_collapse_grouped.dump(tag: "ch_collapse_grouped")
-    ch_cluster_grouped.dump(tag: "ch_cluster_grouped")
-    ch_annotate_grouped.dump(tag: "ch_annotate_grouped")
-    ch_analysis_grouped.dump(tag: "ch_analysis_grouped")
-    ch_report_meta.dump(tag: "ch_report_meta")
+    ch_meta_grouped        = ch_report_data.map { id, data -> data[0] }
+    ch_panels_grouped       = ch_report_data.map { id, data -> data[1] }
+    ch_concatenate_grouped  = ch_report_data.map { id, data -> data[2].flatten() }
+    ch_preqc_grouped        = ch_report_data.map { id, data -> data[3].flatten() }
+    ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[4].flatten() }
+    ch_demux_grouped        = ch_report_data.map { id, data -> data[5].flatten() }
+    ch_collapse_grouped     = ch_report_data.map { id, data -> data[6].flatten() }
+    ch_cluster_grouped      = ch_report_data.map { id, data -> data[7].flatten() }
+    ch_annotate_grouped    = ch_report_data.map { id, data -> data[8].flatten() }
+    ch_analysis_grouped    = ch_report_data.map { id, data -> data[8].flatten() }
 
     PIXELATOR_REPORT (
-        ch_report_meta,
+        ch_meta_grouped,
+        ch_panels_grouped,
+        ch_concatenate_grouped,
         ch_preqc_grouped,
         ch_adapterqc_grouped,
         ch_demux_grouped,
@@ -244,21 +266,9 @@ workflow PIXELATOR_MAIN {
         ch_annotate_grouped,
         ch_analysis_grouped,
     )
+
 
     ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions)
-
-    PIXELATOR_RND_REPORT (
-        ch_report_meta,
-        ch_preqc_grouped,
-        ch_adapterqc_grouped,
-        ch_demux_grouped,
-        ch_collapse_grouped,
-        ch_cluster_grouped,
-        ch_annotate_grouped,
-        ch_analysis_grouped,
-    )
-
-    ch_versions = ch_versions.mix(PIXELATOR_RND_REPORT.out.versions)
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')

@@ -7,12 +7,13 @@ process PIXELATOR_ANNOTATE {
     container "ghcr.io/pixelgentechnologies/pixelator:0.10.0"
 
     input:
-    tuple val(meta), path(h5ad), path(panel)
+    tuple val(meta), path(dataset), path(panel)
 
     output:
     tuple val(meta), path("annotate/*.dataset.pxl"),             emit: dataset
     tuple val(meta), path("annotate/*.report.json"),             emit: report_json
     tuple val(meta), path("annotate/*.png"),                     emit: png
+    tuple val(meta), path("annotate/*.meta.json"),               emit: input_params
     tuple val(meta), path("*pixelator-annotate.log"),            emit: log
     tuple val(meta), path("annotate/*"),                         emit: all_results
 
@@ -35,7 +36,7 @@ process PIXELATOR_ANNOTATE {
         annotate \\
         --output . \\
         $args \\
-        $h5ad \\
+        $dataset \\
         --panel-file $panel
 
     cat <<-END_VERSIONS > versions.yml

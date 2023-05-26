@@ -10,30 +10,32 @@ process PIXELATOR_REPORT {
 
     input:
     val meta
-    path preqc_report_json,             stageAs: "results/preqc/*"
-    path adapterqc_report_json,         stageAs: "results/adapterqc/*"
-    path demux_report_json,             stageAs: "results/demux/*"
-    path collapse_report_json,          stageAs: "results/collapse/*"
-    path cluster_data,                  stageAs: "results/cluster/*"
-    path annotate_report_json,          stageAs: "results/annotate/*"
-    path analysis_report_json,          stageAs: "results/analysis/*"
+    path panel_file
+    path concatenate_data,       stageAs: "results/concatenate/*"
+    path preqc_data,             stageAs: "results/preqc/*"
+    path adapterqc_data,         stageAs: "results/adapterqc/*"
+    path demux_data,             stageAs: "results/demux/*"
+    path collapse_data,          stageAs: "results/collapse/*"
+    path cluster_data,           stageAs: "results/cluster/*"
+    path annotate_data,          stageAs: "results/annotate/*"
+    path analysis_data,          stageAs: "results/analysis/*"
 
     output:
-    path "report/*.html",               emit: reports
-    path "versions.yml",                emit: versions
+    path "report/*.html",        emit: reports
+    path "versions.yml",         emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
     def args = task.ext.args ?: ''
-    def samples = meta.samples.join(',')
 
     """
     pixelator \\
         single-cell \\
         report \\
         --output . \\
+        --panel-file ${panel_file} \\
         $args \\
         results
 

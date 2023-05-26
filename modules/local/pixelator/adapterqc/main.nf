@@ -15,8 +15,9 @@ process PIXELATOR_ADAPTERQC {
 
     tuple val(meta), path("adapterqc/*.processed.{fq,fastq}.gz"),   emit: processed
     tuple val(meta), path("adapterqc/*.failed.{fq,fastq}.gz"),      emit: failed
-    tuple val(meta), path("adapterqc/*.report.json"),          emit: report_json
-    tuple val(meta), path("*pixelator-adapterqc.log"),         emit: log
+    tuple val(meta), path("adapterqc/*.report.json"),               emit: report_json
+    tuple val(meta), path("adapterqc/*.meta.json"),                 emit: input_params
+    tuple val(meta), path("*pixelator-adapterqc.log"),              emit: log
 
     path "versions.yml"           , emit: versions
 

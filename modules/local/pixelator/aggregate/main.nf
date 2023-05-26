@@ -16,7 +16,9 @@ process PIXELATOR_AGGREGATE {
 
 
     tuple val(meta), path("aggregate/*merged_anndata.h5ad"),     emit: h5ad
+    tuple val(meta), path("aggregate/*.parameters.json"),        emit: parameters
     tuple val(meta), path("*pixelator-aggregate.log"),           emit: log
+
 
     path "versions.yml"           , emit: versions
 
@@ -34,6 +36,7 @@ process PIXELATOR_AGGREGATE {
         --verbose \\
         single-cell \\
         aggregate \\
+
         --output . \\
         ${anndata}
 

@@ -13,7 +13,7 @@ import urllib.parse
 from collections import Counter
 from pathlib import Path, PurePath
 import re
-from typing import Iterable, List, MutableMapping, Set
+from typing import Iterable, List, MutableMapping, Optional, Set
 from os import PathLike
 
 logger = logging.getLogger()
@@ -60,6 +60,14 @@ def validate_whitespace(row: MutableMapping[str, str], index: int):
                 f'The sample sheet contains leading or trailing whitespaces in column "{k}" for sample "{sample_name}". '
                 "Remove whitespace or enclose with quotes!"
             )
+
+
+def read_design_options_file(path: Path) -> Set[str]:
+    designs = []
+    with open(str(path), "r") as f:
+        designs = f.readlines()
+
+    return {d.strip() for d in designs}
 
 
 class BaseChecker(metaclass=abc.ABCMeta):
@@ -202,30 +210,18 @@ class RowChecker(BaseChecker):
 
 class PixelatorRowChecker(RowChecker):
     DEFAULT_GROUP = "default"
-    VALID_DESIGNS = {"D12", "D12PE", "D19", "D21PE"}
     REQUIRED_COLUMNS = ["sample", "assay", "design", "panel", "fastq_1", "fastq_2"]
 
-    def __init__(
-        self,
-        sample_col="sample",
-        assay_col="assay",
-        design_col="design",
-        panel_col="panel",
-        first_col="fastq_1",
-        second_col="fastq_2",
-        single_col="single_end",
-        samplesheet_path=None,
-        **kwargs,
-    ):
+    def __init__(self, samplesheet_path=None, design_options: Optional[Set[str]] = None, **kwargs):
         super().__init__(
-            sample_col=sample_col, first_col=first_col, second_col=second_col, single_col=single_col, **kwargs
+            sample_col="sample", first_col="fastq_1", second_col="fastq_2", single_col="single_end", **kwargs
         )
-
-        self._design_col = design_col
+        self._panel_col = "panel"
+        self._assay_col = "assay"
+        self._design_col = "design"
         self._samplesheet_path = samplesheet_path
         self._base_dir = self.get_base_dir(samplesheet_path) if samplesheet_path else None
-        self._panel_col = panel_col
-        self._assay_col = assay_col
+        self.design_options = design_options
 
     @classmethod
     def output_headers(cls, headers: Iterable[str]) -> List[str]:
@@ -242,11 +238,15 @@ class PixelatorRowChecker(RowChecker):
     def _validate_design(self, row):
         """Assert that the design column exists and has supported values."""
         val = row[self._design_col]
+
         if len(val) <= 0:
             raise AssertionError(f"The {self._design_col} field is required.")
 
-        if val not in self.VALID_DESIGNS:
-            supported_designs = ",".join(self.VALID_DESIGNS)
+        if self.design_options is None:
+            return
+
+        if val not in self.design_options:
+            supported_designs = ",".join(self.design_options)
             raise AssertionError(f'Unsupported design: "{val}", expected one of: {supported_designs}')
 
     def _validate_panelfile(self, row):
@@ -486,6 +486,9 @@ def parse_args(argv=None):
         help="Transformed output samplesheet in CSV format.",
     )
     parser.add_argument(
+        "--design-options", metavar="DESIGNS_FILE", type=Path, help="File with possible design options on each line"
+    )
+    parser.add_argument(
         "--samplesheet-path",
         metavar="PATH",
         type=str,
@@ -517,11 +520,20 @@ def main(argv=None):
     if not args.file_in.is_file():
         logger.error(f"The given input file {args.file_in} was not found!")
         sys.exit(2)
+
     args.file_out.parent.mkdir(parents=True, exist_ok=True)
+
+    design_options = None
+    if args.design_options:
+        if not args.design_options.is_file():
+            logger.error(f"The given design options file {args.design_options} was not found!")
+            sys.exit(2)
+
+        design_options = read_design_options_file(args.design_options)
 
     checker = None
     if args.mode == "main":
-        checker = PixelatorRowChecker(samplesheet_path=args.samplesheet_path)
+        checker = PixelatorRowChecker(samplesheet_path=args.samplesheet_path, design_options=design_options)
     elif args.mode == "aggregate":
         checker = PixelatorAggregateRowChecker(samplesheet_path=args.samplesheet_path)
     else:

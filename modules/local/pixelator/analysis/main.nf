@@ -13,6 +13,7 @@ process PIXELATOR_ANALYSIS {
     tuple val(meta), path("analysis/*dataset.pxl"),      emit: dataset
     tuple val(meta), path("analysis/*report.json"),      emit: report_json
     tuple val(meta), path("*pixelator-analysis.log"),    emit: log
+    tuple val(meta), path("analysis/*.meta.json"),       emit: input_params
     tuple val(meta), path("analysis/*"),                 emit: all_results
 
     path "versions.yml"           , emit: versions

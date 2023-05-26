@@ -15,8 +15,10 @@ process PIXELATOR_DEMUX {
     tuple val(meta), path("demux/*processed*.{fq,fastq}.gz"), emit: processed
     tuple val(meta), path("demux/*failed.{fq,fastq}.gz"),     emit: failed
     tuple val(meta), path("demux/*.report.json"),             emit: report_json
+    tuple val(meta), path("demux/*.meta.json"),               emit: input_params
     tuple val(meta), path("demux"),                           emit: results_dir
     tuple val(meta), path("*pixelator-demux.log"),            emit: log
+
 
     path "versions.yml"           , emit: versions
 

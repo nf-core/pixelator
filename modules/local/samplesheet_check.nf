@@ -2,10 +2,8 @@ process SAMPLESHEET_CHECK {
     tag "$samplesheet"
     label 'process_single'
 
-    conda "conda-forge::python=3.8.3"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/python:3.8.3' :
-        'quay.io/biocontainers/python:3.8.3' }"
+    conda "local::pixelator=0.10.0"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.10.0"
 
     input:
     path samplesheet
@@ -22,10 +20,13 @@ process SAMPLESHEET_CHECK {
     def args = task.ext.args ?: ''
 
     """
+    pixelator single-cell --list-designs > design_options.txt
+
     check_samplesheet.py \\
         $samplesheet \\
         samplesheet.valid.csv \\
         --samplesheet-path $samplesheet_path \\
+        --design-options design_options.txt \\
         $args
 
     cat <<-END_VERSIONS > versions.yml

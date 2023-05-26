@@ -14,6 +14,8 @@ process PIXELATOR_CONCATENATE {
 
     output:
     tuple val(meta), path("concatenate/*.merged.{fq,fastq}.gz"),  emit: merged
+    tuple val(meta), path("concatenate/*.report.json"),           emit: report_json
+    tuple val(meta), path("concatenate/*.meta.json"),             emit: input_params
     tuple val(meta), path("*pixelator-concatenate.log"),          emit: log
 
     path "versions.yml"           , emit: versions
@@ -25,10 +27,6 @@ process PIXELATOR_CONCATENATE {
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
 
-    if ( meta.single_end && meta.single_end == true ) {
-        exit 1, "pixelator concatenate requires paired-end input"
-    }
-
     """
     pixelator \\
         --cores $task.cpus \\
@@ -37,9 +35,9 @@ process PIXELATOR_CONCATENATE {
         single-cell \\
         concatenate \\
         --output . \\
+        --design ${meta.design} \\
         $args \\
-        ${reads[0]} \\
-        ${reads[1]}
+        ${reads}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

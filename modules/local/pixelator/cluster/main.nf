@@ -16,6 +16,7 @@ process PIXELATOR_CLUSTER {
     tuple val(meta), path("cluster/*.raw_edgelist.csv.gz"),         emit: raw_edgelist
     tuple val(meta), path("cluster/*.components_recovered.csv"),    emit: components_recovered, optional: true
     tuple val(meta), path("cluster/*.report.json"),                 emit: report_json
+    tuple val(meta), path("cluster/*.meta.json"),                   emit: input_params
     tuple val(meta), path("cluster/*"),                             emit: all_results
     tuple val(meta), path("*pixelator-cluster.log"),                emit: log
 

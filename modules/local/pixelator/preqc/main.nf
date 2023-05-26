@@ -17,7 +17,9 @@ process PIXELATOR_PREQC {
     tuple val(meta), path("preqc/*.failed.{fq,fastq}.gz"),      emit: failed
     tuple val(meta), path("preqc/*.report.html"),               emit: report_html
     tuple val(meta), path("preqc/*.report.json"),               emit: report_json
+    tuple val(meta), path("preqc/*.meta.json"),                 emit: input_params
     tuple val(meta), path("*pixelator-preqc.log"),              emit: log
+
 
     path "versions.yml"           , emit: versions
 
