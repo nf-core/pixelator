@@ -445,6 +445,7 @@
                     "type": "string",
                     "description": "The source repository for the pixelator docker container.",
                     "enum": ["aws-ecr", "ghcr", "internal"],
+                    "default": "ghcr",
                     "hidden": true
                 },
                 "pixelator_tag": {
@@ -453,7 +454,7 @@
                     "help_text": "This option allows you to use a different container tag for the pixelator tool.\nThis is intended for developers and power-users and can break the pipeline. Use on your own risk!",
                     "fa_icon": "fas fa-question-circle",
                     "hidden": true,
-                    "default": "0.7.0"
+                    "default": "0.11.0"
                 },
                 "pixelator_container": {
                     "type": "string",
