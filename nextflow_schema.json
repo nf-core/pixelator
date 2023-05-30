@@ -302,6 +302,11 @@
         "analysis_options": {
             "title": "Options for pixelator analysis command.",
             "properties": {
+                "skip_analysis": {
+                    "description": "Skip analysis step",
+                    "type": "boolean",
+                    "default": false
+                },
                 "compute_polarization": {
                     "description": "Compute polarization scores matrix (clusters by markers)",
                     "type": "boolean",
@@ -334,6 +339,11 @@
         "report_options": {
             "title": "Options for pixelator report command.",
             "properties": {
+                "skip_report": {
+                    "description": "Skip report generation",
+                    "type": "boolean",
+                    "default": false
+                },
                 "report_name": {
                     "description": "The name for the report",
                     "type": ["string"],
