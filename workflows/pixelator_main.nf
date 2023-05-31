@@ -53,8 +53,7 @@ include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 // MODULE: Defined locally
 //
 include { PIXELATOR_CONCATENATE         } from '../modules/local/pixelator/concatenate/main'
-include { PIXELATOR_PREQC               } from '../modules/local/pixelator/preqc/main'
-include { PIXELATOR_ADAPTERQC           } from '../modules/local/pixelator/adapterqc/main'
+include { PIXELATOR_QC                  } from '../modules/local/pixelator/qc/main'
 include { PIXELATOR_DEMUX               } from '../modules/local/pixelator/demux/main'
 include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/collapse/main'
 include { PIXELATOR_CLUSTER             } from '../modules/local/pixelator/cluster/main'
@@ -142,21 +141,15 @@ workflow PIXELATOR_MAIN {
 
     ch_input_reads = ch_merged
 
-    PIXELATOR_PREQC ( ch_input_reads )
-    ch_preqc = PIXELATOR_PREQC.out.processed
-    ch_preqc.dump(tag: "ch_preqc")
-    ch_versions = ch_versions.mix(PIXELATOR_PREQC.out.versions.first())
-
-    PIXELATOR_ADAPTERQC ( ch_preqc )
-    ch_adapterqc = PIXELATOR_ADAPTERQC.out.processed
-    ch_adapterqc.dump(tag: "ch_adapterqc")
-    ch_versions = ch_versions.mix(PIXELATOR_ADAPTERQC.out.versions.first())
-
+    PIXELATOR_QC( ch_input_reads )
+    ch_qc = PIXELATOR_QC.out.processed
+    ch_qc.dump(tag: "ch_ch_qcpreqc")
+    ch_versions = ch_versions.mix(PIXELATOR_QC.out.versions.first())
     // Combine filtered input reads with panel files for input to PIXELATOR_DEMUX
-    ch_adapterqc_and_panel = ch_adapterqc.join(ch_panels)
-    ch_adapterqc_and_panel.dump(tag: "ch_adapterqc_and_panel")
+    ch_qc_and_panel = ch_qc.join(ch_panels)
+    ch_qc_and_panel.dump(tag: "ch_qc_and_panel")
 
-    PIXELATOR_DEMUX ( ch_adapterqc_and_panel )
+    PIXELATOR_DEMUX ( ch_qc_and_panel )
     ch_demuxed = PIXELATOR_DEMUX.out.processed
     ch_demuxed.dump(tag: "ch_demuxed")
     ch_versions = ch_versions.mix(PIXELATOR_DEMUX.out.versions.first())
@@ -197,11 +190,11 @@ workflow PIXELATOR_MAIN {
         ch_concatenate_col = PIXELATOR_CONCATENATE.out.report_json.mix(PIXELATOR_CONCATENATE.out.input_params)
             .map { meta, data -> [ meta.id, data] }.groupTuple()
 
-        ch_preqc_col = PIXELATOR_PREQC.out.report_json.mix(PIXELATOR_PREQC.out.input_params)
+        ch_preqc_col = PIXELATOR_QC.out.preqc_report_json.mix(PIXELATOR_QC.out.preqc_input_params)
             .map { meta, data -> [ meta.id, data] }
             .groupTuple()
 
-        ch_adapterqc_col = PIXELATOR_ADAPTERQC.out.report_json.mix(PIXELATOR_ADAPTERQC.out.input_params)
+        ch_adapterqc_col = PIXELATOR_QC.out.adapterqc_report_json.mix(PIXELATOR_QC.out.adapterqc_input_params)
             .map { meta, data -> [ meta.id, data] }
             .groupTuple()
 
@@ -251,7 +244,7 @@ workflow PIXELATOR_MAIN {
 
         ch_report_data.dump(tag: "ch_report_data")
 
-        ch_meta_grouped        = ch_report_data.map { id, data -> data[0] }
+        ch_meta_grouped         = ch_report_data.map { id, data -> data[0] }
         ch_panels_grouped       = ch_report_data.map { id, data -> data[1] }
         ch_concatenate_grouped  = ch_report_data.map { id, data -> data[2].flatten() }
         ch_preqc_grouped        = ch_report_data.map { id, data -> data[3].flatten() }
@@ -259,8 +252,8 @@ workflow PIXELATOR_MAIN {
         ch_demux_grouped        = ch_report_data.map { id, data -> data[5].flatten() }
         ch_collapse_grouped     = ch_report_data.map { id, data -> data[6].flatten() }
         ch_cluster_grouped      = ch_report_data.map { id, data -> data[7].flatten() }
-        ch_annotate_grouped    = ch_report_data.map { id, data -> data[8].flatten() }
-        ch_analysis_grouped    = ch_report_data.map { id, data -> data[8].flatten() }
+        ch_annotate_grouped     = ch_report_data.map { id, data -> data[8].flatten() }
+        ch_analysis_grouped     = ch_report_data.map { id, data -> data[8].flatten() }
 
         PIXELATOR_REPORT (
             ch_meta_grouped,
