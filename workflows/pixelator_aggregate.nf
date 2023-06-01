@@ -55,7 +55,6 @@ include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoft
 //
 include { PIXELATOR_AGGREGATE           } from '../modules/local/pixelator/aggregate/main'
 include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/analysis/main'
-include { PIXELATOR_RND_REPORT          } from '../modules/local/pixelator/rnd-report/main'
 include { RENAME_MATRICES               } from '../modules/local/rename_matrices'
 include { COLLECT_METADATA              } from '../modules/local/collect_metadata'
 

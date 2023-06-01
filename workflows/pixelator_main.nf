@@ -59,7 +59,6 @@ include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/colla
 include { PIXELATOR_CLUSTER             } from '../modules/local/pixelator/cluster/main'
 include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/analysis/main'
 include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/annotate/main'
-include { PIXELATOR_RND_REPORT          } from '../modules/local/pixelator/rnd-report/main'
 include { PIXELATOR_REPORT              } from '../modules/local/pixelator/report/main'
 include { RENAME_READS                  } from '../modules/local/rename_reads'
 include { COLLECT_METADATA              } from '../modules/local/collect_metadata'
