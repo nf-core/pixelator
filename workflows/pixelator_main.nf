@@ -186,22 +186,22 @@ workflow PIXELATOR_MAIN {
         ch_meta_col                  = ch_panels.map { meta, data -> [ meta.id, meta] }
         ch_panels_col                = ch_panels.map { meta, data -> [ meta.id, data] }
 
-        ch_concatenate_col = PIXELATOR_CONCATENATE.out.report_json.mix(PIXELATOR_CONCATENATE.out.input_params)
+        ch_concatenate_col = PIXELATOR_CONCATENATE.out.report_json.mix(PIXELATOR_CONCATENATE.out.metadata)
             .map { meta, data -> [ meta.id, data] }.groupTuple()
 
-        ch_preqc_col = PIXELATOR_QC.out.preqc_report_json.mix(PIXELATOR_QC.out.preqc_input_params)
+        ch_preqc_col = PIXELATOR_QC.out.preqc_report_json.mix(PIXELATOR_QC.out.preqc_metadata)
             .map { meta, data -> [ meta.id, data] }
             .groupTuple()
 
-        ch_adapterqc_col = PIXELATOR_QC.out.adapterqc_report_json.mix(PIXELATOR_QC.out.adapterqc_input_params)
+        ch_adapterqc_col = PIXELATOR_QC.out.adapterqc_report_json.mix(PIXELATOR_QC.out.adapterqc_metadata)
             .map { meta, data -> [ meta.id, data] }
             .groupTuple()
 
-        ch_demux_col = PIXELATOR_DEMUX.out.report_json.mix(PIXELATOR_DEMUX.out.input_params)
+        ch_demux_col = PIXELATOR_DEMUX.out.report_json.mix(PIXELATOR_DEMUX.out.metadata)
             .map { meta, data -> [ meta.id, data] }
             .groupTuple()
 
-        ch_collapse_col = PIXELATOR_COLLAPSE.out.report_json.mix(PIXELATOR_COLLAPSE.out.input_params)
+        ch_collapse_col = PIXELATOR_COLLAPSE.out.report_json.mix(PIXELATOR_COLLAPSE.out.metadata)
             .map { meta, data -> [ meta.id, data] }
             .groupTuple()
 
@@ -212,6 +212,7 @@ workflow PIXELATOR_MAIN {
         ch_annotate_col = PIXELATOR_ANNOTATE.out.all_results
             .map { meta, data -> [meta.id, data] }
             .groupTuple()
+
 
         ch_analysis_col = null
         if (!params.skip_analysis) {

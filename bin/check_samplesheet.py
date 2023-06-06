@@ -20,7 +20,10 @@ logger = logging.getLogger()
 
 
 def make_absolute_path(path: str, base: PathLike = None) -> str:
-    """If `path` is a relative path without a scheme, resolve it as relative to `base`"""
+    """If `path` is a relative path without a scheme, resolve it as relative to `base`
+
+    Take into account that paths can be references to remote resources eg. [s3://, az://, gs://, file:///, https://, ... ]
+    """
     url = urllib.parse.urlparse(path)
     if url.scheme:
         return path

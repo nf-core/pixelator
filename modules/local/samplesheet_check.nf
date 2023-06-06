@@ -2,8 +2,8 @@ process SAMPLESHEET_CHECK {
     tag "$samplesheet"
     label 'process_single'
 
-    conda "local::pixelator=0.10.0"
-    container "ghcr.io/pixelgentechnologies/pixelator:0.10.0"
+    // conda "local::pixelator=0.10.0"
+    // container "ghcr.io/pixelgentechnologies/pixelator:0.10.0"
 
     input:
     path samplesheet
@@ -20,6 +20,7 @@ process SAMPLESHEET_CHECK {
     def args = task.ext.args ?: ''
 
     """
+    python -v -m pip
     pixelator single-cell --list-designs > design_options.txt
 
     check_samplesheet.py \\

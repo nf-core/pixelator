@@ -15,7 +15,7 @@ process PIXELATOR_CONCATENATE {
     output:
     tuple val(meta), path("concatenate/*.merged.{fq,fastq}.gz"),  emit: merged
     tuple val(meta), path("concatenate/*.report.json"),           emit: report_json
-    tuple val(meta), path("concatenate/*.meta.json"),             emit: input_params
+    tuple val(meta), path("concatenate/*.meta.json"),             emit: metadata
     tuple val(meta), path("*pixelator-concatenate.log"),          emit: log
 
     path "versions.yml"           , emit: versions
@@ -24,7 +24,7 @@ process PIXELATOR_CONCATENATE {
     task.ext.when == null || task.ext.when
 
     script:
-    prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
 
     """
@@ -35,7 +35,6 @@ process PIXELATOR_CONCATENATE {
         single-cell \\
         concatenate \\
         --output . \\
-        --design ${meta.design} \\
         $args \\
         ${reads}
 

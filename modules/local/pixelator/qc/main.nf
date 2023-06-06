@@ -25,13 +25,12 @@ process PIXELATOR_QC {
     tuple val(meta), path("preqc/*.report.json"),                       emit: preqc_report_json
     tuple val(meta), path("{adapterqc,preqc}/*.report.json"),           emit: report_json
 
-    tuple val(meta), path("adapterqc/*.meta.json"),                     emit: adapterqc_input_params
-    tuple val(meta), path("preqc/*.meta.json"),                         emit: preqc_input_params
-    tuple val(meta), path("{adapterqc,preqc}/*.meta.json"),             emit: input_params
+    tuple val(meta), path("adapterqc/*.meta.json"),                     emit: adapterqc_metadata
+    tuple val(meta), path("preqc/*.meta.json"),                         emit: preqc_metadata
+    tuple val(meta), path("{adapterqc,preqc}/*.meta.json"),             emit: metadata
 
-    tuple val(meta), path("*pixelator-qc.log"),                         emit: log
-
-    path "versions.yml"           , emit: versions
+    tuple val(meta), path("*pixelator-*.log"),                          emit: log
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -43,6 +42,8 @@ process PIXELATOR_QC {
     def preqc_args = task.ext.args ?: ''
     def adapterqc_args = task.ext.args2 ?: ''
 
+    // --design is passed in meta and added to args and args2 through modules.conf
+
     """
     pixelator \\
         --cores $task.cpus \\
@@ -51,7 +52,6 @@ process PIXELATOR_QC {
         single-cell \\
         preqc \\
         --output . \\
-        --design ${meta.design} \\
         ${preqc_args} \\
         ${reads}
 
@@ -67,7 +67,6 @@ process PIXELATOR_QC {
         single-cell \\
         adapterqc \\
         --output . \\
-        --design ${meta.design} \\
         ${adapterqc_args} \\
         \${preqc_results[@]}
 
