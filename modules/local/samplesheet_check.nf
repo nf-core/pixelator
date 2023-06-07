@@ -20,7 +20,6 @@ process SAMPLESHEET_CHECK {
     def args = task.ext.args ?: ''
 
     """
-    python -v -m pip
     pixelator single-cell --list-designs > design_options.txt
 
     check_samplesheet.py \\
