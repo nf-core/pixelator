@@ -1,6 +1,6 @@
 
 
-process PIXELATOR_CLUSTER {
+process PIXELATOR_GRAPH {
     tag "$meta.id"
     label 'process_medium'
 
@@ -12,13 +12,13 @@ process PIXELATOR_CLUSTER {
     tuple val(meta), path(edge_list)
 
     output:
-    tuple val(meta), path("cluster/*.edgelist.csv.gz"),             emit: edgelist
-    tuple val(meta), path("cluster/*.raw_edgelist.csv.gz"),         emit: raw_edgelist
-    tuple val(meta), path("cluster/*.components_recovered.csv"),    emit: components_recovered, optional: true
-    tuple val(meta), path("cluster/*.report.json"),                 emit: report_json
-    tuple val(meta), path("cluster/*.meta.json"),                   emit: input_params
-    tuple val(meta), path("cluster/*"),                             emit: all_results
-    tuple val(meta), path("*pixelator-cluster.log"),                emit: log
+    tuple val(meta), path("graph/*.edgelist.csv.gz"),             emit: edgelist
+    tuple val(meta), path("graph/*.raw_edgelist.csv.gz"),         emit: raw_edgelist
+    tuple val(meta), path("graph/*.components_recovered.csv"),    emit: components_recovered, optional: true
+    tuple val(meta), path("graph/*.report.json"),                 emit: report_json
+    tuple val(meta), path("graph/*.meta.json"),                   emit: input_params
+    tuple val(meta), path("graph/*"),                             emit: all_results
+    tuple val(meta), path("*pixelator-graph.log"),                emit: log
 
     path "versions.yml"           , emit: versions
 
@@ -33,10 +33,10 @@ process PIXELATOR_CLUSTER {
     """
     pixelator \\
         --cores $task.cpus \\
-        --log-file ${prefix}.pixelator-cluster.log \\
+        --log-file ${prefix}.pixelator-graph.log \\
         --verbose \\
         single-cell \\
-        cluster \\
+        graph \\
         --output . \\
         $args \\
         ${edge_list}

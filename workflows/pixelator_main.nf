@@ -56,7 +56,7 @@ include { PIXELATOR_CONCATENATE         } from '../modules/local/pixelator/conca
 include { PIXELATOR_QC                  } from '../modules/local/pixelator/qc/main'
 include { PIXELATOR_DEMUX               } from '../modules/local/pixelator/demux/main'
 include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/collapse/main'
-include { PIXELATOR_CLUSTER             } from '../modules/local/pixelator/cluster/main'
+include { PIXELATOR_GRAPH               } from '../modules/local/pixelator/graph/main'
 include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/analysis/main'
 include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/annotate/main'
 include { PIXELATOR_REPORT              } from '../modules/local/pixelator/report/main'
@@ -158,10 +158,10 @@ workflow PIXELATOR_MAIN {
     ch_collapsed.dump(tag: "ch_collapsed")
     ch_versions = ch_versions.mix(PIXELATOR_COLLAPSE.out.versions.first())
 
-    PIXELATOR_CLUSTER ( ch_collapsed )
-    ch_clustered = PIXELATOR_CLUSTER.out.edgelist
+    PIXELATOR_GRAPH ( ch_collapsed )
+    ch_clustered = PIXELATOR_GRAPH.out.edgelist
     ch_clustered.dump(tag: "ch_clustered")
-    ch_versions = ch_versions.mix(PIXELATOR_CLUSTER.out.versions.first())
+    ch_versions = ch_versions.mix(PIXELATOR_GRAPH.out.versions.first())
 
     ch_clustered_and_panel = ch_clustered.join(ch_panels)
     ch_clustered_and_panel.dump(tag: "ch_clustered_and_panel")
@@ -205,7 +205,7 @@ workflow PIXELATOR_MAIN {
             .map { meta, data -> [ meta.id, data] }
             .groupTuple()
 
-        ch_cluster_col = PIXELATOR_CLUSTER.out.all_results
+        ch_cluster_col = PIXELATOR_GRAPH.out.all_results
             .map { meta, data -> [meta.id, data] }
             .groupTuple()
 

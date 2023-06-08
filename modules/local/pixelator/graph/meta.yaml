@@ -1,4 +1,4 @@
-name: pixelator/cluster
+name: pixelator/graph
 description: |
   Compute graph, components and other metrics from a edge list
   produced by pixelator collapse
@@ -26,12 +26,6 @@ input:
         respectively.
 
 output:
-  # tuple val(meta), path("cluster/*.edgelist.csv.gz"),             emit: edgelist
-  # tuple val(meta), path("cluster/*.raw_edgelist.csv.gz"),         emit: raw_edgelist
-  # tuple val(meta), path("cluster/*.components_recovered.csv"),    emit: components_recovered, optional: true
-  # tuple val(meta), path("cluster/*.report.json"),                 emit: report_json
-  # tuple val(meta), path("cluster/*.meta.json"),                   emit: input_params
-
   - edgelist:
       type: file
       description: Filtered edgelist
@@ -50,18 +44,18 @@ output:
 
   - report_json:
       type: file
-      description: JSON file with statistics for the cluster stage
+      description: JSON file with statistics for the graph stage
       pattern: "*.report.json"
 
   - all_results:
       type: file
-      description: All output files from the pixelator cluster Command
+      description: All output files from the pixelator graph Command
       pattern: "*"
 
   - log:
     type: file
     description: Pixelator log files
-    pattern: "*pixelator-cluster*.log"
+    pattern: "*pixelator-graph*.log"
 
   - versions:
       type: file

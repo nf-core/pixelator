@@ -1,5 +1,5 @@
-- name: pixelator_cluster test_pixelator_cluster
-  command: nextflow -C tests/modules/pixelator/cluster/nextflow.config run tests/modules/pixelator/cluster -entry test_pixelator_cluster
+- name: PIXELATOR_GRAPH test_PIXELATOR_GRAPH
+  command: nextflow -C tests/modules/pixelator/cluster/nextflow.config run tests/modules/pixelator/cluster -entry test_PIXELATOR_GRAPH
   tags:
     - pixelator
     - pixelator-cluster

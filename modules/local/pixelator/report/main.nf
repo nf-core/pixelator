@@ -16,7 +16,7 @@ process PIXELATOR_REPORT {
     path adapterqc_data,         stageAs: "results/adapterqc/*"
     path demux_data,             stageAs: "results/demux/*"
     path collapse_data,          stageAs: "results/collapse/*"
-    path cluster_data,           stageAs: "results/cluster/*"
+    path graph_data,             stageAs: "results/graph/*"
     path annotate_data,          stageAs: "results/annotate/*"
     path analysis_data,          stageAs: "results/analysis/*"
 
