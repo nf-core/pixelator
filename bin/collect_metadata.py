@@ -3,13 +3,13 @@
 import sys
 import subprocess
 from pathlib import Path
-import pkg_resources
+import importlib.metadata
 import json
 import argparse
 import ruamel.yaml as yaml
 
 
-installed_packages = {i.key: i.version for i in pkg_resources.working_set}
+installed_packages = {d.name: d.version for d in importlib.metadata.distributions()}
 
 
 def subtool_versions():
