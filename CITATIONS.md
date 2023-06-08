@@ -10,7 +10,11 @@
 
 ## Pipeline tools
 
-- [pixelator}](https://github.com/PixelgenTechnologies/pixelator)
+- [pixelator](https://github.com/PixelgenTechnologies/pixelator)
+
+- [cutadapt] (http://dx.doi.org/10.14806/ej.17.1.200)
+
+- [fastp] (https://doi.org/10.1002/imt2.107)
 
 ## Software packaging/containerisation tools
 
