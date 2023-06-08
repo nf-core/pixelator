@@ -15,7 +15,7 @@ GROUPS = {
     "adapterqc_options",
     "demux_options",
     "collapse_options",
-    "cluster_options",
+    "graph_options",
     "annotate_options",
     "analysis_options",
     "report_options",
