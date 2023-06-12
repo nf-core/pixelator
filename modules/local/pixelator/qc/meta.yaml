@@ -1,0 +1,100 @@
+name: pixelator/qc
+description: Performs quality control before processing of molecular pixelation data
+keywords:
+  - "molecular pixelator"
+  - qc
+  - fastp
+  - cutadapt
+tools:
+  - pixelator:
+      description: |
+        Software package to process sequencing data into Molecular Pixelation data.
+      homepage: https://github.com/PixelgenTechnologies/pixelator
+      documentation: https://github.com/PixelgenTechnologies/pixelator
+      arxiv: null
+      licence: ["MIT"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - reads:
+      type: file
+      description: |
+        List of input FastQ files of size 1 and 2 for single-end and paired-end data,
+        respectively.
+output:
+  - processed:
+      type: file
+      description: All processed FastQ files
+      pattern: "preqc/*.processed.{fq,fastq}.gz"
+
+  - preqc_processed:
+      type: file
+      description: FastQ files containing all reads that passed the preqc stage
+      pattern: "adapterqc/*.processed.{fq,fastq}.gz"
+
+  - adapterqc_processed:
+      type: file
+      description: FastQ files containing all reads that passed the adapter stage
+      pattern: "adapterqc/*.processed.{fq,fastq}.gz"
+
+  - preqc_failed:
+      type: file
+      description: FastQ files containing all reads that were rejected by the preqc stage
+      pattern: "preqc/*.failed.{fq,fastq}.gz"
+
+  - adapterqc_failed:
+      type: file
+      description: FastQ files containing all reads that were rejected by the adapter stage
+      pattern: "adapterqc/*.failed.{fq,fastq}.gz"
+
+  - failed:
+      type: file
+      description: FastQ files containing all reads that were rejected by qc
+      pattern: "adapterqc/*.failed.{fq,fastq}.gz"
+
+  - preqc_report:
+      type: file
+      description: JSON file with statistics for the preqc stage as reported by fastp
+      pattern: "preqc/*.report.json"
+
+  - adapterqc_report:
+      type: file
+      description: JSON file with statistics for the adapoterqc stage as reported by cutadapt
+      pattern: "adapterqc/*.report.json"
+
+  - report:
+      type: file
+      description: JSON files with QC metrics
+      pattern: "{preqc,adapterqc}/*.report.json"
+
+  - preqc_metadata:
+      type: file
+      description: Command invocation metadata files for the pixelator preqc stage
+      pattern: "preqc/*.meta.json"
+
+  - adapterqc_metadata:
+      type: file
+      description: Command invocation metadata files for the pixelator adapterqc stage
+      pattern: "adapterqc/*.meta.json"
+
+  - metadata:
+      type: file
+      description: Command invocation metadata files for pixelator qc stages
+      pattern: "{preqc,adapterqc}/*.meta.json"
+
+  - log:
+    type: file
+    description: Pixelator log files
+    pattern: "*pixelator-*.log"
+
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@fbdtemme"

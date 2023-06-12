@@ -12,6 +12,18 @@
                 "pattern": "^\\S+$",
                 "errorMessage": "Sample name must be provided and cannot contain spaces"
             },
+            "design": {
+                "type": "string",
+                "enum": [
+                    "D21"
+                ],
+                "errorMessage": "Design must be specified"
+            },
+            "panel": {
+                "type": "string",
+                "pattern": "^\\S+.(csv|tsv)$",
+                "errorMessage": "Panel file must be provided, cannot contain spaces and must have extension '.csv'"
+            },
             "fastq_1": {
                 "type": "string",
                 "pattern": "^\\S+\\.f(ast)?q\\.gz$",
@@ -31,6 +43,6 @@
                 ]
             }
         },
-        "required": ["sample", "fastq_1"]
+        "required": ["sample", "design", "panel", "fastq_1"]
     }
 }

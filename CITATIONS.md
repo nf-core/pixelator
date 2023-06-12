@@ -10,10 +10,15 @@
 
 ## Pipeline tools
 
-- [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+- [pixelator](https://doi.org/10.1101/2023.06.05.543770)
+  > Karlsson, Filip, Tomasz Kallas, Divya Thiagarajan, Max Karlsson, Maud Schweitzer, Jose Fernandez Navarro, Louise Leijonancker, et al. “Molecular Pixelation: Single Cell Spatial Proteomics by Sequencing.” bioRxiv, June 8, 2023. https://doi.org/10.1101/2023.06.05.543770.
 
-- [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
-  > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
+- [cutadapt] (http://dx.doi.org/10.14806/ej.17.1.200)
+  > Martin, Marcel. “Cutadapt Removes Adapter Sequences from High-Throughput Sequencing Reads.” EMBnet.Journal 17, no. 1 (May 2, 2011): 10–12. https://doi.org/10.14806/ej.17.1.200.
+
+- [fastp] (https://doi.org/10.1002/imt2.107)
+  > Chen, Shifu. “Ultrafast One-Pass FASTQ Data Preprocessing, Quality Control, and Deduplication Using Fastp.” IMeta 2, no. 2 (2023): e107. https://doi.org/10.1002/imt2.107.
+
 
 ## Software packaging/containerisation tools
 

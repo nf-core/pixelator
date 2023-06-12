@@ -9,23 +9,35 @@ workflow INPUT_CHECK {
     samplesheet // file: /path/to/samplesheet.csv
 
     main:
-    SAMPLESHEET_CHECK ( samplesheet )
+    ch_samplesheet = SAMPLESHEET_CHECK ( samplesheet, samplesheet.toUri() )
         .csv
         .splitCsv ( header:true, sep:',' )
-        .map { create_fastq_channel(it) }
-        .set { reads }
+
+    reads = ch_samplesheet.map { create_fastq_channel(it) }
+    panels = ch_samplesheet.map { create_panels_channel(it) }
 
     emit:
-    reads                                     // channel: [ val(meta), [ reads ] ]
-    versions = SAMPLESHEET_CHECK.out.versions // channel: [ versions.yml ]
+    reads                                      // channel: [ val(meta), [ reads ] ]
+    panels                                     // channel: [ val(meta), panel ]
+
+    versions = SAMPLESHEET_CHECK.out.versions  // channel: [ versions.yml ]
+}
+
+
+def get_meta(LinkedHashMap row) {
+    def meta = [:]
+    meta.id           = row.sample
+    meta.single_end   = row.single_end.toBoolean()
+    meta.design       = row.design
+    meta.group        = row.group
+    meta.assay        = row.assay
+    return meta
 }
 
 // Function to get list of [ meta, [ fastq_1, fastq_2 ] ]
 def create_fastq_channel(LinkedHashMap row) {
     // create meta map
-    def meta = [:]
-    meta.id         = row.sample
-    meta.single_end = row.single_end.toBoolean()
+    def meta = get_meta(row)
 
     // add path(s) of the fastq file(s) to the meta map
     def fastq_meta = []
@@ -41,4 +53,15 @@ def create_fastq_channel(LinkedHashMap row) {
         fastq_meta = [ meta, [ file(row.fastq_1), file(row.fastq_2) ] ]
     }
     return fastq_meta
+}
+
+// Function to get list of [ meta, panel ]
+def create_panels_channel(LinkedHashMap row) {
+    def meta = get_meta(row)
+
+    if (file(row.panel).exists()) {
+        return [ meta, file(row.panel) ]
+    }
+
+    exit 1, "ERROR: Please check panel field: ${row.panel}: Could not find existing csv file."
 }
