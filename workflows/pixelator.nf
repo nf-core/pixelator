@@ -4,10 +4,6 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-def summary_params = NfcoreSchema.paramsSummaryMap(workflow, params)
-
-// Validate input parameters
-WorkflowPixelator.initialise(params, log)
 
 // Check input path parameters to see if they exist
 def checkPathParamList = [ params.input ]
@@ -35,6 +31,7 @@ params.samplesheet_sha = ch_input.bytes.digest('sha-1')
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK                 } from '../subworkflows/local/input_check'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -86,9 +83,14 @@ workflow PIXELATOR {
     //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     //
-    ch_fastq  = INPUT_CHECK ( ch_input ).reads
+    // Create a new channel of metadata from a sample sheet
+    // NB: `input` corresponds to `params.input` and associated sample sheet schema
+    INPUT_CHECK()
 
-    ch_fastq_split = ch_fastq
+    ch_reads = INPUT_CHECK.out.reads
+    ch_panels = INPUT_CHECK.out.panels
+
+    ch_fastq_split = ch_reads
         .map {
             meta, fastq ->
                 new_id = meta.id - ~/_T\d+/
@@ -103,8 +105,6 @@ workflow PIXELATOR {
                     return [ meta, fastq.flatten() ]
         }
 
-    ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
-
     //
     // MODULE: Concatenate FastQ files from same sample if required
     //
@@ -114,12 +114,11 @@ workflow PIXELATOR {
 
     ch_versions = ch_versions.mix(CAT_FASTQ.out.versions.first().ifEmpty(null))
 
-    ch_reads = INPUT_CHECK.out.reads
-    ch_panels = INPUT_CHECK.out.panels
+
 
     // We need to rename to make all reads match the sample name,
     // since pixelator extracts sample_names from read names
-    RENAME_READS ( ch_reads )
+    RENAME_READS ( ch_cat_fastq )
     ch_renamed_reads = RENAME_READS.out.reads
     ch_versions = ch_versions.mix(RENAME_READS.out.versions.first())
 

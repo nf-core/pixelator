@@ -10,13 +10,15 @@
             "sample": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Sample name must be provided and cannot contain spaces"
+                "errorMessage": "Sample name must be provided and cannot contain spaces",
+                "meta": [ "id" ]
             },
             "design": {
                 "type": "string",
                 "enum": [
                     "D21"
                 ],
+                "meta": [ "design" ],
                 "errorMessage": "Design must be specified"
             },
             "panel": {
