@@ -2,8 +2,7 @@ process SAMPLESHEET_CHECK {
     tag "$samplesheet"
     label 'process_single'
 
-    // conda "local::pixelator=0.10.0"
-    // container "ghcr.io/pixelgentechnologies/pixelator:0.10.0"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.11.0"
 
     input:
     path samplesheet

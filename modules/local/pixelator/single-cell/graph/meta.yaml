@@ -10,7 +10,7 @@ tools:
         Software package to process sequencing data into Molecular Pixelation data.
       homepage: https://github.com/PixelgenTechnologies/pixelator
       documentation: https://github.com/PixelgenTechnologies/pixelator
-      arxiv: null
+      doi: 10.1101/2023.06.05.543770
       licence: ["MIT"]
 
 input:

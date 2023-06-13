@@ -56,16 +56,19 @@
                 "max_length": {
                     "fa_icon": "fas up-right-and-down-left-from-center",
                     "type": "integer",
-                    "description": "The maximum length (bases) of a read (longer reads will be trimmed off). If you set this argument it will overrrule the value from the chosen design"
+                    "description": "The maximum length of a read",
+                    "help_text": "Reads longer then given length will be trimmed to the given length. If you set this argument it will overrule the value from the chosen design"
                 },
                 "min_length": {
                     "fa_icon": "fas down-left-and-up-right-to-center",
                     "type": "integer",
-                    "description": "The minimum length (bases) of a read (shorter reads will be discarded). If you set this argument it will overrrule the value from the chosen design."
+                    "description": "The minimum length (bases) of a read",
+                    "help_text": "Reads shorter then given length will be discarded. If you set this argument it will overrule the value from the chosen design."
                 },
                 "max_n_bases": {
                     "fa_icon": "fas n",
                     "description": "The maximum number of Ns allowed in a read",
+                    "help_text": "The default value of 0 means any reads with N in it will be filtered out",
                     "type": "integer",
                     "default": 0
                 },
@@ -96,15 +99,21 @@
                     "fa_icon": "fas not-equal",
                     "description": "The number of mismatches allowed (in percentage) [default: 0.1; 0.0<=x<=0.9]",
                     "type": "number",
-                    "default": 0.1
+                    "default": 0.1,
+                    "minimum": 0.0,
+                    "maximum": 0.9
                 },
                 "pbs1": {
-                    "description": "The PBS1 sequence that must be present in the reads. If you set this argument it will overrrule the value from the chosen design",
-                    "type": "string"
+                    "description": "The PBS1 sequence that must be present in the reads.",
+                    "help_text": "If you set this argument it will overrule the default value from the chosen design",
+                    "type": "string",
+                    "hidden": true
                 },
                 "pbs2": {
-                    "description": "The PBS2 sequence that must be present in the reads. If you set this argument it will overrrule the value from the chosen design",
-                    "type": ["string", "null"]
+                    "description": "The PBS2 sequence that must be present in the reads.",
+                    "help_text": "If you set this argument it will overrule the default value from the chosen design",
+                    "type": "string",
+                    "hidden": true
                 }
             }
         },
@@ -113,7 +122,7 @@
             "properties": {
                 "demux_mismatches": {
                     "fa_icon": "fas not-equal",
-                    "description": "The number of mismatches allowed (in percentage) [default: 0.1; 0.0<=x<=0.9]",
+                    "description": "The number of mismatches allowed (as a fraction)",
                     "type": "number",
                     "default": 0.1,
                     "minimum": 0.0,
@@ -121,29 +130,37 @@
                 },
                 "demux_min_length": {
                     "fa_icon": "fas down-left-and-up-right-to-center",
-                    "description": "The minimum length of the barcode that must overlap when matching. If you set this argument it will overrrule the value from the chosen design",
-                    "type": ["integer", "null"]
+                    "description": "The minimum length of the barcode that must overlap when matching",
+                    "help_text": "If you set this argument it will overrule the value from the chosen design",
+                    "type": "integer"
                 },
                 "anchored": {
                     "fa_icon": "fas anchor",
-                    "description": "Enforce the barcodes to be anchored (at the end of the read)",
+                    "description": "Enforce the barcodes to be anchored (at the end of the read).",
+                    "help_text": "If you set this argument it will overrule the value from the chosen design",
                     "type": "boolean",
-                    "default": true
+                    "hidden": true
                 },
                 "rev_complement": {
                     "fa_icon": "fas right-left",
-                    "description": "Use the reverse complement of the barcodes sequences",
+                    "description": "Use the reverse complement of the barcodes sequences. Set to null to use the default specified by the design.",
                     "type": "boolean",
-                    "default": false
+                    "hidden": true
                 }
             }
         },
         "collapse_options": {
             "title": "Collapse options",
             "properties": {
+                "markers_ignore": {
+                    "fa-icon": "fas fa-list",
+                    "description": "A list of comma separated antibodies to discard",
+                    "type": "string",
+                    "pattern": "(\\S+)?(,\\S+)*"
+                },
                 "algorithm": {
                     "fa_icon": "fas code-fork",
-                    "description": "The algorithm to use for collapsing (adjacency will peform error correction using the number of mismatches given) [default: adjacency]",
+                    "description": "The algorithm to use for collapsing (adjacency will peform error correction using the number of mismatches given)",
                     "default": "adjacency",
                     "enum": ["adjacency", "unique"],
                     "type": "string"
@@ -151,69 +168,77 @@
                 "upia_start": {
                     "fa_icon": "fas backward-step",
                     "description": "The start position (0-based) of UPIA. If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer"
+                    "type": "integer",
+                    "hidden": true
                 },
                 "upia_end": {
                     "fa_icon": "fas forward-step",
                     "description": "The end position (1-based) of UPIA. If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer"
+                    "type": "integer",
+                    "hidden": true
                 },
                 "upib_start": {
                     "fa_icon": "fas backward-step",
                     "description": "The start position (0-based) of UPIB. If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer"
+                    "type": "integer",
+                    "hidden": true
                 },
                 "upib_end": {
                     "fa_icon": "fas forward-step",
                     "description": "The end position (1-based) of UPIB. If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer"
+                    "type": "integer",
+                    "hidden": true
                 },
                 "umia_start": {
                     "fa_icon": "fas backward-step",
                     "description": "The start position (0-based) of UMIA (disabled by default). If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer"
+                    "type": "integer",
+                    "hidden": true
                 },
                 "umia_end": {
                     "fa_icon": "fas forward-step",
                     "description": "The end position (1-based) of UMIA (disabled by default). If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer"
+                    "type": "integer",
+                    "hidden": true
                 },
                 "umib_start": {
                     "fa_icon": "fas forward-step",
                     "description": "The start position (0-based) of UMIB (disabled by default). If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer"
+                    "type": "integer",
+                    "hidden": true
                 },
                 "umib_end": {
                     "fa_icon": "fas backward-step",
                     "description": "The end position (1-based) of UMIB (disabled by default). If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer"
+                    "type": "integer",
+                    "hidden": true
                 },
                 "neighbours": {
                     "fa_icon": "fas circle-nodes",
-                    "description": "The number of neighbours to use when searching for similar sequences (adjacency) This number depends on the sequence depth and the ratio of erronous molecules expected. A high value can make the algoritthm slower. [default: 60; 1<=x<=250]",
+                    "description": "The number of neighbours to use when searching for similar sequences (adjacency) This number depends on the sequence depth and the ratio of erroneous molecules expected. A high value can make the algorithm slower.",
                     "default": 60,
                     "minimum": 1,
                     "maximum": 250,
-                    "type": "integer"
+                    "type": "integer",
+                    "hidden": true
                 },
                 "collapse_mismatches": {
                     "fa_icon": "fas not-equal",
-                    "description": "The number of mismatches allowed when collapsing (adjacency) [default: 2; 0<=x<=5]",
+                    "description": "The number of mismatches allowed when collapsing (adjacency)",
+                    "type": "integer",
                     "default": 2,
                     "minimum": 0,
-                    "maximum": 5,
-                    "type": "integer"
+                    "maximum": 5
                 },
                 "collapse_min_count": {
                     "fa_icon": "fas more-than-equal",
-                    "description": "Discard molecules with with a count (reads) lower than this value [default: 2]",
+                    "description": "Discard molecules with with a count (reads) lower than this value",
                     "default": 2,
                     "minimum": 1,
                     "type": "integer"
                 },
                 "use_counts": {
                     "description": "Use counts when collapsing (the difference in counts between two molecules must be more than double in order to be collapsed)",
-                    "default": false,
                     "type": "boolean"
                 }
             }
@@ -224,37 +249,42 @@
                 "multiplet_recovery": {
                     "description": "Activate the multiplet recovery (leiden or fast-greedy): leiden: use the leiden algorithm (whole graph) fast-greedy: use fast greedy algorithm (per-component)",
                     "type": "string",
-                    "enum": ["leiden", "fast-greedy"],
-                    "default": "leiden"
+                    "enum": ["leiden", "fast-greedy", "none"],
+                    "default": "null"
                 },
                 "fast_greedy_fraction": {
                     "description": "Maximum fraction of edges allowed to be removed in a component for the fast-greedy algorithm [default: 0.05; 0.0<=x<=1.0]",
                     "type": "number",
-                    "default": 0.5,
                     "minimum": 0.0,
-                    "maximum": 1.0
+                    "maximum": 1.0,
+                    "default": 0.05,
+                    "hidden": true
                 },
                 "fast_greedy_cutoff": {
                     "fa_icon": "fas less-than-equal",
                     "description": "Minimum size (edges) of a component to be considered for the fast-greedy algorithm [default: 5000]",
                     "type": "integer",
-                    "default": 5000
+                    "default": 5000,
+                    "hidden": true
+
                 },
                 "leiden_iterations": {
                     "fa_icon": "fas repeat",
                     "description": "Number of iterations for the leiden algorithm, high values will decrease the variance of the results but increase the runtime [default: 10; 1<=x<=100]",
                     "type": "integer",
-                    "default": 10,
                     "minimum": 1,
-                    "maximum": 100
+                    "maximum": 100,
+                    "default": 10,
+                    "hidden": true
                 },
                 "cluster_min_count": {
                     "fa_icon": "fas less-than-equal",
-                    "description": "Discard edges (pixels) with a count (reads) lower than this [default: 2; 1<=x<=50] use 1 to disable",
+                    "description": "Discard edges (pixels) with a count (reads) lower than this, use 1 to disable",
                     "type": "integer",
                     "default": 2,
                     "minimum": 1,
-                    "maximum": 50
+                    "maximum": 50,
+                    "hidden": true
                 }
             }
         },
@@ -262,11 +292,11 @@
             "title": "Options for pixelator annotate command.",
             "properties": {
                 "min_size": {
-                    "description": "The minimum size (pixels) a component/cell can have (default is no filtering)",
+                    "description": "The minimum size (pixels) a component/cell can have (disabled by default)",
                     "type": "integer"
                 },
                 "max_size": {
-                    "description": "The maximum size (pixels) a component/cell can have (default is no filtering)",
+                    "description": "The maximum size (pixels) a component/cell can have (disabled by default)",
                     "type": "integer"
                 },
                 "dynamic_filter": {
@@ -277,17 +307,14 @@
                 },
                 "cell_type_assignments": {
                     "description": "Enable cell type assignment using pre-trained models",
-                    "default": false,
                     "type": "boolean"
                 },
                 "majority_vote": {
                     "description": "Enable cell type majority voting using clustering of components",
-                    "default": false,
                     "type": "boolean"
                 },
                 "aggregate_calling": {
                     "description": "Enable aggregate calling, information on potential aggregates will be added to the output data",
-                    "default": true,
                     "type": "boolean"
                 }
             }
@@ -316,7 +343,8 @@
                     "default": false
                 },
                 "normalization": {
-                    "description": "Which approach to use to normalize the antibody counts: raw will use the raw counts CLR will use the CLR-transformed counts denoise will use CLR-transformed counts and subtract the counts of control antibodies",
+                    "description": "Which approach to use to normalize the antibody counts.",
+                    "help_text": "- `raw`: use the raw counts.\n- `CLR`: use the CLR-transformed counts.\n- `denoise`: use CLR-transformed counts and subtract the counts of control antibodies",
                     "type": "string",
                     "enum": ["raw", "clr", "denoise"],
                     "default": "clr"
@@ -336,11 +364,6 @@
                     "description": "Skip report generation",
                     "type": "boolean",
                     "default": false
-                },
-                "report_name": {
-                    "description": "The name for the report",
-                    "type": ["string"],
-                    "default": "report"
                 }
             }
         },
@@ -427,36 +450,6 @@
                 }
             }
         },
-        "global_options": {
-            "title": "Global options",
-            "type": "object",
-            "fa_icon": "fas fa-file-import",
-            "description": "Less common options for the pipeline (specific to nf-core-pixelator), typically set in a config file.",
-            "help_text": "These options allow you to customize some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
-            "properties": {
-                "pixelator_container_source": {
-                    "type": "string",
-                    "description": "The source repository for the pixelator docker container.",
-                    "enum": ["aws-ecr", "ghcr", "internal"],
-                    "default": "ghcr",
-                    "hidden": true
-                },
-                "pixelator_tag": {
-                    "type": "string",
-                    "description": "Override which container tag of pixelator to use. Use carefully!",
-                    "help_text": "This option allows you to use a different container tag for the pixelator tool.\nThis is intended for developers and power-users and can break the pipeline. Use on your own risk!",
-                    "fa_icon": "fas fa-question-circle",
-                    "hidden": true,
-                    "default": "0.11.0"
-                },
-                "pixelator_container": {
-                    "type": "string",
-                    "description": "The exact container to use. Overrides container defined by pixelator_container_source and pixelator_tag.",
-                    "hidden": true,
-                    "default": null
-                }
-            }
-        },
         "generic_options": {
             "title": "Generic options",
             "type": "object",
@@ -497,14 +490,6 @@
                     "type": "boolean",
                     "description": "Send plain-text email instead of HTML.",
                     "fa_icon": "fas fa-remove-format",
-                    "hidden": true
-                },
-                "max_multiqc_email_size": {
-                    "type": "string",
-                    "description": "File size limit when attaching reports to summary emails.",
-                    "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
-                    "default": "25.MB",
-                    "fa_icon": "fas fa-file-upload",
                     "hidden": true
                 },
                 "monochrome_logs": {
@@ -549,6 +534,7 @@
                 },
                 "schema_ignore_params": {
                     "type": "string",
+                    "default": "",
                     "description": "A comma separated string of inputs the schema validation should ignore."
                 }
             }
@@ -587,9 +573,6 @@
         },
         {
             "$ref": "#/definitions/max_job_request_options"
-        },
-        {
-            "$ref": "#/definitions/global_options"
         },
         {
             "$ref": "#/definitions/generic_options"

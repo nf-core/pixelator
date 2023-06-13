@@ -1,7 +1,6 @@
-name: pixelator/collapse
+name: pixelator/annotate
 description: |
-  Collapse Molecular Pixelation data (FASTQ) by umi-upi to remove duplicates
-  and perform error correction.
+  Filter, annotate and call cells from an edge list produced by pixelator cluster
 keywords:
   - "molecular pixelator"
 tools:
@@ -10,7 +9,7 @@ tools:
         Software package to process sequencing data into Molecular Pixelation data.
       homepage: https://github.com/PixelgenTechnologies/pixelator
       documentation: https://github.com/PixelgenTechnologies/pixelator
-      arxiv: null
+      doi: 10.1101/2023.06.05.543770
       licence: ["MIT"]
 
 input:
@@ -26,25 +25,35 @@ input:
         respectively.
 
 output:
-  - collapsed:
+  - dataset:
       type: file
-      description: FastQ file containing an edge-list of collapsed reads
-      pattern: "*collapsed.csv.gz"
+      description: Pixelator dataset file
+      pattern: "*.dataset.pxl"
 
   - report_json:
       type: file
-      description: JSON file with statistics for the collapse stage
+      description: JSON file with statistics for the cluster stage
       pattern: "*.report.json"
+
+  - png:
+      type: file
+      description: PNG plots
+      pattern: "*.png"
 
   - metadata:
       type: file
       description: Command invocation metadata files for pixelator collapse
       pattern: "*.meta.json"
 
+  - all_results:
+      type: file
+      description: All output files from the pixelator single-cell cluster command
+      pattern: "*"
+
   - log:
     type: file
     description: Pixelator log files
-    pattern: "*pixelator-collapse*.log"
+    pattern: "*pixelator-annotate*.log"
 
   - versions:
       type: file

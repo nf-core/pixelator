@@ -1,6 +1,5 @@
-name: pixelator/analysis
-description: |
-  Perform different analyses on a PixelDataset from pixelator annotate
+name: pixelator/concatenate
+description: Demultiplex molecular pixelation reads according to the panel file barcodes
 keywords:
   - "molecular pixelator"
 tools:
@@ -9,7 +8,7 @@ tools:
         Software package to process sequencing data into Molecular Pixelation data.
       homepage: https://github.com/PixelgenTechnologies/pixelator
       documentation: https://github.com/PixelgenTechnologies/pixelator
-      arxiv: null
+      doi: 10.1101/2023.06.05.543770
       licence: ["MIT"]
 
 input:
@@ -25,30 +24,25 @@ input:
         respectively.
 
 output:
-  - dataset:
+  - merged:
       type: file
-      description: Pixelator dataset file
-      pattern: "*.dataset.pxl"
+      description: FastQ file containing combined and trimmed reads
+      pattern: "*merged*.{fq,fastq}.gz"
 
   - report_json:
       type: file
-      description: JSON file with statistics for the cluster stage
+      description: JSON file with statistics for the concatenate stage
       pattern: "*.report.json"
 
   - metadata:
       type: file
-      description: Command invocation metadata files for pixelator collapse
+      description: Command invocation metadata files for pixelator concatenate
       pattern: "*.meta.json"
-
-  - all_results:
-      type: file
-      description: All output files from the pixelator cluster Command
-      pattern: "*"
 
   - log:
     type: file
     description: Pixelator log files
-    pattern: "*pixelator-analysis*.log"
+    pattern: "*pixelator-concatenate*.log"
 
   - versions:
       type: file

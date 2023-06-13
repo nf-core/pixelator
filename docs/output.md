@@ -12,79 +12,97 @@ The directories listed below will be created in the results directory after the 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using multiple subcommands of the [`pixelator`](https://github.com/PixelgenTechnologies/pixelator) tool.
 
 - [`pixelator concatenate`](#pixelator-concatenate)(Optional) - Concatenate paired end data
-- [`pixelator preqc`](#pixelator-preqc)) - Read QC and filtering
-- [`pixelator adapterqc`](#pixelator-adapterqc)) - Check correctness/presence of PBS1/2 sequences
-- [`pixelator demux`](#pixelator-demux)) - Assign a marker (barcode) to each read
-- [`pixelator collapse`](#pixelator-collapse)) - Error correction, duplicate removal, compute read counts
-- [`pixelator cluster`](#pixelator-cluster)) - Compute undirected graphs and basic size filtering
-- [`pixelator analysis`](#pixelator-analysis)) - Downstream analysis for each cell
-- [`pixelator annotate`](#pixelator-annotate)) - Filter, annotate and call cells on samples
-- [`pixelator aggregate`](#pixelator-aggregate)) - Aggregate results
-- [`pixelator report`](#pixelator-report)) - Report generation
+- [`pixelator preqc`](#pixelator-preqc) - Read QC and filtering
+- [`pixelator adapterqc`](#pixelator-adapterqc) - Check for correctness of PBS1/2 sequences
+- [`pixelator demux`](#pixelator-demux) - Assign a marker (barcode) to each read
+- [`pixelator collapse`](#pixelator-collapse) - Error correction, duplicate removal, compute read counts
+- [`pixelator cluster`](#pixelator-cluster) - Compute undirected graphs and basic size filtering
+- [`pixelator analysis`](#pixelator-analysis) - Downstream analysis for each cell
+- [`pixelator annotate`](#pixelator-annotate) - Filter, annotate and call cells on samples
+- [`pixelator aggregate`](#pixelator-aggregate) - Aggregate results
+- [`pixelator report`](#pixelator-report) - Report generation
 
 ### pixelator concatenate
+
+// TODO: High level description of concatenate step and output files
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
   - `concatenate`
-    - `*merged.fastq.gz`: Concatenated R1 and R2 reads.
-  - `/logs` - `*pixelator-concatenate.log`: Pixelator concatenate log output.
-  </details>
+    - `<sample-id>.merged.fastq.gz`:
+      Combine R1 and R2 reads into full amplicon reads and calculate Q30 scores for the amplicon regions.
+    - `<sample-id>.report.json`: Q30 metrics of the amplicon.
+    - `<sample-id>.meta.json`: Command invocation metadata.
+- `logs`
+  - *pixelator-concatenate.log`: pixelator log output.
 
-### pixelator preqc
+</details>
+
+### pixelator qc
+
+// TODO: High level description of QC step and output files
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
   - `preqc`
-    - `*processed.fastq.gz`: Processed reads.
-    - `*failed.fastq.gz`: Discarded reads.
-    - `*report.html`: Fastp html report.
-    - `*report.json`: Fastp json report.
-  - `/logs` - `*pixelator-preqc.log`: Pixelator preqc log output.
-  </details>
-
-### pixelator adapterqc
-
-<details markdown="1">
-<summary>Output files</summary>
-
-- `pixelator`
+    - `<sample-id>.processed.fastq.gz`: Processed reads.
+    - `<sample-id>.failed.fastq.gz`: Discarded reads.
+    - `<sample-id>.report.json`: Fastp json report.
+    - `<sample-id>.meta.json`: Command invocation metadata.
   - `adapterqc`
-    - `*processed.fastq.gz`: Processed reads.
-    - `*failed.fastq.gz`: Discarded reads.
-    - `*report.json`: Cutadapt json report.
-  - `/logs` - `*pixelator-adapterqc.log`: Pixelator adapterqc log output.
-  </details>
+    - `<sample-id>.processed.fastq.gz`: Processed reads.
+    - `<sample-id>.failed.fastq.gz`: Discarded reads.
+    - `<sample-id>.report.json`: Cutadapt json report.
+    - `<sample-id>.meta.json`: Command invocation metadata.
+
+- `logs` - `*pixelator-preqc.log`: pixelator log output.
+
+</details>
 
 ### pixelator demux
 
+// TODO: High level description of demux step and output files
+
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
-  - `adapterqc`
-    - `*processed-*-.fastq.gz`: Reads demultiplexed per antibody.
-    - `*report.json`: Cutadapt json report.
-  - `/logs` - `*pixelator-demultiplex.log`: Pixelator adapterqc log output.
-  </details>
+  - `demux`
+    - `<sample-id>.processed-<antibody_name>.fastq.gz`: Reads demultiplexed per antibody.
+    - `<sample-id>.failed.fastq.gz`: Discarded reads that do not match an antibody barcode.
+    - `<sample-id>.report.json`: Cutadapt json report.
+    - `<sample-id>.meta.json`: Command invocation metadata.
+
+- `logs`
+  - `*pixelator-demultiplex.log`: pixelator log output.
+
+</details>
 
 ### pixelator collapse
 
+// TODO: High level description of collapse step and output files
+
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
   - `adapterqc`
-    - `*.collapse.csv`: Edge list matrix.
-    - `*collapse.json`: Statistics.
-  - `/logs` - `*pixelator-collapse.log`: Pixelator collapse log output.
-  </details>
+    - `<sample-id>.collapsed.csv.gz`: Edgelist of the graph.
+    - `<sample-id>.report.json`: Statistics for the collapse step.
+    - `<sample-id>.meta.json`: Command invocation metadata.
 
-### pixelator cluster
+- `logs`
+  - `*pixelator-collapse.log`: pixelator log output.
+
+</details>
+
+### pixelator graph
+
+// TODO: High level description of graph step and output files
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -92,77 +110,69 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - `pixelator`
   - `cluster`
     - `<sample-id>.components_recovered.csv`
-    - `<sample-id>.data_summary.png`
-    - `<sample-id>.raw_anndata.h5ad`
-    - `<sample-id>.raw_antibody_metrics.csv`
-    - `<sample-id>.raw_antibody_metrics.png`
-    - `<sample-id>.raw_components_antibody.csv`
-    - `<sample-id>.raw_components_dist.png`
-    - `<sample-id>.raw_components_metrics.csv`
-    - `<sample-id>.raw_pixel_data.csv`
+    - `<sample-id>.edgelist.csv.gz`
+    - `<sample-id>.raw_edgelist.csv.gz`
+    - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`
-  - `/logs` - `*pixelator-cluster.log`: Pixelator cluster log output.
-  </details>
+    - `*.meta.json`: Command invocation metadata.
+
+- `logs`
+  - `*pixelator-cluster.log`: pixelator log output.
+
+</details>
 
 ### pixelator annotate
+
+// TODO: High level description of annotate step and output files
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
   - `annotate`
-  - `<sample-id>.data_summary.png`
-  - `<sample-id>.anndata.h5ad`
-  - `<sample-id>.raw_anndata.h5ad`
-  - `<sample-id>.antibody_metrics.csv`
-  - `<sample-id>.antibody_metrics.png`
-  - `<sample-id>.components_antibody.csv`
-  - `<sample-id>.components_dist.png`
-  - `<sample-id>.components_metrics.csv`
-  - `<sample-id>.pixel_data.csv`
-  - `<sample-id>.report.json`
-  - `/logs` - `*pixelator-annotate.log`: Pixelator cluster log output.
-  </details>
+    - `<sample-id>.dataset.pxl`
+    - `<sample-id>.meta.json`: Command invocation metadata.
+    - `<sample-id>.rank_vs_size.png`
+    - `<sample-id>.raw_components_metrics.csv`
+    - `<sample-id>.report.json`
+    - `<sample-id>.umap.png`
+
+- `logs`
+  - `*pixelator-annotate.log`: pixelator log output.
+</details>
 
 ### pixelator analysis
+
+// TODO: High level description of analysis step and output files
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
   - `analysis`
-    - `<sample-name>.anndata.h5ad`
-    - `<sample-name>.polarization_boxplot.png`
-    - `<sample-name>.polarization_heatmap.png`
-    - `<sample-name>.polarization_matrix.csv`
-    - `<sample-name>.polarization_scores.csv`
-    - `<sample-name>.polarization_matrix.csv`
-    - `<sample-name>.report.json`
-  - `/logs` - `*pixelator-analysis.log`: Pixelator analysis log output.
+    - `<sample-id>.dataset.pxl`
+    - `<sample-id>.meta.json`: Command invocation metadata.
+    - `<sample-id>.report.json`
+
+- `logs`
+  - `*pixelator-analysis.log`: pixelator log output.
 
 </details>
 
-### pixelator aggregate
-
-<details markdown="1">
-<summary>Output files</summary>
-
-- `pixelator`
-  - `aggregate`
-    - `<sample-name>.merged_anndata.h5ad`: Anndata object with aggregated data of multiple samples
-  - `/logs` - `*pixelator-report.log`: Pixelator report log output.
-  </details>
-
 ### pixelator report
 
+// TODO: High level description of report step and output files
+
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
-  - `report/`
-    - `report.html`:
-  - `/logs` - `*pixelator-report.log`: Pixelator report log output.
-  </details>
+  - `report`
+    - `<sample-id>_report.html`
+- `logs`
+  - `*pixelator-report.log`: Pixelator report log output.
+
+</details>
 
 ### Pipeline information
 

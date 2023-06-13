@@ -1,6 +1,6 @@
-name: pixelator/annotate
+name: pixelator/analysis
 description: |
-  Filter, annotate and call cells from an edge list produced by pixelator cluster
+  Perform different analyses on a PixelDataset from pixelator annotate
 keywords:
   - "molecular pixelator"
 tools:
@@ -9,7 +9,7 @@ tools:
         Software package to process sequencing data into Molecular Pixelation data.
       homepage: https://github.com/PixelgenTechnologies/pixelator
       documentation: https://github.com/PixelgenTechnologies/pixelator
-      arxiv: null
+      doi: 10.1101/2023.06.05.543770
       licence: ["MIT"]
 
 input:
@@ -35,11 +35,6 @@ output:
       description: JSON file with statistics for the cluster stage
       pattern: "*.report.json"
 
-  - png:
-      type: file
-      description: PNG plots
-      pattern: "*.png"
-
   - metadata:
       type: file
       description: Command invocation metadata files for pixelator collapse
@@ -53,7 +48,7 @@ output:
   - log:
     type: file
     description: Pixelator log files
-    pattern: "*pixelator-annotate*.log"
+    pattern: "*pixelator-analysis*.log"
 
   - versions:
       type: file

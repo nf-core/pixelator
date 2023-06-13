@@ -55,16 +55,18 @@ include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 //
 // MODULE: Defined locally
 //
-include { PIXELATOR_CONCATENATE         } from '../modules/local/pixelator/concatenate/main'
-include { PIXELATOR_QC                  } from '../modules/local/pixelator/qc/main'
-include { PIXELATOR_DEMUX               } from '../modules/local/pixelator/demux/main'
-include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/collapse/main'
-include { PIXELATOR_GRAPH               } from '../modules/local/pixelator/graph/main'
-include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/analysis/main'
-include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/annotate/main'
-include { PIXELATOR_REPORT              } from '../modules/local/pixelator/report/main'
+
 include { RENAME_READS                  } from '../modules/local/rename_reads'
 include { COLLECT_METADATA              } from '../modules/local/collect_metadata'
+
+include { PIXELATOR_CONCATENATE         } from '../modules/local/pixelator/single-cell/concatenate/main'
+include { PIXELATOR_QC                  } from '../modules/local/pixelator/single-cell/qc/main'
+include { PIXELATOR_DEMUX               } from '../modules/local/pixelator/single-cell/demux/main'
+include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/single-cell/collapse/main'
+include { PIXELATOR_GRAPH               } from '../modules/local/pixelator/single-cell/graph/main'
+include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/single-cell/analysis/main'
+include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/single-cell/annotate/main'
+include { PIXELATOR_REPORT              } from '../modules/local/pixelator/single-cell/report/main'
 
 /*
 ========================================================================================
@@ -206,34 +208,61 @@ workflow PIXELATOR {
         } else {
             ch_analysis_col = ch_meta_col.map { id, meta -> [id, []]}
         }
+
+        // Combine all inputs and group them to make per-stage channels have their output in the same order
+        // ch_report_data: [[
+        //       meta, panels_file,
+        //      [concatenate files...], [preqc files...], [adapterqc files...], [demux files...],
+        //      [collapse files...], [cluster files], [annotate files...], [analysis files...]
+        // ], ...]
+        ch_report_data = ch_meta_col
+            .concat ( ch_panels_col )
+            .concat ( ch_concatenate_col )
+            .concat ( ch_preqc_col )
+            .concat ( ch_adapterqc_col )
+            .concat ( ch_demux_col )
+            .concat ( ch_collapse_col )
+            .concat ( ch_cluster_col )
+            .concat ( ch_annotate_col )
+            .concat ( ch_analysis_col )
+            .groupTuple()
+
+        // Split up everything per stage so we can recreate the expected directory structure for
+        // pixelator single-cell report using stageAs
+
+        ch_meta_grouped         = ch_report_data.map { id, data -> data[0] }
+        ch_panels_grouped       = ch_report_data.map { id, data -> data[1] }
+        ch_concatenate_grouped  = ch_report_data.map { id, data -> data[2].flatten() }
+        ch_preqc_grouped        = ch_report_data.map { id, data -> data[3].flatten() }
+        ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[4].flatten() }
+        ch_demux_grouped        = ch_report_data.map { id, data -> data[5].flatten() }
+        ch_collapse_grouped     = ch_report_data.map { id, data -> data[6].flatten() }
+        ch_cluster_grouped      = ch_report_data.map { id, data -> data[7].flatten() }
+        ch_annotate_grouped     = ch_report_data.map { id, data -> data[8].flatten() }
+        ch_analysis_grouped     = ch_report_data.map { id, data -> data[9].flatten() }
+
+        PIXELATOR_REPORT (
+            ch_meta_grouped,
+            ch_panels_grouped,
+            ch_concatenate_grouped,
+            ch_preqc_grouped,
+            ch_adapterqc_grouped,
+            ch_demux_grouped,
+            ch_collapse_grouped,
+            ch_cluster_grouped,
+            ch_annotate_grouped,
+            ch_analysis_grouped,
+        )
+
+
+        ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions)
     }
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
 
-    // //
-    // // MODULE: MultiQC
-    // //
-    // workflow_summary    = WorkflowPixelator.paramsSummaryMultiqc(workflow, summary_params)
-    // ch_workflow_summary = Channel.value(workflow_summary)
-
-    // methods_description    = WorkflowPixelator.methodsDescriptionText(workflow, ch_multiqc_custom_methods_description)
-    // ch_methods_description = Channel.value(methods_description)
-
-    // ch_multiqc_files = Channel.empty()
-    // ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
-    // ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml'))
-    // ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
-    // ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
-
-    // MULTIQC (
-    //     ch_multiqc_files.collect(),
-    //     ch_multiqc_config.toList(),
-    //     ch_multiqc_custom_config.toList(),
-    //     ch_multiqc_logo.toList()
-    // )
-    // multiqc_report = MULTIQC.out.report.toList()
+    // TODO: Add MultiQC after plugins are available
 }
 
 /*
