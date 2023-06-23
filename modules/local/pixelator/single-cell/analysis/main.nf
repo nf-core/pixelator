@@ -7,7 +7,7 @@ process PIXELATOR_ANALYSIS {
     container "ghcr.io/pixelgentechnologies/pixelator:0.11.0"
 
     input:
-    tuple val(meta), path(h5ad)
+    tuple val(meta), path(data)
 
     output:
     tuple val(meta), path("analysis/*dataset.pxl"),      emit: dataset
@@ -35,7 +35,7 @@ process PIXELATOR_ANALYSIS {
         analysis \\
         --output . \\
         $args \\
-        $h5ad
+        $data
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

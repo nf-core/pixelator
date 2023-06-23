@@ -2,7 +2,8 @@ process SAMPLESHEET_CHECK {
     tag "$samplesheet"
     label 'process_single'
 
-    container "ghcr.io/pixelgentechnologies/pixelator:0.11.0"
+    // conda "local::pixelator=0.10.0"
+    // container "ghcr.io/pixelgentechnologies/pixelator:0.10.0"
 
     input:
     path samplesheet
@@ -31,6 +32,7 @@ process SAMPLESHEET_CHECK {
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         python: \$(python --version | sed 's/Python //g')
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
 }

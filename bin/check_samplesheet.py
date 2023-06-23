@@ -194,33 +194,16 @@ class RowChecker(BaseChecker):
                 f"It should be one of: {', '.join(self.VALID_FORMATS)}"
             )
 
-    def validate_unique_samples(self):
-        """
-        Assert that the combination of sample name and FASTQ filename is unique.
-
-        In addition to the validation, also rename all samples to have a suffix of _T{n}, where n is the
-        number of times the same sample exist, but with different FASTQ files, e.g., multiple runs per experiment.
-
-        """
-        if len(self._seen) != len(self.modified):
-            raise AssertionError("The pair of sample name and FASTQ must be unique.")
-        seen = Counter()
-        for row in self.modified:
-            sample = row[self._sample_col]
-            seen[sample] += 1
-            row[self._sample_col] = f"{sample}_T{seen[sample]}"
-
 
 class PixelatorRowChecker(RowChecker):
     DEFAULT_GROUP = "default"
-    REQUIRED_COLUMNS = ["sample", "assay", "design", "panel", "fastq_1", "fastq_2"]
+    REQUIRED_COLUMNS = ["sample", "design", "panel", "fastq_1", "fastq_2"]
 
     def __init__(self, samplesheet_path=None, design_options: Optional[Set[str]] = None, **kwargs):
         super().__init__(
             sample_col="sample", first_col="fastq_1", second_col="fastq_2", single_col="single_end", **kwargs
         )
         self._panel_col = "panel"
-        self._assay_col = "assay"
         self._design_col = "design"
         self._samplesheet_path = samplesheet_path
         self._base_dir = self.get_base_dir(samplesheet_path) if samplesheet_path else None
@@ -231,12 +214,6 @@ class PixelatorRowChecker(RowChecker):
         headers = list(headers)
         headers.insert(1, "single_end")
         return headers
-
-    def _validate_assay(self, row):
-        """Assert that the assay column exists and has supported values."""
-        val = row[self._assay_col]
-        if len(val) <= 0:
-            raise AssertionError(f"The {self._assay_col} field is required.")
 
     def _validate_design(self, row):
         """Assert that the design column exists and has supported values."""
@@ -276,7 +253,6 @@ class PixelatorRowChecker(RowChecker):
 
         """
         self._validate_sample(row)
-        self._validate_assay(row)
         self._validate_design(row)
         self._validate_first(row)
         self._validate_second(row)
@@ -284,112 +260,6 @@ class PixelatorRowChecker(RowChecker):
         self._resolve_relative_paths(row)
         self._seen.add((row[self._sample_col], row[self._first_col]))
         self.modified.append(row)
-
-
-class PixelatorAggregateRowChecker(BaseChecker):
-    """
-    Define a service that can validate and transform each given row.
-
-    Attributes:
-        modified (list): A list of dicts, where each dict corresponds to a previously
-            validated and transformed row. The order of rows is maintained.
-
-    """
-
-    REQUIRED_COLUMNS = ["sample", "matrix"]
-
-    VALID_FORMATS = (
-        ".h5ad",
-        ".h5ad.gz",
-    )
-
-    def __init__(
-        self,
-        sample_col="sample",
-        group_col="group",
-        matrix_col="matrix",
-        samplesheet_path=None,
-        **kwargs,
-    ):
-        """
-        Initialize the row checker with the expected column names.
-
-        Args:
-            sample_col (str): The name of the column that contains the sample name
-                (default "sample").
-            group_col (str): The name of the column that contains the group
-                assignment
-            second_col (str): The name of the column that contains the matrix file
-                in .h5ad or .h5ad.gz format
-        """
-        self._sample_col = sample_col
-        self._group_col = group_col
-        self._matrix_col = matrix_col
-        self._samplesheet_path = samplesheet_path
-        self._base_dir = PurePath(self._samplesheet_path).parent
-        self._seen = set()
-        self.modified = []
-
-    @classmethod
-    def output_headers(cls, headers: Iterable[str]) -> List[str]:
-        headers = list(headers)
-        if not "group" in headers:
-            headers.insert(1, "group")
-
-        return headers
-
-    def validate_and_transform(self, row):
-        """
-        Perform all validations on the given row and insert the read pairing status.
-
-        Args:
-            row (dict): A mapping from column headers (keys) to elements of that row
-                (values).
-
-        """
-        self._validate_sample(row)
-        self._validate_group(row)
-        self._validate_matrix(row)
-        self._seen.add(row[self._sample_col])
-        self.modified.append(row)
-
-    def _validate_sample(self, row):
-        """Assert that the sample name exists and convert spaces to underscores."""
-        if len(row[self._sample_col]) <= 0:
-            raise AssertionError("Sample input is required.")
-        # Sanitize samples slightly.
-        row[self._sample_col] = row[self._sample_col].replace(" ", "_")
-
-    def _validate_group(self, row):
-        """Add default group entry if not set."""
-        if not self._group_col in row:
-            row[self._group_col] = 0
-
-    def _validate_matrix(self, row):
-        """Assert that the matrix entry has the right format if it exists."""
-        if len(row[self._matrix_col]) <= 0:
-            raise AssertionError("The matrix field is required")
-
-        self._validate_h5ad_format(row[self._matrix_col])
-        matrix_path = make_absolute_path(row[self._matrix_col], self._base_dir)
-
-        row[self._matrix_col] = matrix_path
-
-    def _validate_h5ad_format(self, filename):
-        """Assert that a given filename has one of the expected H5AD extensions."""
-
-        if not any(filename.endswith(extension) for extension in self.VALID_FORMATS):
-            raise AssertionError(
-                f"The matrix file has an unrecognized extension: {filename}\n"
-                f"It should be one of: {', '.join(self.VALID_FORMATS)}"
-            )
-
-    def validate_unique_samples(self):
-        """
-        Assert that the sample name is unique.
-        """
-        if len(self._seen) != len(self.modified):
-            raise AssertionError("The sample name must be unique.")
 
 
 def read_head(handle, num_lines=5):
@@ -457,8 +327,6 @@ def check_samplesheet(file_in, file_out, checker: BaseChecker):
             except AssertionError as error:
                 logger.critical(f"{str(error)} On line {i + 2}.")
                 sys.exit(1)
-
-        checker.validate_unique_samples()
 
     header = checker.output_headers(reader.fieldnames)
 

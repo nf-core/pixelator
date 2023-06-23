@@ -1,3 +1,3 @@
 sample,design,panel,fastq_1,fastq_2
 test_data_se,D12,/path/to/test_panel.csv,/path/to/test_data.fastq.gz,
-uropod_control,D21,/path/to/UNO_D21_conjV21.csv,/path/to/uropod_control_300k_S1_R1_001.fastq.gz,uropod_control_300k_S1_R2_001.fastq.gz
+uropod_control,D21,to/UNO_D21_conjV21.csv,/path/to/uropod_control_300k_S1_R1_001.fastq.gz,uropod_control_300k_S1_R2_001.fastq.gz

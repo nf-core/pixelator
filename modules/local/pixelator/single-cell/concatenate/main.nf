@@ -2,7 +2,7 @@
 
 process PIXELATOR_CONCATENATE {
     tag "$meta.id"
-    label 'process_medium'
+    label 'process_low'
 
 
     conda "local::pixelator=0.10.0"

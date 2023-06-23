@@ -5,8 +5,7 @@ import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
 
 process COLLECT_METADATA {
-
-    label "process_single"
+    label 'process_single'
     cache false
 
     conda "local::pixelator=0.10.0"

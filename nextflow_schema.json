@@ -247,26 +247,8 @@
             "title": "Options for pixelator graph command.",
             "properties": {
                 "multiplet_recovery": {
-                    "description": "Activate the multiplet recovery (leiden or fast-greedy): leiden: use the leiden algorithm (whole graph) fast-greedy: use fast greedy algorithm (per-component)",
-                    "type": "string",
-                    "enum": ["leiden", "fast-greedy", "none"],
-                    "default": "null"
-                },
-                "fast_greedy_fraction": {
-                    "description": "Maximum fraction of edges allowed to be removed in a component for the fast-greedy algorithm [default: 0.05; 0.0<=x<=1.0]",
-                    "type": "number",
-                    "minimum": 0.0,
-                    "maximum": 1.0,
-                    "default": 0.05,
-                    "hidden": true
-                },
-                "fast_greedy_cutoff": {
-                    "fa_icon": "fas less-than-equal",
-                    "description": "Minimum size (edges) of a component to be considered for the fast-greedy algorithm [default: 5000]",
-                    "type": "integer",
-                    "default": 5000,
-                    "hidden": true
-
+                    "description": "Activate the multiplet recovery using leiden community detection",
+                    "type": "boolean"
                 },
                 "leiden_iterations": {
                     "fa_icon": "fas repeat",
@@ -342,18 +324,42 @@
                     "type": "boolean",
                     "default": false
                 },
-                "normalization": {
+                "polarization_normalization": {
                     "description": "Which approach to use to normalize the antibody counts.",
                     "help_text": "- `raw`: use the raw counts.\n- `CLR`: use the CLR-transformed counts.\n- `denoise`: use CLR-transformed counts and subtract the counts of control antibodies",
                     "type": "string",
                     "enum": ["raw", "clr", "denoise"],
                     "default": "clr"
                 },
-                "binarization": {
+                "polarization_binarization": {
                     "fa_icon": "fas binary",
                     "description": "Transform the antibody counts to 0-1 (binarize) when computing polarization",
                     "type": "boolean",
                     "default": false
+                },
+                "colocalization_transformation": {
+                    "type": "string",
+                    "enum": ["raw", "clr", "log1p", "relative"],
+                    "default": "log1p",
+                    "description": "Select the type of transformation to use on the node by antibody counts matrix when computing colocalization"
+                },
+                "colocalization_neighbourhood_size": {
+                    "type": "integer",
+                    "description": "Select the size of the neighbourhood to use when computing colocalization metrics on each component",
+                    "default": 1,
+                    "minimum": 0
+                },
+                "colocalization_n_permutations": {
+                    "type": "integer",
+                    "description": "Set the number of permutations use to compute the empiricalp-value for the colocalization score",
+                    "default": 50,
+                    "minimum": 5
+                },
+                "colocalization_min_region_count": {
+                    "type": "integer",
+                    "description": "The minimum number of counts in a region for it to be concideredvalid for computing colocalization",
+                    "default": 5,
+                    "minimum": 0
                 }
             }
         },
@@ -534,7 +540,7 @@
                 },
                 "schema_ignore_params": {
                     "type": "string",
-                    "default": "",
+                    "default": "awsqueue,awsregion",
                     "description": "A comma separated string of inputs the schema validation should ignore."
                 }
             }
