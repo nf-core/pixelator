@@ -345,19 +345,19 @@
                 },
                 "colocalization_neighbourhood_size": {
                     "type": "integer",
-                    "description": "Select the size of the neighbourhood to use when computing colocalization metrics on each component",
+                    "description": "Select the size of the neighborhood to use when computing colocalization metrics on each component",
                     "default": 1,
                     "minimum": 0
                 },
                 "colocalization_n_permutations": {
                     "type": "integer",
-                    "description": "Set the number of permutations use to compute the empiricalp-value for the colocalization score",
+                    "description": "Set the number of permutations use to compute the empirical p-value for the colocalization score",
                     "default": 50,
                     "minimum": 5
                 },
                 "colocalization_min_region_count": {
                     "type": "integer",
-                    "description": "The minimum number of counts in a region for it to be concideredvalid for computing colocalization",
+                    "description": "The minimum number of counts in a region for it to be concidered valid for computing colocalization",
                     "default": 5,
                     "minimum": 0
                 }
