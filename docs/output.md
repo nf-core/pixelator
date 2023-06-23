@@ -36,7 +36,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
     - `<sample-id>.report.json`: Q30 metrics of the amplicon.
     - `<sample-id>.meta.json`: Command invocation metadata.
 - `logs`
-  - *pixelator-concatenate.log`: pixelator log output.
+  - \*pixelator-concatenate.log`: pixelator log output.
 
 </details>
 
@@ -48,6 +48,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
+
   - `preqc`
     - `<sample-id>.processed.fastq.gz`: Processed reads.
     - `<sample-id>.failed.fastq.gz`: Discarded reads.
@@ -71,6 +72,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
+
   - `demux`
     - `<sample-id>.processed-<antibody_name>.fastq.gz`: Reads demultiplexed per antibody.
     - `<sample-id>.failed.fastq.gz`: Discarded reads that do not match an antibody barcode.
@@ -90,6 +92,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
+
   - `adapterqc`
     - `<sample-id>.collapsed.csv.gz`: Edgelist of the graph.
     - `<sample-id>.report.json`: Statistics for the collapse step.
@@ -108,6 +111,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
+
   - `cluster`
     - `<sample-id>.components_recovered.csv`
     - `<sample-id>.edgelist.csv.gz`
@@ -129,6 +133,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
+
   - `annotate`
     - `<sample-id>.dataset.pxl`
     - `<sample-id>.meta.json`: Command invocation metadata.
@@ -139,7 +144,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 - `logs`
   - `*pixelator-annotate.log`: pixelator log output.
-</details>
+  </details>
 
 ### pixelator analysis
 
@@ -149,6 +154,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
+
   - `analysis`
     - `<sample-id>.dataset.pxl`
     - `<sample-id>.meta.json`: Command invocation metadata.

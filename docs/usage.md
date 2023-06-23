@@ -216,6 +216,7 @@ We recommend adding the following line to your environment to limit this (typica
 ```bash
 NXF_OPTS='-Xms1g -Xmx4g'
 ```
+
 # nf-core/pixelator: Usage
 
 ## :warning: Please read this documentation on the nf-core website: [https://nf-co.re/pixelator/usage](https://nf-co.re/pixelator/usage)
