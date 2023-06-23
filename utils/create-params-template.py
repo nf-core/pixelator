@@ -46,12 +46,12 @@ def render_params_file(schema: Dict[str, Any]):
         properties = definition["properties"]
 
         print(
-
-        f"""
+            f"""
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##     {comment}
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-""")
+"""
+        )
 
         for prop_key, prop in properties.items():
             default_value = prop.get("default", None)
