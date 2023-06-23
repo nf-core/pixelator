@@ -532,12 +532,6 @@
                     "hidden": true,
                     "help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters."
                 },
-                "testdata_root": {
-                    "type": "string",
-                    "description": "Root path to testdata for running local tests",
-                    "hidden": true,
-                    "fa_icon": "fas fa-folder-tree"
-                },
                 "schema_ignore_params": {
                     "type": "string",
                     "default": "awsqueue,awsregion",

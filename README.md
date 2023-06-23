@@ -12,20 +12,30 @@
 
 ## Introduction
 
-**nf-core/pixelator** is a bioinformatics pipeline that ...
-
-<!-- TODO nf-core:
+<!--
    Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
    major pipeline sections and the types of output it produces. You're giving an overview to someone new
    to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
 -->
 
-<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
+**nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for Pipeline for analysis of Molecular Pixelation assays.
+It takes a samplesheet as input and will process your data using `pixelator` to produce final antibody counts.
+
+<!-- Include a figure that guides the user through the major workflow steps. Many nf-core
      workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
+
+![](./docs/images/nf_core_pixelator_metromap.svg)
+
 <!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
-1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
-2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+1. Build amplicon from input reads ([`pixelator concatenate`](https://github.com/PixelgenTechnologies/pixelator))
+2. Read QC and filtering, correctness of PBS sequences ([`pixelator preqc | pixelator adapterqc`](https://github.com/PixelgenTechnologies/pixelator))
+3. Assign a marker (barcode) to each read ([`pixelator demux`](https://github.com/PixelgenTechnologies/pixelator))
+4. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://github.com/PixelgenTechnologies/pixelator))
+5. Compute the components/clusters of the graph from the edge list matrix.([`pixelator graph`](https://github.com/PixelgenTechnologies/pixelator))
+6. Analyze components/clusters of the graph.([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
+7. Filter, annotate and call cells on samples ([`pixelator annotate`](https://github.com/PixelgenTechnologies/pixelator))
+8. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
 
 ## Usage
 
@@ -50,9 +60,18 @@ Each row represents a fastq file (single-end) or a pair of fastq files (paired e
 
 -->
 
-Now, you can run the pipeline using:
+First, prepare a samplesheet with your input data that looks as follows:
 
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
+`samplesheet.csv`:
+
+```csv
+sample,design,panel,fastq_1,fastq_2
+uropod_control,D21,UNO_D21_conjV21.csv,uropod_control_300k_S1_R1_001.fastq.gz,uropod_control_300k_S1_R2_001.fastq.gz
+```
+
+Each row represents a sample and gives the design, a panel file and the input fastq files.
+
+Now, you can run the pipeline using:
 
 ```bash
 nextflow run nf-core/pixelator \
@@ -76,9 +95,11 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-nf-core/pixelator was originally written by Pixelgen Technologies AB.
+nf-core/pixelator was originally written for [Pixelgen Technologies AB](https://www.pixelgen.tech/) by:
 
-We thank the following people for their extensive assistance in the development of this pipeline:
+- Florian De Temmerman
+- Johan Dahlberg
+- Alvaro Martinez Barrio
 
 <!-- TODO nf-core: If applicable, make list of people who have also contributed -->
 
