@@ -4,7 +4,7 @@ process PIXELATOR_ANNOTATE {
     label 'process_medium'
 
     conda "local::pixelator=0.10.0"
-    container "ghcr.io/pixelgentechnologies/pixelator:0.11.0"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.12.0"
 
     input:
     tuple val(meta), path(dataset), path(panel)

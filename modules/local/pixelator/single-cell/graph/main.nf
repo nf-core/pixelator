@@ -6,7 +6,7 @@ process PIXELATOR_GRAPH {
 
     conda "local::pixelator=0.10.0"
 
-    container "ghcr.io/pixelgentechnologies/pixelator:0.11.0"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.12.0"
 
     input:
     tuple val(meta), path(edge_list)
