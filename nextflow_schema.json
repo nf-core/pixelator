@@ -373,6 +373,19 @@
                 }
             }
         },
+        "global_config_options": {
+            "title": "Global options",
+            "type": "object",
+            "description": "Global configuration options specific to nf-core/pixelator.",
+            "properties": {
+                "pixelator_container": {
+                    "type": "string",
+                    "format": "url",
+                    "description": "Override the container image reference to use for all steps using the `pixelator` command.",
+                    "help_text": "Use this to force the pipeline to use a different image version in all steps that use the pixelator command.\nThe pipeline is not garanteed to work when using different pixelator versions."
+                }
+            }
+        },
         "institutional_config_options": {
             "title": "Institutional config options",
             "type": "object",
@@ -567,6 +580,9 @@
         },
         {
             "$ref": "#/definitions/report_options"
+        },
+        {
+            "$ref": "#/definitions/global_config_options"
         },
         {
             "$ref": "#/definitions/institutional_config_options"
