@@ -31,6 +31,7 @@ def get_meta(LinkedHashMap row) {
     meta.design       = row.design
     meta.group        = row.group
     meta.assay        = row.assay
+    meta.panel        = row.panel ?: null
     return meta
 }
 
@@ -60,9 +61,14 @@ def create_fastq_channel(LinkedHashMap row) {
 def create_panels_channel(LinkedHashMap row) {
     def meta = get_meta(row)
 
-    if (file(row.panel).exists()) {
-        return [ meta, file(row.panel) ]
-    }
+    // Require a panel file if no value for panel is set
+    if (meta.panel == null) {
+        if (file(row.panel_file).exists()) {
+            return [ meta, file(row.panel_file) ]
+        }
 
-    exit 1, "ERROR: Please check panel field: ${row.panel}: Could not find existing csv file."
+        exit 1, "ERROR: Please check panel field: ${row.panel_file}: Could not find existing csv file."
+    } else {
+        return [ meta, [] ]
+    }
 }

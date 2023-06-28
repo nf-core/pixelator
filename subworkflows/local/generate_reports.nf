@@ -3,7 +3,7 @@ include { PIXELATOR_REPORT            } from '../../modules/local/pixelator/sing
 
 workflow GENERATE_REPORTS {
     take:
-    panels
+    panel_files              // [meta, panel_file] or [meta, []]
     concatenate_data
     preqc_data
     adapterqc_data
@@ -16,7 +16,7 @@ workflow GENERATE_REPORTS {
     main:
     ch_versions = Channel.empty()
 
-    ch_meta_col = panels
+    ch_meta_col = panel_files
         .map { meta, data -> [ meta.id, meta] }
         .groupTuple()
         .map { id, data ->
@@ -31,10 +31,19 @@ workflow GENERATE_REPORTS {
         }
 
     // Make sure panel files are unique, we can have duplicates if we concatenated multiple samples
-    ch_panels_col = panels
+    ch_panel_files_col = panel_files
         .map { meta, data -> [ meta.id, data] }
         .groupTuple()
-        .map { id, data -> [ id, data.unique() ] }
+        .map { id, data ->
+            if (!data) {
+                return [id, []]
+            }
+            def unique_panels = data.unique()
+            if (unique_panels.size() > 1) {
+                exit 1, "ERROR: Concatenated samples must use the same panel."
+            }
+            return [ id, unique_panels[0] ]
+        }
 
 
     ch_concatenate_col = concatenate_data
@@ -76,7 +85,7 @@ workflow GENERATE_REPORTS {
     //      [collapse files...], [cluster files], [annotate files...], [analysis files...]
     // ], ...]
     ch_report_data = ch_meta_col
-        .concat ( ch_panels_col )
+        .concat ( ch_panel_files_col )
         .concat ( ch_concatenate_col )
         .concat ( ch_preqc_col )
         .concat ( ch_adapterqc_col )
@@ -90,8 +99,7 @@ workflow GENERATE_REPORTS {
     // Split up everything per stage so we can recreate the expected directory structure for
     // pixelator single-cell report using stageAs
 
-    ch_meta_grouped         = ch_report_data.map { id, data -> data[0] }
-    ch_panels_grouped       = ch_report_data.map { id, data -> data[1] }
+    ch_panel_files_grouped  = ch_report_data.map { id, data -> [ data[0], data[1] ] }
     ch_concatenate_grouped  = ch_report_data.map { id, data -> data[2] ? data[2].flatten() : [] }
     ch_preqc_grouped        = ch_report_data.map { id, data -> data[3] ? data[3].flatten() : [] }
     ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[4] ? data[4].flatten() : [] }
@@ -101,9 +109,13 @@ workflow GENERATE_REPORTS {
     ch_annotate_grouped     = ch_report_data.map { id, data -> data[8] ? data[8].flatten() : [] }
     ch_analysis_grouped     = ch_report_data.map { id, data -> data[9] ? data[9].flatten() : [] }
 
+    ch_panel_keys           = ch_panel_files_grouped
+        .map { meta, panel_file -> panel_file ? [] : meta.panel }
+
+
     PIXELATOR_REPORT (
-        ch_meta_grouped,
-        ch_panels_grouped,
+        ch_panel_files_grouped,
+        ch_panel_keys,
         ch_concatenate_grouped,
         ch_preqc_grouped,
         ch_adapterqc_grouped,

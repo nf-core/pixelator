@@ -86,7 +86,7 @@ workflow PIXELATOR {
     INPUT_CHECK ( ch_input )
 
     ch_reads = INPUT_CHECK.out.reads
-    ch_panels = INPUT_CHECK.out.panels
+    ch_panel_files = INPUT_CHECK.out.panels
 
     ch_fastq_split = ch_reads
         .map {
@@ -135,13 +135,19 @@ workflow PIXELATOR {
     ch_qc = PIXELATOR_QC.out.processed
     ch_versions = ch_versions.mix(PIXELATOR_QC.out.versions.first())
 
-    ch_qc_and_panel = ch_qc.join(ch_panels)
-    PIXELATOR_DEMUX ( ch_qc_and_panel )
+    ch_qc_and_panel_file = ch_qc.join(ch_panel_files)
+    ch_demux_panel_keys = ch_qc_and_panel_file
+        .map { meta, fq, panel_file -> panel_file ? [] : meta.panel }
+
+    PIXELATOR_DEMUX ( ch_qc_and_panel_file, ch_demux_panel_keys )
     ch_demuxed = PIXELATOR_DEMUX.out.processed
     ch_versions = ch_versions.mix(PIXELATOR_DEMUX.out.versions.first())
 
-    ch_demuxed_and_panel = ch_demuxed.join(ch_panels)
-    PIXELATOR_COLLAPSE ( ch_demuxed_and_panel )
+    ch_demuxed_and_panel_file = ch_demuxed.join(ch_panel_files)
+    ch_collapse_panel_keys = ch_demuxed_and_panel_file.map {
+        meta, fq, panel_file -> panel_file ? [] : meta.panel }
+
+    PIXELATOR_COLLAPSE ( ch_demuxed_and_panel_file, ch_collapse_panel_keys )
     ch_collapsed = PIXELATOR_COLLAPSE.out.collapsed
     ch_versions = ch_versions.mix(PIXELATOR_COLLAPSE.out.versions.first())
 
@@ -149,9 +155,11 @@ workflow PIXELATOR {
     ch_clustered = PIXELATOR_GRAPH.out.edgelist
     ch_versions = ch_versions.mix(PIXELATOR_GRAPH.out.versions.first())
 
-    ch_clustered_and_panel = ch_clustered.join(ch_panels)
+    ch_clustered_and_panel = ch_clustered.join(ch_panel_files)
+    ch_annotate_panel_keys = ch_demuxed_and_panel_file
+        .map { meta, fq, panel_file -> panel_file ? [] : meta.panel }
 
-    PIXELATOR_ANNOTATE ( ch_clustered_and_panel )
+    PIXELATOR_ANNOTATE ( ch_clustered_and_panel, ch_annotate_panel_keys )
     ch_annotated = PIXELATOR_ANNOTATE.out.dataset
     ch_versions = ch_versions.mix( PIXELATOR_ANNOTATE.out.versions.first() )
 
@@ -161,11 +169,9 @@ workflow PIXELATOR {
 
 
     // Do some transformations to split the inputs into their stages
-    // and have all these "stage output" channels output in the same order
-    // Note that we need to split inout per stage to stage those files in the right subdirs
+    // and have all these "pixelator subcommand output" channels output in the same order
+    // Note that we need to split inout per subcommand to stage those files in the right subdirs
     // as expected by pixelator single-cell report
-
-    // Make sure meta objects are unique, we can have duplicates if we concatenated multiple samples
 
     ch_concatenate_data = PIXELATOR_CONCATENATE.out.report_json.mix(PIXELATOR_CONCATENATE.out.metadata)
     ch_preqc_data = PIXELATOR_QC.out.preqc_report_json.mix(PIXELATOR_QC.out.preqc_metadata)
@@ -177,7 +183,7 @@ workflow PIXELATOR {
     ch_analysis_data = PIXELATOR_ANALYSIS.out.all_results
 
     GENERATE_REPORTS(
-        ch_panels,
+        ch_panel_files,
         ch_concatenate_data,
         ch_preqc_data,
         ch_adapterqc_data,
@@ -194,7 +200,7 @@ workflow PIXELATOR {
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
 
-    // TODO: Add MultiQC after plugins are available
+    // TODO: Add MultiQC after plugins are implemented
 }
 
 /*

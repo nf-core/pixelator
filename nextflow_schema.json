@@ -133,19 +133,6 @@
                     "description": "The minimum length of the barcode that must overlap when matching",
                     "help_text": "If you set this argument it will overrule the value from the chosen design",
                     "type": "integer"
-                },
-                "anchored": {
-                    "fa_icon": "fas anchor",
-                    "description": "Enforce the barcodes to be anchored (at the end of the read).",
-                    "help_text": "If you set this argument it will overrule the value from the chosen design",
-                    "type": "boolean",
-                    "hidden": true
-                },
-                "rev_complement": {
-                    "fa_icon": "fas right-left",
-                    "description": "Use the reverse complement of the barcodes sequences. Set to null to use the default specified by the design.",
-                    "type": "boolean",
-                    "hidden": true
                 }
             }
         },
@@ -164,54 +151,6 @@
                     "default": "adjacency",
                     "enum": ["adjacency", "unique"],
                     "type": "string"
-                },
-                "upia_start": {
-                    "fa_icon": "fas backward-step",
-                    "description": "The start position (0-based) of UPIA. If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer",
-                    "hidden": true
-                },
-                "upia_end": {
-                    "fa_icon": "fas forward-step",
-                    "description": "The end position (1-based) of UPIA. If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer",
-                    "hidden": true
-                },
-                "upib_start": {
-                    "fa_icon": "fas backward-step",
-                    "description": "The start position (0-based) of UPIB. If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer",
-                    "hidden": true
-                },
-                "upib_end": {
-                    "fa_icon": "fas forward-step",
-                    "description": "The end position (1-based) of UPIB. If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer",
-                    "hidden": true
-                },
-                "umia_start": {
-                    "fa_icon": "fas backward-step",
-                    "description": "The start position (0-based) of UMIA (disabled by default). If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer",
-                    "hidden": true
-                },
-                "umia_end": {
-                    "fa_icon": "fas forward-step",
-                    "description": "The end position (1-based) of UMIA (disabled by default). If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer",
-                    "hidden": true
-                },
-                "umib_start": {
-                    "fa_icon": "fas forward-step",
-                    "description": "The start position (0-based) of UMIB (disabled by default). If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer",
-                    "hidden": true
-                },
-                "umib_end": {
-                    "fa_icon": "fas backward-step",
-                    "description": "The end position (1-based) of UMIB (disabled by default). If you set this argument it will overrrule the value from the chosen design",
-                    "type": "integer",
-                    "hidden": true
                 },
                 "neighbours": {
                     "fa_icon": "fas circle-nodes",
@@ -237,7 +176,7 @@
                     "minimum": 1,
                     "type": "integer"
                 },
-                "use_counts": {
+                "collapse_use_counts": {
                     "description": "Use counts when collapsing (the difference in counts between two molecules must be more than double in order to be collapsed)",
                     "type": "boolean"
                 }
@@ -259,7 +198,7 @@
                     "default": 10,
                     "hidden": true
                 },
-                "cluster_min_count": {
+                "graph_min_count": {
                     "fa_icon": "fas less-than-equal",
                     "description": "Discard edges (pixels) with a count (reads) lower than this, use 1 to disable",
                     "type": "integer",

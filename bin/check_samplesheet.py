@@ -58,7 +58,7 @@ def make_absolute_path(path: str, base: PathLike = None) -> str:
 def validate_whitespace(row: MutableMapping[str, str], index: int):
     sample_name = row["sample"]
     for k, v in row.items():
-        if re.search("^\s+|s+$", v):
+        if re.search("^\s+|\s+$", v):
             raise AssertionError(
                 f'The sample sheet contains leading or trailing whitespaces in column "{k}" for sample "{sample_name}". '
                 "Remove whitespace or enclose with quotes!"
@@ -197,13 +197,14 @@ class RowChecker(BaseChecker):
 
 class PixelatorRowChecker(RowChecker):
     DEFAULT_GROUP = "default"
-    REQUIRED_COLUMNS = ["sample", "design", "panel", "fastq_1", "fastq_2"]
+    REQUIRED_COLUMNS = ["sample", "design", "fastq_1", "fastq_2"]
 
     def __init__(self, samplesheet_path=None, design_options: Optional[Set[str]] = None, **kwargs):
         super().__init__(
             sample_col="sample", first_col="fastq_1", second_col="fastq_2", single_col="single_end", **kwargs
         )
         self._panel_col = "panel"
+        self._panel_file_col = "panel_file"
         self._design_col = "design"
         self._samplesheet_path = samplesheet_path
         self._base_dir = self.get_base_dir(samplesheet_path) if samplesheet_path else None
@@ -231,17 +232,29 @@ class PixelatorRowChecker(RowChecker):
 
     def _validate_panelfile(self, row):
         """Assert that the panel column exists and has supported values."""
-        if len(row[self._panel_col]) <= 0:
-            raise AssertionError(f"The {self._panel_col} field is required.")
+        has_panel_col = self._panel_col in row and len(row[self._panel_col]) > 0
+        has_panel_file_col = self._panel_file_col in row and len(row[self._panel_file_col]) > 0
+
+        if not has_panel_col and not has_panel_file_col:
+            raise AssertionError(f"Either {self._panel_col} or {self._panel_file_col} field is required.")
+
+        if has_panel_col and has_panel_file_col:
+            raise AssertionError(
+                f"Both {self._panel_col} and {self._panel_file_col} field are set. "
+                f"Only one must be set {self._panel_col} and the other column left empty."
+            )
 
     def _resolve_relative_paths(self, row):
+        """Make filepaths in samplesheet absolute if needed"""
         first = make_absolute_path(row[self._first_col], self._base_dir)
         second = make_absolute_path(row[self._second_col], self._base_dir)
-        panel = make_absolute_path(row[self._panel_col], self._base_dir)
+
+        if self._panel_file_col in row:
+            if row[self._panel_file_col]:
+                row[self._panel_file_col] = make_absolute_path(row[self._panel_file_col], self._base_dir)
 
         row[self._first_col] = first
         row[self._second_col] = second
-        row[self._panel_col] = panel
 
     def validate_and_transform(self, row):
         """
@@ -257,6 +270,7 @@ class PixelatorRowChecker(RowChecker):
         self._validate_first(row)
         self._validate_second(row)
         self._validate_pair(row)
+        self._validate_panelfile(row)
         self._resolve_relative_paths(row)
         self._seen.add((row[self._sample_col], row[self._first_col]))
         self.modified.append(row)

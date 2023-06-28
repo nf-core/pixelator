@@ -9,8 +9,8 @@ process PIXELATOR_REPORT {
     container "ghcr.io/pixelgentechnologies/pixelator:0.12.0"
 
     input:
-    val meta
-    path panel_file
+    tuple val(meta), path(panel_file)
+    val panel
     path concatenate_data,       stageAs: "results/concatenate/*"
     path preqc_data,             stageAs: "results/preqc/*"
     path adapterqc_data,         stageAs: "results/adapterqc/*"
@@ -29,13 +29,14 @@ process PIXELATOR_REPORT {
 
     script:
     def args = task.ext.args ?: ''
+    def panelOpt = panel ?: panel_file
 
     """
     pixelator \\
         single-cell \\
         report \\
         --output . \\
-        --panel-file ${panel_file} \\
+        --panel ${panelOpt} \\
         $args \\
         results
 

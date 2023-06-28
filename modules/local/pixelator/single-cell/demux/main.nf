@@ -9,7 +9,8 @@ process PIXELATOR_DEMUX {
     container "ghcr.io/pixelgentechnologies/pixelator:0.12.0"
 
     input:
-    tuple val(meta), path(reads), path(antibody_panel)
+    tuple val(meta), path(reads), path(panel_file)
+    val panel
 
     output:
     tuple val(meta), path("demux/*processed*.{fq,fastq}.gz"), emit: processed
@@ -29,6 +30,8 @@ process PIXELATOR_DEMUX {
 
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
+    def panelOpt = panel ?: panel_file
+
     """
     pixelator \\
         --cores $task.cpus \\
@@ -37,7 +40,7 @@ process PIXELATOR_DEMUX {
         single-cell \\
         demux \\
         --output . \\
-        --panel-file ${antibody_panel} \\
+        --panel ${panelOpt} \\
         $args \\
         ${reads}
 

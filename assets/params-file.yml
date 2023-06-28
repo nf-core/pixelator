@@ -84,17 +84,6 @@
 ## ------------------------------------------------------------------------------------------
 # demux_min_length: null
 
-## ------------------------------------------------------------------------------------------
-## Enforce the barcodes to be anchored (at the end of the read).
-## ------------------------------------------------------------------------------------------
-# anchored: null
-
-## ------------------------------------------------------------------------------------------
-## Use the reverse complement of the barcodes sequences. Set to null
-## to use the default specified by the design.
-## ------------------------------------------------------------------------------------------
-# rev_complement: null
-
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##     collapse_options
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -109,54 +98,6 @@
 ## correction using the number of mismatches given)
 ## ------------------------------------------------------------------------------------------
 # algorithm: adjacency
-
-## ------------------------------------------------------------------------------------------
-## The start position (0-based) of UPIA. If you set this argument it
-## will overrrule the value from the chosen design
-## ------------------------------------------------------------------------------------------
-# upia_start: null
-
-## ------------------------------------------------------------------------------------------
-## The end position (1-based) of UPIA. If you set this argument it
-## will overrrule the value from the chosen design
-## ------------------------------------------------------------------------------------------
-# upia_end: null
-
-## ------------------------------------------------------------------------------------------
-## The start position (0-based) of UPIB. If you set this argument it
-## will overrrule the value from the chosen design
-## ------------------------------------------------------------------------------------------
-# upib_start: null
-
-## ------------------------------------------------------------------------------------------
-## The end position (1-based) of UPIB. If you set this argument it
-## will overrrule the value from the chosen design
-## ------------------------------------------------------------------------------------------
-# upib_end: null
-
-## ------------------------------------------------------------------------------------------
-## The start position (0-based) of UMIA (disabled by default). If you
-## set this argument it will overrrule the value from the chosen design
-## ------------------------------------------------------------------------------------------
-# umia_start: null
-
-## ------------------------------------------------------------------------------------------
-## The end position (1-based) of UMIA (disabled by default). If you
-## set this argument it will overrrule the value from the chosen design
-## ------------------------------------------------------------------------------------------
-# umia_end: null
-
-## ------------------------------------------------------------------------------------------
-## The start position (0-based) of UMIB (disabled by default). If you
-## set this argument it will overrrule the value from the chosen design
-## ------------------------------------------------------------------------------------------
-# umib_start: null
-
-## ------------------------------------------------------------------------------------------
-## The end position (1-based) of UMIB (disabled by default). If you
-## set this argument it will overrrule the value from the chosen design
-## ------------------------------------------------------------------------------------------
-# umib_end: null
 
 ## ------------------------------------------------------------------------------------------
 ## The number of neighbours to use when searching for similar
@@ -180,7 +121,7 @@
 ## Use counts when collapsing (the difference in counts between two
 ## molecules must be more than double in order to be collapsed)
 ## ------------------------------------------------------------------------------------------
-# use_counts: null
+# collapse_use_counts: null
 
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##     graph_options
@@ -202,7 +143,7 @@
 ## Discard edges (pixels) with a count (reads) lower than this, use 1
 ## to disable
 ## ------------------------------------------------------------------------------------------
-# cluster_min_count: 2
+# graph_min_count: 2
 
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##     annotate_options

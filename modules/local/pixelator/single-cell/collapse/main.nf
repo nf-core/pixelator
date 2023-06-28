@@ -10,7 +10,8 @@ process PIXELATOR_COLLAPSE {
     container "ghcr.io/pixelgentechnologies/pixelator:0.12.0"
 
     input:
-    tuple val(meta), path(reads), path(panel)
+    tuple val(meta), path(reads), path(panel_file)
+    val panel
 
     output:
     tuple val(meta), path("collapse/*.collapsed.csv.gz"),     emit: collapsed
@@ -30,6 +31,7 @@ process PIXELATOR_COLLAPSE {
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
     def readsArg = reads.join(' ')
+    def panelOpt = panel ?: "${panel_file}"
 
     """
     pixelator \\
@@ -40,7 +42,7 @@ process PIXELATOR_COLLAPSE {
         collapse \\
         --output . \\
         --design ${meta.design} \\
-        --panel-file ${panel} \\
+        --panel ${panelOpt} \\
         $args \\
         ${readsArg}
 
