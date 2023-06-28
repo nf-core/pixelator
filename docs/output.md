@@ -11,18 +11,18 @@ The directories listed below will be created in the results directory after the 
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using multiple subcommands of the [`pixelator`](https://github.com/PixelgenTechnologies/pixelator) tool.
 
-- [`pixelator concatenate`](#pixelator-concatenate)(Optional) - Concatenate paired end data
-- [`pixelator preqc`](#pixelator-preqc) - Read QC and filtering
-- [`pixelator adapterqc`](#pixelator-adapterqc) - Check for correctness of PBS1/2 sequences
-- [`pixelator demux`](#pixelator-demux) - Assign a marker (barcode) to each read
-- [`pixelator collapse`](#pixelator-collapse) - Error correction, duplicate removal, compute read counts
-- [`pixelator cluster`](#pixelator-cluster) - Compute undirected graphs and basic size filtering
-- [`pixelator analysis`](#pixelator-analysis) - Downstream analysis for each cell
-- [`pixelator annotate`](#pixelator-annotate) - Filter, annotate and call cells on samples
-- [`pixelator aggregate`](#pixelator-aggregate) - Aggregate results
-- [`pixelator report`](#pixelator-report) - Report generation
+- [`pixelator single-cell concatenate`](#pixelator-concatenate)(Optional) - Concatenate paired end data
+- [`pixelator single-cell preqc`](#pixelator-preqc) - Read QC and filtering
+- [`pixelator single-cell adapterqc`](#pixelator-adapterqc) - Check for correctness of PBS1/2 sequences
+- [`pixelator single-cell demux`](#pixelator-demux) - Assign a marker (barcode) to each read
+- [`pixelator single-cell collapse`](#pixelator-collapse) - Error correction, duplicate removal, compute read counts
+- [`pixelator single-cell cluster`](#pixelator-cluster) - Compute undirected graphs and basic size filtering
+- [`pixelator single-cell analysis`](#pixelator-analysis) - Downstream analysis for each cell
+- [`pixelator single-cell annotate`](#pixelator-annotate) - Filter, annotate and call cells on samples
+- [`pixelator single-cell aggregate`](#pixelator-aggregate) - Aggregate results
+- [`pixelator single-cell report`](#pixelator-report) - Report generation
 
-### pixelator concatenate
+### pixelator single-cell concatenate
 
 // TODO: High level description of concatenate step and output files
 
@@ -30,17 +30,20 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <summary>Output files</summary>
 
 - `pixelator`
+
   - `concatenate`
+
     - `<sample-id>.merged.fastq.gz`:
       Combine R1 and R2 reads into full amplicon reads and calculate Q30 scores for the amplicon regions.
     - `<sample-id>.report.json`: Q30 metrics of the amplicon.
     - `<sample-id>.meta.json`: Command invocation metadata.
-- `logs`
-  - \*pixelator-concatenate.log`: pixelator log output.
+
+  - `logs`
+    - `<sample-id>.pixelator-concatenate.log`: pixelator log output.
 
 </details>
 
-### pixelator qc
+### pixelator single-cell qc
 
 // TODO: High level description of QC step and output files
 
@@ -55,16 +58,18 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
     - `<sample-id>.report.json`: Fastp json report.
     - `<sample-id>.meta.json`: Command invocation metadata.
   - `adapterqc`
+
     - `<sample-id>.processed.fastq.gz`: Processed reads.
     - `<sample-id>.failed.fastq.gz`: Discarded reads.
     - `<sample-id>.report.json`: Cutadapt json report.
     - `<sample-id>.meta.json`: Command invocation metadata.
 
-- `logs` - `*pixelator-preqc.log`: pixelator log output.
+  - `logs`
+    - `<sample-id>.pixelator-preqc.log`: pixelator log output.
 
 </details>
 
-### pixelator demux
+### pixelator single-cell demux
 
 // TODO: High level description of demux step and output files
 
@@ -74,17 +79,18 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - `pixelator`
 
   - `demux`
+
     - `<sample-id>.processed-<antibody_name>.fastq.gz`: Reads demultiplexed per antibody.
     - `<sample-id>.failed.fastq.gz`: Discarded reads that do not match an antibody barcode.
     - `<sample-id>.report.json`: Cutadapt json report.
     - `<sample-id>.meta.json`: Command invocation metadata.
 
-- `logs`
-  - `*pixelator-demultiplex.log`: pixelator log output.
+  - `logs`
+    - `<sample-id>.pixelator-demultiplex.log`: pixelator log output.
 
 </details>
 
-### pixelator collapse
+### pixelator single-cell collapse
 
 // TODO: High level description of collapse step and output files
 
@@ -94,16 +100,17 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - `pixelator`
 
   - `adapterqc`
+
     - `<sample-id>.collapsed.csv.gz`: Edgelist of the graph.
     - `<sample-id>.report.json`: Statistics for the collapse step.
     - `<sample-id>.meta.json`: Command invocation metadata.
 
-- `logs`
-  - `*pixelator-collapse.log`: pixelator log output.
+  - `logs`
+    - `<sample-id>.pixelator-collapse.log`: pixelator log output.
 
 </details>
 
-### pixelator graph
+### pixelator single-cell graph
 
 // TODO: High level description of graph step and output files
 
@@ -113,6 +120,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - `pixelator`
 
   - `cluster`
+
     - `<sample-id>.components_recovered.csv`
     - `<sample-id>.edgelist.csv.gz`
     - `<sample-id>.raw_edgelist.csv.gz`
@@ -120,12 +128,12 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
     - `<sample-id>.report.json`
     - `*.meta.json`: Command invocation metadata.
 
-- `logs`
-  - `*pixelator-cluster.log`: pixelator log output.
+  - `logs`
+    - `<sample-id>.pixelator-cluster.log`: pixelator log output.
 
 </details>
 
-### pixelator annotate
+### pixelator single-cell annotate
 
 // TODO: High level description of annotate step and output files
 
@@ -135,6 +143,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - `pixelator`
 
   - `annotate`
+
     - `<sample-id>.dataset.pxl`
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.rank_vs_size.png`
@@ -142,11 +151,10 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
     - `<sample-id>.report.json`
     - `<sample-id>.umap.png`
 
-- `logs`
-  - `*pixelator-annotate.log`: pixelator log output.
+  - `logs` - `<sample-id>.pixelator-annotate.log`: pixelator log output.
   </details>
 
-### pixelator analysis
+### pixelator single-cell analysis
 
 // TODO: High level description of analysis step and output files
 
@@ -156,16 +164,17 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - `pixelator`
 
   - `analysis`
+
     - `<sample-id>.dataset.pxl`
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`
 
-- `logs`
-  - `*pixelator-analysis.log`: pixelator log output.
+  - `logs`
+    - `<sample-id>.pixelator-analysis.log`: pixelator log output.
 
 </details>
 
-### pixelator report
+### pixelator single-cell report
 
 // TODO: High level description of report step and output files
 
@@ -175,8 +184,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - `pixelator`
   - `report`
     - `<sample-id>_report.html`
-- `logs`
-  - `*pixelator-report.log`: Pixelator report log output.
+  - `logs`
+    - `<sample-id>.pixelator-report.log`: Pixelator report log output.
 
 </details>
 
