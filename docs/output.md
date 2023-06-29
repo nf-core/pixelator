@@ -77,7 +77,7 @@ The `adapterqc` stage performs a sanity check on the presence and correctness of
 
 ### Demultiplexing
 
-The `demux` command assigns a marker (barcode) to each read. It also generates QC report in JSON format. It saves processed reads (one per antibody) as well as discarded reads (no match to given barcodes/antibodies). In this step an antibody panel file (CSV) is required (--panels-file). This file contains the antibodies present in the data as well as their sequences and it needs the following columns:
+The `demux` command assigns a marker (barcode) to each read. It also generates QC report in JSON format. It saves processed reads (one per antibody) as well as discarded reads (no match to given barcodes/antibodies). This file contains the antibodies present in the data as well as their sequences and it needs the following columns:
 
 <details markdown="1">
 <summary>Output files</summary>
