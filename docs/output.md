@@ -11,20 +11,22 @@ The directories listed below will be created in the results directory after the 
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using multiple subcommands of the [`pixelator`](https://github.com/PixelgenTechnologies/pixelator) tool.
 
-- [`pixelator single-cell concatenate`](#pixelator-concatenate)(Optional) - Concatenate paired end data
-- [`pixelator single-cell preqc`](#pixelator-preqc) - Read QC and filtering
-- [`pixelator single-cell adapterqc`](#pixelator-adapterqc) - Check for correctness of PBS1/2 sequences
-- [`pixelator single-cell demux`](#pixelator-demux) - Assign a marker (barcode) to each read
-- [`pixelator single-cell collapse`](#pixelator-collapse) - Error correction, duplicate removal, compute read counts
+- [Preprocessing](#Preprocessing)
+- [Quality control](#quality-control)
+- [Demultiplexing](#demultiplexing)
+- [Duplicate removal and error correction`](#duplicate-removal-and-error-correction)
 - [`pixelator single-cell cluster`](#pixelator-cluster) - Compute undirected graphs and basic size filtering
+- [Filtering, annotation, cell-calling](#filtering-annotation-cell-calling)
 - [`pixelator single-cell analysis`](#pixelator-analysis) - Downstream analysis for each cell
 - [`pixelator single-cell annotate`](#pixelator-annotate) - Filter, annotate and call cells on samples
 - [`pixelator single-cell aggregate`](#pixelator-aggregate) - Aggregate results
 - [`pixelator single-cell report`](#pixelator-report) - Report generation
 
-### pixelator single-cell concatenate
+### Preprocessing
 
-// TODO: High level description of concatenate step and output files
+The preprocessing step uses `pixelator single-cell concatenate` to create a full amplicon sequence from both single-end and paired-end data.
+It returns a single fastq per sample containing fixed length amplicons.
+This step will also calculate Q30 quality scores for different regions of the library.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -43,9 +45,14 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 </details>
 
-### pixelator single-cell qc
+### Quality control
 
-// TODO: High level description of QC step and output files
+Quality control is performed using `pixelator single-cell preqc` and pixelator single-cell adapterqc`.
+`preqc`used`fastp`internally.`adapterqc`will use`cutadapt` internally.
+
+The preqc stage performs QC and quality filtering of the raw sequencing data. It also generates a QC report in HTML and JSON formats. It saves processed reads as well as reads that were discarded (too short. too many Ns , too low quality, ...).
+
+The `adapterqc` stage performs a sanity check on the presence and correctness of the PBS1/2 sequences. It also generates a QC report in JSON format. It saves processed reads as well as discarded reads (no match to PBS1/2).
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -69,9 +76,9 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 </details>
 
-### pixelator single-cell demux
+### Demultiplexing
 
-// TODO: High level description of demux step and output files
+The `demux` command assigns a marker (barcode) to each read. It also generates QC report in JSON format. It saves processed reads (one per antibody) as well as discarded reads (no match to given barcodes/antibodies). In this step an antibody panel file (CSV) is required (--panels-file). This file contains the antibodies present in the data as well as their sequences and it needs the following columns:
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -90,16 +97,18 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 </details>
 
-### pixelator single-cell collapse
+### Duplicate removal and error correction
 
-// TODO: High level description of collapse step and output files
+This step used the `pixelator single-cell collapse` command.
+The collapse command removes duplicates and performs error correction. This is achieved using the UPI and UMI sequences to check for uniqueness, collapse and compute a read count. The command generates a QC report in JSON format. Errors are allowed when collapsing reads using different collapsing algorithms (--algorithm).
+The output format of this command is an edge list in CSV format.
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
 
-  - `adapterqc`
+  - `collapse`
 
     - `<sample-id>.collapsed.csv.gz`: Edgelist of the graph.
     - `<sample-id>.report.json`: Statistics for the collapse step.
@@ -112,20 +121,26 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 ### pixelator single-cell graph
 
-// TODO: High level description of graph step and output files
+This step uses the `pixelator single-cell graph` command.
+The input is the edge list dataframe (CSV) generated in the collapse step and after filtering it by count (`--graph_min_count`), the connected components of the graph (graphs) are computed and added to the edge list in a column called "component".
+
+The graph command has the option to recover components (technical multiplets) into smaller components using community detection to detect and remove problematic edges. (See `--multiplet_recovery`). The information to keep track of the original and new (recovered) components is stored in a file (components_recovered.csv).
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
 
-  - `cluster`
+  - `graph`
 
-    - `<sample-id>.components_recovered.csv`
-    - `<sample-id>.edgelist.csv.gz`
-    - `<sample-id>.raw_edgelist.csv.gz`
+    - `<sample-id>.edgelist.csv.gz`:
+      Edge list dataframe (CSV) after recovering technical multiplets.
+    - `<sample-id>.raw_edgelist.csv.gz`:
+      Raw edge list dataframe in csv format before recovering technical multiplets.
+    - `<sample-id>.components_recovered.csv`:
+      List of new components recovered (when using `--multiple-recovery`)
     - `<sample-id>.meta.json`: Command invocation metadata.
-    - `<sample-id>.report.json`
+    - `<sample-id>.report.json`: Metrics with useful information about the clustering.
     - `*.meta.json`: Command invocation metadata.
 
   - `logs`
@@ -133,9 +148,9 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 </details>
 
-### pixelator single-cell annotate
+### Filtering, annotation, cell-calling
 
-// TODO: High level description of annotate step and output files
+The annotate command takes as input the edge list (CSV) file generated in the graph command. The edge list is converted to an AnnData object, the command then performs filtering, annotation and cell calling of the components.
 
 <details markdown="1">
 <summary>Output files</summary>
