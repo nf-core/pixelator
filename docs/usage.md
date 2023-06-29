@@ -42,12 +42,8 @@ to add extra information for downstream processing.
 | `sample`     | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
 | `design`     | The name of the pixelator design configuration.                                                                                                                                        |
 | `panel`      | Name of the panel to use.                                                                                                                                                              |
-| `panel_file` | Path to a CSV file containing a custom panel.                                                                                                                                          |
 | `fastq_1`    | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
 | `fastq_2`    | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
-
-The `panel` and `panel_file` options are mutually exclusive. If both are specified, the pipeline will throw an error.
-One of them has to be specified.
 
 The pipeline will auto-detect whether a sample is single- or paired-end based on ifboth `fastq_1` and `fastq_2` or only `fastq_1` is present in the samplesheet.
 
@@ -97,7 +93,6 @@ with `params.yaml` containing:
 ```yaml
 input: './samplesheet.csv'
 outdir: './results/'
-genome: 'GRCh37'
 input: 'data'
 <...>
 ```
