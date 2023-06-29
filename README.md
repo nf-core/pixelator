@@ -33,8 +33,8 @@ It takes a samplesheet as input and will process your data using `pixelator` to 
 3. Assign a marker (barcode) to each read ([`pixelator demux`](https://github.com/PixelgenTechnologies/pixelator))
 4. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://github.com/PixelgenTechnologies/pixelator))
 5. Compute the components/clusters of the graph from the edge list matrix.([`pixelator graph`](https://github.com/PixelgenTechnologies/pixelator))
-6. Analyze components/clusters of the graph.([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
-7. Filter, annotate and call cells on samples ([`pixelator annotate`](https://github.com/PixelgenTechnologies/pixelator))
+6. Filter, annotate and call cells on samples ([`pixelator annotate`](https://github.com/PixelgenTechnologies/pixelator))
+7. Analyze components/clusters of the graph.([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
 8. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
 
 ## Usage
