@@ -29,12 +29,12 @@ It takes a samplesheet as input and will process your data using `pixelator` to 
 <!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
 1. Build amplicon from input reads ([`pixelator concatenate`](https://github.com/PixelgenTechnologies/pixelator))
-2. Read QC and filtering, correctness of PBS sequences ([`pixelator preqc | pixelator adapterqc`](https://github.com/PixelgenTechnologies/pixelator))
+2. Read QC and filtering, correctness of the pixel binding sequence sequences ([`pixelator preqc | pixelator adapterqc`](https://github.com/PixelgenTechnologies/pixelator))
 3. Assign a marker (barcode) to each read ([`pixelator demux`](https://github.com/PixelgenTechnologies/pixelator))
 4. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://github.com/PixelgenTechnologies/pixelator))
-5. Compute the components/clusters of the graph from the edge list matrix.([`pixelator graph`](https://github.com/PixelgenTechnologies/pixelator))
-6. Filter, annotate and call cells on samples ([`pixelator annotate`](https://github.com/PixelgenTechnologies/pixelator))
-7. Analyze components/clusters of the graph.([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
+5. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator graph`](https://github.com/PixelgenTechnologies/pixelator))
+6. Call and annotate cells ([`pixelator annotate`](https://github.com/PixelgenTechnologies/pixelator))
+7. Analyze the cells for polarization and colocalization ([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
 8. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
 
 ## Usage
@@ -66,7 +66,7 @@ First, prepare a samplesheet with your input data that looks as follows:
 
 ```csv
 sample,design,panel,fastq_1,fastq_2
-uropod_control,D21,UNO_D21_conjV21.csv,uropod_control_300k_S1_R1_001.fastq.gz,uropod_control_300k_S1_R2_001.fastq.gz
+uropod_control,D21,human-sc-immunology-spatial-proteomics,uropod_control_300k_S1_R1_001.fastq.gz,uropod_control_300k_S1_R2_001.fastq.gz
 ```
 
 Each row represents a sample and gives the design, a panel file and the input fastq files.
