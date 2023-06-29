@@ -19,6 +19,7 @@
   > Martin, Marcel. “Cutadapt Removes Adapter Sequences from High-Throughput Sequencing Reads.” EMBnet.Journal 17, no. 1 (May 2, 2011): 10–12. https://doi.org/10.14806/ej.17.1.200.
 
 - [fastp] (https://doi.org/10.1002/imt2.107)
+
   > Chen, Shifu. “Ultrafast One-Pass FASTQ Data Preprocessing, Quality Control, and Deduplication Using Fastp.” IMeta 2, no. 2 (2023): e107. https://doi.org/10.1002/imt2.107.
 
 ## Software packaging/containerisation tools
