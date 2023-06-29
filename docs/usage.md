@@ -97,11 +97,11 @@ with `params.yaml` containing:
 ```yaml
 input: './samplesheet.csv'
 outdir: './results/'
-genome: 'GRCh37'
-input: 'data'
 <...>
 ```
 
+You can find an extensive example of a `params.yaml` file with all options and
+documentation in comments [here](../assets/params-file.yml).
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
 
 ### Updating the pipeline
