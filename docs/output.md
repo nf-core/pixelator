@@ -46,8 +46,8 @@ This step will also calculate Q30 quality scores for different regions of the li
 
 ### Quality control
 
-Quality control is performed using `pixelator single-cell preqc` and pixelator single-cell adapterqc`.
-`preqc`used`fastp`internally.`adapterqc`will use`cutadapt` internally.
+Quality control is performed using `pixelator single-cell preqc` and `pixelator single-cell adapterqc`.
+`preqc` used `fastp` internally. `adapterqc` will use `cutadapt` internally.
 
 The preqc stage performs QC and quality filtering of the raw sequencing data. It also generates a QC report in HTML and JSON formats. It saves processed reads as well as reads that were discarded (too short. too many Ns , too low quality, ...).
 
