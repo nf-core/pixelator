@@ -99,7 +99,7 @@ The `demux` command assigns a marker (barcode) to each read. It also generates Q
 ### Duplicate removal and error correction
 
 This step used the `pixelator single-cell collapse` command.
-The collapse command removes duplicates and performs error correction. This is achieved using the UPI and UMI sequences to check for uniqueness, collapse and compute a read count. The command generates a QC report in JSON format. Errors are allowed when collapsing reads using different collapsing algorithms (--algorithm).
+The collapse command removes duplicates and performs error correction. This is achieved using the UPI and UMI sequences to check for uniqueness, collapse and compute a read count. The command generates a QC report in JSON format. Errors are allowed when collapsing reads using different collapsing algorithms (`--algorithm`).
 The output format of this command is an edge list in CSV format.
 
 <details markdown="1">
