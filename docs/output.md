@@ -46,12 +46,11 @@ This step will also calculate Q30 quality scores for different regions of the li
 
 ### Quality control
 
-Quality control is performed using `pixelator single-cell preqc` and pixelator single-cell adapterqc`.
-`preqc`used`fastp`internally.`adapterqc`will use`cutadapt` internally.
+Quality control is performed using `pixelator single-cell preqc` and `pixelator single-cell adapterqc`.
 
-The preqc stage performs QC and quality filtering of the raw sequencing data. It also generates a QC report in HTML and JSON formats. It saves processed reads as well as reads that were discarded (too short. too many Ns , too low quality, ...).
+The preqc stage performs QC and quality filtering of the raw sequencing data. It also generates a QC report in HTML and JSON formats. It saves processed reads as well as reads that were discarded (i.e. were too short, had too many Ns, or too low quality, etc). Internally `preqc` uses [Fastp](https://github.com/OpenGene/fastp), and `adapterqc` used [Cutadapt](https://cutadapt.readthedocs.io/en/stable/)
 
-The `adapterqc` stage performs a sanity check on the presence and correctness of the PBS1/2 sequences. It also generates a QC report in JSON format. It saves processed reads as well as discarded reads (no match to PBS1/2).
+The `adapterqc` stage checks for the presence and correctness of the pixel binding sequences. It also generates a QC report in JSON format. It saves processed reads as well as discarded reads (i.e. reads that did not have a match for both pixel binding sequences).
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -64,7 +63,6 @@ The `adapterqc` stage performs a sanity check on the presence and correctness of
     - `<sample-id>.report.json`: Fastp json report.
     - `<sample-id>.meta.json`: Command invocation metadata.
   - `adapterqc`
-
     - `<sample-id>.processed.fastq.gz`: Processed reads.
     - `<sample-id>.failed.fastq.gz`: Discarded reads.
     - `<sample-id>.report.json`: Cutadapt json report.
@@ -77,7 +75,7 @@ The `adapterqc` stage performs a sanity check on the presence and correctness of
 
 ### Demultiplexing
 
-The `demux` command assigns a marker (barcode) to each read. It also generates QC report in JSON format. It saves processed reads (one per antibody) as well as discarded reads (no match to given barcodes/antibodies). In this step an antibody panel file (CSV) is required (--panels-file). This file contains the antibodies present in the data as well as their sequences and it needs the following columns:
+The `pixelator single-cell demux` command assigns a marker (barcode) to each read. It also generates QC report in JSON format. It saves processed reads (one per antibody) as well as discarded reads with no match to the given barcodes/antibodies.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -85,7 +83,6 @@ The `demux` command assigns a marker (barcode) to each read. It also generates Q
 - `pixelator`
 
   - `demux`
-
     - `<sample-id>.processed-<antibody_name>.fastq.gz`: Reads demultiplexed per antibody.
     - `<sample-id>.failed.fastq.gz`: Discarded reads that do not match an antibody barcode.
     - `<sample-id>.report.json`: Cutadapt json report.
@@ -98,8 +95,10 @@ The `demux` command assigns a marker (barcode) to each read. It also generates Q
 
 ### Duplicate removal and error correction
 
-This step used the `pixelator single-cell collapse` command.
-The collapse command removes duplicates and performs error correction. This is achieved using the UPI and UMI sequences to check for uniqueness, collapse and compute a read count. The command generates a QC report in JSON format. Errors are allowed when collapsing reads using different collapsing algorithms (--algorithm).
+This step uses the `pixelator single-cell collapse` command.
+
+The `collapse` command removes duplicate reads and performs error correction. This is achieved using the umique pixel identifier and unique molecular identifier sequences to check for uniqueness, collapse and compute a read count. The command generates a QC report in JSON format. Errors are allowed when collapsing reads if `collapse_options.algorithm` is set to `adjacency` (this is the default option).
+
 The output format of this command is an edge list in CSV format.
 
 <details markdown="1">
@@ -108,7 +107,6 @@ The output format of this command is an edge list in CSV format.
 - `pixelator`
 
   - `collapse`
-
     - `<sample-id>.collapsed.csv.gz`: Edgelist of the graph.
     - `<sample-id>.report.json`: Statistics for the collapse step.
     - `<sample-id>.meta.json`: Command invocation metadata.
@@ -126,9 +124,9 @@ by count (`--graph_min_count`), the connected components of the graph (graphs) a
 added to the edge list in a column called "component".
 
 The graph command has the option to recover components (technical multiplets) into smaller
-components using community detection to detect and remove problematic edges.
-(See `--multiplet_recovery`). The information to keep track of the original and
-new (recovered) components is stored in a file (components_recovered.csv).
+components using community detection to find and remove problematic edges.
+(See `graph_options.multiplet_recovery`). The information to keep track of the original and
+new (recovered) components are stored in a file (components_recovered.csv).
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -136,7 +134,6 @@ new (recovered) components is stored in a file (components_recovered.csv).
 - `pixelator`
 
   - `graph`
-
     - `<sample-id>.edgelist.csv.gz`:
       Edge list dataframe (CSV) after recovering technical multiplets.
     - `<sample-id>.raw_edgelist.csv.gz`:
@@ -152,16 +149,13 @@ new (recovered) components is stored in a file (components_recovered.csv).
 
 </details>
 
-### Filtering, annotation, cell-calling
+### Cell-calling, filtering, and annotation
 
 This step uses the `pixelator single-cell annotate` command.
 
-The annotate command takes as input the edge list (CSV) file generated in the graph command.
-The edge list is converted to an AnnData object, the command then performs filtering, annotation and
-cell calling of the components.
-
-The DataFrame contained in a pxl file will have the same dimension as in the antibody panel so any
-missing antibody will be filled with 0's.
+The annotate command takes as input the edge list (CSV) file generated in the graph command. It parses, and filters the
+edgelist to find putative cells, and it will generate a pxl file containing the edgelist, and an (AnnData object)[https://anndata.readthedocs.io/en/latest/]
+as well as some useful medatadata.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -169,7 +163,6 @@ missing antibody will be filled with 0's.
 - `pixelator`
 
   - `annotate`
-
     - `<sample-id>.dataset.pxl`
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.rank_vs_size.png`
@@ -177,18 +170,20 @@ missing antibody will be filled with 0's.
     - `<sample-id>.report.json`
     - `<sample-id>.umap.png`
 
-  - `logs` - `<sample-id>.pixelator-annotate.log`: pixelator log output.
+  - `logs`
+    - `<sample-id>.pixelator-annotate.log`: pixelator log output.
   </details>
 
 ### Downstream analysis
 
-This step uses the `pixelator single-cell analysis` command.
-Downstream analysis is performed on the `PixelDataset` in PXL format generated by the previous stage.
+This step uses the `pixelator single-cell analysis` command. Analysis is performed on the pxl file generated by the previous stage.
 
 Currently, the following analysis can be performed (if enabled):
 
-- polarization scores (all the statistics in a dataframe) (enable with --compute_polarization)
-- co-localization scores (all pair-wise scores in a dataframe) (enable with --compute_colocalization)
+- polarization scores (enable with `analysis_options.compute_polarization`)
+- co-localization scores (enable with `analysis_options.compute_colocalization`)
+
+The results of the analysis is added to the pxl file file.
 
 This step can be skipped using the `--skip_analysis` option.
 
@@ -198,7 +193,6 @@ This step can be skipped using the `--skip_analysis` option.
 - `pixelator`
 
   - `analysis`
-
     - `<sample-id>.dataset.pxl`
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`
