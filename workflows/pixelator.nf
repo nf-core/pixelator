@@ -15,6 +15,8 @@ if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input sample
 // Inject the samplesheet SHA into the params object
 params.samplesheet_sha = ch_input.bytes.digest('sha-1')
 
+def summary_params = NfcoreSchema.paramsSummaryMap(workflow, params)
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     CONFIG FILES
@@ -113,7 +115,6 @@ workflow PIXELATOR {
     ch_versions = ch_versions.mix(CAT_FASTQ.out.versions.first().ifEmpty(null))
 
 
-
     // We need to rename to make all reads match the sample name,
     // since pixelator extracts sample_names from read names
     RENAME_READS ( ch_cat_fastq )
@@ -174,13 +175,13 @@ workflow PIXELATOR {
     // as expected by pixelator single-cell report
 
     ch_concatenate_data = PIXELATOR_CONCATENATE.out.report_json.mix(PIXELATOR_CONCATENATE.out.metadata)
-    ch_preqc_data = PIXELATOR_QC.out.preqc_report_json.mix(PIXELATOR_QC.out.preqc_metadata)
-    ch_adapterqc_data = PIXELATOR_QC.out.adapterqc_report_json.mix(PIXELATOR_QC.out.adapterqc_metadata)
-    ch_demux_data = PIXELATOR_DEMUX.out.report_json.mix(PIXELATOR_DEMUX.out.metadata)
-    ch_collapse_data = PIXELATOR_COLLAPSE.out.report_json.mix(PIXELATOR_COLLAPSE.out.metadata)
-    ch_cluster_data = PIXELATOR_GRAPH.out.all_results
-    ch_annotate_data = PIXELATOR_ANNOTATE.out.all_results
-    ch_analysis_data = PIXELATOR_ANALYSIS.out.all_results
+    ch_preqc_data       = PIXELATOR_QC.out.preqc_report_json.mix(PIXELATOR_QC.out.preqc_metadata)
+    ch_adapterqc_data   = PIXELATOR_QC.out.adapterqc_report_json.mix(PIXELATOR_QC.out.adapterqc_metadata)
+    ch_demux_data       = PIXELATOR_DEMUX.out.report_json.mix(PIXELATOR_DEMUX.out.metadata)
+    ch_collapse_data    = PIXELATOR_COLLAPSE.out.report_json.mix(PIXELATOR_COLLAPSE.out.metadata)
+    ch_cluster_data     = PIXELATOR_GRAPH.out.all_results
+    ch_annotate_data    = PIXELATOR_ANNOTATE.out.all_results
+    ch_analysis_data    = PIXELATOR_ANALYSIS.out.all_results
 
     GENERATE_REPORTS(
         ch_panel_files,
