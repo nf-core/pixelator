@@ -2,9 +2,6 @@ repository_type: pipeline
 lint:
   # No multiqc support for now
   multiqc_config: false
-  # TODO: Remove after move to nf-core
-  nextflow_config:
-    manifest.homePage: false
   files_exist:
     - assets/multiqc_config.yml
     - conf/igenomes.config
