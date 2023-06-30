@@ -24,6 +24,7 @@
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",
+                    "default": "./results",
                     "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
                     "fa_icon": "fas fa-folder-open"
                 },
@@ -187,7 +188,8 @@
             "properties": {
                 "multiplet_recovery": {
                     "description": "Activate the multiplet recovery using leiden community detection",
-                    "type": "boolean"
+                    "type": "boolean",
+                    "default": true
                 },
                 "leiden_iterations": {
                     "fa_icon": "fas repeat",
@@ -226,17 +228,10 @@
                     "enum": ["both", "min", "max"],
                     "default": "min"
                 },
-                "cell_type_assignments": {
-                    "description": "Enable cell type assignment using pre-trained models",
-                    "type": "boolean"
-                },
-                "majority_vote": {
-                    "description": "Enable cell type majority voting using clustering of components",
-                    "type": "boolean"
-                },
                 "aggregate_calling": {
                     "description": "Enable aggregate calling, information on potential aggregates will be added to the output data",
-                    "type": "boolean"
+                    "type": "boolean",
+                    "default": true
                 }
             }
         },

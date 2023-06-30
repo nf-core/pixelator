@@ -130,7 +130,7 @@
 ## ------------------------------------------------------------------------------------------
 ## Activate the multiplet recovery using leiden community detection
 ## ------------------------------------------------------------------------------------------
-# multiplet_recovery: null
+# multiplet_recovery: true
 
 ## ------------------------------------------------------------------------------------------
 ## Number of iterations for the leiden algorithm, high values will
@@ -169,20 +169,10 @@
 # dynamic_filter: min
 
 ## ------------------------------------------------------------------------------------------
-## Enable cell type assignment using pre-trained models
-## ------------------------------------------------------------------------------------------
-# cell_type_assignments: null
-
-## ------------------------------------------------------------------------------------------
-## Enable cell type majority voting using clustering of components
-## ------------------------------------------------------------------------------------------
-# majority_vote: null
-
-## ------------------------------------------------------------------------------------------
 ## Enable aggregate calling, information on potential aggregates will
 ## be added to the output data
 ## ------------------------------------------------------------------------------------------
-# aggregate_calling: null
+# aggregate_calling: true
 
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##     analysis_options
