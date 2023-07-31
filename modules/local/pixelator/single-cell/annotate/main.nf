@@ -13,7 +13,6 @@ process PIXELATOR_ANNOTATE {
     output:
     tuple val(meta), path("annotate/*.dataset.pxl"),             emit: dataset
     tuple val(meta), path("annotate/*.report.json"),             emit: report_json
-    tuple val(meta), path("annotate/*.png"),                     emit: png
     tuple val(meta), path("annotate/*.meta.json"),               emit: metadata
     tuple val(meta), path("annotate/*"),                         emit: all_results
     tuple val(meta), path("*pixelator-annotate.log"),            emit: log
