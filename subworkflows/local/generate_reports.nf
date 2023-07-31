@@ -4,14 +4,14 @@ include { PIXELATOR_REPORT            } from '../../modules/local/pixelator/sing
 workflow GENERATE_REPORTS {
     take:
     panel_files              // [meta, panel_file] or [meta, []]
-    amplicon_data
-    preqc_data
-    adapterqc_data
-    demux_data
-    collapse_data
-    graph_data
-    annotate_data
-    analysis_data
+    amplicon_data            // [meta, [<sample_name>.report.json, <sample_name>.meta.json]]
+    preqc_data               // [meta, [<sample_name>.report.json, <sample_name>.meta.json]]
+    adapterqc_data           // [meta, [<sample_name>.report.json, <sample_name>.meta.json]]
+    demux_data               // [meta, [<sample_name>.report.json, <sample_name>.meta.json]]
+    collapse_data            // [meta, [<sample_name>.report.json, <sample_name>.meta.json]]
+    graph_data               // [meta, [list of files]]
+    annotate_data            // [meta, [list of files]]
+    analysis_data            // [meta, [list of files]]
 
     main:
     ch_versions = Channel.empty()
@@ -30,62 +30,41 @@ workflow GENERATE_REPORTS {
             return [id, data]
         }
 
-    // Make sure panel files are unique, we can have duplicates if we concatenated multiple samples
-    ch_panel_files_col = panel_files
+    ch_panel_col = panel_files
         .map { meta, data -> [ meta.id, data] }
-        .groupTuple()
-        .map { id, data ->
-            if (!data) {
-                return [id, []]
-            }
-            def unique_panels = data.unique()
-            if (unique_panels.size() > 1) {
-                exit 1, "ERROR: Concatenated samples must use the same panel."
-            }
-            return [ id, unique_panels[0] ]
-        }
 
+    // These first subcommands each return two files per sample used by the reporting
+    // A json file with stats and a command invocation metadata json file
 
-    ch_amplicon_col = amplicon_data
-        .map { meta, data -> [ meta.id, data] }
-        .groupTuple()
+    ch_amplicon_col         = amplicon_data.map { meta, data -> [ meta.id, data] }
+    ch_preqc_col            = preqc_data.map { meta, data -> [ meta.id, data] }
+    ch_adapterqc_col        = adapterqc_data.map { meta, data -> [ meta.id, data] }
+    ch_demux_col            = demux_data.map { meta, data -> [ meta.id, data] }
+    ch_collapse_col         = collapse_data.map { meta, data -> [ meta.id, data] }
+    ch_graph_col            = graph_data.map { meta, data -> [meta.id, data] }
+    ch_annotate_col         = annotate_data.map { meta, data -> [meta.id, data] }
+    ch_analysis_col         = analysis_data.map { meta, data -> [meta.id, data] }
 
-    ch_preqc_col = preqc_data
-        .map { meta, data -> [ meta.id, data] }
-        .groupTuple()
+    //
+    // Combine all inputs and group them, then split them up again. This makes sure the per subcommand outputs have the sample order
+    //
+    // ch_report_data: [
+    //    [
+    //       meta, panel_files,
+    //      [amplicon files...],
+    //      [preqc files...],
+    //      [adapterqc files...],
+    //      [demux files...],
+    //      [collapse files...],
+    //      [cluster files],
+    //      [annotate files...],
+    //      [analysis files...]
+    //    ],
+    //    [ same structure repeated for each sample ]
+    // ]
 
-    ch_adapterqc_col = adapterqc_data
-        .map { meta, data -> [ meta.id, data] }
-        .groupTuple()
-
-    ch_demux_col = demux_data
-        .map { meta, data -> [ meta.id, data] }
-        .groupTuple()
-
-    ch_collapse_col = collapse_data
-        .map { meta, data -> [ meta.id, data] }
-        .groupTuple()
-
-    ch_graph_col = graph_data
-        .map { meta, data -> [meta.id, data] }
-        .groupTuple()
-
-    ch_annotate_col = annotate_data
-        .map { meta, data -> [meta.id, data] }
-        .groupTuple()
-
-    ch_analysis_col = analysis_data
-        .map { meta, data -> [meta.id, data] }
-        .groupTuple()
-
-  // Combine all inputs and group them to make per-stage channels have their output in the same order
-    // ch_report_data: [[
-    //       meta, panels_file,
-    //      [concatenate files...], [preqc files...], [adapterqc files...], [demux files...],
-    //      [collapse files...], [cluster files], [annotate files...], [analysis files...]
-    // ], ...]
     ch_report_data = ch_meta_col
-        .concat ( ch_panel_files_col )
+        .concat ( ch_panel_col )
         .concat ( ch_amplicon_col )
         .concat ( ch_preqc_col )
         .concat ( ch_adapterqc_col )
@@ -94,10 +73,14 @@ workflow GENERATE_REPORTS {
         .concat ( ch_graph_col )
         .concat ( ch_annotate_col )
         .concat ( ch_analysis_col )
-        .groupTuple()
+        .groupTuple (size: 10)
 
     // Split up everything per stage so we can recreate the expected directory structure for
-    // pixelator single-cell report using stageAs
+    // `pixelator single-cell report` using stageAs for each stage
+    //
+    // These ch_<stage>_grouped channels all emit a list of input files for each sample in the samplesheet
+    // The channels will emit values in the same order so eg. the first list of files from each ch_<stage>_grouped
+    // channel will match the same sample from the samplesheet.
 
     ch_panel_files_grouped  = ch_report_data.map { id, data -> [ data[0], data[1] ] }
     ch_amplicon_grouped     = ch_report_data.map { id, data -> data[2] ? data[2].flatten() : [] }
@@ -109,6 +92,7 @@ workflow GENERATE_REPORTS {
     ch_annotate_grouped     = ch_report_data.map { id, data -> data[8] ? data[8].flatten() : [] }
     ch_analysis_grouped     = ch_report_data.map { id, data -> data[9] ? data[9].flatten() : [] }
 
+    // If no `panel_file` is given we need to pass in `panel` from the samplesheet instead
     ch_panel_keys           = ch_panel_files_grouped
         .map { meta, panel_file -> panel_file ? [] : meta.panel }
 

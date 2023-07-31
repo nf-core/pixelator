@@ -94,11 +94,6 @@ workflow PIXELATOR {
     ch_panel_files = INPUT_CHECK.out.panels
 
     ch_fastq_split = ch_reads
-        .map {
-            meta, fastq ->
-                new_id = meta.id - ~/_T\d+/
-                [ meta + [id: new_id], fastq ]
-        }
         .groupTuple()
         .branch {
             meta, fastq ->
@@ -115,19 +110,33 @@ workflow PIXELATOR {
         .reads
         .mix(ch_fastq_split.single)
 
-    ch_versions = ch_versions.mix(CAT_FASTQ.out.versions.first().ifEmpty(null))
+    // Check that multi lane samples use the same panel file
+    ch_checked_panel_files = ch_panel_files
+        .map { meta, data -> [ meta.id, data] }
+        .groupTuple()
+        .map { id, data ->
+            if (!data) {
+                return [id, []]
+            }
+            def unique_panels = data.unique()
+            if (unique_panels.size() > 1) {
+                exit 1, "ERROR: Concatenated samples must use the same panel."
+            }
+            return [ id, unique_panels[0] ]
+        }
 
+    ch_cat_panel_files = ch_cat_fastq
+        .map { meta, _ -> [meta.id, meta] }
+        .join(ch_checked_panel_files, failOnMismatch:true, failOnDuplicate:true)
+        .map { id, meta, panel_files -> [meta, panel_files] }
+
+    ch_versions = ch_versions.mix(CAT_FASTQ.out.versions.first().ifEmpty(null))
 
     // We need to rename to make all reads match the sample name,
     // since pixelator extracts sample_names from read names
     RENAME_READS ( ch_cat_fastq )
     ch_renamed_reads = RENAME_READS.out.reads
     ch_versions = ch_versions.mix(RENAME_READS.out.versions.first())
-
-    ch_renamed_branched = ch_renamed_reads.branch {
-        single_end: it[0].single_end
-        paired_end: true
-    }
 
     PIXELATOR_AMPLICON ( ch_renamed_reads )
     ch_merged = PIXELATOR_AMPLICON.out.merged
@@ -139,7 +148,7 @@ workflow PIXELATOR {
     ch_qc = PIXELATOR_QC.out.processed
     ch_versions = ch_versions.mix(PIXELATOR_QC.out.versions.first())
 
-    ch_qc_and_panel_file = ch_qc.join(ch_panel_files)
+    ch_qc_and_panel_file = ch_qc.join(ch_cat_panel_files, failOnMismatch:true, failOnDuplicate:true)
     ch_demux_panel_keys = ch_qc_and_panel_file
         .map { meta, fq, panel_file -> panel_file ? [] : meta.panel }
 
@@ -147,7 +156,7 @@ workflow PIXELATOR {
     ch_demuxed = PIXELATOR_DEMUX.out.processed
     ch_versions = ch_versions.mix(PIXELATOR_DEMUX.out.versions.first())
 
-    ch_demuxed_and_panel_file = ch_demuxed.join(ch_panel_files)
+    ch_demuxed_and_panel_file = ch_demuxed.join(ch_cat_panel_files, failOnMismatch:true, failOnDuplicate:true)
     ch_collapse_panel_keys = ch_demuxed_and_panel_file.map {
         meta, fq, panel_file -> panel_file ? [] : meta.panel }
 
@@ -159,7 +168,7 @@ workflow PIXELATOR {
     ch_clustered = PIXELATOR_GRAPH.out.edgelist
     ch_versions = ch_versions.mix(PIXELATOR_GRAPH.out.versions.first())
 
-    ch_clustered_and_panel = ch_clustered.join(ch_panel_files)
+    ch_clustered_and_panel = ch_clustered.join(ch_cat_panel_files, failOnMismatch:true, failOnDuplicate:true)
     ch_annotate_panel_keys = ch_demuxed_and_panel_file
         .map { meta, fq, panel_file -> panel_file ? [] : meta.panel }
 
@@ -172,22 +181,34 @@ workflow PIXELATOR {
     ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())
 
 
-    // Do some transformations to split the inputs into their stages
-    // and have all these "pixelator subcommand output" channels output in the same order
-    // Note that we need to split inout per subcommand to stage those files in the right subdirs
-    // as expected by pixelator single-cell report
+    // Prepare all data needed by reporting for each pixelator step
 
-    ch_amplicon_data = PIXELATOR_AMPLICON.out.report_json.mix(PIXELATOR_AMPLICON.out.metadata)
-    ch_preqc_data       = PIXELATOR_QC.out.preqc_report_json.mix(PIXELATOR_QC.out.preqc_metadata)
-    ch_adapterqc_data   = PIXELATOR_QC.out.adapterqc_report_json.mix(PIXELATOR_QC.out.adapterqc_metadata)
-    ch_demux_data       = PIXELATOR_DEMUX.out.report_json.mix(PIXELATOR_DEMUX.out.metadata)
-    ch_collapse_data    = PIXELATOR_COLLAPSE.out.report_json.mix(PIXELATOR_COLLAPSE.out.metadata)
+    ch_amplicon_data    = PIXELATOR_AMPLICON.out.report_json
+        .concat(PIXELATOR_AMPLICON.out.metadata)
+        .groupTuple(size: 2)
+
+    ch_preqc_data       = PIXELATOR_QC.out.preqc_report_json
+        .concat(PIXELATOR_QC.out.preqc_metadata)
+        .groupTuple(size: 2)
+
+    ch_adapterqc_data   = PIXELATOR_QC.out.adapterqc_report_json
+        .concat(PIXELATOR_QC.out.adapterqc_metadata)
+        .groupTuple(size: 2)
+
+    ch_demux_data       = PIXELATOR_DEMUX.out.report_json
+        .concat(PIXELATOR_DEMUX.out.metadata)
+        .groupTuple(size: 2)
+
+    ch_collapse_data    = PIXELATOR_COLLAPSE.out.report_json
+        .concat(PIXELATOR_COLLAPSE.out.metadata)
+        .groupTuple(size: 2)
+
     ch_cluster_data     = PIXELATOR_GRAPH.out.all_results
     ch_annotate_data    = PIXELATOR_ANNOTATE.out.all_results
     ch_analysis_data    = PIXELATOR_ANALYSIS.out.all_results
 
     GENERATE_REPORTS(
-        ch_panel_files,
+        ch_cat_panel_files,
         ch_amplicon_data,
         ch_preqc_data,
         ch_adapterqc_data,
