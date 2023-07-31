@@ -60,7 +60,7 @@ include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 //
 include { RENAME_READS                  } from '../modules/local/rename_reads'
 include { COLLECT_METADATA              } from '../modules/local/collect_metadata'
-include { PIXELATOR_CONCATENATE         } from '../modules/local/pixelator/single-cell/concatenate/main'
+include { PIXELATOR_AMPLICON            } from '../modules/local/pixelator/single-cell/amplicon/main'
 include { PIXELATOR_QC                  } from '../modules/local/pixelator/single-cell/qc/main'
 include { PIXELATOR_DEMUX               } from '../modules/local/pixelator/single-cell/demux/main'
 include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/single-cell/collapse/main'
@@ -129,9 +129,9 @@ workflow PIXELATOR {
         paired_end: true
     }
 
-    PIXELATOR_CONCATENATE ( ch_renamed_reads )
-    ch_merged = PIXELATOR_CONCATENATE.out.merged
-    ch_versions = ch_versions.mix(PIXELATOR_CONCATENATE.out.versions.first())
+    PIXELATOR_AMPLICON ( ch_renamed_reads )
+    ch_merged = PIXELATOR_AMPLICON.out.merged
+    ch_versions = ch_versions.mix(PIXELATOR_AMPLICON.out.versions.first())
 
     ch_input_reads = ch_merged
 
@@ -177,7 +177,7 @@ workflow PIXELATOR {
     // Note that we need to split inout per subcommand to stage those files in the right subdirs
     // as expected by pixelator single-cell report
 
-    ch_concatenate_data = PIXELATOR_CONCATENATE.out.report_json.mix(PIXELATOR_CONCATENATE.out.metadata)
+    ch_amplicon_data = PIXELATOR_AMPLICON.out.report_json.mix(PIXELATOR_AMPLICON.out.metadata)
     ch_preqc_data       = PIXELATOR_QC.out.preqc_report_json.mix(PIXELATOR_QC.out.preqc_metadata)
     ch_adapterqc_data   = PIXELATOR_QC.out.adapterqc_report_json.mix(PIXELATOR_QC.out.adapterqc_metadata)
     ch_demux_data       = PIXELATOR_DEMUX.out.report_json.mix(PIXELATOR_DEMUX.out.metadata)
@@ -188,7 +188,7 @@ workflow PIXELATOR {
 
     GENERATE_REPORTS(
         ch_panel_files,
-        ch_concatenate_data,
+        ch_amplicon_data,
         ch_preqc_data,
         ch_adapterqc_data,
         ch_demux_data,

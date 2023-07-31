@@ -4,7 +4,7 @@ include { PIXELATOR_REPORT            } from '../../modules/local/pixelator/sing
 workflow GENERATE_REPORTS {
     take:
     panel_files              // [meta, panel_file] or [meta, []]
-    concatenate_data
+    amplicon_data
     preqc_data
     adapterqc_data
     demux_data
@@ -46,7 +46,7 @@ workflow GENERATE_REPORTS {
         }
 
 
-    ch_concatenate_col = concatenate_data
+    ch_amplicon_col = amplicon_data
         .map { meta, data -> [ meta.id, data] }
         .groupTuple()
 
@@ -86,7 +86,7 @@ workflow GENERATE_REPORTS {
     // ], ...]
     ch_report_data = ch_meta_col
         .concat ( ch_panel_files_col )
-        .concat ( ch_concatenate_col )
+        .concat ( ch_amplicon_col )
         .concat ( ch_preqc_col )
         .concat ( ch_adapterqc_col )
         .concat ( ch_demux_col )
@@ -100,7 +100,7 @@ workflow GENERATE_REPORTS {
     // pixelator single-cell report using stageAs
 
     ch_panel_files_grouped  = ch_report_data.map { id, data -> [ data[0], data[1] ] }
-    ch_concatenate_grouped  = ch_report_data.map { id, data -> data[2] ? data[2].flatten() : [] }
+    ch_amplicon_grouped     = ch_report_data.map { id, data -> data[2] ? data[2].flatten() : [] }
     ch_preqc_grouped        = ch_report_data.map { id, data -> data[3] ? data[3].flatten() : [] }
     ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[4] ? data[4].flatten() : [] }
     ch_demux_grouped        = ch_report_data.map { id, data -> data[5] ? data[5].flatten() : [] }
@@ -116,7 +116,7 @@ workflow GENERATE_REPORTS {
     PIXELATOR_REPORT (
         ch_panel_files_grouped,
         ch_panel_keys,
-        ch_concatenate_grouped,
+        ch_amplicon_grouped,
         ch_preqc_grouped,
         ch_adapterqc_grouped,
         ch_demux_grouped,

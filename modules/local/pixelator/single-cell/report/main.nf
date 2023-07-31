@@ -11,7 +11,7 @@ process PIXELATOR_REPORT {
     input:
     tuple val(meta), path(panel_file)
     val panel
-    path concatenate_data,       stageAs: "results/concatenate/*"
+    path amplicon_data,       stageAs: "results/amplicon/*"
     path preqc_data,             stageAs: "results/preqc/*"
     path adapterqc_data,         stageAs: "results/adapterqc/*"
     path demux_data,             stageAs: "results/demux/*"

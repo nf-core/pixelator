@@ -1,6 +1,6 @@
 
 
-process PIXELATOR_CONCATENATE {
+process PIXELATOR_AMPLICON {
     tag "$meta.id"
     label 'process_low'
 
@@ -13,10 +13,10 @@ process PIXELATOR_CONCATENATE {
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("concatenate/*.merged.{fq,fastq}.gz"),  emit: merged
-    tuple val(meta), path("concatenate/*.report.json"),           emit: report_json
-    tuple val(meta), path("concatenate/*.meta.json"),             emit: metadata
-    tuple val(meta), path("*pixelator-concatenate.log"),          emit: log
+    tuple val(meta), path("amplicon/*.merged.{fq,fastq}.gz"),  emit: merged
+    tuple val(meta), path("amplicon/*.report.json"),           emit: report_json
+    tuple val(meta), path("amplicon/*.meta.json"),             emit: metadata
+    tuple val(meta), path("*pixelator-amplicon.log"),          emit: log
 
     path "versions.yml"           , emit: versions
 
@@ -30,10 +30,10 @@ process PIXELATOR_CONCATENATE {
     """
     pixelator \\
         --cores $task.cpus \\
-        --log-file ${prefix}.pixelator-concatenate.log \\
+        --log-file ${prefix}.pixelator-amplicon.log \\
         --verbose \\
         single-cell \\
-        concatenate \\
+        amplicon \\
         --output . \\
         $args \\
         ${reads}
