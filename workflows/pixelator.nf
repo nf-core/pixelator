@@ -7,15 +7,6 @@
 include { paramsSummaryLog; paramsSummaryMap } from 'plugin/nf-validation'
 
 
-// Check input path parameters to see if they exist
-def checkPathParamList = [ params.input ]
-for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
-
-// Inject the samplesheet SHA into the params object
-params.samplesheet_sha = ch_input.bytes.digest('sha-1')
-
-def summary_params = NfcoreSchema.paramsSummaryMap(workflow, params)
-
 def logo = NfcoreTemplate.logo(workflow, params.monochrome_logs)
 def citation = '\n' + WorkflowMain.citation(workflow) + '\n'
 def summary_params = paramsSummaryMap(workflow)
@@ -24,6 +15,10 @@ def summary_params = paramsSummaryMap(workflow)
 log.info logo + paramsSummaryLog(workflow) + citation
 
 WorkflowPixelator.initialise(params, log)
+
+// Inject the samplesheet SHA-1 into the params object
+ch_input               = file(params.input)
+params.samplesheet_sha = ch_input.bytes.digest('sha-1')
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,7 +78,6 @@ include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/singl
 def multiqc_report = []
 
 workflow PIXELATOR {
-    ch_input    = file(params.input)
     ch_versions = Channel.empty()
 
     COLLECT_METADATA ()

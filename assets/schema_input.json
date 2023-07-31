@@ -52,6 +52,7 @@
                 ]
             }
         },
-        "required": ["sample", "design", "panel", "fastq_1"]
+        "required": ["sample", "design", "fastq_1"],
+        "oneOf": [{ "required": ["panel"] }, { "required": ["panel_file"] }]
     }
 }
