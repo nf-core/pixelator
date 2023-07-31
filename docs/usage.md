@@ -49,7 +49,7 @@ to add extra information for downstream processing.
 The `panel` and `panel_file` options are mutually exclusive. If both are specified, the pipeline will throw an error.
 One of them has to be specified.
 
-The pipeline will auto-detect whether a sample is single- or paired-end based on ifboth `fastq_1` and `fastq_2` or only `fastq_1` is present in the samplesheet.
+The pipeline will auto-detect whether a sample is single- or paired-end based on if both `fastq_1` and `fastq_2` or only `fastq_1` is present in the samplesheet.
 
 ### Multiple runs of the same sample
 
