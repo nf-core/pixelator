@@ -45,14 +45,13 @@ def make_absolute_path(path: str, base: PathLike = None) -> str:
     url[0] = base_url[0] or "file"
     url[2] = str(resolved_path)
 
-    # Make sure there are three /// (hidden netloc) in urls.
+    # Make sure there are three /// (hidden netloc) in urls with file scheme.
     # other schemes [s3, gs, az] only use two //
     if scheme == "file":
         resolved_path = str(resolved_path) if resolved_path.is_absolute() else str(PurePath("/", str(resolved_path)))
-    else:
-        resolved_path = str(resolved_path).lstrip("/")
+        return f"{scheme}://{resolved_path}"
 
-    return f"{scheme}://{resolved_path}"
+    return urllib.parse.urlunparse(url)
 
 
 def validate_whitespace(row: MutableMapping[str, str], index: int):
@@ -139,7 +138,8 @@ class RowChecker(BaseChecker):
     def get_base_dir(path: str) -> str:
         url = urllib.parse.urlparse(path)
         parent_path = PurePath(url.path).parent
-        return f"{url.scheme}://{str(parent_path)}"
+        netloc = url.netloc
+        return f"{url.scheme}://{netloc}{str(parent_path)}"
 
     def validate_and_transform(self, row):
         """
