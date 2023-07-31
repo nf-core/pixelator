@@ -1,4 +1,4 @@
-# PixelgenTechnologies/nf-core-pixelator: Output
+# nf-core/pixelator: Output
 
 ## Introduction
 
