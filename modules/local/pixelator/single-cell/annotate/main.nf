@@ -3,7 +3,7 @@ process PIXELATOR_ANNOTATE {
     tag "$meta.id"
     label 'process_medium'
 
-    conda "local::pixelator=0.10.0"
+    conda "local::pixelator=0.12.0"
     container "ghcr.io/pixelgentechnologies/pixelator:0.12.0"
 
     input:

@@ -3,9 +3,8 @@
 process PIXELATOR_QC {
     tag "$meta.id"
     label 'process_medium'
-    conda "local::pixelator=0.10.0"
 
-    // TODO: make pixelator available on galaxyproject and quay.io support
+    conda "local::pixelator=0.12.0"
     container "ghcr.io/pixelgentechnologies/pixelator:0.12.0"
 
     input:
