@@ -1,5 +1,3 @@
-
-
 process PIXELATOR_DEMUX {
     tag "$meta.id"
     label 'process_medium'

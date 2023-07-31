@@ -1,4 +1,3 @@
-
 process PIXELATOR_ANALYSIS {
     tag "$meta.id"
     label 'process_medium'

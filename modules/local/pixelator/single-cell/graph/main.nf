@@ -1,5 +1,3 @@
-
-
 process PIXELATOR_GRAPH {
     tag "$meta.id"
     label 'process_medium'

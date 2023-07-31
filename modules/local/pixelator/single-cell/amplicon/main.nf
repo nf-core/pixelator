@@ -1,5 +1,3 @@
-
-
 process PIXELATOR_AMPLICON {
     tag "$meta.id"
     label 'process_low'

@@ -1,5 +1,3 @@
-
-
 process PIXELATOR_QC {
     tag "$meta.id"
     label 'process_medium'

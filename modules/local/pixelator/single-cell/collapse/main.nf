@@ -1,5 +1,3 @@
-
-
 process PIXELATOR_COLLAPSE {
     tag "$meta.id"
     label 'process_medium'

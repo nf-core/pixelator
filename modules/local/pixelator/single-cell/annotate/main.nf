@@ -1,4 +1,3 @@
-
 process PIXELATOR_ANNOTATE {
     tag "$meta.id"
     label 'process_medium'
