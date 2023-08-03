@@ -35,6 +35,14 @@ jobs:
         with:
           version: "${{ matrix.NXF_VER }}"
 
+      # TODO: Remove once image is public
+      - name: Connect to Github Container Registry
+        uses: docker/login-action@v2.2.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run pipeline with test data
         # TODO nf-core: You can customise CI pipeline run tests as required
         # For example: adding multiple test runs with different parameters
