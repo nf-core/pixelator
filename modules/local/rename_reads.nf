@@ -3,7 +3,7 @@ process RENAME_READS {
     label "process_single"
 
     conda "conda-forge::sed=4.7"
-    if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
+    if (workflow.containerEngine == 'singularity' && !tast.ext.singularity_pull_docker_container) {
         container "https://depot.galaxyproject.org/singularity/ubuntu:20.04"
     } else {
         container "registry.hub.docker.com/biocontainers/biocontainers:v1.2.0_cv2"
