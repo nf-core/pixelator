@@ -18,7 +18,7 @@
    to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
 -->
 
-**nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for Pipeline for analysis of Molecular Pixelation assays.
+**nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for analysis of Molecular Pixelation assays.
 It takes a samplesheet as input and will process your data using `pixelator` to produce final antibody counts.
 
 <!-- Include a figure that guides the user through the major workflow steps. Many nf-core
