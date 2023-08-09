@@ -14,8 +14,6 @@ def summary_params = paramsSummaryMap(workflow)
 // Print parameter summary log to screen
 log.info logo + paramsSummaryLog(workflow) + citation
 
-WorkflowPixelator.initialise(params, log)
-
 // Inject the samplesheet SHA-1 into the params object
 ch_input               = file(params.input)
 params.samplesheet_sha = ch_input.bytes.digest('sha-1')

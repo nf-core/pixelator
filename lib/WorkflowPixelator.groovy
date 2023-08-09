@@ -8,16 +8,6 @@ import groovy.text.SimpleTemplateEngine
 class WorkflowPixelator {
 
     //
-    // Check and validate parameters
-    //
-    public static void initialise(params, log) {
-        // Check mandatory parameters
-        if (!params.input) {
-            Nextflow.error("Input samplesheet not specified!")
-        }
-    }
-
-    //
     // Get workflow summary for MultiQC
     //
     public static String paramsSummaryMultiqc(workflow, summary) {
