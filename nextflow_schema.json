@@ -155,9 +155,9 @@
                     "enum": ["adjacency", "unique"],
                     "type": "string"
                 },
-                "neighbours": {
+                "max_neighbours": {
                     "fa_icon": "fas circle-nodes",
-                    "description": "The number of neighbours to use when searching for similar sequences (adjacency) This number depends on the sequence depth and the ratio of erroneous molecules expected. A high value can make the algorithm slower.",
+                    "description": "The maximum number of neighbors to use when searching for similar sequences. This number depends on the sequence depth and the ratio of erroneous molecules expected. A high value can make the algorithm slower. This is only used when algorithm is set to 'adjacency'",
                     "default": 60,
                     "minimum": 1,
                     "maximum": 250,
