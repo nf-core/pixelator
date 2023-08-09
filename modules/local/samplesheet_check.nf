@@ -2,6 +2,7 @@ process SAMPLESHEET_CHECK {
     tag "$samplesheet"
     label 'process_single'
 
+    // TODO: Update once pixelator is public in bioconda
     conda "local::pixelator=0.12.0"
     container "ghcr.io/pixelgentechnologies/pixelator:0.12.0"
 
