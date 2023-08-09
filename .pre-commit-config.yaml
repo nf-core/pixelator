@@ -15,7 +15,8 @@ repos:
         name: Update nf-params.yml file with schema
         language: python
         additional_dependencies:
-          - git+https://github.com/nf-core/tools@dev
+          # TODO: Pin this to 2.10 after release
+          - git+https://github.com/nf-core/tools@df0c1bf9c18cb21e3a4da04c0de73f6ae24ff29f
         entry: nf-core
         args: [create-params-file, --output, assets/nf-params.yml, "--force", "."]
         pass_filenames: false
