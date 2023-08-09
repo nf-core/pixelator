@@ -2,12 +2,14 @@ process SAMPLESHEET_CHECK {
     tag "$samplesheet"
     label 'process_single'
 
-    // TODO: Update once pixelator is public in bioconda
-    conda "local::pixelator=0.12.0"
-    container "ghcr.io/pixelgentechnologies/pixelator:0.12.0"
+    conda "conda-forge::python=3.8.3"
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/python:3.8.3' :
+        'biocontainers/python:3.8.3' }"
 
     input:
     path samplesheet
+    path design_options
     val samplesheet_path
 
     output:
@@ -21,19 +23,16 @@ process SAMPLESHEET_CHECK {
     def args = task.ext.args ?: ''
 
     """
-    pixelator single-cell --list-designs > design_options.txt
-
     check_samplesheet.py \\
         $samplesheet \\
         samplesheet.valid.csv \\
         --samplesheet-path $samplesheet_path \\
-        --design-options design_options.txt \\
+        --design-options $design_options \\
         $args
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         python: \$(python --version | sed 's/Python //g')
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
 }

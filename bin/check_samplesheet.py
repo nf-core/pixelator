@@ -8,13 +8,12 @@ import abc
 import argparse
 import csv
 import logging
+import re
 import sys
 import urllib.parse
-from collections import Counter
-from pathlib import Path, PurePath
-import re
-from typing import Iterable, List, MutableMapping, Optional, Set
 from os import PathLike
+from pathlib import Path, PurePath
+from typing import Iterable, List, MutableMapping, Optional, Set
 
 logger = logging.getLogger()
 

@@ -2,15 +2,24 @@
 // Check input samplesheet and get read channels
 //
 
-include { SAMPLESHEET_CHECK } from '../../modules/local/samplesheet_check'
+include { SAMPLESHEET_CHECK }        from '../../modules/local/samplesheet_check'
+include { PIXELATOR_LIST_DESIGNS }   from '../../modules/local/pixelator/list_designs.nf'
 
 workflow INPUT_CHECK {
     take:
     samplesheet                                // file: /path/to/samplesheet.csv
 
     main:
-    ch_samplesheet_rows = SAMPLESHEET_CHECK ( samplesheet, samplesheet.toUri() )
-        .csv
+
+    PIXELATOR_LIST_DESIGNS()
+
+    SAMPLESHEET_CHECK (
+        samplesheet,
+        PIXELATOR_LIST_DESIGNS.out.designs,
+        samplesheet.toUri()
+    )
+
+    ch_samplesheet_rows = SAMPLESHEET_CHECK.out.csv
         .splitCsv ( header:true, sep:',' )
 
     reads = ch_samplesheet_rows.map { create_fastq_channel(it) }
