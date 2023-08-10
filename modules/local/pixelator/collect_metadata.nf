@@ -4,7 +4,7 @@ import org.json.JSONArray
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
 
-process COLLECT_METADATA {
+process PIXELATOR_COLLECT_METADATA {
     label 'process_single'
     cache false
 

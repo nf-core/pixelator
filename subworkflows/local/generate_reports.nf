@@ -82,7 +82,8 @@ workflow GENERATE_REPORTS {
     // The channels will emit values in the same order so eg. the first list of files from each ch_<stage>_grouped
     // channel will match the same sample from the samplesheet.
 
-    ch_panel_files_grouped  = ch_report_data.map { id, data -> [ data[0], data[1] ] }
+    // If no `panel_file` (data[1]) is given we need to pass in `panel` from the samplesheet instead
+    ch_panel_files_grouped  = ch_report_data.map { id, data -> [ data[0], data[1], data[1] ? null : data[0].panel ] }
     ch_amplicon_grouped     = ch_report_data.map { id, data -> data[2] ? data[2].flatten() : [] }
     ch_preqc_grouped        = ch_report_data.map { id, data -> data[3] ? data[3].flatten() : [] }
     ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[4] ? data[4].flatten() : [] }
@@ -92,14 +93,8 @@ workflow GENERATE_REPORTS {
     ch_annotate_grouped     = ch_report_data.map { id, data -> data[8] ? data[8].flatten() : [] }
     ch_analysis_grouped     = ch_report_data.map { id, data -> data[9] ? data[9].flatten() : [] }
 
-    // If no `panel_file` is given we need to pass in `panel` from the samplesheet instead
-    ch_panel_keys           = ch_panel_files_grouped
-        .map { meta, panel_file -> panel_file ? [] : meta.panel }
-
-
     PIXELATOR_REPORT (
         ch_panel_files_grouped,
-        ch_panel_keys,
         ch_amplicon_grouped,
         ch_preqc_grouped,
         ch_adapterqc_grouped,

@@ -7,8 +7,7 @@ process PIXELATOR_ANNOTATE {
     container "ghcr.io/pixelgentechnologies/pixelator:0.12.0"
 
     input:
-    tuple val(meta), path(dataset), path(panel_file)
-    val panel
+    tuple val(meta), path(dataset), path(panel_file), val(panel)
 
     output:
     tuple val(meta), path("annotate/*.dataset.pxl") , emit: dataset
@@ -26,7 +25,11 @@ process PIXELATOR_ANNOTATE {
 
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
-    def panelOpt = panel ?: panel_file
+    def panelOpt = (
+        panel      ? "--panel $panel"      :
+        panel_file ? "--panel $panel_file" :
+        ""
+    )
 
     """
     pixelator \\
@@ -36,9 +39,9 @@ process PIXELATOR_ANNOTATE {
         single-cell \\
         annotate \\
         --output . \\
+        $panelOpt \\
         $args \\
         $dataset \\
-        --panel ${panelOpt}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

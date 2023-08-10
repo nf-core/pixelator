@@ -57,7 +57,7 @@ include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 // MODULE: Defined locally
 //
 include { RENAME_READS                  } from '../modules/local/rename_reads'
-include { COLLECT_METADATA              } from '../modules/local/collect_metadata'
+include { PIXELATOR_COLLECT_METADATA    } from '../modules/local/pixelator/collect_metadata'
 include { PIXELATOR_AMPLICON            } from '../modules/local/pixelator/single-cell/amplicon/main'
 include { PIXELATOR_QC                  } from '../modules/local/pixelator/single-cell/qc/main'
 include { PIXELATOR_DEMUX               } from '../modules/local/pixelator/single-cell/demux/main'
@@ -78,9 +78,6 @@ def multiqc_report = []
 workflow PIXELATOR {
     ch_versions = Channel.empty()
 
-    COLLECT_METADATA ()
-    ch_versions = ch_versions.mix(COLLECT_METADATA.out.versions)
-
     //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     //
@@ -100,6 +97,9 @@ workflow PIXELATOR {
                 multiple: fastq.size() > 1
                     return [ meta, fastq.flatten() ]
         }
+
+    PIXELATOR_COLLECT_METADATA ()
+    ch_versions = ch_versions.mix(PIXELATOR_COLLECT_METADATA.out.versions)
 
     //
     // MODULE: Concatenate FastQ files from same sample if required
@@ -146,31 +146,31 @@ workflow PIXELATOR {
     ch_qc = PIXELATOR_QC.out.processed
     ch_versions = ch_versions.mix(PIXELATOR_QC.out.versions.first())
 
-    ch_qc_and_panel_file = ch_qc.join(ch_cat_panel_files, failOnMismatch:true, failOnDuplicate:true)
-    ch_demux_panel_keys = ch_qc_and_panel_file
-        .map { meta, fq, panel_file -> panel_file ? [] : meta.panel }
+    ch_fq_and_panel = ch_qc
+        .join(ch_cat_panel_files, failOnMismatch:true, failOnDuplicate:true)
+        .map { meta, fq, panel_file -> [meta, fq, panel_file, panel_file ? null : meta.panel ] }
 
-    PIXELATOR_DEMUX ( ch_qc_and_panel_file, ch_demux_panel_keys )
+    PIXELATOR_DEMUX ( ch_fq_and_panel )
     ch_demuxed = PIXELATOR_DEMUX.out.processed
     ch_versions = ch_versions.mix(PIXELATOR_DEMUX.out.versions.first())
 
-    ch_demuxed_and_panel_file = ch_demuxed.join(ch_cat_panel_files, failOnMismatch:true, failOnDuplicate:true)
-    ch_collapse_panel_keys = ch_demuxed_and_panel_file.map {
-        meta, fq, panel_file -> panel_file ? [] : meta.panel }
+    ch_demuxed_and_panel = ch_demuxed
+        .join(ch_cat_panel_files, failOnMismatch:true, failOnDuplicate:true)
+        .map { meta, demuxed, panel_file -> [meta, demuxed, panel_file, panel_file ? null : meta.panel ] }
 
-    PIXELATOR_COLLAPSE ( ch_demuxed_and_panel_file, ch_collapse_panel_keys )
+    PIXELATOR_COLLAPSE ( ch_demuxed_and_panel )
     ch_collapsed = PIXELATOR_COLLAPSE.out.collapsed
-    ch_versions = ch_versions.mix(PIXELATOR_COLLAPSE.out.versions.first())
+    ch_versions = ch_versions.mix( PIXELATOR_COLLAPSE.out.versions.first())
 
     PIXELATOR_GRAPH ( ch_collapsed )
     ch_clustered = PIXELATOR_GRAPH.out.edgelist
     ch_versions = ch_versions.mix(PIXELATOR_GRAPH.out.versions.first())
 
-    ch_clustered_and_panel = ch_clustered.join(ch_cat_panel_files, failOnMismatch:true, failOnDuplicate:true)
-    ch_annotate_panel_keys = ch_demuxed_and_panel_file
-        .map { meta, fq, panel_file -> panel_file ? [] : meta.panel }
+    ch_clustered_and_panel = ch_clustered
+        .join(ch_cat_panel_files, failOnMismatch:true, failOnDuplicate:true)
+        .map { meta, clustered, panel_file -> [meta, clustered, panel_file, panel_file ? null : meta.panel ] }
 
-    PIXELATOR_ANNOTATE ( ch_clustered_and_panel, ch_annotate_panel_keys )
+    PIXELATOR_ANNOTATE ( ch_clustered_and_panel )
     ch_annotated = PIXELATOR_ANNOTATE.out.dataset
     ch_versions = ch_versions.mix( PIXELATOR_ANNOTATE.out.versions.first() )
 
