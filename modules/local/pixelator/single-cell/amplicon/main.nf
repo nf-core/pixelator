@@ -10,12 +10,12 @@ process PIXELATOR_AMPLICON {
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("amplicon/*.merged.{fq,fastq}.gz"),  emit: merged
-    tuple val(meta), path("amplicon/*.report.json"),           emit: report_json
-    tuple val(meta), path("amplicon/*.meta.json"),             emit: metadata
-    tuple val(meta), path("*pixelator-amplicon.log"),          emit: log
+    tuple val(meta), path("amplicon/*.merged.{fq,fastq}.gz"), emit: merged
+    tuple val(meta), path("amplicon/*.report.json")         , emit: report_json
+    tuple val(meta), path("amplicon/*.meta.json")           , emit: metadata
+    tuple val(meta), path("*pixelator-amplicon.log")        , emit: log
 
-    path "versions.yml"           , emit: versions
+    path "versions.yml"                                     , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

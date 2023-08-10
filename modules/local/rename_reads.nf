@@ -13,8 +13,8 @@ process RENAME_READS {
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("${meta.id}{,_R1,_R2}*"),   emit: reads
-    path "versions.yml",                              emit: versions
+    tuple val(meta), path("${meta.id}{,_R1,_R2}*"), emit: reads
+    path "versions.yml"                           , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

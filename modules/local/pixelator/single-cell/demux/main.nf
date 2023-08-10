@@ -12,13 +12,12 @@ process PIXELATOR_DEMUX {
 
     output:
     tuple val(meta), path("demux/*processed*.{fq,fastq}.gz"), emit: processed
-    tuple val(meta), path("demux/*failed.{fq,fastq}.gz"),     emit: failed
-    tuple val(meta), path("demux/*.report.json"),             emit: report_json
-    tuple val(meta), path("demux/*.meta.json"),               emit: metadata
-    tuple val(meta), path("*pixelator-demux.log"),            emit: log
+    tuple val(meta), path("demux/*failed.{fq,fastq}.gz")    , emit: failed
+    tuple val(meta), path("demux/*.report.json")            , emit: report_json
+    tuple val(meta), path("demux/*.meta.json")              , emit: metadata
+    tuple val(meta), path("*pixelator-demux.log")           , emit: log
 
-
-    path "versions.yml"           , emit: versions
+    path "versions.yml"                                     , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

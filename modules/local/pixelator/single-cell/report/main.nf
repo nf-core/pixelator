@@ -9,18 +9,18 @@ process PIXELATOR_REPORT {
     input:
     tuple val(meta), path(panel_file)
     val panel
-    path amplicon_data,          stageAs: "results/amplicon/*"
-    path preqc_data,             stageAs: "results/preqc/*"
-    path adapterqc_data,         stageAs: "results/adapterqc/*"
-    path demux_data,             stageAs: "results/demux/*"
-    path collapse_data,          stageAs: "results/collapse/*"
-    path graph_data,             stageAs: "results/graph/*"
-    path annotate_data,          stageAs: "results/annotate/*"
-    path analysis_data,          stageAs: "results/analysis/*"
+    path amplicon_data      , stageAs: "results/amplicon/*"
+    path preqc_data         , stageAs: "results/preqc/*"
+    path adapterqc_data     , stageAs: "results/adapterqc/*"
+    path demux_data         , stageAs: "results/demux/*"
+    path collapse_data      , stageAs: "results/collapse/*"
+    path graph_data         , stageAs: "results/graph/*"
+    path annotate_data      , stageAs: "results/annotate/*"
+    path analysis_data      , stageAs: "results/analysis/*"
 
     output:
-    path "report/*.html",        emit: reports
-    path "versions.yml",         emit: versions
+    path "report/*.html", emit: reports
+    path "versions.yml",  emit: versions
 
     when:
     task.ext.when == null || task.ext.when

@@ -10,13 +10,13 @@ process PIXELATOR_ANALYSIS {
     tuple val(meta), path(data)
 
     output:
-    tuple val(meta), path("analysis/*dataset.pxl"),      emit: dataset
-    tuple val(meta), path("analysis/*report.json"),      emit: report_json
-    tuple val(meta), path("analysis/*.meta.json"),       emit: metadata
-    tuple val(meta), path("analysis/*"),                 emit: all_results
-    tuple val(meta), path("*pixelator-analysis.log"),    emit: log
+    tuple val(meta), path("analysis/*dataset.pxl")  , emit: dataset
+    tuple val(meta), path("analysis/*report.json")  , emit: report_json
+    tuple val(meta), path("analysis/*.meta.json")   , emit: metadata
+    tuple val(meta), path("analysis/*")             , emit: all_results
+    tuple val(meta), path("*pixelator-analysis.log"), emit: log
 
-    path "versions.yml"           , emit: versions
+    path "versions.yml"                             , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

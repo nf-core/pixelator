@@ -10,15 +10,15 @@ process PIXELATOR_GRAPH {
     tuple val(meta), path(edge_list)
 
     output:
-    tuple val(meta), path("graph/*.edgelist.csv.gz"),             emit: edgelist
-    tuple val(meta), path("graph/*.raw_edgelist.csv.gz"),         emit: raw_edgelist
-    tuple val(meta), path("graph/*.components_recovered.csv"),    emit: components_recovered, optional: true
-    tuple val(meta), path("graph/*.report.json"),                 emit: report_json
-    tuple val(meta), path("graph/*.meta.json"),                   emit: input_params
-    tuple val(meta), path("graph/*"),                             emit: all_results
-    tuple val(meta), path("*pixelator-graph.log"),                emit: log
+    tuple val(meta), path("graph/*.edgelist.csv.gz")         , emit: edgelist
+    tuple val(meta), path("graph/*.raw_edgelist.csv.gz")     , emit: raw_edgelist
+    tuple val(meta), path("graph/*.components_recovered.csv"), emit: components_recovered, optional: true
+    tuple val(meta), path("graph/*.report.json")             , emit: report_json
+    tuple val(meta), path("graph/*.meta.json")               , emit: input_params
+    tuple val(meta), path("graph/*")                         , emit: all_results
+    tuple val(meta), path("*pixelator-graph.log")            , emit: log
 
-    path "versions.yml"           , emit: versions
+    path "versions.yml"                                      , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
