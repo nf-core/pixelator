@@ -105,18 +105,6 @@
                     "default": 0.1,
                     "minimum": 0.0,
                     "maximum": 0.9
-                },
-                "pbs1": {
-                    "description": "The PBS1 sequence that must be present in the reads.",
-                    "help_text": "If you set this argument it will overrule the default value from the chosen design",
-                    "type": "string",
-                    "hidden": true
-                },
-                "pbs2": {
-                    "description": "The PBS2 sequence that must be present in the reads.",
-                    "help_text": "If you set this argument it will overrule the default value from the chosen design",
-                    "type": "string",
-                    "hidden": true
                 }
             }
         },
