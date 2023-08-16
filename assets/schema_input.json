@@ -6,6 +6,7 @@
     "type": "array",
     "items": {
         "type": "object",
+        "required": ["sample", "design", "fastq_1"],
         "properties": {
             "sample": {
                 "type": "string",
@@ -15,21 +16,24 @@
             },
             "design": {
                 "type": "string",
-                "enum": ["D21"],
                 "meta": ["design"],
                 "errorMessage": "Design must be specified"
             },
             "panel": {
+                "errorMessage": "Panel name must be specified",
+                "type": "string",
+                "meta": ["panel"]
+            },
+            "panel_file": {
+                "errorMessage": "Panel file must either be left empty or cannot contain spaces and must have extension '.csv', '.tsv' or '.yaml'",
                 "anyOf": [
                     {
                         "type": "string",
-                        "pattern": "^\\S+.(csv|tsv)$",
-                        "errorMessage": "Panel file or panel name must be provided, cannot contain spaces and must have extension '.csv'"
+                        "pattern": "^\\S+.(csv|tsv|ya?ml)$"
                     },
                     {
                         "type": "string",
-                        "enum": ["human-sc-immunology-spatial-proteomics"],
-                        "errorMessage": "Panel name must be specified"
+                        "maxLength": 0
                     }
                 ]
             },
@@ -51,8 +55,6 @@
                     }
                 ]
             }
-        },
-        "required": ["sample", "design", "fastq_1"],
-        "oneOf": [{ "required": ["panel"] }, { "required": ["panel_file"] }]
+        }
     }
 }

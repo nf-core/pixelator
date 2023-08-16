@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+"""
+Collect version information about the pixelator python environment.
+
+Written by Florian De Temmerman (https://github.com/fbdtemme)
+Copyright (c) 2023 Pixelgen Technologies AB.
+"""
+
 import sys
 import subprocess
 from pathlib import Path

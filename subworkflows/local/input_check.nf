@@ -1,9 +1,9 @@
 //
 // Check input samplesheet and get read channels
 //
-
+include { fromSamplesheet }          from 'plugin/nf-validation'
 include { SAMPLESHEET_CHECK }        from '../../modules/local/samplesheet_check'
-include { PIXELATOR_LIST_DESIGNS }   from '../../modules/local/pixelator/list_designs.nf'
+include { PIXELATOR_LIST_OPTIONS }   from '../../modules/local/pixelator/list_options.nf'
 
 workflow INPUT_CHECK {
     take:
@@ -11,73 +11,134 @@ workflow INPUT_CHECK {
 
     main:
 
-    PIXELATOR_LIST_DESIGNS()
+    // Create a new channel of metadata from a sample sheet
+    // NB: `input` corresponds to `params.input` and associated sample sheet schema
+    def samplesheetUrl = samplesheet.toUri()
 
-    SAMPLESHEET_CHECK (
-        samplesheet,
-        PIXELATOR_LIST_DESIGNS.out.designs,
-        samplesheet.toUri()
-    )
+    ch_input = Channel.fromSamplesheet("input")
+        .map { check_channels(samplesheetUrl, *it) }
 
-    ch_samplesheet_rows = SAMPLESHEET_CHECK.out.csv
-        .splitCsv ( header:true, sep:',' )
+    PIXELATOR_LIST_OPTIONS()
 
-    reads = ch_samplesheet_rows.map { create_fastq_channel(it) }
-    panels = ch_samplesheet_rows.map { create_panels_channel(it) }
+    // Create a set of valid pixelator options to pass to --design
+    ch_design_options = PIXELATOR_LIST_OPTIONS.out.designs
+        .splitText()
+        .map( text -> text.trim())
+        .reduce( new HashSet() ) { prev, curr -> prev << curr }
+
+    // Create a set of valid pixelator designs
+    ch_panel_options = PIXELATOR_LIST_OPTIONS.out.panels
+        .splitText()
+        .map( text -> text.trim())
+        .reduce( new HashSet() ) { prev, curr -> prev << curr }
+
+    ch_checked_input = ch_input
+        .map { it -> it[0] }
+        .combine(ch_panel_options)
+        .combine(ch_design_options)
+        .map {
+            meta, panel_options, design_options ->
+                validate_panel(meta, panel_options)
+                validate_design(meta, design_options)
+                return [meta, []]
+        }
+        // Combine a dummy output after validation with the main input and strip the dummy value again
+        // This adds a dependency to make sure all jobs wait untill the validation is complete
+        .join(ch_input)
+        .map { it -> [ it[0] ] + it[2..-1] }
+
+    reads = ch_checked_input.map { it -> [it[0]] + it[2..-1] }
+    panels = ch_checked_input.map { it -> [it[0], it[1]] }
 
     emit:
     reads                                      // channel: [ val(meta), [ reads ] ]
     panels                                     // channel: [ val(meta), panel ]
 
-    versions = SAMPLESHEET_CHECK.out.versions  // channel: [ versions.yml ]
+    versions = PIXELATOR_LIST_OPTIONS.out.versions  // channel: [ versions.yml ]
 }
 
 
-def get_meta(LinkedHashMap row) {
-    def meta = [:]
-    meta.id           = row.sample
-    meta.single_end   = row.single_end.toBoolean()
-    meta.design       = row.design
-    meta.group        = row.group
-    meta.assay        = row.assay
-    meta.panel        = row.panel ?: null
-    return meta
-}
-
-// Function to get list of [ meta, [ fastq_1, fastq_2 ] ]
-def create_fastq_channel(LinkedHashMap row) {
-    def meta = get_meta(row)
-
-    // add path(s) of the fastq file(s) to the meta map
-    def fastq_meta = []
-
-    if (!file(row.fastq_1).exists()) {
-        exit 1, "ERROR: Please check input samplesheet -> Read 1 FastQ file does not exist!\n${row.fastq_1}"
+// Resolve relative paths relative to the samplesheet parent directory.
+def resolve_relative_path(relative_path, URI samplesheet_path) {
+    if (!(relative_path instanceof String)) {
+        return relative_path
     }
 
-    if (meta.single_end) {
-        fastq_meta = [ meta, [ file(row.fastq_1) ] ]
-    } else {
-        if (!file(row.fastq_2).exists()) {
-            exit 1, "ERROR: Please check input samplesheet -> Read 2 FastQ file does not exist!\n${row.fastq_2}"
-        }
-        fastq_meta = [ meta, [ file(row.fastq_1), file(row.fastq_2) ] ]
+    // Try to create a java.net.UR object out of it. If it is not a proper URL, a MalformedURLException will be t
+    URI uri;
+
+    try {
+        uri = new URI(relative_path)
+    } catch (URISyntaxException exc) {
+        return relative_path
     }
-    return fastq_meta
+
+    // If a scheme is given we keep it as given
+    if (uri.getScheme() != null) {
+        return uri
+    }
+
+    def path = new File(relative_path);
+    if (path.isAbsolute()) {
+        return path
+    }
+
+    // Resolve relative paths agains the samplesheet_path
+    def resolvedPath = samplesheet_path.resolve(relative_path);
+
+    def stringPath = resolvedPath.toString()
+    return stringPath
 }
 
 
-def create_panels_channel(LinkedHashMap row) {
-    def meta = get_meta(row)
-
-    // Require a panel file if no value for panel is set
+// Validate a given panel key if present against the (dynamic) set of panel options retrieved from pixelator
+def validate_panel(LinkedHashMap meta, HashSet options) {
     if (meta.panel == null) {
-        if (file(row.panel_file).exists()) {
-            return [ meta, file(row.panel_file) ]
+        return
+    }
+
+    if (!options.contains(meta.panel)) {
+        exit 1, "ERROR: Please check input samplesheet -> panel field does not contains a valid key!\n${meta.panel}\nValid options:\n${options}"
+    }
+}
+
+
+// Validate a given design key if present against the (dynamic) set of design options retrieved from pixelator
+def validate_design(LinkedHashMap meta, HashSet options) {
+    if (meta.design == null) {
+        return
+    }
+
+    if (!options.contains(meta.design)) {
+        exit 1, "ERROR: Please check input samplesheet -> design field does contains a valid key!\n${meta.design}\nValid options:\n${options}"
+    }
+}
+
+// Resolve relative paths and check that all files exist.
+def check_channels(URI samplesheetUrl, Map meta, panel_file, ...fq) {
+    def paired_end = fq.size() == 2
+    def panel_file_abs = resolve_relative_path(panel_file, samplesheetUrl)
+    def fq1_abs = resolve_relative_path(fq[0], samplesheetUrl)
+
+    if (panel_file_abs && !file(panel_file_abs).exists()) {
+        exit 1, "ERROR: Please check input samplesheet -> panel_file does not exist!\n${panel_file_abs}"
+    }
+
+    if (!file(fq1_abs).exists()) {
+        exit 1, "ERROR: Please check input samplesheet -> fastq_1 does not exist!\n${fq1_abs}"
+    }
+
+    def reads = [ fq1_abs ]
+
+    if (paired_end) {
+        def fq2_abs = resolve_relative_path(fq[1], samplesheetUrl)
+
+        if (fq2_abs && !file(fq2_abs).exists()) {
+            exit 1, "ERROR: Please check input samplesheet -> fastq_2 does not exist!\n${fq2_abs}"
         }
 
-        exit 1, "ERROR: Please check panel field: ${row.panel_file}: Could not find existing csv file."
-    } else {
-        return [ meta, [] ]
+        reads += [ fq2_abs]
     }
+
+    return [ meta, panel_file_abs, reads ]
 }
