@@ -2,8 +2,8 @@ process PIXELATOR_LIST_OPTIONS {
     label 'process_single'
 
     // TODO: Update once pixelator is public in bioconda
-    conda "local::pixelator=0.12.0"
-    container "ghcr.io/pixelgentechnologies/pixelator:0.12.0"
+    conda "local::pixelator=0.13.0"
+    container "ghcr.io/pixelgentechnologies/pixelator:0.13.0"
 
     output:
     path "design_options.txt"     , emit: designs
