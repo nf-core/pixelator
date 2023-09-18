@@ -8,9 +8,8 @@ process PIXELATOR_COLLECT_METADATA {
     label 'process_single'
     cache false
 
-    // TODO: Update once pixelator is public in bioconda
-    conda "local::pixelator=0.13.0"
-    container 'ghcr.io/pixelgentechnologies/pixelator:0.12.0'
+    conda "bioconda::pixelator=0.13.1"
+    container "biocontainers/pixelator:0.13.1"
 
     input:
 

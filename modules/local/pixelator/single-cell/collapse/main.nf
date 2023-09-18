@@ -2,9 +2,8 @@ process PIXELATOR_COLLAPSE {
     tag "$meta.id"
     label 'process_medium'
 
-    // TODO: Update once pixelator is public in bioconda
-    conda "local::pixelator=0.13.0"
-    container "ghcr.io/pixelgentechnologies/pixelator:0.13.0"
+    conda "bioconda::pixelator=0.13.1"
+    container "biocontainers/pixelator:0.13.1"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel)
