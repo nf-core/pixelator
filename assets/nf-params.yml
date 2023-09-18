@@ -23,6 +23,15 @@
 # input = null
 
 ## -----------------------------------------------------------------------------
+## input_basedir
+## -----------------------------------------------------------------------------
+##     Path to a local or remote directory that is the "current working
+##     directory" for relative paths defined in the input samplesheet
+##     Type: string
+## -----------------------------------------------------------------------------
+# input_basedir = null
+
+## -----------------------------------------------------------------------------
 ## outdir
 ## -----------------------------------------------------------------------------
 ##     The output directory where the results will be saved. You have to use

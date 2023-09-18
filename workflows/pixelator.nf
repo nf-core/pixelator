@@ -83,7 +83,7 @@ workflow PIXELATOR {
     //
     // Create a new channel of metadata from a sample sheet
     // NB: `input` corresponds to `params.input` and associated sample sheet schema
-    INPUT_CHECK ( ch_input )
+    INPUT_CHECK ( ch_input, params.input_basedir )
 
     ch_reads = INPUT_CHECK.out.reads
     ch_panel_files = INPUT_CHECK.out.panels

@@ -56,10 +56,45 @@ The pipeline will auto-detect whether a sample is single- or paired-end based on
 The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
 
 ```csv
-sample,design,panel,fastq_1,fastq_2
-uropod_control_1,D21,UNO_D21_Beta.csv,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
-uropod_control_1,D21,UNO_D21_Beta.csv,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
-uropod_control_1,D21,UNO_D21_Beta.csv,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
+sample,design,panel,panel_file,fastq_1,fastq_2
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
+```
+
+### Relative paths
+
+Using relative paths in a samplesheet is supported.
+This make it easier to relocate data since you do not have to edit the paths to files in the samplesheet.
+
+The default behavior is to resolve relative paths based on the directory the samplesheet file is located in.
+
+Given following directory structure:
+
+- data
+  - samplesheet.csv
+  - fastq
+    - sample1_R1.fq.gz
+    - sample1_R2.fq.gz
+
+You can use following samplesheet:
+
+```csv
+sample,design,panel,panel_file,fastq_1,fastq_2
+sample1,D21,human-sc-immunology-spatial-proteomics,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
+```
+
+Using the `--input_basedir` option you can specify a different location that will be used to resolve relative paths.
+This location can be a local or a remote path.
+
+For example, using the same samplesheet as above, but with the samplesheet on the local machine and the input data located on an AWS S3 bucket:
+
+- s3://my-company-data/experiment-1/fastq
+  - sample1_R1.fq.gz
+  - sample1_R2.fq.gz
+
+```shell
+nextflow run nf-core/pixelator --input samplesheet.csv --input_basedir s3://my-company-data/experiment-1/
 ```
 
 ## Running the pipeline

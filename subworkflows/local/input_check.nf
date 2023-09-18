@@ -1,6 +1,7 @@
 //
 // Check input samplesheet and get read channels
 //
+
 include { fromSamplesheet }          from 'plugin/nf-validation'
 include { SAMPLESHEET_CHECK }        from '../../modules/local/samplesheet_check'
 include { PIXELATOR_LIST_OPTIONS }   from '../../modules/local/pixelator/list_options.nf'
@@ -8,15 +9,18 @@ include { PIXELATOR_LIST_OPTIONS }   from '../../modules/local/pixelator/list_op
 workflow INPUT_CHECK {
     take:
     samplesheet                                // file: /path/to/samplesheet.csv
+    input_basedir                         // string | null
 
     main:
 
     // Create a new channel of metadata from a sample sheet
     // NB: `input` corresponds to `params.input` and associated sample sheet schema
-    def samplesheetUrl = samplesheet.toUri()
+    def inputBaseDir = get_data_basedir(samplesheet.toUri(), input_basedir)
+
+    log.info "Resolving relative paths in samplesheet relative to: ${inputBaseDir}"
 
     ch_input = Channel.fromSamplesheet("input")
-        .map { check_channels(samplesheetUrl, *it) }
+        .map { check_channels(inputBaseDir, *it) }
 
     PIXELATOR_LIST_OPTIONS()
 
@@ -26,7 +30,7 @@ workflow INPUT_CHECK {
         .map( text -> text.trim())
         .reduce( new HashSet() ) { prev, curr -> prev << curr }
 
-    // Create a set of valid pixelator designs
+    // Create a set of valid pixelator panel keys to pass using --panel
     ch_panel_options = PIXELATOR_LIST_OPTIONS.out.panels
         .splitText()
         .map( text -> text.trim())
@@ -112,6 +116,48 @@ def validate_design(LinkedHashMap meta, HashSet options) {
     if (!options.contains(meta.design)) {
         exit 1, "ERROR: Please check input samplesheet -> design field does contains a valid key!\n${meta.design}\nValid options:\n${options}"
     }
+}
+
+// Determine the path/url that will be used as the root for relative paths in the samplesheet
+def get_data_basedir(URI samplesheet, String input_basedir) {
+
+    URI uri;
+
+    // nothing given to --input_data so we use the samplesheet as root directory
+    // for resolving relative paths
+    if (!input_basedir) {
+        return samplesheet
+    }
+
+    try {
+        uri = new URI(input_basedir)
+    } catch (URISyntaxException exc) {
+        return samplesheet
+    }
+
+    // If a scheme is given we keep check that it is a directory (trailing-slash)
+    if (uri.getScheme() != null) {
+        if (!uri.path.endsWith('/')) {
+            def newUrl = new URI(
+                    uri.getProtocol(), uri.getUserInfo(), uri.getHost(),
+                    uri.getPort(), uri.getPath() + '/', url.getQuery(), url.getRef()
+            )
+            return newUrl
+        }
+        return uri
+    }
+
+    f = file(input_basedir)
+    if (!f.exists()) {
+        exit 1, "ERROR: data path passed with --input_basedir does not exist!"
+    }
+    if (f.isDirectory()) {
+        data_root = new URI(f.toString() + '/')
+    } else {
+        data_root = new URI(f.toString())
+    }
+
+    return data_root
 }
 
 // Resolve relative paths and check that all files exist.
