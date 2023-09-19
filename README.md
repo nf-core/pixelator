@@ -1,5 +1,7 @@
 # ![nf-core/pixelator](docs/images/nf-core-pixelator_logo_light.png#gh-light-mode-only) ![nf-core/pixelator](docs/images/nf-core-pixelator_logo_dark.png#gh-dark-mode-only)
 
+[![nf-core CI](https://github.com/nf-core/pixelator/actions/workflows/ci.yml/badge.svg)](https://github.com/nf-core/pixelator/actions/workflows/ci.yml)
+[![nf-core linting](https://github.com/nf-core/pixelator/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/pixelator/actions/workflows/linting.yml)
 [![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/pixelator/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A523.04.0-23aa62.svg)](https://www.nextflow.io/)
@@ -12,21 +14,10 @@
 
 ## Introduction
 
-<!--
-   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
-   major pipeline sections and the types of output it produces. You're giving an overview to someone new
-   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
--->
-
 **nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for analysis of Molecular Pixelation assays.
 It takes a samplesheet as input and will process your data using `pixelator` to produce final antibody counts.
 
-<!-- Include a figure that guides the user through the major workflow steps. Many nf-core
-     workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
-
 ![](./docs/images/nf_core_pixelator_metromap.svg)
-
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
 1. Build amplicon from input reads ([`pixelator amplicon`](https://github.com/PixelgenTechnologies/pixelator))
 2. Read QC and filtering, correctness of the pixel binding sequence sequences ([`pixelator preqc | pixelator adapterqc`](https://github.com/PixelgenTechnologies/pixelator))
@@ -43,22 +34,6 @@ It takes a samplesheet as input and will process your data using `pixelator` to 
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how
 > to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline)
 > with `-profile test` before running the workflow on actual data.
-
-<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
-     Explain what rows and columns represent. For instance (please edit as appropriate):
-
-First, prepare a samplesheet with your input data that looks as follows:
-
-`samplesheet.csv`:
-
-```csv
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-```
-
-Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
-
--->
 
 First, prepare a samplesheet with your input data that looks as follows:
 
@@ -95,7 +70,7 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-nf-core/pixelator was originally written for [Pixelgen Technologies AB](https://www.pixelgen.tech/) by:
+nf-core/pixelator was originally written for [Pixelgen Technologies AB](https://www.pixelgen.com/) by:
 
 - Florian De Temmerman
 - Johan Dahlberg
@@ -113,8 +88,6 @@ For further information or help, don't hesitate to get in touch on the [Slack `#
 
 <!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
 <!-- If you use  nf-core/pixelator for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
-
-<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 
