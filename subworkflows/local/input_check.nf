@@ -139,8 +139,8 @@ def get_data_basedir(URI samplesheet, String input_basedir) {
     if (uri.getScheme() != null) {
         if (!uri.path.endsWith('/')) {
             def newUrl = new URI(
-                    uri.getProtocol(), uri.getUserInfo(), uri.getHost(),
-                    uri.getPort(), uri.getPath() + '/', url.getQuery(), url.getRef()
+                    uri.getScheme(), uri.getUserInfo(), uri.getHost(),
+                    uri.getPort(), uri.getPath() + '/', uri.getQuery(), uri.getFragment()
             )
             return newUrl
         }

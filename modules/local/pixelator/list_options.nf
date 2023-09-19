@@ -3,7 +3,7 @@ process PIXELATOR_LIST_OPTIONS {
 
 
     conda "bioconda::pixelator=0.13.1"
-    container "biocontainers/pixelator:0.13.1"
+    container "biocontainers/pixelator:0.13.1--pyh7cba7a3_0"
 
     output:
     path "design_options.txt"     , emit: designs

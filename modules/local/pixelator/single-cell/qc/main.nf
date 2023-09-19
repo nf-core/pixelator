@@ -4,7 +4,7 @@ process PIXELATOR_QC {
 
 
     conda "bioconda::pixelator=0.13.1"
-    container "biocontainers/pixelator:0.13.1"
+    container "biocontainers/pixelator:0.13.1--pyh7cba7a3_0"
 
     input:
     tuple val(meta), path(reads)

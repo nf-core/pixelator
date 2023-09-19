@@ -9,7 +9,7 @@ process PIXELATOR_COLLECT_METADATA {
     cache false
 
     conda "bioconda::pixelator=0.13.1"
-    container "biocontainers/pixelator:0.13.1"
+    container "biocontainers/pixelator:0.13.1--pyh7cba7a3_0"
 
     input:
 
