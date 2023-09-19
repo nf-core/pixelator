@@ -3,7 +3,7 @@ process PIXELATOR_COLLAPSE {
     label 'process_medium'
 
     conda "bioconda::pixelator=0.13.1"
-    container "biocontainers/pixelator:0.13.1"
+    container "biocontainers/pixelator:0.13.1--pyh7cba7a3_0"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel)
