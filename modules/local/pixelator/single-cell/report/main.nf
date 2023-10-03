@@ -17,14 +17,17 @@ process PIXELATOR_REPORT {
     path annotate_data      , stageAs: "results/annotate/*"
     path analysis_data      , stageAs: "results/analysis/*"
 
+
     output:
-    path "report/*.html", emit: reports
-    path "versions.yml",  emit: versions
+    path "report/*.html"        , emit: reports
+    path "versions.yml"         , emit: versions
+    path "*pixelator-*.log"     , emit: log
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
+    def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
     def panelOpt = (
         panel      ? "--panel $panel"      :
@@ -34,6 +37,9 @@ process PIXELATOR_REPORT {
 
     """
     pixelator \\
+        --cores $task.cpus \\
+        --log-file ${prefix}.pixelator-report.log \\
+        --verbose \\
         single-cell \\
         report \\
         --output . \\
