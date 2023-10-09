@@ -5,3 +5,5 @@ lint:
   files_exist:
     - assets/multiqc_config.yml
     - conf/igenomes.config
+  files_unchanged:
+    - lib/NfcoreTemplate.groovy
