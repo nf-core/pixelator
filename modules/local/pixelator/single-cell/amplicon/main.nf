@@ -3,8 +3,8 @@ process PIXELATOR_AMPLICON {
     label 'process_low'
 
 
-    conda "bioconda::pixelator=0.13.1"
-    container "biocontainers/pixelator:0.13.1--pyh7cba7a3_0"
+    conda "bioconda::pixelator=0.14.0"
+    container "biocontainers/pixelator:0.14.0--pyh7cba7a3_0"
 
     input:
     tuple val(meta), path(reads)
