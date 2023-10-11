@@ -147,7 +147,7 @@ class NfcoreTemplate {
             } catch (all) {
                 // Catch failures and try with plaintext
                 def mail_cmd = [ 'mail', '-s', subject, '--content-type=text/html', email_address ]
-                if ( mqc_report.size() <= max_multiqc_email_size.toBytes() ) {
+                if ( mqc_report != null && mqc_report.size() <= max_multiqc_email_size.toBytes() ) {
                     mail_cmd += [ '-A', mqc_report ]
                 }
                 mail_cmd.execute() << email_html
