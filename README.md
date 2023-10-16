@@ -16,7 +16,7 @@
 **nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for analysis of Molecular Pixelation assays.
 It takes a samplesheet as input and will process your data using `pixelator` to produce final antibody counts.
 
-![](./docs/images/nf_core_pixelator_metromap.svg)
+![](./docs/images/nf-core-pixelator-metromap.svg)
 
 1. Build amplicon from input reads ([`pixelator amplicon`](https://github.com/PixelgenTechnologies/pixelator))
 2. Read QC and filtering, correctness of the pixel binding sequence sequences ([`pixelator preqc | pixelator adapterqc`](https://github.com/PixelgenTechnologies/pixelator))
