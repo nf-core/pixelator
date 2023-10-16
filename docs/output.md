@@ -23,16 +23,12 @@ The pipeline consists of the following steps:
 
 ### Preprocessing
 
-The preprocessing step uses `pixelator single-cell concatenate` to create a full amplicon sequence from both single-end and paired-end data.
-It returns a single fastq per sample containing fixed length amplicons.
-This step will also calculate Q30 quality scores for different regions of the library.
-
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
 
-  - `concatenate`
+  - `amplicon`
 
     - `<sample-id>.merged.fastq.gz`:
       Combine R1 and R2 reads into full amplicon reads and calculate Q30 scores for the amplicon regions.
@@ -40,21 +36,15 @@ This step will also calculate Q30 quality scores for different regions of the li
     - `<sample-id>.meta.json`: Command invocation metadata.
 
   - `logs`
-    - `<sample-id>.pixelator-concatenate.log`: pixelator log output.
+    - `<sample-id>.pixelator-amplicon.log`: pixelator log output.
 
 </details>
 
+The preprocessing step uses `pixelator single-cell amplicon` to create full-length amplicon sequences from both single-end and paired-end data.
+It returns a single fastq file per sample containing fixed length amplicons.
+This step will also calculate Q30 quality scores for different regions of the library.
+
 ### Quality control
-
-Quality control is performed using `pixelator single-cell preqc` and `pixelator single-cell adapterqc`.
-
-The preqc stage performs QC and quality filtering of the raw sequencing data.
-It also generates a QC report in HTML and JSON formats. It saves processed reads as well as reads that were
-discarded (i.e. were too short, had too many Ns, or too low quality, etc.). Internally `preqc`
-uses [Fastp](https://github.com/OpenGene/fastp), and `adapterqc`
-uses [Cutadapt](https://cutadapt.readthedocs.io/en/stable/).
-
-The `adapterqc` stage checks for the presence and correctness of the pixel binding sequences. It also generates a QC report in JSON format. It saves processed reads as well as discarded reads (i.e. reads that did not have a match for both pixel binding sequences).
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -78,11 +68,17 @@ The `adapterqc` stage checks for the presence and correctness of the pixel bindi
 
 </details>
 
-### Demultiplexing
+Quality control is performed using `pixelator single-cell preqc` and `pixelator single-cell adapterqc`.
 
-The `pixelator single-cell demux` command assigns a marker (barcode) to each read. It also generates QC report in
-JSON format. It saves processed reads (one per antibody) as well as discarded reads with no match to the
-given barcodes/antibodies.
+The preqc stage performs QC and quality filtering of the raw sequencing data.
+It also generates a QC report in HTML and JSON formats. It saves processed reads as well as reads that were
+discarded (i.e. were too short, had too many Ns, or too low quality, etc.). Internally `preqc`
+uses [Fastp](https://github.com/OpenGene/fastp), and `adapterqc`
+uses [Cutadapt](https://cutadapt.readthedocs.io/en/stable/).
+
+The `adapterqc` stage checks for the presence and correctness of the pixel binding sequences. It also generates a QC report in JSON format. It saves processed reads as well as discarded reads (i.e. reads that did not have a match for both pixel binding sequences).
+
+### Demultiplexing
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -101,16 +97,11 @@ given barcodes/antibodies.
 
 </details>
 
+The `pixelator single-cell demux` command assigns a marker (barcode) to each read. It also generates QC report in
+JSON format. It saves processed reads (one per antibody) as well as discarded reads with no match to the
+given barcodes/antibodies.
+
 ### Duplicate removal and error correction
-
-This step uses the `pixelator single-cell collapse` command.
-
-The `collapse` command removes duplicate reads and performs error correction.
-This is achieved using the unique pixel identifier and unique molecular identifier sequences to check for
-uniqueness, collapse and compute a read count. The command generates a QC report in JSON format.
-Errors are allowed when collapsing reads if `--algorithm` is set to `adjacency` (this is the default option).
-
-The output format of this command is an edge list in CSV format.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -128,17 +119,16 @@ The output format of this command is an edge list in CSV format.
 
 </details>
 
+This step uses the `pixelator single-cell collapse` command.
+
+The `collapse` command removes duplicate reads and performs error correction.
+This is achieved using the unique pixel identifier and unique molecular identifier sequences to check for
+uniqueness, collapse and compute a read count. The command generates a QC report in JSON format.
+Errors are allowed when collapsing reads if `--algorithm` is set to `adjacency` (this is the default option).
+
+The output format of this command is an edge list in CSV format.
+
 ### Compute connected components
-
-This step uses the `pixelator single-cell graph` command.
-The input is the edge list dataframe (CSV) generated in the collapse step and after filtering it
-by count (`--graph_min_count`), the connected components of the graph (graphs) are computed and
-added to the edge list in a column called "component".
-
-The graph command has the option to recover components (technical multiplets) into smaller
-components using community detection to find and remove problematic edges.
-(See `--multiplet_recovery`). The information to keep track of the original and
-new (recovered) components are stored in a file (components_recovered.csv).
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -162,13 +152,17 @@ new (recovered) components are stored in a file (components_recovered.csv).
 
 </details>
 
+This step uses the `pixelator single-cell graph` command.
+The input is the edge list dataframe (CSV) generated in the collapse step and after filtering it
+by count (`--graph_min_count`), the connected components of the graph (graphs) are computed and
+added to the edge list in a column called "component".
+
+The graph command has the option to recover components (technical multiplets) into smaller
+components using community detection to find and remove problematic edges.
+(See `--multiplet_recovery`). The information to keep track of the original and
+new (recovered) components are stored in a file (components_recovered.csv).
+
 ### Cell-calling, filtering, and annotation
-
-This step uses the `pixelator single-cell annotate` command.
-
-The annotate command takes as input the edge list (CSV) file generated in the graph command. It parses, and filters the
-edgelist to find putative cells, and it will generate a pxl file containing the edgelist, and an
-(AnnData object)[https://anndata.readthedocs.io/en/latest/] as well as some useful medatadata.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -186,18 +180,13 @@ edgelist to find putative cells, and it will generate a pxl file containing the 
     - `<sample-id>.pixelator-annotate.log`: pixelator log output.
     </details>
 
+This step uses the `pixelator single-cell annotate` command.
+
+The annotate command takes as input the edge list (CSV) file generated in the graph command. It parses, and filters the
+edgelist to find putative cells, and it will generate a pxl file containing the edgelist, and an
+(AnnData object)[https://anndata.readthedocs.io/en/latest/] as well as some useful medatadata.
+
 ### Downstream analysis
-
-This step uses the `pixelator single-cell analysis` command.
-Downstream analysis is performed on the `pxl` file generated by the previous stage.
-The results of the analysis is added to the pxl file.
-
-Currently, the following analysis can be performed (if enabled):
-
-- polarization scores (enable with `--compute_polarization`)
-- co-localization scores (enable with `--compute_colocalization`)
-
-This step can be skipped using the `--skip_analysis` option.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -215,13 +204,18 @@ This step can be skipped using the `--skip_analysis` option.
 
 </details>
 
+This step uses the `pixelator single-cell analysis` command.
+Downstream analysis is performed on the `pxl` file generated by the previous stage.
+The results of the analysis is added to the pxl file.
+
+Currently, the following analysis can be performed (if enabled):
+
+- polarization scores (enable with `--compute_polarization`)
+- co-localization scores (enable with `--compute_colocalization`)
+
+This step can be skipped using the `--skip_analysis` option.
+
 ### Generate reports
-
-This step uses the `pixelator single-cell report` command.
-This step will collect metrics and outputs generated by previous stages
-and generate a report in HTML format for each sample.
-
-This step can be skipped using the `--skip_report` option.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -233,6 +227,14 @@ This step can be skipped using the `--skip_report` option.
     - `<sample-id>.pixelator-report.log`: Pixelator log output.
 
 </details>
+
+This step uses the `pixelator single-cell report` command.
+This step will collect metrics and outputs generated by previous stages
+and generate a report in HTML format for each sample.
+
+This step can be skipped using the `--skip_report` option.
+
+More information on the report can be found in the pixelator documentation [here](https://software.pixelgen.com/pixelator/outputs/web-report/)
 
 ### Pipeline information
 

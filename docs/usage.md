@@ -37,14 +37,13 @@ uropod_stimulated,D21,human-sc-immunology-spatial-proteomics,uropod_stimulated_S
 Columns not defined in the table below are ignored by the pipeline but can be useful
 to add extra information for downstream processing.
 
-| Column       | Description                                                                                                                                                                            |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`     | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `design`     | The name of the pixelator design configuration.                                                                                                                                        |
-| `panel`      | Name of the panel to use.                                                                                                                                                              |
-| `panel_file` | Path to a CSV file containing a custom panel.                                                                                                                                          |
-| `fastq_1`    | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
-| `fastq_2`    | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
+| Column                              | Required | Description                                                                                                                                                                            |
+| ----------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`                            | Yes      | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
+| `design`                            | Yes      | The name of the pixelator design configuration.                                                                                                                                        |
+| `panel` <br />or<br /> `panel_file` | Yes      | Name of the panel to use. <br />or<br /> Path to a CSV file containing a custom panel.                                                                                                 |
+| `fastq_1`                           | Yes      | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
+| `fastq_2`                           | No       | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". Parameter only used if you are running paired-end.               |
 
 The `panel` and `panel_file` options are mutually exclusive. If both are specified, the pipeline will throw an error.
 One of them has to be specified.
@@ -56,10 +55,10 @@ The pipeline will auto-detect whether a sample is single- or paired-end based on
 The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
 
 ```csv
-sample,design,panel,panel_file,fastq_1,fastq_2
-uropod_control_1,D21,human-sc-immunology-spatial-proteomics,,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
-uropod_control_1,D21,human-sc-immunology-spatial-proteomics,,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
-uropod_control_1,D21,human-sc-immunology-spatial-proteomics,,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
+sample,design,panel,fastq_1,fastq_2
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
 ```
 
 ### Relative paths
@@ -96,6 +95,41 @@ For example, using the same samplesheet as above, but with the samplesheet on th
 ```shell
 nextflow run nf-core/pixelator --input samplesheet.csv --input_basedir s3://my-company-data/experiment-1/
 ```
+
+### Design
+
+The `design` column specifies the name of the pixelator assay design configuration to use.
+
+A list of available designs can be listed by running following command:
+
+```shell
+pixelator single-cell --list-designs
+```
+
+Currently, a single design is available:
+
+- `D21`
+
+### Panels
+
+The panel file contains all information used to link antibodies barcodes to their respective targets.
+Panel files can be specified in two ways:
+
+- Using a predefined panel name to use the default build in panels.
+- Passing a csv file with a customized panel.
+
+Predefined panels can be passed in the `panel` field. Custom panels can be passed in the `panel_file` field.
+Every sample should have either `panel` or `panel_file` specified.
+
+A list of available panels can be listed by running following command:
+
+```shell
+pixelator single-cell --list-panels
+```
+
+Currently, a single built-in panel is available:
+
+- `human-sc-immunology-spatial-proteomics`
 
 ## Running the pipeline
 
