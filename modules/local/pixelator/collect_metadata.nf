@@ -8,8 +8,8 @@ process PIXELATOR_COLLECT_METADATA {
     label 'process_single'
     cache false
 
-    conda "bioconda::pixelator=0.14.0"
-    container "biocontainers/pixelator:0.14.0--pyh7cba7a3_0"
+    conda "bioconda::pixelator=0.15.0"
+    container "biocontainers/pixelator:0.15.0--pyh7cba7a3_0"
 
     input:
 

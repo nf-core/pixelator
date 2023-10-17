@@ -3,8 +3,8 @@ process PIXELATOR_GRAPH {
     label 'process_medium'
 
 
-    conda "bioconda::pixelator=0.14.0"
-    container "biocontainers/pixelator:0.14.0--pyh7cba7a3_0"
+    conda "bioconda::pixelator=0.15.0"
+    container "biocontainers/pixelator:0.15.0--pyh7cba7a3_0"
 
     input:
     tuple val(meta), path(edge_list)
