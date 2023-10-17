@@ -1,5 +1,5 @@
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-##     nf-core/pixelator 1.0.0dev
+##     nf-core/pixelator 1.0.0
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##     This is an example parameter file to pass to the `-params-file` option
 ##     of nextflow run with the nf-core/pixelator pipeline.
