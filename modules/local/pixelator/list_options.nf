@@ -3,7 +3,9 @@ process PIXELATOR_LIST_OPTIONS {
 
 
     conda "bioconda::pixelator=0.15.0"
-    container "biocontainers/pixelator:0.15.0--pyh7cba7a3_0"
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/pixelator:0.15.0--pyh7cba7a3_0' :
+        'biocontainers/pixelator:0.15.0--pyh7cba7a3_0' }"
 
     output:
     path "design_options.txt"     , emit: designs
