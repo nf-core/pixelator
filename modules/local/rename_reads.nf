@@ -3,11 +3,10 @@ process RENAME_READS {
     label "process_single"
 
     conda "conda-forge::sed=4.7"
-    if (workflow.containerEngine == 'singularity' && !tast.ext.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/ubuntu:20.04"
-    } else {
-        container "registry.hub.docker.com/biocontainers/biocontainers:v1.2.0_cv2"
-    }
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/ubuntu:20.04' :
+        'registry.hub.docker.com/biocontainers/biocontainers:v1.2.0_cv2' }"
+
 
     input:
     tuple val(meta), path(reads)
