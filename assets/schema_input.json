@@ -6,11 +6,36 @@
     "type": "array",
     "items": {
         "type": "object",
+        "required": ["sample", "design", "fastq_1"],
         "properties": {
             "sample": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Sample name must be provided and cannot contain spaces"
+                "errorMessage": "Sample name must be provided and cannot contain spaces",
+                "meta": ["id"]
+            },
+            "design": {
+                "type": "string",
+                "meta": ["design"],
+                "errorMessage": "Design must be specified"
+            },
+            "panel": {
+                "errorMessage": "Panel name must be specified",
+                "type": "string",
+                "meta": ["panel"]
+            },
+            "panel_file": {
+                "errorMessage": "Panel file must either be left empty or cannot contain spaces and must have extension '.csv', '.tsv' or '.yaml'",
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "pattern": "^\\S+.(csv|tsv|ya?ml)$"
+                    },
+                    {
+                        "type": "string",
+                        "maxLength": 0
+                    }
+                ]
             },
             "fastq_1": {
                 "type": "string",
@@ -30,7 +55,6 @@
                     }
                 ]
             }
-        },
-        "required": ["sample", "fastq_1"]
+        }
     }
 }

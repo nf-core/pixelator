@@ -15,16 +15,25 @@
                 "input": {
                     "type": "string",
                     "format": "file-path",
-                    "mimetype": "text/csv",
-                    "pattern": "^\\S+\\.csv$",
                     "schema": "assets/schema_input.json",
+                    "mimetype": "text/csv",
+                    "exists": true,
+                    "pattern": "^\\S+\\.(csv|tsv)$",
                     "description": "Path to comma-separated file containing information about the samples in the experiment.",
                     "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/pixelator/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
                 },
+                "input_basedir": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "exists": false,
+                    "description": "Path to a local or remote directory that is the \"current working directory\" for relative paths defined in the input samplesheet",
+                    "fa_icon": "fas fa-folder"
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",
+                    "default": "./results",
                     "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
                     "fa_icon": "fas fa-folder-open"
                 },
@@ -34,49 +43,277 @@
                     "fa_icon": "fas fa-envelope",
                     "help_text": "Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then you don't need to specify this on the command line for every run.",
                     "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
-                },
-                "multiqc_title": {
-                    "type": "string",
-                    "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
-                    "fa_icon": "fas fa-file-signature"
                 }
             }
         },
-        "reference_genome_options": {
-            "title": "Reference genome options",
+        "preqc_options": {
+            "title": "QC/Filtering/Trimming options",
             "type": "object",
-            "fa_icon": "fas fa-dna",
-            "description": "Reference genome related files and options required for the workflow.",
+            "fa_icon": "fas fa-terminal",
             "properties": {
-                "genome": {
-                    "type": "string",
-                    "description": "Name of iGenomes reference.",
-                    "fa_icon": "fas fa-book",
-                    "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details."
+                "trim_front": {
+                    "fa_icon": "fas backward-step",
+                    "type": "integer",
+                    "description": "Trim N bases from the front of the reads",
+                    "default": 0
                 },
-                "fasta": {
-                    "type": "string",
-                    "format": "file-path",
-                    "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "description": "Path to FASTA genome file.",
-                    "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
-                    "fa_icon": "far fa-file-code"
+                "trim_tail": {
+                    "fa_icon": "fas forward-step",
+                    "type": "integer",
+                    "description": "Trim N bases from the tail of the reads",
+                    "default": 0
                 },
-                "igenomes_base": {
+                "max_length": {
+                    "fa_icon": "fas up-right-and-down-left-from-center",
+                    "type": "integer",
+                    "description": "The maximum length of a read",
+                    "help_text": "Reads longer then given length will be trimmed to the given length. If you set this argument it will overrule the value from the chosen design"
+                },
+                "min_length": {
+                    "fa_icon": "fas down-left-and-up-right-to-center",
+                    "type": "integer",
+                    "description": "The minimum length (bases) of a read",
+                    "help_text": "Reads shorter then given length will be discarded. If you set this argument it will overrule the value from the chosen design."
+                },
+                "max_n_bases": {
+                    "fa_icon": "fas n",
+                    "description": "The maximum number of Ns allowed in a read",
+                    "help_text": "The default value of 0 means any reads with N in it will be filtered out",
+                    "type": "integer",
+                    "default": 0
+                },
+                "avg_qual": {
+                    "fa_icon": "fas gauge",
+                    "description": "Minimum avg. quality a read must have (0 will disable the filter)",
+                    "type": "integer",
+                    "default": 20
+                },
+                "dedup": {
+                    "fa_icon": "fas clone",
+                    "description": "Remove duplicated reads (exact same sequence)",
+                    "type": "boolean",
+                    "default": false
+                },
+                "remove_polyg": {
+                    "fa_icon": "fas g",
+                    "description": "Remove PolyG sequences (length of 10 or more)",
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        },
+        "adapterqc_options": {
+            "title": "Adapter QC Options",
+            "properties": {
+                "adapterqc_mismatches": {
+                    "fa_icon": "fas not-equal",
+                    "description": "The number of mismatches allowed (in percentage) [default: 0.1; 0.0<=x<=0.9]",
+                    "type": "number",
+                    "default": 0.1,
+                    "minimum": 0.0,
+                    "maximum": 0.9
+                }
+            }
+        },
+        "demux_options": {
+            "title": "Demux options",
+            "properties": {
+                "demux_mismatches": {
+                    "fa_icon": "fas not-equal",
+                    "description": "The number of mismatches allowed (as a fraction)",
+                    "type": "number",
+                    "default": 0.1,
+                    "minimum": 0.0,
+                    "maximum": 0.9
+                },
+                "demux_min_length": {
+                    "fa_icon": "fas down-left-and-up-right-to-center",
+                    "description": "The minimum length of the barcode that must overlap when matching",
+                    "help_text": "If you set this argument it will overrule the value from the chosen design",
+                    "type": "integer"
+                }
+            }
+        },
+        "collapse_options": {
+            "title": "Collapse options",
+            "properties": {
+                "markers_ignore": {
+                    "fa-icon": "fas fa-list",
+                    "description": "A list of comma separated antibodies to discard",
                     "type": "string",
-                    "format": "directory-path",
-                    "description": "Directory / URL base for iGenomes references.",
-                    "default": "s3://ngi-igenomes/igenomes",
-                    "fa_icon": "fas fa-cloud-download-alt",
+                    "pattern": "(\\S+)?(,\\S+)*"
+                },
+                "algorithm": {
+                    "fa_icon": "fas code-fork",
+                    "description": "The algorithm to use for collapsing (adjacency will peform error correction using the number of mismatches given)",
+                    "default": "adjacency",
+                    "enum": ["adjacency", "unique"],
+                    "type": "string"
+                },
+                "max_neighbours": {
+                    "fa_icon": "fas circle-nodes",
+                    "description": "The maximum number of neighbors to use when searching for similar sequences. This number depends on the sequence depth and the ratio of erroneous molecules expected. A high value can make the algorithm slower. This is only used when algorithm is set to 'adjacency'",
+                    "default": 60,
+                    "minimum": 1,
+                    "maximum": 250,
+                    "type": "integer",
                     "hidden": true
                 },
-                "igenomes_ignore": {
+                "collapse_mismatches": {
+                    "fa_icon": "fas not-equal",
+                    "description": "The number of mismatches allowed when collapsing (adjacency)",
+                    "type": "integer",
+                    "default": 2,
+                    "minimum": 0,
+                    "maximum": 5
+                },
+                "collapse_min_count": {
+                    "fa_icon": "fas more-than-equal",
+                    "description": "Discard molecules with with a count (reads) lower than this value",
+                    "default": 2,
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "collapse_use_counts": {
+                    "description": "Use counts when collapsing (the difference in counts between two molecules must be more than double in order to be collapsed)",
+                    "type": "boolean"
+                }
+            }
+        },
+        "graph_options": {
+            "title": "Options for pixelator graph command.",
+            "properties": {
+                "multiplet_recovery": {
+                    "description": "Activate the multiplet recovery using leiden community detection",
                     "type": "boolean",
-                    "description": "Do not load the iGenomes reference config.",
-                    "fa_icon": "fas fa-ban",
-                    "hidden": true,
-                    "help_text": "Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`."
+                    "default": true
+                },
+                "leiden_iterations": {
+                    "fa_icon": "fas repeat",
+                    "description": "Number of iterations for the leiden algorithm, high values will decrease the variance of the results but increase the runtime [default: 10; 1<=x<=100]",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 10,
+                    "hidden": true
+                },
+                "graph_min_count": {
+                    "fa_icon": "fas less-than-equal",
+                    "description": "Discard edges (pixels) with a count (reads) lower than this, use 1 to disable",
+                    "type": "integer",
+                    "default": 2,
+                    "minimum": 1,
+                    "maximum": 50,
+                    "hidden": true
+                }
+            }
+        },
+        "annotate_options": {
+            "title": "Options for pixelator annotate command.",
+            "properties": {
+                "min_size": {
+                    "description": "The minimum size (pixels) a component/cell can have (disabled by default)",
+                    "type": "integer"
+                },
+                "max_size": {
+                    "description": "The maximum size (pixels) a component/cell can have (disabled by default)",
+                    "type": "integer"
+                },
+                "dynamic_filter": {
+                    "description": " Enable the estimation of dynamic size filters using a log-rank approach both: estimate both min and max size, min: estimate min size (--min-size), max: estimate max size (--max-size)",
+                    "type": "string",
+                    "enum": ["both", "min", "max"],
+                    "default": "min"
+                },
+                "aggregate_calling": {
+                    "description": "Enable aggregate calling, information on potential aggregates will be added to the output data",
+                    "type": "boolean",
+                    "default": true
+                }
+            }
+        },
+        "analysis_options": {
+            "title": "Options for pixelator analysis command.",
+            "properties": {
+                "skip_analysis": {
+                    "description": "Skip analysis step",
+                    "type": "boolean",
+                    "default": false
+                },
+                "compute_polarization": {
+                    "description": "Compute polarization scores matrix (clusters by markers)",
+                    "type": "boolean",
+                    "default": true
+                },
+                "compute_colocalization": {
+                    "description": " Compute colocalization scores (marker by marker) for each component",
+                    "type": "boolean",
+                    "default": true
+                },
+                "use_full_bipartite": {
+                    "description": "Use the bipartite graph instead of the one-node projection when computing polarization, coabundance and colocalization scores",
+                    "type": "boolean",
+                    "default": false
+                },
+                "polarization_normalization": {
+                    "description": "Which approach to use to normalize the antibody counts.",
+                    "help_text": "- `raw`: use the raw counts.\n- `CLR`: use the CLR-transformed counts.\n- `denoise`: use CLR-transformed counts and subtract the counts of control antibodies",
+                    "type": "string",
+                    "enum": ["raw", "clr", "denoise"],
+                    "default": "clr"
+                },
+                "polarization_binarization": {
+                    "fa_icon": "fas binary",
+                    "description": "Transform the antibody counts to 0-1 (binarize) when computing polarization",
+                    "type": "boolean",
+                    "default": false
+                },
+                "colocalization_transformation": {
+                    "type": "string",
+                    "enum": ["raw", "clr", "log1p", "relative"],
+                    "default": "log1p",
+                    "description": "Select the type of transformation to use on the node by antibody counts matrix when computing colocalization"
+                },
+                "colocalization_neighbourhood_size": {
+                    "type": "integer",
+                    "description": "Select the size of the neighborhood to use when computing colocalization metrics on each component",
+                    "default": 1,
+                    "minimum": 0
+                },
+                "colocalization_n_permutations": {
+                    "type": "integer",
+                    "description": "Set the number of permutations use to compute the empirical p-value for the colocalization score",
+                    "default": 50,
+                    "minimum": 5
+                },
+                "colocalization_min_region_count": {
+                    "type": "integer",
+                    "description": "The minimum number of counts in a region for it to be concidered valid for computing colocalization",
+                    "default": 5,
+                    "minimum": 0
+                }
+            }
+        },
+        "report_options": {
+            "title": "Options for pixelator report command.",
+            "properties": {
+                "skip_report": {
+                    "description": "Skip report generation",
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        },
+        "global_config_options": {
+            "title": "Global options",
+            "type": "object",
+            "description": "Global configuration options specific to nf-core/pixelator.",
+            "properties": {
+                "pixelator_container": {
+                    "type": "string",
+                    "format": "url",
+                    "description": "Override the container image reference to use for all steps using the `pixelator` command.",
+                    "help_text": "Use this to force the pipeline to use a different image version in all steps that use the pixelator command.\nThe pipeline is not garanteed to work when using different pixelator versions."
                 }
             }
         },
@@ -157,7 +394,7 @@
                     "description": "Maximum amount of time that can be requested for any single job.",
                     "default": "240.h",
                     "fa_icon": "far fa-clock",
-                    "pattern": "^(\\d+\\.?\\s*(s|m|h|day)\\s*)+$",
+                    "pattern": "^(\\d+\\.?\\s*(s|m|h|d|day)\\s*)+$",
                     "hidden": true,
                     "help_text": "Use to set an upper-limit for the time requirement for each process. Should be a string in the format integer-unit e.g. `--max_time '2.h'`"
                 }
@@ -205,14 +442,6 @@
                     "fa_icon": "fas fa-remove-format",
                     "hidden": true
                 },
-                "max_multiqc_email_size": {
-                    "type": "string",
-                    "description": "File size limit when attaching MultiQC reports to summary emails.",
-                    "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
-                    "default": "25.MB",
-                    "fa_icon": "fas fa-file-upload",
-                    "hidden": true
-                },
                 "monochrome_logs": {
                     "type": "boolean",
                     "description": "Do not use coloured log outputs.",
@@ -225,23 +454,6 @@
                     "fa_icon": "fas fa-people-group",
                     "help_text": "Incoming hook URL for messaging service. Currently, MS Teams and Slack are supported.",
                     "hidden": true
-                },
-                "multiqc_config": {
-                    "type": "string",
-                    "description": "Custom config file to supply to MultiQC.",
-                    "fa_icon": "fas fa-cog",
-                    "hidden": true
-                },
-                "multiqc_logo": {
-                    "type": "string",
-                    "description": "Custom logo file to supply to MultiQC. File name must also be set in the MultiQC config file",
-                    "fa_icon": "fas fa-image",
-                    "hidden": true
-                },
-                "multiqc_methods_description": {
-                    "type": "string",
-                    "description": "Custom MultiQC yaml file containing HTML including a methods description.",
-                    "fa_icon": "fas fa-cog"
                 },
                 "tracedir": {
                     "type": "string",
@@ -257,12 +469,26 @@
                     "fa_icon": "fas fa-check-square",
                     "hidden": true
                 },
-                "show_hidden_params": {
+                "validationShowHiddenParams": {
                     "type": "boolean",
                     "fa_icon": "far fa-eye-slash",
                     "description": "Show all params when using `--help`",
                     "hidden": true,
                     "help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters."
+                },
+                "validationFailUnrecognisedParams": {
+                    "type": "boolean",
+                    "fa_icon": "far fa-check-circle",
+                    "description": "Validation of parameters fails when an unrecognised parameter is found.",
+                    "hidden": true,
+                    "help_text": "By default, when an unrecognised parameter is found, it returns a warinig."
+                },
+                "validationLenientMode": {
+                    "type": "boolean",
+                    "fa_icon": "far fa-check-circle",
+                    "description": "Validation of parameters in lenient more.",
+                    "hidden": true,
+                    "help_text": "Allows string values that are parseable as numbers or booleans. For further information see [JSONSchema docs](https://github.com/everit-org/json-schema#lenient-mode)."
                 }
             }
         }
@@ -272,7 +498,31 @@
             "$ref": "#/definitions/input_output_options"
         },
         {
-            "$ref": "#/definitions/reference_genome_options"
+            "$ref": "#/definitions/preqc_options"
+        },
+        {
+            "$ref": "#/definitions/adapterqc_options"
+        },
+        {
+            "$ref": "#/definitions/demux_options"
+        },
+        {
+            "$ref": "#/definitions/collapse_options"
+        },
+        {
+            "$ref": "#/definitions/graph_options"
+        },
+        {
+            "$ref": "#/definitions/annotate_options"
+        },
+        {
+            "$ref": "#/definitions/analysis_options"
+        },
+        {
+            "$ref": "#/definitions/report_options"
+        },
+        {
+            "$ref": "#/definitions/global_config_options"
         },
         {
             "$ref": "#/definitions/institutional_config_options"
