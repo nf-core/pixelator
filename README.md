@@ -77,8 +77,6 @@ nf-core/pixelator was originally written for [Pixelgen Technologies AB](https://
 - Johan Dahlberg
 - Alvaro Martinez Barrio
 
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
-
 ## Contributions and Support
 
 If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
