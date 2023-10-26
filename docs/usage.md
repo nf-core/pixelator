@@ -241,8 +241,8 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
 
 :::warning
 Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
-This causes issues in some dependencies. As a workaround, you can revert tot the old behavior by setting the environment variable
-`NXF_APPTAINER_HOME_MOUNT` to `true` in the machine from which you launch the pipeline.
+This causes issues in some dependencies. As a workaround, you can revert to the old behavior by setting the environment variable
+`NXF_APPTAINER_HOME_MOUNT` or `NXF_SINGULARITY_HOME_MOUNT` to `true` in the machine from which you launch the pipeline.
 :::
 
 ### `-resume`
