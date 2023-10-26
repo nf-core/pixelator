@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Enhancements & fixes
 
 - [[PR #66](https://github.com/nf-core/pixelator/pull/66)] - Add a warning and workaround for singularity & apptainer
+- Cleanup some linting warnings
+- Update docker image in RENAME_READS to match the singularity container
 
 ### Software dependencies
 

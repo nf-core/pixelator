@@ -1,11 +1,11 @@
 process RENAME_READS {
     tag "$meta.id"
-    label "process_single"
+    label 'process_single'
 
     conda "conda-forge::sed=4.7"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/ubuntu:20.04' :
-        'registry.hub.docker.com/biocontainers/biocontainers:v1.2.0_cv2' }"
+        'nf-core/ubuntu:20.04' }"
 
 
     input:
