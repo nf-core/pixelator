@@ -3,10 +3,10 @@ process PIXELATOR_QC {
     label 'process_medium'
 
 
-    conda "bioconda::pixelator=0.15.0"
+    conda "bioconda::pixelator=0.15.2"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.15.0--pyh7cba7a3_0' :
-        'biocontainers/pixelator:0.15.0--pyh7cba7a3_0' }"
+        'https://depot.galaxyproject.org/singularity/pixelator:0.15.2--pyh7cba7a3_0' :
+        'biocontainers/pixelator:0.15.2--pyh7cba7a3_0' }"
 
     input:
     tuple val(meta), path(reads)

@@ -27,6 +27,11 @@ It takes a samplesheet as input and will process your data using `pixelator` to 
 7. Analyze the cells for polarization and colocalization ([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
 8. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
 
+> **Warning**
+> Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
+> This causes issues in some dependencies. As a workaround, you can revert to the old behavior by setting the environment variable
+> `NXF_APPTAINER_HOME_MOUNT` or `NXF_SINGULARITY_HOME_MOUNT` to `true` in the machine from which you launch the pipeline.
+
 ## Usage
 
 :::note
@@ -85,8 +90,7 @@ For further information or help, don't hesitate to get in touch on the [Slack `#
 
 ## Citations
 
-<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
-If you use  nf-core/pixelator for your analysis, please cite it using the following doi: [10.5281/zenodo.10015112](https://doi.org/10.5281/zenodo.10015112)
+If you use nf-core/pixelator for your analysis, please cite it using the following doi: [10.5281/zenodo.10015112](https://doi.org/10.5281/zenodo.10015112)
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 
