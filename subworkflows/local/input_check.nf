@@ -79,12 +79,12 @@ def resolve_relative_path(relative_path, URI samplesheet_path) {
 
     // If a scheme is given we keep it as given
     if (uri.getScheme() != null) {
-        return uri
+        return relative_path
     }
 
-    def path = new File(relative_path);
+    def path = new File(relative_path)
     if (path.isAbsolute()) {
-        return path
+        return relative_path
     }
 
     // Resolve relative paths agains the samplesheet_path
