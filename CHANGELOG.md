@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.2dev] - UNRELEASED
 
+### Enhancements & fixes
+
+- [[PR #70](https://github.com/nf-core/pixelator/pull/70)] - Fix loading of absolute paths and urls in input samplesheet
+
 ## [1.0.1] - 2023-10-27
 
 ### Enhancements & fixes
