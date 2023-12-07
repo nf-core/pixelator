@@ -11,12 +11,12 @@ process PIXELATOR_COLLAPSE {
     tuple val(meta), path(reads), path(panel_file), val(panel)
 
     output:
-    tuple val(meta), path("collapse/*.collapsed.csv.gz"), emit: collapsed
-    tuple val(meta), path("collapse/*.report.json")     , emit: report_json
-    tuple val(meta), path("collapse/*.meta.json")       , emit: metadata
-    tuple val(meta), path("*pixelator-collapse.log")    , emit: log
+    tuple val(meta), path("collapse/*.collapsed.parquet"), emit: collapsed
+    tuple val(meta), path("collapse/*.report.json")      , emit: report_json
+    tuple val(meta), path("collapse/*.meta.json")        , emit: metadata
+    tuple val(meta), path("*pixelator-collapse.log")     , emit: log
 
-    path "versions.yml"                                 , emit: versions
+    path "versions.yml"                                  , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
