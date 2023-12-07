@@ -110,7 +110,7 @@ given barcodes/antibodies.
 
   - `collapse`
 
-    - `<sample-id>.collapsed.csv.gz`: Edgelist of the graph.
+    - `<sample-id>.collapsed.parquet`: Edgelist of the graph.
     - `<sample-id>.report.json`: Statistics for the collapse step.
     - `<sample-id>.meta.json`: Command invocation metadata.
 
@@ -137,10 +137,8 @@ The output format of this command is an edge list in CSV format.
 
   - `graph`
 
-    - `<sample-id>.edgelist.csv.gz`:
-      Edge list dataframe (CSV) after recovering technical multiplets.
-    - `<sample-id>.raw_edgelist.csv.gz`:
-      Raw edge list dataframe in csv format before recovering technical multiplets.
+    - `<sample-id>.edgelist.parquet`:
+      Edge list dataframe after recovering technical multiplets.
     - `<sample-id>.components_recovered.csv`:
       List of new components recovered (when using `--multiple-recovery`)
     - `<sample-id>.meta.json`: Command invocation metadata.
