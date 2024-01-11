@@ -142,6 +142,8 @@ class NfcoreTemplate {
             try {
                 if (params.plaintext_email) { throw GroovyException('Send plaintext e-mail, not HTML') }
                 // Try to send HTML e-mail using sendmail
+                def sendmail_tf = new File(workflow.launchDir.toString(), ".sendmail_tmp.html")
+                sendmail_tf.withWriter { w -> w << sendmail_html }
                 [ 'sendmail', '-t' ].execute() << sendmail_html
                 log.info "-${colors.purple}[$workflow.manifest.name]${colors.green} Sent summary e-mail to $email_address (sendmail)-"
             } catch (all) {
