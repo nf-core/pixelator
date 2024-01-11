@@ -8,19 +8,6 @@ import groovy.text.SimpleTemplateEngine
 class WorkflowPixelator {
 
     //
-    // Check and validate parameters
-    //
-    public static void initialise(params, log) {
-
-        genomeExistsError(params, log)
-
-
-        if (!params.fasta) {
-            Nextflow.error "Genome fasta file not specified with e.g. '--fasta genome.fa' or via a detectable config file."
-        }
-    }
-
-    //
     // Get workflow summary for MultiQC
     //
     public static String paramsSummaryMultiqc(workflow, summary) {
@@ -53,7 +40,7 @@ class WorkflowPixelator {
 
     public static String toolCitationText(params) {
 
-        // TODO nf-core: Optionally add in-text citation tools to this list.
+        // TODO: Optionally add in-text citation tools to this list.
         // Can use ternary operators to dynamically construct based conditions, e.g. params["run_xyz"] ? "Tool (Foo et al. 2023)" : "",
         // Uncomment function in methodsDescriptionText to render in MultiQC report
         def citation_text = [

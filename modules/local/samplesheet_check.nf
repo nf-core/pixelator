@@ -9,6 +9,8 @@ process SAMPLESHEET_CHECK {
 
     input:
     path samplesheet
+    path design_options
+    val samplesheet_path
 
     output:
     path '*.csv'       , emit: csv
@@ -18,10 +20,15 @@ process SAMPLESHEET_CHECK {
     task.ext.when == null || task.ext.when
 
     script: // This script is bundled with the pipeline, in nf-core/pixelator/bin/
+    def args = task.ext.args ?: ''
+
     """
     check_samplesheet.py \\
         $samplesheet \\
-        samplesheet.valid.csv
+        samplesheet.valid.csv \\
+        --samplesheet-path $samplesheet_path \\
+        --design-options $design_options \\
+        $args
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

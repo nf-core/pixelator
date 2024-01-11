@@ -1,1 +1,9 @@
 repository_type: pipeline
+lint:
+  # No multiqc support for now
+  multiqc_config: false
+  files_exist:
+    - assets/multiqc_config.yml
+    - conf/igenomes.config
+  files_unchanged:
+    - lib/NfcoreTemplate.groovy
