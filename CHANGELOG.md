@@ -3,13 +3,22 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.2] - 2023-11-20
+## [[1.0.3](https://github.com/nf-core/pixelator/releases/tag/1.0.3)] - 2024-01-19
+
+### Enhancements & fixes
+
+- [[PR #74](https://github.com/nf-core/pixelator/pull/74)] - Template update for nf-core/tools v2.11
+- [[e196431](https://github.com/nf-core/pixelator/commit/e196431842b039cbf5c299c7a3e568f6a3e30e33)] - Workaround a tool issue by removing `docker.runOptions` user and group flags
+- [[PR #76](https://github.com/nf-core/pixelator/pull/76)] - Use `adapterqc` output as main output of PIXELATOR_QC
+- [[PR #77](https://github.com/nf-core/pixelator/pull/77)] - Fix some style issues in nextflow_schema.json
+
+## [[1.0.2](https://github.com/nf-core/pixelator/releases/tag/1.0.2)] - 2023-11-20
 
 ### Enhancements & fixes
 
 - [[PR #70](https://github.com/nf-core/pixelator/pull/70)] - Fix loading of absolute paths and urls in input samplesheet
 
-## [1.0.1] - 2023-10-27
+## [[1.0.1](https://github.com/nf-core/pixelator/releases/tag/1.0.1)] - 2023-10-27
 
 ### Enhancements & fixes
 
@@ -29,6 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 >
 > **NB:** Dependency has been **removed** if new version information isn't present.
 
-## [1.0.0] - 2023-10-17
+## [[1.0.0](https://github.com/nf-core/pixelator/releases/tag/1.0.0)] - 2023-10-17
 
 Initial release of nf-core/pixelator.
