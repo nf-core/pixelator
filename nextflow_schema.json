@@ -145,7 +145,7 @@
                 },
                 "algorithm": {
                     "fa_icon": "fas code-fork",
-                    "description": "The algorithm to use for collapsing (adjacency will peform error correction using the number of mismatches given)",
+                    "description": "The algorithm to use for collapsing (adjacency will perform error correction using the number of mismatches given)",
                     "default": "adjacency",
                     "enum": ["adjacency", "unique"],
                     "type": "string"
@@ -288,7 +288,7 @@
                 },
                 "colocalization_min_region_count": {
                     "type": "integer",
-                    "description": "The minimum number of counts in a region for it to be concidered valid for computing colocalization",
+                    "description": "The minimum number of counts in a region for it to be considered valid for computing colocalization",
                     "default": 5,
                     "minimum": 0
                 }
@@ -312,7 +312,7 @@
                 "pixelator_container": {
                     "type": "string",
                     "description": "Override the container image reference to use for all steps using the `pixelator` command.",
-                    "help_text": "Use this to force the pipeline to use a different image version in all steps that use the pixelator command.\nThe pipeline is not garanteed to work when using different pixelator versions."
+                    "help_text": "Use this to force the pipeline to use a different image version in all steps that use the pixelator command.\nThe pipeline is not guaranteed to work when using different pixelator versions."
                 }
             }
         },
@@ -480,7 +480,7 @@
                     "fa_icon": "far fa-check-circle",
                     "description": "Validation of parameters fails when an unrecognised parameter is found.",
                     "hidden": true,
-                    "help_text": "By default, when an unrecognised parameter is found, it returns a warinig."
+                    "help_text": "By default, when an unrecognised parameter is found, it returns a warning."
                 },
                 "validationLenientMode": {
                     "type": "boolean",

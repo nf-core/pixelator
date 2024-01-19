@@ -1,5 +1,5 @@
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-##     nf-core/pixelator 1.1.0dev
+##     nf-core/pixelator 1.0.3
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##     This is an example parameter file to pass to the `-params-file` option
 ##     of nextflow run with the nf-core/pixelator pipeline.
@@ -171,7 +171,7 @@
 ## -----------------------------------------------------------------------------
 ## algorithm
 ## -----------------------------------------------------------------------------
-##     The algorithm to use for collapsing (adjacency will peform error
+##     The algorithm to use for collapsing (adjacency will perform error
 ##     correction using the number of mismatches given)
 ##     Type: string
 ## -----------------------------------------------------------------------------
@@ -345,7 +345,7 @@
 ## -----------------------------------------------------------------------------
 ## colocalization_min_region_count
 ## -----------------------------------------------------------------------------
-##     The minimum number of counts in a region for it to be concidered valid
+##     The minimum number of counts in a region for it to be considered valid
 ##     for computing colocalization
 ##     Type: integer
 ## -----------------------------------------------------------------------------
