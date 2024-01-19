@@ -12,7 +12,7 @@ process PIXELATOR_QC {
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("preqc/*.processed.{fq,fastq}.gz")         , emit: processed
+    tuple val(meta), path("adapterqc/*.processed.{fq,fastq}.gz")     , emit: processed
 
     tuple val(meta), path("adapterqc/*.processed.{fq,fastq}.gz")     , emit: adapterqc_processed
     tuple val(meta), path("preqc/*.processed.{fq,fastq}.gz")         , emit: preqc_processed
