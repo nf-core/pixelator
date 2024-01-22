@@ -7,3 +7,4 @@ lint:
     - conf/igenomes.config
   files_unchanged:
     - lib/NfcoreTemplate.groovy
+    - .prettierignore

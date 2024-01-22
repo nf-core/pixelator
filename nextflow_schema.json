@@ -17,7 +17,6 @@
                     "format": "file-path",
                     "schema": "assets/schema_input.json",
                     "mimetype": "text/csv",
-                    "exists": true,
                     "pattern": "^\\S+\\.(csv|tsv)$",
                     "description": "Path to comma-separated file containing information about the samples in the experiment.",
                     "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/pixelator/usage#samplesheet-input).",
@@ -91,19 +90,18 @@
                 "dedup": {
                     "fa_icon": "fas clone",
                     "description": "Remove duplicated reads (exact same sequence)",
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 },
                 "remove_polyg": {
                     "fa_icon": "fas g",
                     "description": "Remove PolyG sequences (length of 10 or more)",
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             }
         },
         "adapterqc_options": {
             "title": "Adapter QC Options",
+            "type": "object",
             "properties": {
                 "adapterqc_mismatches": {
                     "fa_icon": "fas not-equal",
@@ -117,6 +115,7 @@
         },
         "demux_options": {
             "title": "Demux options",
+            "type": "object",
             "properties": {
                 "demux_mismatches": {
                     "fa_icon": "fas not-equal",
@@ -136,16 +135,17 @@
         },
         "collapse_options": {
             "title": "Collapse options",
+            "type": "object",
             "properties": {
                 "markers_ignore": {
-                    "fa-icon": "fas fa-list",
+                    "fa_icon": "fas fa-list",
                     "description": "A list of comma separated antibodies to discard",
                     "type": "string",
                     "pattern": "(\\S+)?(,\\S+)*"
                 },
                 "algorithm": {
                     "fa_icon": "fas code-fork",
-                    "description": "The algorithm to use for collapsing (adjacency will peform error correction using the number of mismatches given)",
+                    "description": "The algorithm to use for collapsing (adjacency will perform error correction using the number of mismatches given)",
                     "default": "adjacency",
                     "enum": ["adjacency", "unique"],
                     "type": "string"
@@ -182,6 +182,7 @@
         },
         "graph_options": {
             "title": "Options for pixelator graph command.",
+            "type": "object",
             "properties": {
                 "multiplet_recovery": {
                     "description": "Activate the multiplet recovery using leiden community detection",
@@ -210,6 +211,7 @@
         },
         "annotate_options": {
             "title": "Options for pixelator annotate command.",
+            "type": "object",
             "properties": {
                 "min_size": {
                     "description": "The minimum size (pixels) a component/cell can have (disabled by default)",
@@ -234,11 +236,11 @@
         },
         "analysis_options": {
             "title": "Options for pixelator analysis command.",
+            "type": "object",
             "properties": {
                 "skip_analysis": {
                     "description": "Skip analysis step",
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 },
                 "compute_polarization": {
                     "description": "Compute polarization scores matrix (clusters by markers)",
@@ -252,8 +254,7 @@
                 },
                 "use_full_bipartite": {
                     "description": "Use the bipartite graph instead of the one-node projection when computing polarization, coabundance and colocalization scores",
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 },
                 "polarization_normalization": {
                     "description": "Which approach to use to normalize the antibody counts.",
@@ -265,8 +266,7 @@
                 "polarization_binarization": {
                     "fa_icon": "fas binary",
                     "description": "Transform the antibody counts to 0-1 (binarize) when computing polarization",
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 },
                 "colocalization_transformation": {
                     "type": "string",
@@ -288,7 +288,7 @@
                 },
                 "colocalization_min_region_count": {
                     "type": "integer",
-                    "description": "The minimum number of counts in a region for it to be concidered valid for computing colocalization",
+                    "description": "The minimum number of counts in a region for it to be considered valid for computing colocalization",
                     "default": 5,
                     "minimum": 0
                 }
@@ -296,11 +296,11 @@
         },
         "report_options": {
             "title": "Options for pixelator report command.",
+            "type": "object",
             "properties": {
                 "skip_report": {
                     "description": "Skip report generation",
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             }
         },
@@ -311,9 +311,8 @@
             "properties": {
                 "pixelator_container": {
                     "type": "string",
-                    "format": "url",
                     "description": "Override the container image reference to use for all steps using the `pixelator` command.",
-                    "help_text": "Use this to force the pipeline to use a different image version in all steps that use the pixelator command.\nThe pipeline is not garanteed to work when using different pixelator versions."
+                    "help_text": "Use this to force the pipeline to use a different image version in all steps that use the pixelator command.\nThe pipeline is not guaranteed to work when using different pixelator versions."
                 }
             }
         },
@@ -481,7 +480,7 @@
                     "fa_icon": "far fa-check-circle",
                     "description": "Validation of parameters fails when an unrecognised parameter is found.",
                     "hidden": true,
-                    "help_text": "By default, when an unrecognised parameter is found, it returns a warinig."
+                    "help_text": "By default, when an unrecognised parameter is found, it returns a warning."
                 },
                 "validationLenientMode": {
                     "type": "boolean",

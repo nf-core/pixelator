@@ -1,5 +1,5 @@
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-##     nf-core/pixelator 1.0.1
+##     nf-core/pixelator 1.0.3
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##     This is an example parameter file to pass to the `-params-file` option
 ##     of nextflow run with the nf-core/pixelator pipeline.
@@ -107,7 +107,7 @@
 ##     Remove duplicated reads (exact same sequence)
 ##     Type: boolean
 ## -----------------------------------------------------------------------------
-# dedup = false
+# dedup = null
 
 ## -----------------------------------------------------------------------------
 ## remove_polyg
@@ -115,7 +115,7 @@
 ##     Remove PolyG sequences (length of 10 or more)
 ##     Type: boolean
 ## -----------------------------------------------------------------------------
-# remove_polyg = false
+# remove_polyg = null
 
 
 ## =============================================================================
@@ -171,7 +171,7 @@
 ## -----------------------------------------------------------------------------
 ## algorithm
 ## -----------------------------------------------------------------------------
-##     The algorithm to use for collapsing (adjacency will peform error
+##     The algorithm to use for collapsing (adjacency will perform error
 ##     correction using the number of mismatches given)
 ##     Type: string
 ## -----------------------------------------------------------------------------
@@ -271,7 +271,7 @@
 ##     Skip analysis step
 ##     Type: boolean
 ## -----------------------------------------------------------------------------
-# skip_analysis = false
+# skip_analysis = null
 
 ## -----------------------------------------------------------------------------
 ## compute_polarization
@@ -296,7 +296,7 @@
 ##     computing polarization, coabundance and colocalization scores
 ##     Type: boolean
 ## -----------------------------------------------------------------------------
-# use_full_bipartite = false
+# use_full_bipartite = null
 
 ## -----------------------------------------------------------------------------
 ## polarization_normalization
@@ -313,7 +313,7 @@
 ##     polarization
 ##     Type: boolean
 ## -----------------------------------------------------------------------------
-# polarization_binarization = false
+# polarization_binarization = null
 
 ## -----------------------------------------------------------------------------
 ## colocalization_transformation
@@ -345,7 +345,7 @@
 ## -----------------------------------------------------------------------------
 ## colocalization_min_region_count
 ## -----------------------------------------------------------------------------
-##     The minimum number of counts in a region for it to be concidered valid
+##     The minimum number of counts in a region for it to be considered valid
 ##     for computing colocalization
 ##     Type: integer
 ## -----------------------------------------------------------------------------
@@ -362,7 +362,7 @@
 ##     Skip report generation
 ##     Type: boolean
 ## -----------------------------------------------------------------------------
-# skip_report = false
+# skip_report = null
 
 
 ## =============================================================================

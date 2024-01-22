@@ -27,18 +27,15 @@ It takes a samplesheet as input and will process your data using `pixelator` to 
 7. Analyze the cells for polarization and colocalization ([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
 8. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
 
-> **Warning**
+> [!WARNING]
 > Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
 > This causes issues in some dependencies. As a workaround, you can revert to the old behavior by setting the environment variable
 > `NXF_APPTAINER_HOME_MOUNT` or `NXF_SINGULARITY_HOME_MOUNT` to `true` in the machine from which you launch the pipeline.
 
 ## Usage
 
-:::note
-If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how
-to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline)
-with `-profile test` before running the workflow on actual data.
-:::
+> [!NOTE]
+> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
 First, prepare a samplesheet with your input data that looks as follows:
 
@@ -60,11 +57,9 @@ nextflow run nf-core/pixelator \
    --outdir <OUTDIR>
 ```
 
-:::warning
-Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those
-provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
-see [docs](https://nf-co.re/usage/configuration#custom-configuration-files).
-:::
+> [!WARNING]
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
+> see [docs](https://nf-co.re/usage/configuration#custom-configuration-files).
 
 For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/pixelator/usage) and the [parameter documentation](https://nf-co.re/pixelator/parameters).
 

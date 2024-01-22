@@ -54,7 +54,7 @@ The pipeline will auto-detect whether a sample is single- or paired-end based on
 
 The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
 
-```csv
+```csv title="samplesheet.csv"
 sample,design,panel,fastq_1,fastq_2
 uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
 uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
@@ -78,7 +78,7 @@ Given following directory structure:
 
 You can use following samplesheet:
 
-```csv
+```csv title="samplesheet.csv"
 sample,design,panel,panel_file,fastq_1,fastq_2
 sample1,D21,human-sc-immunology-spatial-proteomics,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
 ```
