@@ -1,4 +1,4 @@
-name: multiqc
+name: cat_fastq
 channels:
   - conda-forge
   - bioconda

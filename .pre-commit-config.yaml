@@ -8,3 +8,20 @@ repos:
     hooks:
       - id: editorconfig-checker
         alias: ec
+
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+
+  - repo: local
+    hooks:
+      - id: nf-core/tools parameters.yaml
+        name: Update nf-params.yml file with schema
+        language: python
+        additional_dependencies:
+          - nf-core
+        entry: nf-core
+        args: [create-params-file, --output, assets/nf-params.yml, "--force", "."]
+        pass_filenames: false
+        files: ^nextflow_schema.json$

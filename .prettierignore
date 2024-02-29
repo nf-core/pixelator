@@ -1,6 +1,7 @@
 email_template.html
 adaptivecard.json
 slackreport.json
+.devcontainer/devcontainer.json
 .nextflow*
 work/
 data/
@@ -10,3 +11,4 @@ testing/
 testing*
 *.pyc
 bin/
+assets/nf-params.yml
