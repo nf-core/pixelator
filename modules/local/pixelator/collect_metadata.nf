@@ -1,8 +1,6 @@
-import org.json.JSONObject
-import org.json.JSONTokener
-import org.json.JSONArray
-import groovy.json.JsonSlurper
-import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
+
+
 
 process PIXELATOR_COLLECT_METADATA {
     label 'process_single'
@@ -72,12 +70,10 @@ process PIXELATOR_COLLECT_METADATA {
         parameters: params
     ]
 
-    def builder = new JsonBuilder(metadata)
-    def nextflowJson = builder.toPrettyString()
+    def nextflowJson = JsonOutput.toJson(metadata)
 
     """
     echo '${nextflowJson}' > nextflow-metadata.json
     collect_metadata.py --process-name ${task.process} --workflow-data "nextflow-metadata.json"
     """
-
 }
