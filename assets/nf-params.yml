@@ -1,5 +1,5 @@
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-##     nf-core/pixelator 1.0.3
+##     nf-core/pixelator 1.1.0dev
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##     This is an example parameter file to pass to the `-params-file` option
 ##     of nextflow run with the nf-core/pixelator pipeline.
@@ -19,6 +19,7 @@
 ##     Path to comma-separated file containing information about the samples
 ##     in the experiment.
 ##     Type: string
+##     Required
 ## -----------------------------------------------------------------------------
 # input = null
 
@@ -37,8 +38,9 @@
 ##     The output directory where the results will be saved. You have to use
 ##     absolute paths to storage on Cloud infrastructure.
 ##     Type: string
+##     Required
 ## -----------------------------------------------------------------------------
-# outdir = "./results"
+# outdir = null
 
 ## -----------------------------------------------------------------------------
 ## email
@@ -404,7 +406,7 @@
 ## =============================================================================
 ## Less common options for the pipeline, typically set in a config file.
 
-## (12 hidden parameters are not shown)
+## (11 hidden parameters are not shown)
 
 
 
