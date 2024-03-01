@@ -1,30 +1,18 @@
-exclude: ^(.*.test.snap)|(assets/nf-params.yml)$
+exclude: ^(.*.test.snap)$
 
 repos:
-  - repo: local
-    hooks:
-      - id: nf-core/tools parameters.yaml
-        name: Update nf-params.yml file with schema
-        language: python
-        additional_dependencies:
-          - nf-core
-        entry: nf-core
-        args: [create-params-file, --output, assets/nf-params.yml, "--force", "."]
-        pass_filenames: false
-        files: ^nextflow_schema.json$
-
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: "v3.1.0"
     hooks:
       - id: prettier
+
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: "2.7.3"
     hooks:
       - id: editorconfig-checker
         alias: ec
-        exclude: assets/nf-params.yml
 
   - repo: https://github.com/psf/black
-    rev: 23.3.0
+    rev: 24.2.0
     hooks:
       - id: black
