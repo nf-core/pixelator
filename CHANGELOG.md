@@ -10,6 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `collapse` and `graph` steps output parquet files
 - Update pixelator to 0.16.2
 
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.15.2      | 0.16.2      |
+
+> **NB:** Dependency has been **updated** if both old and new version information is present.
+>
+> **NB:** Dependency has been **added** if just the new version information is present.
+>
+> **NB:** Dependency has been **removed** if new version information isn't present.
+
 ## [[1.0.3](https://github.com/nf-core/pixelator/releases/tag/1.0.3)] - 2024-01-19
 
 ### Enhancements & fixes
