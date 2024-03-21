@@ -5,10 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED] - YYYY-MM-DD
 
-### Changed
+### Enhancements & fixes
 
-- `collapse` and `graph` steps output parquet files
-- Update pixelator to 0.16.2
+- `collapse` and `graph` step now output parquet files
+- Update `process_medium` label to use 32 GiB of memory by default
+- Fix a warning from an unused parameter from the nf-core template
 
 ### Software dependencies
 
