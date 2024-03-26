@@ -17,7 +17,7 @@ nextflow.enable.dsl = 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR  } from './workflows/pixelator'
+include { PIXELATOR               } from './workflows/pixelator'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
 
