@@ -3,13 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[1.1.0](https://github.com/nf-core/pixelator/releases/tag/1.1.0)] - 2024-03-22
+## [[1.1.0](https://github.com/nf-core/pixelator/releases/tag/1.1.0)] - 2024-03-26
 
 ### Enhancements & fixes
 
-- `collapse` and `graph` step now output parquet files
-- Update `process_medium` label to use 32 GiB of memory by default
-- Fix a warning from an unused parameter from the nf-core template
+- [[PR #83](https://github.com/nf-core/pixelator/pull/83)] - Template update for nf-core/tools v2.13
+- [[PR #84](https://github.com/nf-core/pixelator/pull/84)] - Update pixelator to 0.16.2, collapse`and`graph` step now return parquet files
+- [[PR #85](https://github.com/nf-core/pixelator/pull/85)] - Remove a workaround for container issues, silence some warnings, update default resources
 
 ### Software dependencies
 
