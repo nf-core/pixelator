@@ -20,7 +20,9 @@ installed_packages = {d.name: d.version for d in importlib.metadata.distribution
 
 
 def subtool_versions():
-    cutadapt_proc = subprocess.run(["cutadapt", "--version"], capture_output=True, text=True)
+    cutadapt_proc = subprocess.run(
+        ["cutadapt", "--version"], capture_output=True, text=True
+    )
     fastp_proc = subprocess.run(["fastp", "--version"], capture_output=True, text=True)
 
     cutadapt_version = cutadapt_proc.stdout.strip("\n")
@@ -73,7 +75,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--process-name", dest="process_name", type=str)
-    parser.add_argument("--workflow-data", dest="workflow_data", type=Path, default=None)
+    parser.add_argument(
+        "--workflow-data", dest="workflow_data", type=Path, default=None
+    )
     args = parser.parse_args()
 
     main(args)

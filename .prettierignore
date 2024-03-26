@@ -11,4 +11,3 @@ testing/
 testing*
 *.pyc
 bin/
-assets/nf-params.yml

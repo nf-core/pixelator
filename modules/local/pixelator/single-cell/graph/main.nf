@@ -3,17 +3,16 @@ process PIXELATOR_GRAPH {
     label 'process_medium'
 
 
-    conda "bioconda::pixelator=0.15.2"
+    conda "bioconda::pixelator=0.16.2"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.15.2--pyh7cba7a3_0' :
-        'biocontainers/pixelator:0.15.2--pyh7cba7a3_0' }"
+        'https://depot.galaxyproject.org/singularity/pixelator:0.16.2--pyhdfd78af_0' :
+        'biocontainers/pixelator:0.16.2--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(edge_list)
 
     output:
-    tuple val(meta), path("graph/*.edgelist.csv.gz")         , emit: edgelist
-    tuple val(meta), path("graph/*.raw_edgelist.csv.gz")     , emit: raw_edgelist
+    tuple val(meta), path("graph/*.edgelist.parquet")         , emit: edgelist
     tuple val(meta), path("graph/*.components_recovered.csv"), emit: components_recovered, optional: true
     tuple val(meta), path("graph/*.report.json")             , emit: report_json
     tuple val(meta), path("graph/*.meta.json")               , emit: input_params
