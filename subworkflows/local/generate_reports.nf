@@ -1,17 +1,29 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
 include { PIXELATOR_REPORT            } from '../../modules/local/pixelator/single-cell/report/main'
 
 
+/*
+========================================================================================
+    SUBWORKFLOW TO GENERATE PIXELATOR REPORTS
+========================================================================================
+*/
+
 workflow GENERATE_REPORTS {
     take:
-    panel_files              // [meta, panel_file] or [meta, []]
-    amplicon_data            // [meta, [<sample_name>.report.json, <sample_name>.meta.json]]
-    preqc_data               // [meta, [<sample_name>.report.json, <sample_name>.meta.json]]
-    adapterqc_data           // [meta, [<sample_name>.report.json, <sample_name>.meta.json]]
-    demux_data               // [meta, [<sample_name>.report.json, <sample_name>.meta.json]]
-    collapse_data            // [meta, [<sample_name>.report.json, <sample_name>.meta.json]]
-    graph_data               // [meta, [list of files]]
-    annotate_data            // [meta, [list of files]]
-    analysis_data            // [meta, [list of files]]
+    panel_files              // channel: [meta, path(panel_file) | []]
+    amplicon_data            // channel: [meta, [path, ...]]
+    preqc_data               // channel: [meta, [path, ...]]
+    adapterqc_data           // channel: [meta, [path, ...]]
+    demux_data               // channel: [meta, [path, ...]]
+    collapse_data            // channel: [meta, [path, ...]]
+    graph_data               // channel: [meta, [path, ...]]
+    annotate_data            // channel: [meta, [path, ...]]
+    analysis_data            // channel: [meta, [path, ...]]
 
     main:
     ch_versions = Channel.empty()
@@ -33,9 +45,10 @@ workflow GENERATE_REPORTS {
     ch_panel_col = panel_files
         .map { meta, data -> [ meta.id, data] }
 
+    //
     // These first subcommands each return two files per sample used by the reporting
     // A json file with stats and a command invocation metadata json file
-
+    //
     ch_amplicon_col         = amplicon_data.map { meta, data -> [ meta.id, data] }
     ch_preqc_col            = preqc_data.map { meta, data -> [ meta.id, data] }
     ch_adapterqc_col        = adapterqc_data.map { meta, data -> [ meta.id, data] }
@@ -46,7 +59,8 @@ workflow GENERATE_REPORTS {
     ch_analysis_col         = analysis_data.map { meta, data -> [meta.id, data] }
 
     //
-    // Combine all inputs and group them, then split them up again. This makes sure the per subcommand outputs have the sample order
+    // Combine all inputs and group them, then split them up again.
+    // This is neded to have the per subcommand outputs in the sample order
     //
     // ch_report_data: [
     //    [
@@ -75,6 +89,7 @@ workflow GENERATE_REPORTS {
         .concat ( ch_analysis_col )
         .groupTuple (size: 10)
 
+    //
     // Split up everything per stage so we can recreate the expected directory structure for
     // `pixelator single-cell report` using stageAs for each stage
     //
@@ -83,6 +98,7 @@ workflow GENERATE_REPORTS {
     // channel will match the same sample from the samplesheet.
 
     // If no `panel_file` (data[1]) is given we need to pass in `panel` from the samplesheet instead
+    //
     ch_panel_files_grouped  = ch_report_data.map { id, data -> [ data[0], data[1], data[1] ? null : data[0].panel ] }
     ch_amplicon_grouped     = ch_report_data.map { id, data -> data[2] ? data[2].flatten() : [] }
     ch_preqc_grouped        = ch_report_data.map { id, data -> data[3] ? data[3].flatten() : [] }
@@ -93,6 +109,11 @@ workflow GENERATE_REPORTS {
     ch_annotate_grouped     = ch_report_data.map { id, data -> data[8] ? data[8].flatten() : [] }
     ch_analysis_grouped     = ch_report_data.map { id, data -> data[9] ? data[9].flatten() : [] }
 
+    //
+    // MODULE: Run pixelator single-cell report for each samples
+    //
+    // NB: These channels need to be split per stage to allow PIXELATOR_REPORT to
+    //     use stageAs directives to reorder the inputs and prevent filename collisions
     PIXELATOR_REPORT (
         ch_panel_files_grouped,
         ch_amplicon_grouped,

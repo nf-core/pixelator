@@ -1,17 +1,15 @@
-import org.json.JSONObject
-import org.json.JSONTokener
-import org.json.JSONArray
-import groovy.json.JsonSlurper
-import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
+
+
 
 process PIXELATOR_COLLECT_METADATA {
     label 'process_single'
     cache false
 
-    conda "bioconda::pixelator=0.15.2"
+    conda "bioconda::pixelator=0.16.2"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.15.2--pyh7cba7a3_0' :
-        'biocontainers/pixelator:0.15.2--pyh7cba7a3_0' }"
+        'https://depot.galaxyproject.org/singularity/pixelator:0.16.2--pyhdfd78af_0' :
+        'biocontainers/pixelator:0.16.2--pyhdfd78af_0' }"
 
     input:
 
@@ -72,12 +70,10 @@ process PIXELATOR_COLLECT_METADATA {
         parameters: params
     ]
 
-    def builder = new JsonBuilder(metadata)
-    def nextflowJson = builder.toPrettyString()
+    def nextflowJson = JsonOutput.toJson(metadata)
 
     """
     echo '${nextflowJson}' > nextflow-metadata.json
     collect_metadata.py --process-name ${task.process} --workflow-data "nextflow-metadata.json"
     """
-
 }

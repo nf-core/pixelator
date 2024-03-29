@@ -3,6 +3,26 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[1.1.0](https://github.com/nf-core/pixelator/releases/tag/1.1.0)] - 2024-03-29
+
+### Enhancements & fixes
+
+- [[PR #83](https://github.com/nf-core/pixelator/pull/83)] - Template update for nf-core/tools v2.13
+- [[PR #84](https://github.com/nf-core/pixelator/pull/84)] - Update pixelator to 0.16.2, collapse`and`graph` step now return parquet files
+- [[PR #85](https://github.com/nf-core/pixelator/pull/85)] - Remove a workaround for container issues, silence some warnings, update default resources
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.15.2      | 0.16.2      |
+
+> **NB:** Dependency has been **updated** if both old and new version information is present.
+>
+> **NB:** Dependency has been **added** if just the new version information is present.
+>
+> **NB:** Dependency has been **removed** if new version information isn't present.
+
 ## [[1.0.3](https://github.com/nf-core/pixelator/releases/tag/1.0.3)] - 2024-01-19
 
 ### Enhancements & fixes
