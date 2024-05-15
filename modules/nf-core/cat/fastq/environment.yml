@@ -1,7 +1,7 @@
-name: fastqc
+name: cat_fastq
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - bioconda::fastqc=0.12.1
+  - conda-forge::coreutils=8.30
