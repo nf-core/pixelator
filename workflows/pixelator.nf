@@ -60,6 +60,7 @@ include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/singl
 include { PIXELATOR_GRAPH               } from '../modules/local/pixelator/single-cell/graph/main'
 include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/single-cell/analysis/main'
 include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/single-cell/annotate/main'
+include { PIXELATOR_LAYOUT              } from '../modules/local/pixelator/single-cell/layout/main'
 
 /*
 ========================================================================================
@@ -197,6 +198,12 @@ workflow PIXELATOR {
     ch_analysed = PIXELATOR_ANALYSIS.out.dataset
     ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())
 
+
+    //
+    // MODULE: Run pixelator single-cell layout
+    PIXELATOR_LAYOUT ( ch_analysed )
+    ch_layout = PIXELATOR_LAYOUT.out.dataset
+    ch_versions = ch_versions.mix(PIXELATOR_LAYOUT.out.versions.first())
 
     // Prepare all data needed by reporting for each pixelator step
 

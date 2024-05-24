@@ -1,6 +1,6 @@
-process PIXELATOR_AMPLICON {
+process PIXELATOR_LAYOUT {
     tag "$meta.id"
-    label 'process_low'
+    label 'process_medium'
 
 
     conda "bioconda::pixelator=0.17.1"
@@ -9,33 +9,35 @@ process PIXELATOR_AMPLICON {
         'biocontainers/pixelator:0.17.1--pyhdfd78af_0' }"
 
     input:
-    tuple val(meta), path(reads)
+    tuple val(meta), path(data)
 
     output:
-    tuple val(meta), path("amplicon/*.merged.{fq,fastq}.gz"), emit: merged
-    tuple val(meta), path("amplicon/*.report.json")         , emit: report_json
-    tuple val(meta), path("amplicon/*.meta.json")           , emit: metadata
-    tuple val(meta), path("*pixelator-amplicon.log")        , emit: log
+    tuple val(meta), path("layout/*dataset.pxl")  , emit: dataset
+    tuple val(meta), path("layout/*report.json")  , emit: report_json
+    tuple val(meta), path("layout/*.meta.json")   , emit: metadata
+    tuple val(meta), path("layout/*")             , emit: all_results
+    tuple val(meta), path("*pixelator-layout.log"), emit: log
 
-    path "versions.yml"                                     , emit: versions
+    path "versions.yml"                             , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
-    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
 
     """
     pixelator \\
         --cores $task.cpus \\
-        --log-file ${prefix}.pixelator-amplicon.log \\
+        --log-file ${prefix}.pixelator-layout.log \\
         --verbose \\
         single-cell \\
-        amplicon \\
+        layout \\
         --output . \\
         $args \\
-        ${reads}
+        $data
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
