@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - Update pixelator to 0.17.1
 - [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - Add `pixelator single-cell layout` command
 - [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - The `graph` and `annotate` steps are now using `process_high` as their resource tags
+- [[PR #91](https://github.com/nf-core/pixelator/pull/91)] - Set `process_high` to use 64GB of RAM and `process_high_memory` to use 128GB of RAM
 
 ### Software dependencies
 
