@@ -18,6 +18,7 @@ process PIXELATOR_REPORT {
     path graph_data         , stageAs: "results/graph/*"
     path annotate_data      , stageAs: "results/annotate/*"
     path analysis_data      , stageAs: "results/analysis/*"
+    path layout_data        , stageAs: "results/layout/*"
 
 
     output:

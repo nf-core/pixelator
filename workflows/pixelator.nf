@@ -201,6 +201,7 @@ workflow PIXELATOR {
 
     //
     // MODULE: Run pixelator single-cell layout
+    //
     PIXELATOR_LAYOUT ( ch_analysed )
     ch_layout = PIXELATOR_LAYOUT.out.dataset
     ch_versions = ch_versions.mix(PIXELATOR_LAYOUT.out.versions.first())
@@ -230,6 +231,7 @@ workflow PIXELATOR {
     ch_cluster_data     = PIXELATOR_GRAPH.out.all_results
     ch_annotate_data    = PIXELATOR_ANNOTATE.out.all_results
     ch_analysis_data    = PIXELATOR_ANALYSIS.out.all_results
+    ch_layout_data      = PIXELATOR_ANALYSIS.out.all_results
 
     GENERATE_REPORTS(
         ch_cat_panel_files,
@@ -240,7 +242,8 @@ workflow PIXELATOR {
         ch_collapse_data,
         ch_cluster_data,
         ch_annotate_data,
-        ch_analysis_data
+        ch_analysis_data,
+        ch_layout_data
     )
 
     ch_versions = ch_versions.mix(GENERATE_REPORTS.out.versions)
