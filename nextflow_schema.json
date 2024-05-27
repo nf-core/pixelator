@@ -539,6 +539,9 @@
             "$ref": "#/definitions/analysis_options"
         },
         {
+            "$ref": "#/definitions/layout_options"
+        },
+        {
             "$ref": "#/definitions/report_options"
         },
         {
