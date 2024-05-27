@@ -256,21 +256,28 @@
                     "description": "Use the bipartite graph instead of the one-node projection when computing polarization, coabundance and colocalization scores",
                     "type": "boolean"
                 },
-                "polarization_normalization": {
-                    "description": "Which approach to use to normalize the antibody counts.",
-                    "help_text": "- `raw`: use the raw counts.\n- `CLR`: use the CLR-transformed counts.\n- `denoise`: use CLR-transformed counts and subtract the counts of control antibodies",
+                "polarization_transformation": {
+                    "description": "Which transformation to use for the antibody counts when calculating polarity scores.",
+                    "help_text": "- `raw`: use the raw counts.\n- `log1p`: use the log1p-transformed counts.\n",
                     "type": "string",
-                    "enum": ["raw", "clr", "denoise"],
-                    "default": "clr"
+                    "enum": ["raw", "log1p"],
+                    "default": "log1p"
                 },
-                "polarization_binarization": {
-                    "fa_icon": "fas binary",
-                    "description": "Transform the antibody counts to 0-1 (binarize) when computing polarization",
-                    "type": "boolean"
+                "polarization_n_permutations": {
+                    "type": "integer",
+                    "description": "Set the number of permutations use to compute the empirical z- and p-values for the polarity score",
+                    "default": 50,
+                    "minimum": 5
+                },
+                "polarization_min_marker_count": {
+                    "type": "integer",
+                    "description": "The minimum number of counts of a marker to calculate the polarity score in the component",
+                    "default": 5,
+                    "minimum": 2
                 },
                 "colocalization_transformation": {
                     "type": "string",
-                    "enum": ["raw", "clr", "log1p", "relative"],
+                    "enum": ["raw", "log1p", "rate-diff"],
                     "default": "log1p",
                     "description": "Select the type of transformation to use on the node by antibody counts matrix when computing colocalization"
                 },
@@ -291,6 +298,27 @@
                     "description": "The minimum number of counts in a region for it to be considered valid for computing colocalization",
                     "default": 5,
                     "minimum": 0
+                }
+            }
+        },
+        "layout_options": {
+            "title": "Options for pixelator layout command.",
+            "type": "object",
+            "properties": {
+                "skip_layout": {
+                    "description": "Skip layout step",
+                    "type": "boolean"
+                },
+                "no_node_marker_counts": {
+                    "description": "Skip adding marker counts to the layout.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "layout_algorithm": {
+                    "description": "Select a layout algorithm to use. This can be specified as a comma separated list to compute multiple layouts. Possible values are: fruchterman_reingold, fruchterman_reingold_3d, kamada_kawai, kamada_kawai_3d, pmds, pmds_3d",
+                    "type": "string",
+                    "pattern": "(\\S+)?(,\\S+)*",
+                    "default": "pmds_3d"
                 }
             }
         },
@@ -509,6 +537,9 @@
         },
         {
             "$ref": "#/definitions/analysis_options"
+        },
+        {
+            "$ref": "#/definitions/layout_options"
         },
         {
             "$ref": "#/definitions/report_options"

@@ -24,6 +24,7 @@ workflow GENERATE_REPORTS {
     graph_data               // channel: [meta, [path, ...]]
     annotate_data            // channel: [meta, [path, ...]]
     analysis_data            // channel: [meta, [path, ...]]
+    layout_data              // channel: [meta, [path, ...]]
 
     main:
     ch_versions = Channel.empty()
@@ -57,6 +58,7 @@ workflow GENERATE_REPORTS {
     ch_graph_col            = graph_data.map { meta, data -> [meta.id, data] }
     ch_annotate_col         = annotate_data.map { meta, data -> [meta.id, data] }
     ch_analysis_col         = analysis_data.map { meta, data -> [meta.id, data] }
+    ch_layout_col           = layout_data.map { meta, data -> [meta.id, data] }
 
     //
     // Combine all inputs and group them, then split them up again.
@@ -87,6 +89,7 @@ workflow GENERATE_REPORTS {
         .concat ( ch_graph_col )
         .concat ( ch_annotate_col )
         .concat ( ch_analysis_col )
+        .concat ( ch_layout_col )
         .groupTuple (size: 10)
 
     //
@@ -108,6 +111,7 @@ workflow GENERATE_REPORTS {
     ch_graph_grouped        = ch_report_data.map { id, data -> data[7] ? data[7].flatten() : [] }
     ch_annotate_grouped     = ch_report_data.map { id, data -> data[8] ? data[8].flatten() : [] }
     ch_analysis_grouped     = ch_report_data.map { id, data -> data[9] ? data[9].flatten() : [] }
+    ch_layout_grouped       = ch_report_data.map { id, data -> data[10] ? data[10].flatten() : [] }
 
     //
     // MODULE: Run pixelator single-cell report for each samples
@@ -124,6 +128,7 @@ workflow GENERATE_REPORTS {
         ch_graph_grouped,
         ch_annotate_grouped,
         ch_analysis_grouped,
+        ch_layout_grouped,
     )
 
     ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions.first())

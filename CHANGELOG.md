@@ -3,6 +3,26 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[1.2.0](https://github.com/nf-core/pixelator/releases/tag/1.1.0)] - 2024-05-??
+
+### Enhancements & fixes
+
+- [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - Update pixelator to 0.17.1
+- [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - Add `pixelator single-cell layout` command
+- [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - The `graph` and `annotate` steps are now using `process_high` as their resource tags
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.16.2      | 0.17.1      |
+
+> **NB:** Dependency has been **updated** if both old and new version information is present.
+>
+> **NB:** Dependency has been **added** if just the new version information is present.
+>
+> **NB:** Dependency has been **removed** if new version information isn't present.
+
 ## [[1.1.0](https://github.com/nf-core/pixelator/releases/tag/1.1.0)] - 2024-03-29
 
 ### Enhancements & fixes
