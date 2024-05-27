@@ -231,7 +231,9 @@ workflow PIXELATOR {
     ch_cluster_data     = PIXELATOR_GRAPH.out.all_results
     ch_annotate_data    = PIXELATOR_ANNOTATE.out.all_results
     ch_analysis_data    = PIXELATOR_ANALYSIS.out.all_results
-    ch_layout_data      = PIXELATOR_ANALYSIS.out.all_results
+    ch_layout_data      = PIXELATOR_LAYOUT.out.report_json
+        .concat(PIXELATOR_LAYOUT.out.metadata)
+        .groupTuple(size: 2)
 
     GENERATE_REPORTS(
         ch_cat_panel_files,
