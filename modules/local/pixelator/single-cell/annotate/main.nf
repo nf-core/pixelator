@@ -1,6 +1,6 @@
 process PIXELATOR_ANNOTATE {
     tag "$meta.id"
-    label 'process_medium'
+    label 'process_high'
 
 
     conda "bioconda::pixelator=0.17.1"

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - Update pixelator to 0.17.1
 - [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - Add `pixelator single-cell layout` command
 - [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - `graph` step is now using `process_high` as it's resource tag
+- [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - `annotate` step is now using `process_high` as it's resource tag
 
 ### Software dependencies
 
