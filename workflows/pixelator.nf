@@ -40,7 +40,6 @@ include { GENERATE_REPORTS            } from '../subworkflows/local/generate_rep
 //
 // MODULE: Installed directly from nf-core/modules
 //
-include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 /*
 ========================================================================================
@@ -93,7 +92,7 @@ workflow PIXELATOR {
         }
 
     //
-    // MODULE: Dump pixelaor and pipeline information
+    // MODULE: Dump pixelator and pipeline information
     //
     PIXELATOR_COLLECT_METADATA ()
     ch_versions = ch_versions.mix(PIXELATOR_COLLECT_METADATA.out.versions)
