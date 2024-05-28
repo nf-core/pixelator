@@ -40,7 +40,6 @@ include { GENERATE_REPORTS            } from '../subworkflows/local/generate_rep
 //
 // MODULE: Installed directly from nf-core/modules
 //
-include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 /*
 ========================================================================================
@@ -51,7 +50,6 @@ include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 //
 // MODULE: Defined locally
 //
-include { RENAME_READS                  } from '../modules/local/rename_reads'
 include { PIXELATOR_COLLECT_METADATA    } from '../modules/local/pixelator/collect_metadata'
 include { PIXELATOR_AMPLICON            } from '../modules/local/pixelator/single-cell/amplicon/main'
 include { PIXELATOR_QC                  } from '../modules/local/pixelator/single-cell/qc/main'
@@ -60,6 +58,7 @@ include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/singl
 include { PIXELATOR_GRAPH               } from '../modules/local/pixelator/single-cell/graph/main'
 include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/single-cell/analysis/main'
 include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/single-cell/annotate/main'
+include { PIXELATOR_LAYOUT              } from '../modules/local/pixelator/single-cell/layout/main'
 
 /*
 ========================================================================================
@@ -92,7 +91,7 @@ workflow PIXELATOR {
         }
 
     //
-    // MODULE: Dump pixelaor and pipeline information
+    // MODULE: Dump pixelator and pipeline information
     //
     PIXELATOR_COLLECT_METADATA ()
     ch_versions = ch_versions.mix(PIXELATOR_COLLECT_METADATA.out.versions)
@@ -126,18 +125,10 @@ workflow PIXELATOR {
 
     ch_versions = ch_versions.mix(CAT_FASTQ.out.versions.first())
 
-
-    //
-    // MODULE: Rename input reads to match the sample ids from the samplesheet
-    //
-    RENAME_READS ( ch_cat_fastq )
-    ch_renamed_reads = RENAME_READS.out.reads
-    ch_versions = ch_versions.mix(RENAME_READS.out.versions.first())
-
     //
     // MODULE: Run pixelator single-cell amplicon
     //
-    PIXELATOR_AMPLICON ( ch_renamed_reads )
+    PIXELATOR_AMPLICON ( ch_cat_fastq )
     ch_merged = PIXELATOR_AMPLICON.out.merged
     ch_versions = ch_versions.mix(PIXELATOR_AMPLICON.out.versions.first())
 
@@ -198,6 +189,13 @@ workflow PIXELATOR {
     ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())
 
 
+    //
+    // MODULE: Run pixelator single-cell layout
+    //
+    PIXELATOR_LAYOUT ( ch_analysed )
+    ch_layout = PIXELATOR_LAYOUT.out.dataset
+    ch_versions = ch_versions.mix(PIXELATOR_LAYOUT.out.versions.first())
+
     // Prepare all data needed by reporting for each pixelator step
 
     ch_amplicon_data    = PIXELATOR_AMPLICON.out.report_json
@@ -223,6 +221,9 @@ workflow PIXELATOR {
     ch_cluster_data     = PIXELATOR_GRAPH.out.all_results
     ch_annotate_data    = PIXELATOR_ANNOTATE.out.all_results
     ch_analysis_data    = PIXELATOR_ANALYSIS.out.all_results
+    ch_layout_data      = PIXELATOR_LAYOUT.out.report_json
+        .concat(PIXELATOR_LAYOUT.out.metadata)
+        .groupTuple(size: 2)
 
     GENERATE_REPORTS(
         ch_cat_panel_files,
@@ -233,7 +234,8 @@ workflow PIXELATOR {
         ch_collapse_data,
         ch_cluster_data,
         ch_annotate_data,
-        ch_analysis_data
+        ch_analysis_data,
+        ch_layout_data
     )
 
     ch_versions = ch_versions.mix(GENERATE_REPORTS.out.versions)
@@ -242,8 +244,12 @@ workflow PIXELATOR {
     // Collate and save software versions
     //
     softwareVersionsToYAML(ch_versions)
-        .collectFile(storeDir: "${params.outdir}/pipeline_info", name: 'nf_core_pipeline_software_mqc_versions.yml', sort: true, newLine: true)
-        .set { ch_collated_versions }
+        .collectFile(
+            storeDir: "${params.outdir}/pipeline_info",
+            name: 'nf_core_pipeline_software_mqc_versions.yml',
+            sort: true,
+            newLine: true
+        ).set { ch_collated_versions }
 
     // TODO: Add MultiQC when plugins are ready
 

@@ -168,12 +168,10 @@ newly recovered components are stored in a file (components_recovered.csv).
 - `pixelator`
 
   - `annotate`
-    - `<sample-id>.dataset.pxl`
+    - `<sample-id>.annotate.dataset.pxl`
     - `<sample-id>.meta.json`: Command invocation metadata.
-    - `<sample-id>.rank_vs_size.png`
-    - `<sample-id>.raw_components_metrics.csv`
+    - `<sample-id>.raw_components_metrics.csv.gz`
     - `<sample-id>.report.json`: Statistics for the analysis step.
-    - `<sample-id>.umap.png`
   - `logs`
     - `<sample-id>.pixelator-annotate.log`: pixelator log output.
     </details>
@@ -193,7 +191,7 @@ edgelist to find putative cells, and it will generate a pxl file containing the 
 
   - `analysis`
 
-    - `<sample-id>.dataset.pxl`: PXL file with the analysis results added to it.
+    - `<sample-id>.analysis.dataset.pxl`: PXL file with the analysis results added to it.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: Statistics for the analysis step.
 
@@ -213,6 +211,30 @@ Currently, the following analysis are performed:
 
 Each analysis can be disabled by using respectively `--compute_polarization false` or `--compute_colocalization false`.
 This entire step can also be skipped using the `--skip_analysis` option.
+
+### Compute layouts for visualization
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `pixelator`
+
+  - `layout`
+
+    - `<sample-id>.layout.dataset.pxl`: PXL file with the layout results added to it.
+    - `<sample-id>.meta.json`: Command invocation metadata.
+    - `<sample-id>.report.json`: Statistics for the layout step.
+
+  - `logs`
+    - `<sample-id>.pixelator-layout.log`: pixelator log output.
+
+</details>
+
+This step uses the `pixelator single-cell layout` command.
+It will generate precomputed layouts that can be used to visualize cells
+as part of the downstream analysis.
+
+This entire step can also be skipped using the `--skip_layout` option.
 
 ### Generate reports
 

@@ -3,10 +3,10 @@ process PIXELATOR_AMPLICON {
     label 'process_low'
 
 
-    conda "bioconda::pixelator=0.16.2"
+    conda "bioconda::pixelator=0.17.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.16.2--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.16.2--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/pixelator:0.17.1--pyhdfd78af_0' :
+        'biocontainers/pixelator:0.17.1--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(reads)
@@ -26,7 +26,19 @@ process PIXELATOR_AMPLICON {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
 
+    // Make list of old name and new name pairs to use for renaming in the bash while loop
+    def old_new_pairs = (reads instanceof Path || reads.size() == 1)
+        ? [[ reads, "${prefix}${getFileSuffix(reads)}" ]]
+        : reads.withIndex().collect { entry, index -> [ entry, "${prefix}_${index + 1}${getFileSuffix(entry)}" ] }
+
+    def rename_to = old_new_pairs*.join(' ').join(' ')
+    def renamed_reads = old_new_pairs.collect { old_name, new_name -> new_name }.join(' ')
+
     """
+    printf "%s %s\\n" $rename_to | while read old_name new_name; do
+        [ -f "\${new_name}" ] || ln -s \$old_name \$new_name
+    done
+
     pixelator \\
         --cores $task.cpus \\
         --log-file ${prefix}.pixelator-amplicon.log \\
@@ -35,11 +47,19 @@ process PIXELATOR_AMPLICON {
         amplicon \\
         --output . \\
         $args \\
-        ${reads}
+        ${renamed_reads}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
+}
+
+
+// for .gz files also include the second to last extension if it is present. E.g., .fasta.gz
+// Source: nf-core/modules/cat/cat
+def getFileSuffix(filename) {
+    def match = filename =~ /^.*?((\.\w{1,5})?(\.\w{1,5}\.gz$))/
+    return match ? match[0][1] : filename.substring(filename.lastIndexOf('.'))
 }

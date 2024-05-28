@@ -1,6 +1,6 @@
-process PIXELATOR_ANNOTATE {
+process PIXELATOR_LAYOUT {
     tag "$meta.id"
-    label 'process_high'
+    label 'process_medium'
 
 
     conda "bioconda::pixelator=0.17.1"
@@ -9,16 +9,16 @@ process PIXELATOR_ANNOTATE {
         'biocontainers/pixelator:0.17.1--pyhdfd78af_0' }"
 
     input:
-    tuple val(meta), path(dataset), path(panel_file), val(panel)
+    tuple val(meta), path(data)
 
     output:
-    tuple val(meta), path("annotate/*.dataset.pxl") , emit: dataset
-    tuple val(meta), path("annotate/*.report.json") , emit: report_json
-    tuple val(meta), path("annotate/*.meta.json")   , emit: metadata
-    tuple val(meta), path("annotate/*")             , emit: all_results
-    tuple val(meta), path("*pixelator-annotate.log"), emit: log
+    tuple val(meta), path("layout/*dataset.pxl")  , emit: dataset
+    tuple val(meta), path("layout/*report.json")  , emit: report_json
+    tuple val(meta), path("layout/*.meta.json")   , emit: metadata
+    tuple val(meta), path("layout/*")             , emit: all_results
+    tuple val(meta), path("*pixelator-layout.log"), emit: log
 
-    path "versions.yml"                             , emit: versions
+    path "versions.yml"                           , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -27,23 +27,17 @@ process PIXELATOR_ANNOTATE {
 
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
-    def panelOpt = (
-        panel      ? "--panel $panel"      :
-        panel_file ? "--panel $panel_file" :
-        ""
-    )
 
     """
     pixelator \\
         --cores $task.cpus \\
-        --log-file ${prefix}.pixelator-annotate.log \\
+        --log-file ${prefix}.pixelator-layout.log \\
         --verbose \\
         single-cell \\
-        annotate \\
+        layout \\
         --output . \\
-        $panelOpt \\
         $args \\
-        $dataset \\
+        $data
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
