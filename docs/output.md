@@ -168,12 +168,10 @@ newly recovered components are stored in a file (components_recovered.csv).
 - `pixelator`
 
   - `annotate`
-    - `<sample-id>.annotated.dataset.pxl`
+    - `<sample-id>.annotate.dataset.pxl`
     - `<sample-id>.meta.json`: Command invocation metadata.
-    - `<sample-id>.rank_vs_size.png`
-    - `<sample-id>.raw_components_metrics.csv`
+    - `<sample-id>.raw_components_metrics.csv.gz`
     - `<sample-id>.report.json`: Statistics for the analysis step.
-    - `<sample-id>.umap.png`
   - `logs`
     - `<sample-id>.pixelator-annotate.log`: pixelator log output.
     </details>
