@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - The `graph` and `annotate` steps are now using `process_high` as their resource tags
 - [[PR #91](https://github.com/nf-core/pixelator/pull/91)] - Set `process_high` to use 64GB of RAM and `process_high_memory` to use 128GB of RAM
 - [[PR #92](https://github.com/nf-core/pixelator/pull/92)] - Minor touch-ups to the documentation
+- [[PR #93](https://github.com/nf-core/pixelator/pull/93)] - Merge RENAME_READS functionality into PIXELATOR_AMPLICON
 
 ### Software dependencies
 

@@ -50,7 +50,6 @@ include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 //
 // MODULE: Defined locally
 //
-include { RENAME_READS                  } from '../modules/local/rename_reads'
 include { PIXELATOR_COLLECT_METADATA    } from '../modules/local/pixelator/collect_metadata'
 include { PIXELATOR_AMPLICON            } from '../modules/local/pixelator/single-cell/amplicon/main'
 include { PIXELATOR_QC                  } from '../modules/local/pixelator/single-cell/qc/main'
@@ -126,18 +125,10 @@ workflow PIXELATOR {
 
     ch_versions = ch_versions.mix(CAT_FASTQ.out.versions.first())
 
-
-    //
-    // MODULE: Rename input reads to match the sample ids from the samplesheet
-    //
-    RENAME_READS ( ch_cat_fastq )
-    ch_renamed_reads = RENAME_READS.out.reads
-    ch_versions = ch_versions.mix(RENAME_READS.out.versions.first())
-
     //
     // MODULE: Run pixelator single-cell amplicon
     //
-    PIXELATOR_AMPLICON ( ch_renamed_reads )
+    PIXELATOR_AMPLICON ( ch_cat_fastq )
     ch_merged = PIXELATOR_AMPLICON.out.merged
     ch_versions = ch_versions.mix(PIXELATOR_AMPLICON.out.versions.first())
 
