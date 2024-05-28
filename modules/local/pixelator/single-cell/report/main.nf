@@ -3,10 +3,10 @@ process PIXELATOR_REPORT {
     label 'process_low'
 
 
-    conda "bioconda::pixelator=0.16.2"
+    conda "bioconda::pixelator=0.17.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.16.2--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.16.2--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/pixelator:0.17.1--pyhdfd78af_0' :
+        'biocontainers/pixelator:0.17.1--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(panel_file), val(panel)
@@ -18,6 +18,7 @@ process PIXELATOR_REPORT {
     path graph_data         , stageAs: "results/graph/*"
     path annotate_data      , stageAs: "results/annotate/*"
     path analysis_data      , stageAs: "results/analysis/*"
+    path layout_data        , stageAs: "results/layout/*"
 
 
     output:

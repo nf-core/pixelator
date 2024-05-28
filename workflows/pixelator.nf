@@ -60,6 +60,7 @@ include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/singl
 include { PIXELATOR_GRAPH               } from '../modules/local/pixelator/single-cell/graph/main'
 include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/single-cell/analysis/main'
 include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/single-cell/annotate/main'
+include { PIXELATOR_LAYOUT              } from '../modules/local/pixelator/single-cell/layout/main'
 
 /*
 ========================================================================================
@@ -198,6 +199,13 @@ workflow PIXELATOR {
     ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())
 
 
+    //
+    // MODULE: Run pixelator single-cell layout
+    //
+    PIXELATOR_LAYOUT ( ch_analysed )
+    ch_layout = PIXELATOR_LAYOUT.out.dataset
+    ch_versions = ch_versions.mix(PIXELATOR_LAYOUT.out.versions.first())
+
     // Prepare all data needed by reporting for each pixelator step
 
     ch_amplicon_data    = PIXELATOR_AMPLICON.out.report_json
@@ -223,6 +231,9 @@ workflow PIXELATOR {
     ch_cluster_data     = PIXELATOR_GRAPH.out.all_results
     ch_annotate_data    = PIXELATOR_ANNOTATE.out.all_results
     ch_analysis_data    = PIXELATOR_ANALYSIS.out.all_results
+    ch_layout_data      = PIXELATOR_LAYOUT.out.report_json
+        .concat(PIXELATOR_LAYOUT.out.metadata)
+        .groupTuple(size: 2)
 
     GENERATE_REPORTS(
         ch_cat_panel_files,
@@ -233,7 +244,8 @@ workflow PIXELATOR {
         ch_collapse_data,
         ch_cluster_data,
         ch_annotate_data,
-        ch_analysis_data
+        ch_analysis_data,
+        ch_layout_data
     )
 
     ch_versions = ch_versions.mix(GENERATE_REPORTS.out.versions)
