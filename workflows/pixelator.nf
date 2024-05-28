@@ -40,7 +40,6 @@ include { GENERATE_REPORTS            } from '../subworkflows/local/generate_rep
 //
 // MODULE: Installed directly from nf-core/modules
 //
-include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 /*
 ========================================================================================
@@ -93,7 +92,7 @@ workflow PIXELATOR {
         }
 
     //
-    // MODULE: Dump pixelaor and pipeline information
+    // MODULE: Dump pixelator and pipeline information
     //
     PIXELATOR_COLLECT_METADATA ()
     ch_versions = ch_versions.mix(PIXELATOR_COLLECT_METADATA.out.versions)
@@ -254,8 +253,12 @@ workflow PIXELATOR {
     // Collate and save software versions
     //
     softwareVersionsToYAML(ch_versions)
-        .collectFile(storeDir: "${params.outdir}/pipeline_info", name: 'nf_core_pipeline_software_mqc_versions.yml', sort: true, newLine: true)
-        .set { ch_collated_versions }
+        .collectFile(
+            storeDir: "${params.outdir}/pipeline_info",
+            name: 'nf_core_pipeline_software_mqc_versions.yml',
+            sort: true,
+            newLine: true
+        ).set { ch_collated_versions }
 
     // TODO: Add MultiQC when plugins are ready
 
