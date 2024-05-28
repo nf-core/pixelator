@@ -6,8 +6,3 @@ lint:
   files_exist:
     - assets/multiqc_config.yml
     - conf/igenomes.config
-  files_unchanged:
-    - lib/NfcoreTemplate.groovy
-    - .prettierignore
-    # Skip warning for a removed a reference to nf-test
-    - .github/PULL_REQUEST_TEMPLATE.md
