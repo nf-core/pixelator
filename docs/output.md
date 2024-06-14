@@ -24,6 +24,13 @@ The pipeline consists of the following steps:
 
 ### Preprocessing
 
+The preprocessing step uses `pixelator single-cell amplicon` to create full-length amplicon sequences from both single-end and paired-end data.
+It returns a single fastq file per sample containing fixed length amplicons.
+This step will also calculate Q30 quality scores for different regions of the library.
+
+These amplicon FASTQ files are intermediate and by default not placed in the output folder kept in the final files delivered to users.
+Set `--save_amplicon_reads` or `--save_all` to enable publishing of these files to:
+
 <details markdown="1">
 <summary>Output files</summary>
 
@@ -41,11 +48,22 @@ The pipeline consists of the following steps:
 
 </details>
 
-The preprocessing step uses `pixelator single-cell amplicon` to create full-length amplicon sequences from both single-end and paired-end data.
-It returns a single fastq file per sample containing fixed length amplicons.
-This step will also calculate Q30 quality scores for different regions of the library.
-
 ### Quality control
+
+Quality control is performed using `pixelator single-cell preqc` and `pixelator single-cell adapterqc`.
+
+The preqc stage performs QC and quality filtering of the raw sequencing data.
+It also generates a QC report in HTML and JSON formats. It saves processed reads as well as reads that were
+discarded (i.e. were too short, had too many Ns, or too low quality, etc.). Internally `preqc`
+uses [Fastp](https://github.com/OpenGene/fastp), and `adapterqc`
+uses [Cutadapt](https://cutadapt.readthedocs.io/en/stable/).
+
+The `adapterqc` stage checks for the presence and correctness of the pixel binding sequences.
+It also generates a QC report in JSON format. It saves processed reads as well as discarded reads (i.e. reads that did not have a match for both pixel binding sequences).
+
+These processed and discarded FASTQ reads are intermediate and by default not placed in the output folder kept in the final files delivered to users.
+Set `--save_qc_passed_reads` and/or `--save_qc_passed_reads` to enable publishing of these files.
+Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -69,17 +87,15 @@ This step will also calculate Q30 quality scores for different regions of the li
 
 </details>
 
-Quality control is performed using `pixelator single-cell preqc` and `pixelator single-cell adapterqc`.
-
-The preqc stage performs QC and quality filtering of the raw sequencing data.
-It also generates a QC report in HTML and JSON formats. It saves processed reads as well as reads that were
-discarded (i.e. were too short, had too many Ns, or too low quality, etc.). Internally `preqc`
-uses [Fastp](https://github.com/OpenGene/fastp), and `adapterqc`
-uses [Cutadapt](https://cutadapt.readthedocs.io/en/stable/).
-
-The `adapterqc` stage checks for the presence and correctness of the pixel binding sequences. It also generates a QC report in JSON format. It saves processed reads as well as discarded reads (i.e. reads that did not have a match for both pixel binding sequences).
-
 ### Demultiplexing
+
+The `pixelator single-cell demux` command assigns a marker (barcode) to each read. It also generates QC report in
+JSON format. It saves processed reads (one per antibody) as well as discarded reads with no match to the
+given barcodes/antibodies.
+
+These processed and discarded FASTQ reads are intermediate and by default not placed in the output folder kept in the final files delivered to users.
+Set `--save_demux_failed_reads` and/or `--save_demux_processed_reads` to enable publishing of these files.
+Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -98,11 +114,20 @@ The `adapterqc` stage checks for the presence and correctness of the pixel bindi
 
 </details>
 
-The `pixelator single-cell demux` command assigns a marker (barcode) to each read. It also generates QC report in
-JSON format. It saves processed reads (one per antibody) as well as discarded reads with no match to the
-given barcodes/antibodies.
-
 ### Duplicate removal and error correction
+
+This step uses the `pixelator single-cell collapse` command.
+
+The `collapse` command removes duplicate reads and performs error correction.
+This is achieved using the unique pixel identifier and unique molecular identifier sequences to check for
+uniqueness, collapse and compute a read count. The command generates a QC report in JSON format.
+Errors are allowed when collapsing reads if `--algorithm` is set to `adjacency` (this is the default option).
+
+The output format of this command is a parquet file containing deduplicated and error-corrected reads.
+
+The collapsed reads are intermediate and by default not placed in the output folder kept in the final files delivered to users.
+Set `--save_collapsed_reads` to enable publishing of these files.
+Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -120,16 +145,23 @@ given barcodes/antibodies.
 
 </details>
 
-This step uses the `pixelator single-cell collapse` command.
-
-The `collapse` command removes duplicate reads and performs error correction.
-This is achieved using the unique pixel identifier and unique molecular identifier sequences to check for
-uniqueness, collapse and compute a read count. The command generates a QC report in JSON format.
-Errors are allowed when collapsing reads if `--algorithm` is set to `adjacency` (this is the default option).
-
-The output format of this command is an edge list in CSV format.
-
 ### Compute connected components
+
+This step uses the `pixelator single-cell graph` command.
+The input is the edge list parquet file generated in the collapse step and after filtering it
+by count (`--graph_min_count`), the connected components of the graph (graphs) are computed and
+added to the edge list in a column called "component".
+
+The graph command has the option to recover components (technical multiplets) into smaller
+components using community detection to find and remove problematic edges.
+(See `--multiplet_recovery`). The information to keep track of the original and
+newly recovered components are stored in a file (components_recovered.csv).
+This file is not included in the output folder by default, but can be included by passing `--save_recovered_components`.
+
+The edgelist is intermediate and by default not placed in the output folder kept in the final files delivered to users.
+Set `--save_edgelist` to enable publishing of these file.
+
+Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -151,17 +183,19 @@ The output format of this command is an edge list in CSV format.
 
 </details>
 
-This step uses the `pixelator single-cell graph` command.
-The input is the edge list dataframe (CSV) generated in the collapse step and after filtering it
-by count (`--graph_min_count`), the connected components of the graph (graphs) are computed and
-added to the edge list in a column called "component".
-
-The graph command has the option to recover components (technical multiplets) into smaller
-components using community detection to find and remove problematic edges.
-(See `--multiplet_recovery`). The information to keep track of the original and
-newly recovered components are stored in a file (components_recovered.csv).
-
 ### Cell-calling, filtering, and annotation
+
+This step uses the `pixelator single-cell annotate` command.
+
+The annotate command takes as input the edge list file generated in the graph command. It parses, and filters the
+edgelist to find putative cells, and it will generate a PXL file containing the edgelist, and an
+(AnnData object)[https://anndata.readthedocs.io/en/latest/] as well as some useful metadata.
+
+Some summary statistics before filtering are stored in `raw_components_metrics.csv.gz`.
+This file is not included in the output folder by default, but can be included by passing `--save_raw_component_metrics`.
+
+By default, the PXL file after annotate will not be saved to the results directory unless `--skip_analysis` and `--skip_layout` is passed.
+Set `--save_annotate_dataset` to include these files.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -169,7 +203,7 @@ newly recovered components are stored in a file (components_recovered.csv).
 - `pixelator`
 
   - `annotate`
-    - `<sample-id>.annotate.dataset.pxl`
+    - `<sample-id>.annotate.dataset.pxl`: The procesed PXL dataset,
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.raw_components_metrics.csv.gz`
     - `<sample-id>.report.json`: Statistics for the analysis step.
@@ -177,13 +211,24 @@ newly recovered components are stored in a file (components_recovered.csv).
     - `<sample-id>.pixelator-annotate.log`: pixelator log output.
     </details>
 
-This step uses the `pixelator single-cell annotate` command.
-
-The annotate command takes as input the edge list (CSV) file generated in the graph command. It parses, and filters the
-edgelist to find putative cells, and it will generate a pxl file containing the edgelist, and an
-(AnnData object)[https://anndata.readthedocs.io/en/latest/] as well as some useful metadata.
-
 ### Downstream analysis
+
+This step uses the `pixelator single-cell analysis` command.
+Downstream analysis is performed on the `pxl` file generated by the previous stage.
+The results of the analysis are added to the pxl file.
+
+Currently, the following analysis are performed:
+
+- polarization scores (enable with `--compute_polarization`)
+- co-localization scores (enable with `--compute_colocalization`)
+
+Each analysis can be disabled by using respectively `--compute_polarization false` or `--compute_colocalization false`.
+This entire step can also be skipped using the `--skip_analysis` option.
+
+By default, the PXL file after analysis will not be saved to the results directory unless `--skip_layout` is passed.
+Set `--save_analysis_dataset` to include these files.
+
+Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -201,19 +246,15 @@ edgelist to find putative cells, and it will generate a pxl file containing the 
 
 </details>
 
-This step uses the `pixelator single-cell analysis` command.
-Downstream analysis is performed on the `pxl` file generated by the previous stage.
-The results of the analysis is added to the pxl file.
-
-Currently, the following analysis are performed:
-
-- polarization scores (enable with `--compute_polarization`)
-- co-localization scores (enable with `--compute_colocalization`)
-
-Each analysis can be disabled by using respectively `--compute_polarization false` or `--compute_colocalization false`.
-This entire step can also be skipped using the `--skip_analysis` option.
-
 ### Compute layouts for visualization
+
+This step uses the `pixelator single-cell layout` command.
+It will generate precomputed layouts that can be used to visualize cells
+as part of the downstream analysis. This data will be appended to a PXL file.
+
+This entire step can also be skipped using the `--skip_layout` option.
+
+Set `--save_all` to keep all intermediary outputs of all steps.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -231,13 +272,15 @@ This entire step can also be skipped using the `--skip_analysis` option.
 
 </details>
 
-This step uses the `pixelator single-cell layout` command.
-It will generate precomputed layouts that can be used to visualize cells
-as part of the downstream analysis.
-
-This entire step can also be skipped using the `--skip_layout` option.
-
 ### Generate reports
+
+This step uses the `pixelator single-cell report` command.
+This step will collect metrics and outputs generated by previous stages
+and generate a report in HTML format for each sample.
+
+This step can be skipped using the `--skip_report` option.
+
+More information on the report can be found in the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/web-report/)
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -250,14 +293,6 @@ This entire step can also be skipped using the `--skip_layout` option.
 
 </details>
 
-This step uses the `pixelator single-cell report` command.
-This step will collect metrics and outputs generated by previous stages
-and generate a report in HTML format for each sample.
-
-This step can be skipped using the `--skip_report` option.
-
-More information on the report can be found in the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/web-report/)
-
 ### Pipeline information
 
 <details markdown="1">
@@ -266,10 +301,36 @@ More information on the report can be found in the [pixelator documentation](htt
 - `pipeline_info/`
   - Reports generated by Nextflow: `execution_report.html`, `execution_timeline.html`, `execution_trace.txt` and `pipeline_dag.dot`/`pipeline_dag.svg`.
   - Reports generated by the pipeline: `pipeline_report.html`, `pipeline_report.txt` and `software_versions.yml`. The `pipeline_report*` files will only be present if the `--email` / `--email_on_fail` parameter's are used when running the pipeline.
-  - Reformatted samplesheet files used as input to the pipeline: `samplesheet.valid.csv`.
   - Metadata file with software versions, environment information and pipeline configuration for debugging: `metadata.json`
   - Parameters used by the pipeline run: `params.json`.
 
 </details>
 
 [Nextflow](https://www.nextflow.io/docs/latest/tracing.html) provides excellent functionality for generating various reports relevant to the running and execution of the pipeline. This will allow you to troubleshoot errors with the running of the pipeline, and also provide you with other information such as launch commands, run times and resource usage.
+
+## Output directory structure
+
+With default parameters, the pixelator pipeline output directory will only include the most "complete" PXL file
+generated by the pipeline and an interactive HTML report per sample.
+The PXL dataset files can be from either the `annotate`, `analysis` or `layout` step.
+
+With default parameters, the `<sample-id>.layout.datasets.pxl` will be copied to the output directory.
+If the `layout` stage is skipped (using `--skip_layout`) the `<sample-id>.analysis.datasets.pxl` files will be included and
+if the `analysis` stage is skipped (using `--skip_analysis`) the `<sample-id>.annotate.datasets.pxl` will be copied.
+
+Various flags are available to store intermediate files and are described in the input parameter documentation. Alternatively, you can keep all intermediate files using `--save_all`.
+
+Below is an example output structure for a pipeline run using the default settings.
+
+- `pipeline_info/`
+- `pixelator/`
+
+  - `logs/`
+
+    - `<sample-id>/`:
+      - `*.log`
+
+  - `pbmcs_unstimulated.layout.dataset.pxl`
+  - `pbmcs_unstimulated.qc-report.html`
+  - `uropod_control.layout.dataset.pxl`
+  - `uropod_control.qc-report.html`
