@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Enhancements & fixes
 
+- [[PR #97](https://github.com/nf-core/pixelator/pull/97)] - Update citations
 - [[PR #96](https://github.com/nf-core/pixelator/pull/96)] - Make all ext.args assignments closures
 
 ### Software dependencies
