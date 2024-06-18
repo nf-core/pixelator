@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Enhancements & fixes
 
 - [[PR #96](https://github.com/nf-core/pixelator/pull/96)] - Make all ext.args assignments closures
+- [[PR #98](https://github.com/nf-core/pixelator/pull/98)] - Update metromap to include layout step
 
 ### Software dependencies
 
