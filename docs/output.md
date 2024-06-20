@@ -19,6 +19,7 @@ The pipeline consists of the following steps:
 - [Compute connected components](#compute-connected-components)
 - [Filtering, annotation, cell-calling](#cell-calling-filtering-and-annotation)
 - [Downstream analysis](#downstream-analysis)
+- [Generate layouts for visualization](#compute-layouts-for-visualization)
 - [Generate reports](#generate-reports)
 
 ### Preprocessing
