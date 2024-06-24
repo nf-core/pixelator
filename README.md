@@ -30,7 +30,8 @@ It takes a samplesheet as input and will process your data using `pixelator` to 
 5. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator graph`](https://github.com/PixelgenTechnologies/pixelator))
 6. Call and annotate cells ([`pixelator annotate`](https://github.com/PixelgenTechnologies/pixelator))
 7. Analyze the cells for polarization and colocalization ([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
-8. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
+8. Generate 3D graph layouts for visualization of cells ([`pixelator layout`](https://github.com/PixelgenTechnologies/pixelator))
+9. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
 
 > [!WARNING]
 > Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
