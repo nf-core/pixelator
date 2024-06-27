@@ -26,10 +26,11 @@ process PIXELATOR_AMPLICON {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
 
-    // Make list of old name and new name pairs to use for renaming in the bash while loop
+    // Make list of old name and new name pairs to use for renaming
+    // Use R1/R2 style suffixes for limited backward compatibility with pixelator<0.17
     def old_new_pairs = (reads instanceof Path || reads.size() == 1)
         ? [[ reads, "${prefix}${getFileSuffix(reads)}" ]]
-        : reads.withIndex().collect { entry, index -> [ entry, "${prefix}_${index + 1}${getFileSuffix(entry)}" ] }
+        : reads.withIndex().collect { entry, index -> [ entry, "${prefix}_R${index + 1}${getFileSuffix(entry)}" ] }
 
     def rename_to = old_new_pairs*.join(' ').join(' ')
     def renamed_reads = old_new_pairs.collect { old_name, new_name -> new_name }.join(' ')
