@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[PR #98](https://github.com/nf-core/pixelator/pull/98)] - Update metromap to include layout step
 - [[PR #99](https://github.com/nf-core/pixelator/pull/99)] - Update README to include layout step
 - [[PR #100](https://github.com/nf-core/pixelator/pull/100)] - Use R1/R2 suffixes in amplicon input fastq file renaming
+- [[PR #101](https://github.com/nf-core/pixelator/pull/101)] - Fix validation issue when using panel_file instead of panel
 
 ### Software dependencies
 
