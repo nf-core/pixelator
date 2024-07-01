@@ -25,7 +25,7 @@ The pipeline consists of the following steps:
 ### Preprocessing
 
 The preprocessing step uses `pixelator single-cell amplicon` to create full-length amplicon sequences from both single-end and paired-end data.
-It returns a single fastq file per sample containing fixed length amplicons.
+It returns a single FASTQ file per sample containing fixed length amplicons.
 This step will also calculate Q30 quality scores for different regions of the library.
 
 These amplicon FASTQ files are intermediate and by default not placed in the output folder with the final files delivered to users.
