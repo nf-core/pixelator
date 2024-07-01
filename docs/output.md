@@ -118,9 +118,9 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
 This step uses the `pixelator single-cell collapse` command.
 
-The `collapse` command removes duplicate reads and performs error correction.
-This is achieved using the unique pixel identifier and unique molecular identifier sequences to check for
-uniqueness, collapse and compute a read count. The command generates a QC report in JSON format.
+The `collapse` command quantifies molecules by performing error correction and detecting PCR duplicates.
+This is achieved using the unique pixel identifier and unique molecular identifier sequences to check for uniqueness, collapse and compute a read count.
+The command generates a QC report in JSON format.
 Errors are allowed when collapsing reads if `--algorithm` is set to `adjacency` (this is the default option).
 
 The output format of this command is a parquet file containing deduplicated and error-corrected molecules.
