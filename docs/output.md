@@ -148,9 +148,9 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 ### Compute connected components
 
 This step uses the `pixelator single-cell graph` command.
-The input is the edge list parquet file generated in the collapse step and after filtering it
-by count (`--graph_min_count`), the connected components of the graph (graphs) are computed and
-added to the edge list in a column called "component".
+The input is the edge list parquet file generated in the collapse step.
+The molecules from edge list are filtered by count (`--graph_min_count`) to form the edges of the connected components of the graph.
+When graphs are computed and identified, their ID names are added back to the edge list in a column called "component".
 
 The graph command has the option to recover components (technical multiplets) into smaller
 components using community detection to find and remove problematic edges
