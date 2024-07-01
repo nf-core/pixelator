@@ -28,7 +28,7 @@ The preprocessing step uses `pixelator single-cell amplicon` to create full-leng
 It returns a single fastq file per sample containing fixed length amplicons.
 This step will also calculate Q30 quality scores for different regions of the library.
 
-These amplicon FASTQ files are intermediate and by default not placed in the output folder kept in the final files delivered to users.
+These amplicon FASTQ files are intermediate and by default not placed in the output folder with the final files delivered to users.
 Set `--save_amplicon_reads` or `--save_all` to enable publishing of these files to:
 
 <details markdown="1">
@@ -61,7 +61,7 @@ uses [Cutadapt](https://cutadapt.readthedocs.io/en/stable/).
 The `adapterqc` stage checks for the presence and correctness of the pixel binding sequences.
 It also generates a QC report in JSON format. It saves processed reads as well as discarded reads (i.e. reads that did not have a match for both pixel binding sequences).
 
-These processed and discarded FASTQ reads are intermediate and by default not placed in the output folder kept in the final files delivered to users.
+These processed and discarded FASTQ reads are intermediate and by default not placed in the output folder with the final files delivered to users.
 Set `--save_qc_passed_reads` and/or `--save_qc_passed_reads` to enable publishing of these files.
 Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
@@ -89,11 +89,11 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
 ### Demultiplexing
 
-The `pixelator single-cell demux` command assigns a marker (barcode) to each read. It also generates QC report in
-JSON format. It saves processed reads (one per antibody) as well as discarded reads with no match to the
+The `pixelator single-cell demux` command assigns each read to a marker (with a certain barcode) file. It also generates QC report in
+JSON format. It saves processed reads (one file per antibody) as well as discarded reads (in a different file) with no match to the
 given barcodes/antibodies.
 
-These processed and discarded FASTQ reads are intermediate and by default not placed in the output folder kept in the final files delivered to users.
+These processed and discarded FASTQ reads are intermediate and by default not placed in the output folder with the final files delivered to users.
 Set `--save_demux_failed_reads` and/or `--save_demux_processed_reads` to enable publishing of these files.
 Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
@@ -123,9 +123,9 @@ This is achieved using the unique pixel identifier and unique molecular identifi
 uniqueness, collapse and compute a read count. The command generates a QC report in JSON format.
 Errors are allowed when collapsing reads if `--algorithm` is set to `adjacency` (this is the default option).
 
-The output format of this command is a parquet file containing deduplicated and error-corrected reads.
+The output format of this command is a parquet file containing deduplicated and error-corrected molecules.
 
-The collapsed reads are intermediate and by default not placed in the output folder kept in the final files delivered to users.
+The collapsed reads are intermediate and by default not placed in the output folder with the final files delivered to users.
 Set `--save_collapsed_reads` to enable publishing of these files.
 Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
@@ -153,12 +153,12 @@ by count (`--graph_min_count`), the connected components of the graph (graphs) a
 added to the edge list in a column called "component".
 
 The graph command has the option to recover components (technical multiplets) into smaller
-components using community detection to find and remove problematic edges.
-(See `--multiplet_recovery`). The information to keep track of the original and
+components using community detection to find and remove problematic edges
+(see `--multiplet_recovery`). These new component IDs are then stored in the "component" column. The information to keep track of the original and
 newly recovered components are stored in a file (components_recovered.csv).
 This file is not included in the output folder by default, but can be included by passing `--save_recovered_components`.
 
-The edgelist is intermediate and by default not placed in the output folder kept in the final files delivered to users.
+The edgelist is intermediate and by default not placed in the output folder with the final files delivered to users.
 Set `--save_edgelist` to enable publishing of these file.
 
 Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
@@ -187,8 +187,8 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
 This step uses the `pixelator single-cell annotate` command.
 
-The annotate command takes as input the edge list file generated in the graph command. It parses, and filters the
-edgelist to find putative cells, and it will generate a PXL file containing the edgelist, and an
+The annotate command takes as input the molecule list file generated in the graph command. It parses, and filters the
+molecules grouped by "component" ID to find putative cells, and it will generate a PXL file containing the edges of the graphs in an edgelist, and an
 (AnnData object)[https://anndata.readthedocs.io/en/latest/] as well as some useful metadata.
 
 Some summary statistics before filtering are stored in `raw_components_metrics.csv.gz`.
@@ -203,7 +203,7 @@ Set `--save_annotate_dataset` to include these files.
 - `pixelator`
 
   - `annotate`
-    - `<sample-id>.annotate.dataset.pxl`: The procesed PXL dataset,
+    - `<sample-id>.annotate.dataset.pxl`: The annotated PXL dataset,
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.raw_components_metrics.csv.gz`
     - `<sample-id>.report.json`: Statistics for the analysis step.
@@ -214,8 +214,8 @@ Set `--save_annotate_dataset` to include these files.
 ### Downstream analysis
 
 This step uses the `pixelator single-cell analysis` command.
-Downstream analysis is performed on the `pxl` file generated by the previous stage.
-The results of the analysis are added to the pxl file.
+Downstream analyses are performed on the PXL file generated by the previous stage.
+The results of the analysis are added to the PXL file produced in this stage.
 
 Currently, the following analysis are performed:
 
@@ -280,7 +280,7 @@ and generate a report in HTML format for each sample.
 
 This step can be skipped using the `--skip_report` option.
 
-More information on the report can be found in the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/web-report/)
+More information on the report can be found in the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/qc-report/)
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -310,8 +310,8 @@ More information on the report can be found in the [pixelator documentation](htt
 
 ## Output directory structure
 
-With default parameters, the pixelator pipeline output directory will only include the most "complete" PXL file
-generated by the pipeline and an interactive HTML report per sample.
+With default parameters, the pixelator pipeline output directory will only include the latest PXL file
+generated by the pipeline (with the most "complete" information) and an interactive HTML report per sample.
 The PXL dataset files can be from either the `annotate`, `analysis` or `layout` step.
 
 With default parameters, the `<sample-id>.layout.datasets.pxl` will be copied to the output directory.
