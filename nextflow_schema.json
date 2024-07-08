@@ -349,7 +349,7 @@
                 "colocalization_transformation": {
                     "type": "string",
                     "enum": ["raw", "log1p", "rate-diff"],
-                    "default": "log1p",
+                    "default": "rate-diff",
                     "description": "Select the type of transformation to use on the node by antibody counts matrix when computing colocalization"
                 },
                 "colocalization_neighbourhood_size": {
