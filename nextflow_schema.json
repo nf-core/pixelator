@@ -402,7 +402,7 @@
                     "description": "Select a layout algorithm to use. This can be specified as a comma separated list to compute multiple layouts. Possible values are: fruchterman_reingold, fruchterman_reingold_3d, kamada_kawai, kamada_kawai_3d, pmds, pmds_3d",
                     "type": "string",
                     "pattern": "(\\S+)?(,\\S+)*",
-                    "default": "pmds_3d"
+                    "default": "wpmds_3d"
                 }
             }
         },
