@@ -370,6 +370,12 @@
                     "default": 5,
                     "minimum": 0
                 },
+                "colocalization_min_marker_count": {
+                    "type": "integer",
+                    "description": "The minimum number of counts in a component for for it to be considered valid for computing colocalization",
+                    "default": 5,
+                    "minimum": 0
+                },
                 "save_analysis_dataset": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
