@@ -70,10 +70,13 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 - `pixelator`
 
   - `preqc`
+
     - `<sample-id>.processed.fastq.gz`: Processed reads.
     - `<sample-id>.failed.fastq.gz`: Discarded reads.
     - `<sample-id>.report.json`: Fastp json report.
+    - `<sample-id>.qc-report.html`: Fastp html report.
     - `<sample-id>.meta.json`: Command invocation metadata.
+
   - `adapterqc`
 
     - `<sample-id>.processed.fastq.gz`: Processed reads.

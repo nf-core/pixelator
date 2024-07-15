@@ -25,6 +25,8 @@ process PIXELATOR_QC {
     tuple val(meta), path("preqc/*.report.json")                     , emit: preqc_report_json
     tuple val(meta), path("{adapterqc,preqc}/*.report.json")         , emit: report_json
 
+    tuple val(meta), path("preqc/*.qc-report.html")                  , emit: preqc_report_html
+
     tuple val(meta), path("adapterqc/*.meta.json")                   , emit: adapterqc_metadata
     tuple val(meta), path("preqc/*.meta.json")                       , emit: preqc_metadata
     tuple val(meta), path("{adapterqc,preqc}/*.meta.json")           , emit: metadata
