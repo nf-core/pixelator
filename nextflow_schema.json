@@ -55,7 +55,7 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Save intermediate amplicon reads generated from the raw input reads.",
-                    "help": "By default, generated amplicon FastQ files will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
+                    "help": "By default, generated amplicon FastQ files will not be saved to the results directory. Specify this flag (or set it to `true` in your config file) to copy these files to the results directory when complete."
                 }
             }
         },
@@ -123,14 +123,14 @@
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
                     "default": false,
-                    "description": "Save intermediate qc read files containing all reads that passed the filters.",
-                    "help": "By default, filtered read FastQ files after QC will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
+                    "description": "Save intermediate QC read files containing all reads that passed the filters.",
+                    "help": "By default, filtered read FastQ files after QC will not be saved to the results directory. Specify this flag (or set it to `true` in your config file) to copy these files to the results directory when complete."
                 },
                 "save_qc_failed_reads": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
                     "default": false,
-                    "description": "Save intermediate qc read files containing all reads that failed the filters.",
+                    "description": "Save intermediate QC read files containing all reads that failed the filters.",
                     "help": "By default, FastQ files with reads that failed QC will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
                 }
             }

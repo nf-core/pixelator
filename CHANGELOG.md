@@ -23,11 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | ----------- | ----------- | ----------- |
 | `pixelator` | 0.17.1      | 0.18.1      |
 
-> **NB:** Dependency has been **updated** if both old and new version information is present.
->
-> **NB:** Dependency has been **added** if just the new version information is present.
->
-> **NB:** Dependency has been **removed** if new version information isn't present.
+> [!NOTE]
+> Dependency has been **updated** if both old and new version information is present.
+> Dependency has been **added** if just the new version information is present.
+> Dependency has been **removed** if new version information isn't present.
 
 ## [[1.2.0](https://github.com/nf-core/pixelator/releases/tag/1.2.0)] - 2024-05-28
 
