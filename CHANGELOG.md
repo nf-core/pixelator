@@ -15,12 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[PR #101](https://github.com/nf-core/pixelator/pull/101)] - Fix validation issue when using panel_file instead of panel
 - [[PR #102](https://github.com/nf-core/pixelator/pull/101)] - Restructure output directory
 - [[PR #103](https://github.com/nf-core/pixelator/pull/103)] - Make rate-diff the default transformation method when computing colocalization
+- [[PR #104](https://github.com/nf-core/pixelator/pull/104)] - Update to pixelator 0.18.1
 
 ### Software dependencies
 
 | Dependency  | Old version | New version |
 | ----------- | ----------- | ----------- |
-| `pixelator` | 0.17.1      | 0.17.1      |
+| `pixelator` | 0.17.1      | 0.18.1      |
 
 > **NB:** Dependency has been **updated** if both old and new version information is present.
 >

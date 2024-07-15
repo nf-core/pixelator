@@ -127,9 +127,12 @@ A list of available panels can be listed by running following command:
 pixelator single-cell --list-panels
 ```
 
-Currently, a single built-in panel is available:
+Currently, two built-in panels are available:
 
-- `human-sc-immunology-spatial-proteomics`
+- `human-sc-immunology-spatial-proteomics-1`
+- `human-sc-immunology-spatial-proteomics-2`
+
+`human-sc-immunology-spatial-proteomics` is also an allowed value and is an alias to `human-sc-immunology-spatial-proteomics-1`.
 
 ## Running the pipeline
 
