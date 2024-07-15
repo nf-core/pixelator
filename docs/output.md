@@ -56,7 +56,7 @@ The preqc step performs QC and quality filtering of the raw sequencing data usin
 It generates a QC report in HTML and JSON formats. It saves processed reads as well as reads that were
 discarded (i.e. were too short, had too many Ns, or too low quality, etc.). Internally `preqc`
 
-The `adapterqc` stage checks for the presence and correctness of the pixel binding sequences, 
+The `adapterqc` stage checks for the presence and correctness of the pixel binding sequences,
 using [Cutadapt](https://cutadapt.readthedocs.io/en/stable/) internally.
 It also generates a QC report in JSON format. It saves processed reads as well as discarded reads (i.e. reads that did not have a match for both pixel binding sequences).
 
@@ -135,7 +135,7 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 
   - `collapse`
 
-    - `<sample-id>.collapsed.parquet`: Edgelist of the graph.
+    - `<sample-id>.collapsed.parquet`: Edge list of the graph.
     - `<sample-id>.report.json`: Statistics for the collapse step.
     - `<sample-id>.meta.json`: Command invocation metadata.
 
@@ -187,7 +187,7 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 This step uses the `pixelator single-cell annotate` command.
 
 The annotate command takes as input the molecule list file generated in the graph command. It parses, and filters the
-molecules grouped by "component" ID to find putative cells, and it will generate a PXL file containing the edges of the graphs in an edgelist, and an
+molecules grouped by "component" ID to find putative cells, and it will generate a PXL file containing the edges of the graphs in an edge list, and an
 (AnnData object)[https://anndata.readthedocs.io/en/latest/] as well as some useful metadata.
 
 Some summary statistics before filtering are stored in `raw_components_metrics.csv.gz`.
