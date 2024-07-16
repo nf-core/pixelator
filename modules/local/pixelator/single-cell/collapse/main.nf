@@ -4,8 +4,8 @@ process PIXELATOR_COLLAPSE {
 
     conda "bioconda::pixelator=0.17.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.18.1--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.18.1--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/pixelator:0.18.2--pyhdfd78af_0' :
+        'biocontainers/pixelator:0.18.2--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel)
