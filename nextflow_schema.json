@@ -131,7 +131,7 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Save intermediate QC read files containing all reads that failed the filters.",
-                    "help": "By default, FastQ files with reads that failed QC will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
+                    "help": "By default, FastQ files with reads that failed QC will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 }
             }
         },
