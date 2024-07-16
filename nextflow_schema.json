@@ -157,15 +157,15 @@
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
                     "default": false,
-                    "description": "Save intermediate qc read files containing all reads that containt valid antibody barcodes.",
-                    "help": "By default, FastQ files containing reads with valid antibody barcodes will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
+                    "description": "Save intermediate QC read files containing all reads that contain valid antibody barcodes.",
+                    "help": "By default, FastQ files containing reads with valid antibody barcodes will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 },
                 "save_demux_failed_reads": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
                     "default": false,
-                    "description": "Save intermediate qc read files containing all reads that failed the filters.",
-                    "help": "By default, FastQ files containing reads without valid antibody barcodes will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
+                    "description": "Save intermediate QC read files containing all reads that failed the filters.",
+                    "help": "By default, FastQ files containing reads without valid antibody barcodes will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 }
             }
         },
@@ -219,7 +219,7 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Save an intermediate parquet file containing collapsed read information.",
-                    "help": "By default, intermediate collapsed reads will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
+                    "help": "By default, intermediate collapsed reads will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 }
             }
         },
@@ -254,15 +254,15 @@
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
                     "default": false,
-                    "description": "Save an intermediate csv file containing the unfiltered graph edge list.",
-                    "help": "By default, the unfiltered edge list will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
+                    "description": "Save an intermediate CSV file containing the unfiltered graph edge list.",
+                    "help": "By default, the unfiltered edge list will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 },
                 "save_recovered_components": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
                     "default": false,
-                    "description": "Save an intermediate csv file containing the recovered components after multiplet recovery.",
-                    "help": "By default, the recovered component will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
+                    "description": "Save an intermediate CSV file containing the recovered components after multiplet recovery.",
+                    "help": "By default, the recovered component will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 }
             }
         },
@@ -294,14 +294,14 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Save the raw_component_metrics.csv file from the annotate stage.",
-                    "help": "By default, the raw_component_metrics CSV file after annotate will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
+                    "help": "By default, the raw_component_metrics CSV file after annotate will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 },
                 "save_annotate_dataset": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
                     "default": false,
                     "description": "Save the PXL dataset after the annotate stage.",
-                    "help": "By default, the PXL file after annotate will not be saved to the results directory unless `--skip_analysis` and `--skip_layout` is passed. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
+                    "help": "By default, the PXL file after annotate will not be saved to the results directory unless `--skip_analysis` and `--skip_layout` is passed. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 }
             }
         },
@@ -372,7 +372,7 @@
                 },
                 "colocalization_min_marker_count": {
                     "type": "integer",
-                    "description": "The minimum number of counts in a component for for it to be considered valid for computing colocalization",
+                    "description": "The minimum number of counts in a component for it to be considered valid for computing colocalization",
                     "default": 5,
                     "minimum": 0
                 },
@@ -381,7 +381,7 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Save the PXL dataset after the analysis stage.",
-                    "help": "By default, the PXL dataset after the analysis stage will only be saved be saved when `--skip_layout` is passed. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
+                    "help": "By default, the PXL dataset after the analysis stage will only be saved be saved when `--skip_layout` is passed. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 }
             }
         },
