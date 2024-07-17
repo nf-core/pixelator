@@ -30,7 +30,8 @@ It takes a samplesheet as input and will process your data using `pixelator` to 
 5. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator graph`](https://github.com/PixelgenTechnologies/pixelator))
 6. Call and annotate cells ([`pixelator annotate`](https://github.com/PixelgenTechnologies/pixelator))
 7. Analyze the cells for polarization and colocalization ([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
-8. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
+8. Generate 3D graph layouts for visualization of cells ([`pixelator layout`](https://github.com/PixelgenTechnologies/pixelator))
+9. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
 
 > [!WARNING]
 > Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
@@ -101,3 +102,11 @@ You can cite the `nf-core` publication as follows:
 > Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven Nahnsen.
 >
 > _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).
+
+You can cite the molecular pixelation technology as follows:
+
+> **Molecular pixelation: spatial proteomics of single cells by sequencing.**
+>
+> Filip Karlsson, Tomasz Kallas, Divya Thiagarajan, Max Karlsson, Maud Schweitzer, Jose Fernandez Navarro, Louise Leijonancker, Sylvain Geny, Erik Pettersson, Jan Rhomberg-Kauert, Ludvig Larsson, Hanna van Ooijen, Stefan Petkov, Marcela González-Granillo, Jessica Bunz, Johan Dahlberg, Michele Simonetti, Prajakta Sathe, Petter Brodin, Alvaro Martinez Barrio & Simon Fredriksson
+>
+> _Nat Methods._ 2024 May 08. doi: [10.1038/s41592-024-02268-9](https://doi.org/10.1038/s41592-024-02268-9)

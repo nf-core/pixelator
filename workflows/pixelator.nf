@@ -192,7 +192,8 @@ workflow PIXELATOR {
     //
     // MODULE: Run pixelator single-cell layout
     //
-    PIXELATOR_LAYOUT ( ch_analysed )
+    ch_layout_input = params.skip_analysis ? ch_annotated : ch_analysed
+    PIXELATOR_LAYOUT ( ch_layout_input )
     ch_layout = PIXELATOR_LAYOUT.out.dataset
     ch_versions = ch_versions.mix(PIXELATOR_LAYOUT.out.versions.first())
 

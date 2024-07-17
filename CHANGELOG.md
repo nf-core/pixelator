@@ -3,6 +3,32 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[1.3.0](https://github.com/nf-core/pixelator/releases/tag/1.3.0)] - 2024-07-17
+
+### Enhancements & fixes
+
+- [[PR #97](https://github.com/nf-core/pixelator/pull/97)] - Update citations
+- [[PR #96](https://github.com/nf-core/pixelator/pull/96)] - Make all ext.args assignments closures
+- [[PR #98](https://github.com/nf-core/pixelator/pull/98)] - Update metromap to include layout step
+- [[PR #99](https://github.com/nf-core/pixelator/pull/99)] - Update README to include layout step
+- [[PR #100](https://github.com/nf-core/pixelator/pull/100)] - Use R1/R2 suffixes in amplicon input fastq file renaming
+- [[PR #101](https://github.com/nf-core/pixelator/pull/101)] - Fix validation issue when using panel_file instead of panel
+- [[PR #102](https://github.com/nf-core/pixelator/pull/101)] - Restructure output directory
+- [[PR #103](https://github.com/nf-core/pixelator/pull/103)] - Make rate-diff the default transformation method when computing colocalization
+- [[PR #104](https://github.com/nf-core/pixelator/pull/104)] - Update to pixelator 0.18.1
+- [[PR #106](https://github.com/nf-core/pixelator/pull/106)] - Update to pixelator 0.18.2
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.17.1      | 0.18.2      |
+
+> [!NOTE]
+> Dependency has been **updated** if both old and new version information is present.
+> Dependency has been **added** if just the new version information is present.
+> Dependency has been **removed** if new version information isn't present.
+
 ## [[1.2.0](https://github.com/nf-core/pixelator/releases/tag/1.2.0)] - 2024-05-28
 
 ### Enhancements & fixes

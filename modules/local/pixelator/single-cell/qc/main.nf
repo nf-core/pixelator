@@ -5,8 +5,8 @@ process PIXELATOR_QC {
 
     conda "bioconda::pixelator=0.17.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.17.1--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.17.1--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/pixelator:0.18.2--pyhdfd78af_0' :
+        'biocontainers/pixelator:0.18.2--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(reads)
@@ -24,6 +24,8 @@ process PIXELATOR_QC {
     tuple val(meta), path("adapterqc/*.report.json")                 , emit: adapterqc_report_json
     tuple val(meta), path("preqc/*.report.json")                     , emit: preqc_report_json
     tuple val(meta), path("{adapterqc,preqc}/*.report.json")         , emit: report_json
+
+    tuple val(meta), path("preqc/*.qc-report.html")                  , emit: preqc_report_html
 
     tuple val(meta), path("adapterqc/*.meta.json")                   , emit: adapterqc_metadata
     tuple val(meta), path("preqc/*.meta.json")                       , emit: preqc_metadata

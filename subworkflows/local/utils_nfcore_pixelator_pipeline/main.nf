@@ -339,7 +339,7 @@ def resolve_relative_path(relative_path, URI samplesheet_path) {
 //
 def validate_panel(LinkedHashMap meta, HashSet options) {
     if (meta.panel == null) {
-        return
+        return meta
     }
 
     if (!options.contains(meta.panel)) {
@@ -356,7 +356,7 @@ def validate_panel(LinkedHashMap meta, HashSet options) {
 //
 def validate_design(LinkedHashMap meta, HashSet options) {
     if (meta.design == null) {
-        return
+        return meta
     }
 
     if (!options.contains(meta.design)) {
