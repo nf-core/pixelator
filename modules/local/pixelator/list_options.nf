@@ -2,7 +2,7 @@ process PIXELATOR_LIST_OPTIONS {
     label 'process_single'
 
 
-    conda "bioconda::pixelator=0.17.1"
+    conda "bioconda::pixelator=0.18.2"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/pixelator:0.18.2--pyhdfd78af_0' :
         'biocontainers/pixelator:0.18.2--pyhdfd78af_0' }"
