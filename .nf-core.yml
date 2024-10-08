@@ -1,2 +1,20 @@
+bump_version: null
+lint:
+  files_exist:
+    - assets/multiqc_config.yml
+    - conf/igenomes.config
+  multiqc_config: false
+nf_core_version: 3.0.0
+org_path: null
 repository_type: pipeline
-nf_core_version: "2.14.1"
+template:
+  author: Pixelgen Technologies AB
+  description: Pipeline for analysis of Molecular Pixelation assays
+  force: false
+  is_nfcore: true
+  name: pixelator
+  org: nf-core
+  outdir: .
+  skip_features: null
+  version: 1.3.1
+update: null

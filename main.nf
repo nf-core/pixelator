@@ -9,8 +9,6 @@
 ----------------------------------------------------------------------------------------
 */
 
-nextflow.enable.dsl = 2
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT FUNCTIONS / MODULES / SUBWORKFLOWS / WORKFLOWS
@@ -20,7 +18,6 @@ nextflow.enable.dsl = 2
 include { PIXELATOR  } from './workflows/pixelator'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
-
 include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
 
 /*
@@ -56,10 +53,8 @@ workflow NFCORE_PIXELATOR {
     PIXELATOR (
         samplesheet
     )
-
     emit:
     multiqc_report = PIXELATOR.out.multiqc_report // channel: /path/to/multiqc_report.html
-
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,27 +65,24 @@ workflow NFCORE_PIXELATOR {
 workflow {
 
     main:
-
     //
     // SUBWORKFLOW: Run initialisation tasks
     //
     PIPELINE_INITIALISATION (
         params.version,
-        params.help,
         params.validate_params,
         params.monochrome_logs,
         args,
         params.outdir,
         params.input
     )
-
+    
     //
     // WORKFLOW: Run main workflow
     //
     NFCORE_PIXELATOR (
         PIPELINE_INITIALISATION.out.samplesheet
     )
-
     //
     // SUBWORKFLOW: Run completion tasks
     //
