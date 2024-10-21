@@ -239,7 +239,7 @@
                 },
                 "graph_max_edges_to_split": {
                     "fa_icon": "fas less-than-equal",
-                    "description": "Maximum number of edges  between the product components as a result of a component split operation during the multiplet recovery process.",
+                    "description": "Maximum number of edges between the produced components as a result of a component split operation during the multiplet recovery process.",
                     "type": "integer",
                     "default": 5,
                     "minimum": 1,
