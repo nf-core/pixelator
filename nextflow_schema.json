@@ -210,10 +210,6 @@
                     "minimum": 1,
                     "type": "integer"
                 },
-                "collapse_use_counts": {
-                    "description": "Use counts when collapsing (the difference in counts between two molecules must be more than double in order to be collapsed)",
-                    "type": "boolean"
-                },
                 "save_collapsed_reads": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
@@ -232,13 +228,22 @@
                     "type": "boolean",
                     "default": true
                 },
-                "leiden_iterations": {
-                    "fa_icon": "fas repeat",
-                    "description": "Number of iterations for the leiden algorithm, high values will decrease the variance of the results but increase the runtime [default: 10; 1<=x<=100]",
+                "graph_max_refinement_recursion_depth": {
+                    "fa_icon": "fas less-than-equal",
+                    "description": "The number of times a component can be broken down into smaller components during the multiplet recovery process.",
                     "type": "integer",
+                    "default": 5,
                     "minimum": 1,
                     "maximum": 100,
-                    "default": 10,
+                    "hidden": true
+                },
+                "graph_max_edges_to_split": {
+                    "fa_icon": "fas less-than-equal",
+                    "description": "Maximum number of edges between the produced components as a result of a component split operation during the multiplet recovery process.",
+                    "type": "integer",
+                    "default": 5,
+                    "minimum": 1,
+                    "maximum": 1000,
                     "hidden": true
                 },
                 "graph_min_count": {
