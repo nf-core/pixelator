@@ -3,19 +3,42 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[1.4.0](https://github.com/nf-core/pixelator/releases/tag/1.4.0] - ????-??-??
+## [[1.4.0dev](https://github.com/nf-core/pixelator/releases/tag/1.4.0] - ????-??-??
 
 ### Enhancements & fixes
 
 - [[PR #111](https://github.com/nf-core/pixelator/pull/111)] - Template update for nf-core/tools v3.0.2
+- [[PR #112](https://github.com/nf-core/pixelator/pull/112)] - Add graph refinement options for pixelator 0.19
 
-## [[1.3.1](https://github.com/nf-core/pixelator/releases/tag/1.3.1)] - 2024-07-31
+### Parameters
+
+| Old parameter                        | New parameter                      |
+| ------------------------------------ | ---------------------------------- |
+|                                      | `--help_full`                      |
+|                                      | `--show_hidden`                    |
+| `--validationFailUnrecognisedParams` |                                    |
+| `--validationLenientMode`            |                                    |
+| `--validationSchemaIgnoreParams`     |                                    |
+| `--validationShowHiddenParams`       |                                    |
+| `--leiden-iterations`                | `--max-refinement-recursion-depth` |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
 
 ### Software dependencies
 
 | Dependency  | Old version | New version |
 | ----------- | ----------- | ----------- |
 | `pixelator` | 0.18.2      | 0.19.0      |
+
+> [!NOTE]
+> Dependency has been **updated** if both old and new parameter information is present.
+> Dependency has been **added** if just the new parameter information is present.
+> Dependency has been **removed** if new parameter information isn't present.
+
+## [[1.3.1](https://github.com/nf-core/pixelator/releases/tag/1.3.1)] - 2024-07-31
 
 ### Enhancements & fixes
 
