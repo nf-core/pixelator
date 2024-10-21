@@ -1,6 +1,8 @@
 bump_version: null
 lint:
   multiqc_config: false
+  files_unchanged:
+    - assets/nf-core-pixelator_logo_light.png
   files_exist:
     - assets/multiqc_config.yml
     - conf/igenomes.config
