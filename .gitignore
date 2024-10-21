@@ -6,5 +6,6 @@ results/
 testing/
 testing*
 *.pyc
+null/
 .idea
 .vscode

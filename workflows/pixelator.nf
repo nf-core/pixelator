@@ -4,7 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { paramsSummaryMap       } from 'plugin/nf-validation'
+include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
@@ -68,12 +68,10 @@ include { PIXELATOR_LAYOUT              } from '../modules/local/pixelator/singl
 
 workflow PIXELATOR {
     take:
-    ch_samplesheet            // channel: [ meta, path(panel_file | []), path(sample_1.fq), path(sample_2.fq) ]
-
+    ch_samplesheet // channel: samplesheet read in from --input
     main:
 
     ch_versions = Channel.empty()
-
     //
     // Split the samplesheet channel in reads and panel_files
     //
@@ -247,13 +245,12 @@ workflow PIXELATOR {
     softwareVersionsToYAML(ch_versions)
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
-            name: 'nf_core_pipeline_software_mqc_versions.yml',
+            name: 'nf_core_'  + 'pipeline_software_' +  'mqc_'  + 'versions.yml',
             sort: true,
             newLine: true
         ).set { ch_collated_versions }
 
     // TODO: Add MultiQC when plugins are ready
-
 
     emit:
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
@@ -264,3 +261,6 @@ workflow PIXELATOR {
     THE END
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+
+
+
