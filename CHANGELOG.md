@@ -12,16 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Parameters
 
-| Old parameter                        | New parameter                      |
-| ------------------------------------ | ---------------------------------- |
-|                                      | `--help_full`                      |
-|                                      | `--show_hidden`                    |
-| `--validationFailUnrecognisedParams` |                                    |
-| `--validationLenientMode`            |                                    |
-| `--validationSchemaIgnoreParams`     |                                    |
-| `--validationShowHiddenParams`       |                                    |
-| `--leiden-iterations`                | `--max-refinement-recursion-depth` |
-|                                      | `--max-edges-to-split`             |
+| Old parameter                        | New parameter                            |
+| ------------------------------------ | ---------------------------------------- |
+|                                      | `--help_full`                            |
+|                                      | `--show_hidden`                          |
+| `--validationFailUnrecognisedParams` |                                          |
+| `--validationLenientMode`            |                                          |
+| `--validationSchemaIgnoreParams`     |                                          |
+| `--validationShowHiddenParams`       |                                          |
+| `--leiden_iterations`                | `--graph_max_refinement_recursion_depth` |
+|                                      | `--graph_max_edges_to_split`             |
 
 > [!NOTE]
 > Parameter has been **updated** if both old and new parameter information is present.
