@@ -335,7 +335,7 @@ def resolve_relative_path(relative_path, URI samplesheet_path) {
 // Validate a given panel key if present against the (dynamic) set of panel options retrieved from pixelator
 //
 def validate_panel(LinkedHashMap meta, HashSet options) {
-    if (meta.panel == null) {
+    if (meta.panel == null || meta.panel == []) {
         return meta
     }
 
@@ -352,7 +352,7 @@ def validate_panel(LinkedHashMap meta, HashSet options) {
 // Validate a given design key if present against the (dynamic) set of design options retrieved from pixelator
 //
 def validate_design(LinkedHashMap meta, HashSet options) {
-    if (meta.design == null) {
+    if (meta.design == null || meta.design == []) {
         return meta
     }
 
