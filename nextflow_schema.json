@@ -26,7 +26,6 @@
                 "input_basedir": {
                     "type": "string",
                     "format": "directory-path",
-                    "exists": false,
                     "description": "Path to a local or remote directory that is the \"current working directory\" for relative paths defined in the input samplesheet",
                     "fa_icon": "fas fa-folder"
                 },
