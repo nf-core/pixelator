@@ -276,7 +276,8 @@
                     "type": "integer"
                 },
                 "dynamic_filter": {
-                    "description": " Enable the estimation of dynamic size filters using a log-rank approach both: estimate both min and max size, min: estimate min size (--min-size), max: estimate max size (--max-size)",
+                    "description": "Enable the estimation of dynamic size filters using a log-rank approach.",
+                    "help_text": "Following options are available:\n- both: estimates both minimum and maximum component size\n- min: estimates the minimum component size (or uses {MINIMUM_N_EDGES_CELL_SIZE} edges, whichever is smallest)\n- max: estimates the maximum component size.\n\nNote that this cannot be set at the same time as `--min-size` or `--max-size`.",
                     "type": "string",
                     "enum": ["both", "min", "max"],
                     "default": "min"
