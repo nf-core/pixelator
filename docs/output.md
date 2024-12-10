@@ -156,9 +156,7 @@ When graphs are computed and identified, their ID names are added back to the ed
 
 The graph command has the option to recover components (technical multiplets) into smaller
 components using community detection to find and remove problematic edges
-(see `--multiplet_recovery`). These new component IDs are then stored in the "component" column. The information to keep track of the original and
-newly recovered components are stored in a file (components_recovered.csv).
-This file is not included in the output folder by default, but can be included by passing `--save_recovered_components`.
+(see `--multiplet_recovery`). These new component IDs are then stored in the "component" column.
 
 The edge list is intermediate and by default not placed in the output folder with the final files delivered to users.
 Set `--save_edgelist` to enable publishing of these file.

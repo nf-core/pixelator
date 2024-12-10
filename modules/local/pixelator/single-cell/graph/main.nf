@@ -13,7 +13,6 @@ process PIXELATOR_GRAPH {
 
     output:
     tuple val(meta), path("graph/*.edgelist.parquet")         , emit: edgelist
-    tuple val(meta), path("graph/*.components_recovered.csv"), emit: components_recovered, optional: true
     tuple val(meta), path("graph/*.report.json")             , emit: report_json
     tuple val(meta), path("graph/*.meta.json")               , emit: input_params
     tuple val(meta), path("graph/*")                         , emit: all_results

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[PR #111](https://github.com/nf-core/pixelator/pull/111)] - Template update for nf-core/tools v3.0.2
 - [[PR #112](https://github.com/nf-core/pixelator/pull/112)] - Add graph refinement options for pixelator 0.19
 - [[PR #113](https://github.com/nf-core/pixelator/pull/113)] - Fix validation issues after nf-core/tools v3.0.2 update
+- [[PR #114](https://github.com/nf-core/pixelator/pull/114)] - Remove `--save_recovered_components` options for graph outputs
 
 ### Parameters
 
@@ -23,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | `--validationShowHiddenParams`       |                                          |
 | `--leiden_iterations`                | `--graph_max_refinement_recursion_depth` |
 |                                      | `--graph_max_edges_to_split`             |
+|                                      | `--graph_max_edges_to_split`             |
+| `--save_recovered_components`        |                                          |
 
 > [!NOTE]
 > Parameter has been **updated** if both old and new parameter information is present.
