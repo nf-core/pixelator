@@ -428,7 +428,7 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Save all intermediate results.",
-                    "help": "This option is equivalent to passing:\n`--save_amplicon_reads --save_qc_passed_reads --save_qc_failed_reads --save_demux_processed_reads --save_demux_failed_reads --save_collapsed_reads --save_edgelist --save_recovered_components --save_annotate_dataset --save_analysis_dataset`"
+                    "help": "This option is equivalent to passing:\n`--save_amplicon_reads --save_qc_passed_reads --save_qc_failed_reads --save_demux_processed_reads --save_demux_failed_reads --save_collapsed_reads --save_edgelist --save_annotate_dataset --save_analysis_dataset`"
                 }
             }
         },
