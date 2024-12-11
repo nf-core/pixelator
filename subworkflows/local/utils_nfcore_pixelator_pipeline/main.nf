@@ -100,13 +100,13 @@ workflow PIPELINE_INITIALISATION {
     // Create a set of valid pixelator options to pass to --design
     ch_design_options = PIXELATOR_LIST_OPTIONS.out.designs
         .splitText()
-        .map( text -> text.trim())
+        .map { it.trim() }
         .reduce( new HashSet() ) { prev, curr -> prev << curr }
 
     // Create a set of valid pixelator panel keys to pass using --panel
     ch_panel_options = PIXELATOR_LIST_OPTIONS.out.panels
         .splitText()
-        .map( text -> text.trim())
+        .map { it.trim() }
         .reduce( new HashSet() ) { prev, curr -> prev << curr }
 
     //
