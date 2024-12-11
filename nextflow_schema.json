@@ -260,13 +260,6 @@
                     "default": false,
                     "description": "Save an intermediate CSV file containing the unfiltered graph edge list.",
                     "help": "By default, the unfiltered edge list will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
-                },
-                "save_recovered_components": {
-                    "fa_icon": "fas fa-save",
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Save an intermediate CSV file containing the recovered components after multiplet recovery.",
-                    "help": "By default, the recovered component will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 }
             }
         },
@@ -283,7 +276,8 @@
                     "type": "integer"
                 },
                 "dynamic_filter": {
-                    "description": " Enable the estimation of dynamic size filters using a log-rank approach both: estimate both min and max size, min: estimate min size (--min-size), max: estimate max size (--max-size)",
+                    "description": "Enable the estimation of dynamic size filters using a log-rank approach.",
+                    "help_text": "Following options are available:\n- both: estimates both minimum and maximum component size\n- min: estimates the minimum component size (or uses {MINIMUM_N_EDGES_CELL_SIZE} edges, whichever is smallest)\n- max: estimates the maximum component size.\n\nNote that this cannot be set at the same time as `--min-size` or `--max-size`.",
                     "type": "string",
                     "enum": ["both", "min", "max"],
                     "default": "min"
@@ -435,7 +429,7 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Save all intermediate results.",
-                    "help": "This option is equivalent to passing:\n`--save_amplicon_reads --save_qc_passed_reads --save_qc_failed_reads --save_demux_processed_reads --save_demux_failed_reads --save_collapsed_reads --save_edgelist --save_recovered_components --save_annotate_dataset --save_analysis_dataset`"
+                    "help": "This option is equivalent to passing:\n`--save_amplicon_reads --save_qc_passed_reads --save_qc_failed_reads --save_demux_processed_reads --save_demux_failed_reads --save_collapsed_reads --save_edgelist --save_annotate_dataset --save_analysis_dataset`"
                 }
             }
         },
