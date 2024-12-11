@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[PR #112](https://github.com/nf-core/pixelator/pull/112)] - Add graph refinement options for pixelator 0.19
 - [[PR #113](https://github.com/nf-core/pixelator/pull/113)] - Fix validation issues after nf-core/tools v3.0.2 update
 - [[PR #114](https://github.com/nf-core/pixelator/pull/114)] - Remove `--save_recovered_components` options for graph outputs
+- [[PR #115](https://github.com/nf-core/pixelator/pull/115)] - Update containers for pixelator 0.19
 
 ### Parameters
 
