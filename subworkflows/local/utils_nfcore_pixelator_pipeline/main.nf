@@ -69,8 +69,6 @@ workflow PIPELINE_INITIALISATION {
     //
     // Custom validation for pipeline parameters
     //
-    validateInputParameters()
-
 
     ch_versions = Channel.empty()
 
@@ -145,7 +143,6 @@ workflow PIPELINE_COMPLETION {
     outdir          //    path: Path to output directory where results will be published
     monochrome_logs // boolean: Disable ANSI colour codes in log output
     hook_url        //  string: hook URL for notifications
-    multiqc_report  //  string: Path to MultiQC report
 
     main:
     summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
@@ -162,7 +159,7 @@ workflow PIPELINE_COMPLETION {
                 plaintext_email,
                 outdir,
                 monochrome_logs,
-                multiqc_report.toList()
+                []
             )
         }
 
@@ -182,13 +179,6 @@ workflow PIPELINE_COMPLETION {
     FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-//
-// Check and validate pipeline parameters
-//
-def validateInputParameters() {
-    // Keep this commented here to closely follow the template
-    // genomeExistsError()
-}
 
 //
 // Validate channels from input samplesheet
@@ -205,31 +195,6 @@ def validateInputSamplesheet(input) {
     return [ metas[0], fastqs ]
 }
 //
-// Get attribute from genome config file e.g. fasta
-//
-def getGenomeAttribute(attribute) {
-    if (params.genomes && params.genome && params.genomes.containsKey(params.genome)) {
-        if (params.genomes[ params.genome ].containsKey(attribute)) {
-            return params.genomes[ params.genome ][ attribute ]
-        }
-    }
-    return null
-}
-
-//
-// Exit pipeline if incorrect --genome key provided
-//
-def genomeExistsError() {
-    if (params.genomes && params.genome && !params.genomes.containsKey(params.genome)) {
-        def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-            "  Genome '${params.genome}' not found in any config files provided to the pipeline.\n" +
-            "  Currently, the available genome keys are:\n" +
-            "  ${params.genomes.keySet().join(", ")}\n" +
-            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        error(error_string)
-    }
-}
-//
 // Generate methods description for MultiQC
 //
 def toolCitationText() {
@@ -238,8 +203,6 @@ def toolCitationText() {
     // Uncomment function in methodsDescriptionText to render in MultiQC report
     def citation_text = [
             "Tools used in the workflow included:",
-            "FastQC (Andrews 2010),",
-            "MultiQC (Ewels et al. 2016)",
             "."
         ].join(' ').trim()
 
@@ -251,15 +214,13 @@ def toolBibliographyText() {
     // Can use ternary operators to dynamically construct based conditions, e.g. params["run_xyz"] ? "<li>Author (2023) Pub name, Journal, DOI</li>" : "",
     // Uncomment function in methodsDescriptionText to render in MultiQC report
     def reference_text = [
-            "<li>Andrews S, (2010) FastQC, URL: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).</li>",
-            "<li>Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics , 32(19), 3047–3048. doi: /10.1093/bioinformatics/btw354</li>"
         ].join(' ').trim()
 
     return reference_text
 }
 
 def methodsDescriptionText(mqc_methods_yaml) {
-    // Convert  to a named map so can be used as with familar NXF ${workflow} variable syntax in the MultiQC YML file
+    // Convert  to a named map so can be used as with familiar NXF ${workflow} variable syntax in the MultiQC YML file
     def meta = [:]
     meta.workflow = workflow.toMap()
     meta["manifest_map"] = workflow.manifest.toMap()
@@ -340,7 +301,7 @@ def validate_panel(LinkedHashMap meta, HashSet options) {
     }
 
     if (!options.contains(meta.panel)) {
-        options_list_str = " - ${options.join("\n - ")}"
+        def options_list_str = " - ${options.join("\n - ")}"
         exit 1, "Please check input samplesheet -> panel field does not contains a valid key!\n\nInput: ${meta.panel}\nValid options:\n${options_list_str}"
     }
 
@@ -357,7 +318,7 @@ def validate_design(LinkedHashMap meta, HashSet options) {
     }
 
     if (!options.contains(meta.design)) {
-        options_list_str = " - ${options.join("\n - ")}"
+        def options_list_str = " - ${options.join("\n - ")}"
         exit 1, "Please check input samplesheet -> design field does not contains a valid key!\n\nInput: ${meta.design}\nValid options:\n${options_list_str}"
     }
 
@@ -395,10 +356,13 @@ def get_data_basedir(URI samplesheet, String input_basedir) {
         return uri
     }
 
-    f = file(input_basedir)
+    def f = file(input_basedir)
     if (!f.exists()) {
         exit 1, "ERROR: data path passed with --input_basedir does not exist!"
     }
+
+    def data_root = null
+
     if (f.isDirectory()) {
         data_root = new URI(f.toString() + '/')
     } else {

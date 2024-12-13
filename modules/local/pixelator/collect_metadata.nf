@@ -1,6 +1,3 @@
-import groovy.json.JsonOutput
-
-
 
 process PIXELATOR_COLLECT_METADATA {
     label 'process_single'
@@ -11,8 +8,6 @@ process PIXELATOR_COLLECT_METADATA {
         'https://depot.galaxyproject.org/singularity/pixelator:pixelator:0.19.0--pyhdfd78af_0' :
         'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
 
-    input:
-
     output:
     path "metadata.json", emit: metadata
     path "versions.yml" , emit: versions
@@ -22,12 +17,12 @@ process PIXELATOR_COLLECT_METADATA {
 
     script:
 
-    Map nextflow_dict = [
+    def nextflow_dict = [
         version: workflow.nextflow.version,
         build: workflow.nextflow.build,
         timestamp: workflow.nextflow.timestamp?.toString(),
     ]
-    Map manifest_dict = [
+    def manifest_dict = [
         author: workflow.manifest.getAuthor(),
         defaultBranch: workflow.manifest.getDefaultBranch(),
         description: workflow.manifest.getDescription(),
@@ -39,7 +34,7 @@ process PIXELATOR_COLLECT_METADATA {
         doi: workflow.manifest.getDoi(),
     ]
 
-    Map workflow_dict = [
+    def workflow_dict = [
         scriptId: workflow.scriptId,
         scriptName: workflow.scriptName,
         scriptFile: workflow.scriptFile.toString(),
@@ -70,8 +65,7 @@ process PIXELATOR_COLLECT_METADATA {
         parameters: params
     ]
 
-    def nextflowJson = JsonOutput.toJson(metadata)
-
+    def nextflowJson = groovy.json.JsonOutput.toJson(metadata)
     """
     echo '${nextflowJson}' > nextflow-metadata.json
     collect_metadata.py --process-name ${task.process} --workflow-data "nextflow-metadata.json"

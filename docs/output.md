@@ -12,6 +12,7 @@ of [`pixelator`](https://github.com/PixelgenTechnologies/pixelator).
 
 The pipeline consists of the following steps:
 
+- [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 - [Preprocessing](#Preprocessing)
 - [Quality control](#quality-control)
 - [Demultiplexing](#demultiplexing)
