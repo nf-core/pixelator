@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[PR #116](https://github.com/nf-core/pixelator/pull/116)] - Bump version to 1.4
 - [[PR #117](https://github.com/nf-core/pixelator/pull/117)] - Template update for nf-core/tools v3.1.0
 - [[PR #118](https://github.com/nf-core/pixelator/pull/118)] - Update metromap, bump conda versions
+- [[PR #119](https://github.com/nf-core/pixelator/pull/119)] - Add process_long to AMPLICON and COLLAPSE steps
 
 ### Parameters
 
