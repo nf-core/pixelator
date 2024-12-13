@@ -1,11 +1,12 @@
 lint:
+  multiqc_config: false
+  files_unchanged:
+    - assets/nf-core-pixelator_logo_light.png
   files_exist:
     - assets/multiqc_config.yml
     - conf/igenomes.config
-  files_unchanged:
-    - assets/nf-core-pixelator_logo_light.png
-  multiqc_config: false
 nf_core_version: 3.1.0
+org_path: null
 repository_type: pipeline
 template:
   author: Pixelgen Technologies AB
@@ -19,4 +20,4 @@ template:
     - fastqc
     - multiqc
     - igenomes
-  version: 1.3.1
+  version: 1.4.0
