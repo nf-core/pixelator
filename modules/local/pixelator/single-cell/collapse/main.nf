@@ -1,6 +1,7 @@
 process PIXELATOR_COLLAPSE {
     tag "$meta.id"
     label 'process_medium'
+    label 'process_long'
 
     conda "bioconda::pixelator=0.18.2"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
