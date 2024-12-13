@@ -1,6 +1,7 @@
 process PIXELATOR_AMPLICON {
     tag "$meta.id"
     label 'process_low'
+    label 'process_long'
 
 
     conda "bioconda::pixelator=0.19.0"
