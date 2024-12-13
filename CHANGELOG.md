@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[PR #115](https://github.com/nf-core/pixelator/pull/115)] - Update containers for pixelator 0.19
 - [[PR #116](https://github.com/nf-core/pixelator/pull/116)] - Bump version to 1.4
 - [[PR #117](https://github.com/nf-core/pixelator/pull/117)] - Template update for nf-core/tools v3.1.0
-- [[PR #118](https://github.com/nf-core/pixelator/pull/118)] - Update metromap for 1.4 release
+- [[PR #118](https://github.com/nf-core/pixelator/pull/118)] - Update metromap, bump conda versions
 
 ### Parameters
 
