@@ -6,7 +6,7 @@ process PIXELATOR_AMPLICON {
 
     conda "bioconda::pixelator=0.19.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:pixelator:0.19.0--pyhdfd78af_0' :
+        'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
         'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
 
     input:
