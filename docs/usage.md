@@ -6,51 +6,133 @@
 
 ## Introduction
 
-<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
-
 ## Samplesheet input
 
-You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.
+You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline.
+Use this parameter to specify its location.
 
 ```bash
 --input '[path to samplesheet file]'
 ```
+
+An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+
+### Format
+
+The samplesheet is a CSV or TSV formatted file with a few required and some optional columns.
+You can export to CSV from spreadsheet programs such as Microsoft Excel, Google Sheets and LibreOffice Calc.
+
+Following table provides an overview of all possible columns in the samplesheet.
+The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 5 columns
+to match those defined in the table below.
+
+Below is an example of a simple samplesheet with two samples.
+
+```csv
+sample,design,panel,fastq_1,fastq_2
+uropod_control,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_R1_001.fastq.gz,uropod_control_S1_R2_001.fastq.gz
+uropod_stimulated,D21,human-sc-immunology-spatial-proteomics,uropod_stimulated_S1_R1_001.fastq.gz,uropod_stimulated_S1_R2_001.fastq.gz
+```
+
+Columns not defined in the table below are ignored by the pipeline but can be useful
+to add extra information for downstream processing.
+
+| Column                              | Required | Description                                                                                                                                                                            |
+| ----------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`                            | Yes      | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
+| `design`                            | Yes      | The name of the pixelator design configuration.                                                                                                                                        |
+| `panel` <br />or<br /> `panel_file` | Yes      | Name of the panel to use. <br />or<br /> Path to a CSV file containing a custom panel.                                                                                                 |
+| `fastq_1`                           | Yes      | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
+| `fastq_2`                           | No       | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". Parameter only used if you are running paired-end.               |
+
+The `panel` and `panel_file` options are mutually exclusive. If both are specified, the pipeline will throw an error.
+One of them has to be specified.
+
+The pipeline will auto-detect whether a sample is single- or paired-end based on if both `fastq_1` and `fastq_2` or only `fastq_1` is present in the samplesheet.
 
 ### Multiple runs of the same sample
 
 The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
 
 ```csv title="samplesheet.csv"
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L003_R1_001.fastq.gz,AEG588A1_S1_L003_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
+sample,design,panel,fastq_1,fastq_2
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
 ```
 
-### Full samplesheet
+### Relative paths
 
-The pipeline will auto-detect whether a sample is single- or paired-end using the information provided in the samplesheet. The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 3 columns to match those defined in the table below.
+Using relative paths in a samplesheet is supported.
+This make it easier to relocate data since you do not have to edit the paths to files in the samplesheet.
 
-A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where `TREATMENT_REP3` has been sequenced twice.
+The default behavior is to resolve relative paths based on the directory the samplesheet file is located in.
+
+Given following directory structure:
+
+- data
+  - samplesheet.csv
+  - fastq
+    - sample1_R1.fq.gz
+    - sample1_R2.fq.gz
+
+You can use following samplesheet:
 
 ```csv title="samplesheet.csv"
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP2,AEG588A2_S2_L002_R1_001.fastq.gz,AEG588A2_S2_L002_R2_001.fastq.gz
-CONTROL_REP3,AEG588A3_S3_L002_R1_001.fastq.gz,AEG588A3_S3_L002_R2_001.fastq.gz
-TREATMENT_REP1,AEG588A4_S4_L003_R1_001.fastq.gz,
-TREATMENT_REP2,AEG588A5_S5_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
+sample,design,panel,panel_file,fastq_1,fastq_2
+sample1,D21,human-sc-immunology-spatial-proteomics,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
 ```
 
-| Column    | Description                                                                                                                                                                            |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`  | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `fastq_1` | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-| `fastq_2` | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
+Using the `--input_basedir` option you can specify a different location that will be used to resolve relative paths.
+This location can be a local or a remote path.
 
-An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+For example, using the same samplesheet as above, but with the samplesheet on the local machine and the input data located on an AWS S3 bucket:
+
+- s3://my-company-data/experiment-1/fastq
+  - sample1_R1.fq.gz
+  - sample1_R2.fq.gz
+
+```shell
+nextflow run nf-core/pixelator --input samplesheet.csv --input_basedir s3://my-company-data/experiment-1/
+```
+
+### Design
+
+The `design` column specifies the name of the pixelator assay design configuration to use.
+
+A list of available designs can be listed by running following command:
+
+```shell
+pixelator single-cell --list-designs
+```
+
+Currently, a single design is available:
+
+- `D21`
+
+### Panels
+
+The panel file contains all information used to link antibodies barcodes to their respective targets.
+Panel files can be specified in two ways:
+
+- Using a predefined panel name to use the default build in panels.
+- Passing a csv file with a customized panel.
+
+Predefined panels can be passed in the `panel` field. Custom panels can be passed in the `panel_file` field.
+Every sample should have either `panel` or `panel_file` specified.
+
+A list of available panels can be listed by running following command:
+
+```shell
+pixelator single-cell --list-panels
+```
+
+Currently, two built-in panels are available:
+
+- `human-sc-immunology-spatial-proteomics-1`
+- `human-sc-immunology-spatial-proteomics-2`
+
+`human-sc-immunology-spatial-proteomics` is also an allowed value and is an alias to `human-sc-immunology-spatial-proteomics-1`.
 
 ## Running the pipeline
 
@@ -93,6 +175,8 @@ genome: 'GRCh37'
 <...>
 ```
 
+You can find an extensive example of a `params.yaml` file with all options and
+documentation in comments [here](../assets/params-file.yml).
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
 
 ### Updating the pipeline
@@ -156,6 +240,12 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
   - A generic configuration profile to enable [Wave](https://seqera.io/wave/) containers. Use together with one of the above (requires Nextflow ` 24.03.0-edge` or later).
 - `conda`
   - A generic configuration profile to be used with [Conda](https://conda.io/docs/). Please only use Conda as a last resort i.e. when it's not possible to run the pipeline with Docker, Singularity, Podman, Shifter, Charliecloud, or Apptainer.
+
+:::warning
+Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
+This causes issues in some dependencies. As a workaround, you can revert to the old behavior by setting the environment variable
+`NXF_APPTAINER_HOME_MOUNT` or `NXF_SINGULARITY_HOME_MOUNT` to `true` in the machine from which you launch the pipeline.
+:::
 
 ### `-resume`
 
