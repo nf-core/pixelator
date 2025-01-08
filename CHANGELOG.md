@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[1.4.0](https://github.com/nf-core/pixelator/releases/tag/1.4.0)] - 2024-12-13
+## [[1.4.0](https://github.com/nf-core/pixelator/releases/tag/1.4.0)] - 2024-01-??
 
 ### Enhancements & fixes
 
@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[PR #117](https://github.com/nf-core/pixelator/pull/117)] - Template update for nf-core/tools v3.1.0
 - [[PR #118](https://github.com/nf-core/pixelator/pull/118)] - Update metromap, bump conda versions
 - [[PR #120](https://github.com/nf-core/pixelator/pull/120)] - Add process_long to AMPLICON and COLLAPSE steps
+- [[PR #122](https://github.com/nf-core/pixelator/pull/122)] - Template update for nf-core/tools v3.1.1
 
 ### Parameters
 
