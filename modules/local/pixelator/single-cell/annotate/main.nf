@@ -49,4 +49,20 @@ process PIXELATOR_ANNOTATE {
         pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir annotate
+    touch "${prefix}.pixelator-annotate.log"
+    touch "annotate/${prefix}.dataset.pxl"
+    touch "annotate/${prefix}.report.json"
+    touch "annotate/${prefix}.meta.json"
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
 }

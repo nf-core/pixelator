@@ -24,7 +24,7 @@ process PIXELATOR_GRAPH {
 
     script:
 
-    prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
 
     """
@@ -37,6 +37,22 @@ process PIXELATOR_GRAPH {
         --output . \\
         $args \\
         ${edge_list}
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir graph
+    touch "${prefix}.pixelator-graph.log"
+    touch "graph/${prefix}.edgelist.parquet"
+    touch "graph/${prefix}.report.json"
+    touch "graph/${prefix}.meta.json"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

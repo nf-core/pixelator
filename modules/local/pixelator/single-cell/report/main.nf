@@ -54,4 +54,19 @@ process PIXELATOR_REPORT {
         pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
+
+    stub:
+
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir report
+    touch "${prefix}.pixelator-report.log"
+    touch "report/${prefix}.html"
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
 }

@@ -23,8 +23,7 @@ process PIXELATOR_ANALYSIS {
     task.ext.when == null || task.ext.when
 
     script:
-
-    prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
 
     """
@@ -37,6 +36,22 @@ process PIXELATOR_ANALYSIS {
         --output . \\
         $args \\
         $data
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir analysis
+    touch "${prefix}.pixelator-analysis.log"
+    touch "analysis/${prefix}.dataset.pxl"
+    touch "analysis/${prefix}.report.json"
+    touch "analysis/${prefix}.meta.json"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

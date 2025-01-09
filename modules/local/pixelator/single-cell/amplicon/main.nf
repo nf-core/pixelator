@@ -55,6 +55,21 @@ process PIXELATOR_AMPLICON {
         pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    """
+    mkdir amplicon
+    touch "${prefix}.pixelator-amplicon.log"
+    touch amplicon/${prefix}.merged.fq.gz
+    touch amplicon/${prefix}.report.json
+    touch amplicon/${prefix}.meta.json
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
 }
 
 

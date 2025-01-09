@@ -76,4 +76,29 @@ process PIXELATOR_QC {
         pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir preqc
+    touch "preqc/${prefix}.processed.fq.gz"
+    touch "preqc/${prefix}.failed.fq.gz"
+    touch "preqc/${prefix}.report.json"
+    touch "preqc/${prefix}.meta.json"
+    touch "preqc/${prefix}.qc-report.html"
+    touch "${prefix}.pixelator-preqc.log"
+
+    mkdir adapterqc
+    touch "adapterqc/${prefix}.processed.fq.gz"
+    touch "adapterqc/${prefix}.failed.fq.gz"
+    touch "adapterqc/${prefix}.report.json"
+    touch "adapterqc/${prefix}.meta.json"
+    touch "${prefix}.pixelator-adapterqc.log"
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
 }
