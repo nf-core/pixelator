@@ -41,6 +41,7 @@ workflow NFCORE_PIXELATOR {
     PIXELATOR (
         samplesheet
     )
+    // TODO: Emit MultiQC report once implemented
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,6 +74,7 @@ workflow {
     //
     // SUBWORKFLOW: Run completion tasks
     //
+    // TODO: Pass MultiQC report here once implemented
     PIPELINE_COMPLETION (
         params.email,
         params.email_on_fail,
@@ -80,6 +82,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
+        []
     )
 }
 
