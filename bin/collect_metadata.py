@@ -16,6 +16,8 @@ import argparse
 import ruamel.yaml as yaml
 
 
+__version__ = "1.0.0"
+
 installed_packages = {d.name: d.version for d in importlib.metadata.distributions()}
 
 
@@ -72,7 +74,13 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        prog="collect-metadata",
+        description="Collect version information about the pixelator python environment.",
+    )
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s {__version__}"
+    )
 
     parser.add_argument("--process-name", dest="process_name", type=str)
     parser.add_argument(
