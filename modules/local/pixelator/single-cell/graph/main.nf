@@ -11,9 +11,9 @@ process PIXELATOR_GRAPH {
     tuple val(meta), path(edge_list)
 
     output:
-    tuple val(meta), path("graph/*.edgelist.parquet")         , emit: edgelist
+    tuple val(meta), path("graph/*.edgelist.parquet")        , emit: edgelist
     tuple val(meta), path("graph/*.report.json")             , emit: report_json
-    tuple val(meta), path("graph/*.meta.json")               , emit: input_params
+    tuple val(meta), path("graph/*.meta.json")               , emit: metadata
     tuple val(meta), path("graph/*")                         , emit: all_results
     tuple val(meta), path("*pixelator-graph.log")            , emit: log
 

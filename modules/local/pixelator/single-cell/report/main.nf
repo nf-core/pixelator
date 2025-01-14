@@ -21,9 +21,9 @@ process PIXELATOR_REPORT {
 
 
     output:
-    path "report/*.html"        , emit: reports
-    path "versions.yml"         , emit: versions
-    path "*pixelator-*.log"     , emit: log
+    tuple val(meta), path("report/*.html")        , emit: reports
+    tuple val(meta), path("*pixelator-*.log")     , emit: log
+    path "versions.yml"                           , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

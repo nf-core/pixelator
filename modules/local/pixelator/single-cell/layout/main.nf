@@ -50,7 +50,7 @@ process PIXELATOR_LAYOUT {
     """
     mkdir layout
     touch "${prefix}.pixelator-layout.log"
-    touch "layout/${prefix}.dataset.pxl"
+    touch "layout/${prefix}.layout.dataset.pxl"
     touch "layout/${prefix}.report.json"
     touch "layout/${prefix}.meta.json"
 

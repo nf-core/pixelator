@@ -23,8 +23,7 @@ process PIXELATOR_ANNOTATE {
     task.ext.when == null || task.ext.when
 
     script:
-
-    prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
     def panelOpt = (
         panel      ? "--panel $panel"      :

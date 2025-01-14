@@ -1,0 +1,66 @@
+{
+    "Params: default - stub": {
+        "content": [
+            11,
+            [
+                "pipeline_info",
+                "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
+                "pixelator",
+                "pixelator/logs",
+                "pixelator/logs/sample01",
+                "pixelator/logs/sample01/sample01.pixelator-adapterqc.log",
+                "pixelator/logs/sample01/sample01.pixelator-amplicon.log",
+                "pixelator/logs/sample01/sample01.pixelator-analysis.log",
+                "pixelator/logs/sample01/sample01.pixelator-annotate.log",
+                "pixelator/logs/sample01/sample01.pixelator-collapse.log",
+                "pixelator/logs/sample01/sample01.pixelator-demux.log",
+                "pixelator/logs/sample01/sample01.pixelator-graph.log",
+                "pixelator/logs/sample01/sample01.pixelator-layout.log",
+                "pixelator/logs/sample01/sample01.pixelator-preqc.log",
+                "pixelator/logs/sample01/sample01.pixelator-report.log",
+                "pixelator/sample01.html",
+                "pixelator/sample01.layout.dataset.pxl"
+            ],
+            [
+                
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.3"
+        },
+        "timestamp": "2025-01-13T17:41:37.776422163"
+    },
+    "Params: default": {
+        "content": [
+            11,
+            [
+                "pipeline_info",
+                "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
+                "pixelator",
+                "pixelator/logs",
+                "pixelator/logs/sample01",
+                "pixelator/logs/sample01/sample01.pixelator-adapterqc.log",
+                "pixelator/logs/sample01/sample01.pixelator-amplicon.log",
+                "pixelator/logs/sample01/sample01.pixelator-analysis.log",
+                "pixelator/logs/sample01/sample01.pixelator-annotate.log",
+                "pixelator/logs/sample01/sample01.pixelator-collapse.log",
+                "pixelator/logs/sample01/sample01.pixelator-demux.log",
+                "pixelator/logs/sample01/sample01.pixelator-graph.log",
+                "pixelator/logs/sample01/sample01.pixelator-layout.log",
+                "pixelator/logs/sample01/sample01.pixelator-preqc.log",
+                "pixelator/logs/sample01/sample01.pixelator-report.log",
+                "pixelator/sample01.layout.dataset.pxl",
+                "pixelator/sample01.qc-report.html"
+            ],
+            [
+                
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.3"
+        },
+        "timestamp": "2025-01-14T14:44:14.780391273"
+    }
+}

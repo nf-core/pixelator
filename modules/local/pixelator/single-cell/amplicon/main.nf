@@ -61,7 +61,7 @@ process PIXELATOR_AMPLICON {
     """
     mkdir amplicon
     touch "${prefix}.pixelator-amplicon.log"
-    touch amplicon/${prefix}.merged.fq.gz
+    echo "" | gzip >> amplicon/${prefix}.merged.fq.gz
     touch amplicon/${prefix}.report.json
     touch amplicon/${prefix}.meta.json
 

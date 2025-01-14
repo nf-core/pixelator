@@ -69,14 +69,10 @@ process PIXELATOR_COLLECT_METADATA {
     """
     echo '${nextflowJson}' > nextflow-metadata.json
     collect_metadata.py --process-name ${task.process} --workflow-data "nextflow-metadata.json"
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        collect_metadata.py: \$(echo \$(collect_metadata.py --version 2>/dev/null) | sed 's/collect-metadata //g' )
-    END_VERSIONS
     """
 
-        stub:
+    stub:
+
     def nextflow_dict = [
         version: workflow.nextflow.version,
         build: workflow.nextflow.build,
@@ -131,7 +127,8 @@ process PIXELATOR_COLLECT_METADATA {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        collect_metadata.py: \$(echo \$(collect_metadata.py --version 2>/dev/null) | sed 's/collect-metadata //g' )
+        python: 3.11.4
+        collect-metadata: 1.0.0
     END_VERSIONS
     """
 }

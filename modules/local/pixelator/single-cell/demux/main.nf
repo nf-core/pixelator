@@ -59,8 +59,8 @@ process PIXELATOR_DEMUX {
     touch "${prefix}.pixelator-demux.log"
     touch "demux/${prefix}.report.json"
     touch "demux/${prefix}.meta.json"
-    touch "demux/${prefix}.processed.fq.gz"
-    touch "demux/${prefix}.failed.fq.gz"
+    echo "" | gzip >> "demux/${prefix}.processed.fq.gz"
+    echo "" | gzip >> "demux/${prefix}.failed.fq.gz"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

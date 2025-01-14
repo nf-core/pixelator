@@ -1,0 +1,76 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_ANALYSIS"
+    script "../main.nf"
+    process "PIXELATOR_ANALYSIS"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/mpx"
+    tag "pixelator/single_cell_mpx_analysis"
+
+
+    test("Test MPX analysis - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.annotate.dataset.pxl', checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("Test MPX analysis - SCSP v1 | Immunology-I") {
+        when {
+            params {
+                save_all
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.annotate.dataset.pxl', checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                        process.out.report_json,
+                        process.out.metadata
+                    ).match()
+                },
+                {
+                    with (process.out.dataset.get(0)) {
+                        assert path(get(1)).zip.extract("adata.h5ad").exists()
+                        assert path(get(1)).zip.extract("edgelist.parquet").exists()
+                        assert snapshot(
+                            path(get(1)).zip.extract("metadata.json")
+                        ).match("pxl")
+                    }
+                },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator analysis")
+                    }
+                },
+            )
+        }
+    }
+}
+
