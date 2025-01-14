@@ -66,7 +66,8 @@ def main(args):
         yaml.dump(
             data={
                 args.process_name: {
-                    "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+                    "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
+                    "collect-metadata": __version__,
                 }
             },
             stream=f,
