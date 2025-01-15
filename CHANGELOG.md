@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[PR #122](https://github.com/nf-core/pixelator/pull/122)] - Template update for nf-core/tools v3.1.1
 - [[PR #124](https://github.com/nf-core/pixelator/pull/124)] - Add manifest.contributors metadata to nextflow.config
 - [[PR #125](https://github.com/nf-core/pixelator/pull/125)] - Use environment.yml files for all conda process directives
+- [[PR #123](https://github.com/nf-core/pixelator/pull/123)] - Add nf-test tests for local modules and subworkflows
 
 ### Parameters
 
