@@ -2,8 +2,7 @@ process PIXELATOR_ANNOTATE {
     tag "$meta.id"
     label 'process_high'
 
-
-    conda "bioconda::pixelator=0.19.0"
+    conda "modules/local/pixelator/single-cell/annotate/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
         'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
