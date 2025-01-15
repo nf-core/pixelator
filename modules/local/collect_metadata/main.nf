@@ -3,7 +3,7 @@ process PIXELATOR_COLLECT_METADATA {
     label 'process_single'
     cache false
 
-    conda "modules/local/collect_metadata/environment.yml"
+    conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
         'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
