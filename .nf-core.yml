@@ -1,4 +1,5 @@
 lint:
+  actions_ci: false
   multiqc_config: false
   files_unchanged:
     - assets/nf-core-pixelator_logo_light.png

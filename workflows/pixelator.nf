@@ -28,7 +28,7 @@ params.samplesheet_sha = ch_input.bytes.digest('sha-1')
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
-include { GENERATE_REPORTS            } from '../subworkflows/local/generate_reports'
+include { GENERATE_REPORTS            } from '../subworkflows/local/generate_reports/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

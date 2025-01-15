@@ -1,0 +1,88 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_QC"
+    script "../main.nf"
+    process "PIXELATOR_QC"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/mpx"
+    tag "pixelator/single_cell_mpx_qc"
+
+
+    test("Test MPX qc - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/amplicon/sample01_1k_pbmcs_scsp_v1_immunology1.merged.fastq.gz', checkIfExists: true),
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("Test MPX qc - SCSP v1 | Immunology-I") {
+        when {
+                params {
+                save_all = true
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/amplicon/sample01_1k_pbmcs_scsp_v1_immunology1.merged.fastq.gz', checkIfExists: true),
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                        process.out.adapterqc_processed,
+                        process.out.preqc_processed,
+                        process.out.adapterqc_failed,
+                        process.out.preqc_failed,
+                        process.out.adapterqc_report_json,
+                        process.out.preqc_report_json,
+                        process.out.adapterqc_metadata,
+                        process.out.preqc_metadata,
+                        process.out.versions
+                    )
+                },
+                {
+                    with(process.out.preqc_report_html) {
+                        assert path(get(0).get(1)).exists()
+                    }
+                },
+                {
+                    with (process.out.preqc_log) {
+                        assert path(get(0).get(1)).readLines().any { it.contains("Finished pixelator preqc") }
+                    }
+                },
+                {
+                    with (process.out.adapterqc_log) {
+                        assert path(get(0).get(1)).readLines().any { it.contains("Finished pixelator adapterqc") }
+                    }
+                },
+            )
+        }
+    }
+}
+

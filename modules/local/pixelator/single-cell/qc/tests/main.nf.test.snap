@@ -1,0 +1,395 @@
+{
+    "Test MPX qc - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.processed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.processed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "10": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "11": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "12": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        [
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "13": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-preqc.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "14": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-adapterqc.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "15": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        [
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-adapterqc.log:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-preqc.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "16": [
+                    "versions.yml:md5,3d671a9296c6c0dc792641a15a34c92a"
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.processed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "3": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.failed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "4": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.failed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "5": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        [
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.failed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.failed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                        ]
+                    ]
+                ],
+                "6": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "7": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "8": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        [
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "9": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.qc-report.html:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "adapterqc_failed": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.failed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "adapterqc_log": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-adapterqc.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "adapterqc_metadata": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "adapterqc_processed": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.processed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "adapterqc_report_json": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "failed": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        [
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.failed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.failed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                        ]
+                    ]
+                ],
+                "log": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        [
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-adapterqc.log:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-preqc.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "metadata": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        [
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "preqc_failed": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.failed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "preqc_log": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-preqc.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "preqc_metadata": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "preqc_processed": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.processed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "preqc_report_html": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.qc-report.html:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "preqc_report_json": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "processed": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.processed.fq.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "report_json": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        [
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,3d671a9296c6c0dc792641a15a34c92a"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.3"
+        },
+        "timestamp": "2025-01-14T13:37:20.1784758"
+    }
+}

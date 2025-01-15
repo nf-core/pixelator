@@ -9,3 +9,5 @@ testing*
 null/
 .idea
 .vscode
+
+.nf-test*

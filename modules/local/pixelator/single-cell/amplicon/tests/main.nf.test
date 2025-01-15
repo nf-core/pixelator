@@ -1,0 +1,78 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_AMPLICON"
+    script "../main.nf"
+    process "PIXELATOR_AMPLICON"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/mpx"
+    tag "pixelator/single_cell_mpx_amplicon"
+
+
+    test("Test MPX amplicon - stub") {
+
+        options "-stub"
+
+        when {
+            params {
+                save_all = true
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R1.fastq.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R2.fastq.gz', checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() },
+
+            )
+        }
+    }
+
+    test("Test MPX amplicon - SCSP v1 | Immunology-I") {
+        when {
+            params {
+                save_all = true
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R1.fastq.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R2.fastq.gz', checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                        process.out.merged,
+                        process.out.report_json,
+                        process.out.metadata
+                    ).match()
+                },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator amplicon")
+                    }
+                },
+            )
+        }
+    }
+}
+

@@ -7,7 +7,7 @@
                 "nf-core": {
                     "cat/fastq": {
                         "branch": "master",
-                        "git_sha": "a1abf90966a2a4016d3c3e41e228bfcbd4811ccc",
+                        "git_sha": "0e9cb409c32d3ec4f0d3804588e4778971c09b7e",
                         "installed_by": ["modules"]
                     }
                 }

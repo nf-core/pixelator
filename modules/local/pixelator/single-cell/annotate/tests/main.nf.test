@@ -1,0 +1,83 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_ANNOTATE"
+    script "../main.nf"
+    process "PIXELATOR_ANNOTATE"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/mpx"
+    tag "pixelator/single_cell_mpx_annotate"
+
+
+    test("Test MPX annotate - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/graph/sample01_1k_pbmcs_scsp_v1_immunology1.edgelist.parquet', checkIfExists: true),
+                    [],
+                    "human-sc-immunology-spatial-proteomics-1"
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() },
+
+            )
+        }
+    }
+
+    test("Test MPX annotate - SCSP v1 | Immunology-I") {
+        options "--save_all"
+
+        when {
+            params {
+                save_all = true
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/graph/sample01_1k_pbmcs_scsp_v1_immunology1.edgelist.parquet', checkIfExists: true),
+                    [],
+                    "human-sc-immunology-spatial-proteomics-1"
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                        process.out.report_json,
+                        process.out.metadata
+                    ).match()
+                },
+                {
+                    with (process.out.dataset.get(0)) {
+                        assert path(get(1)).zip.extract("adata.h5ad").exists()
+                        assert path(get(1)).zip.extract("edgelist.parquet").exists()
+                        assert snapshot(
+                            path(get(1)).zip.extract("metadata.json")
+                        ).match("pxl")
+                    }
+                },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator annotate")
+                    }
+                },
+            )
+        }
+    }
+}
+

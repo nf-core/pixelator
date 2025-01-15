@@ -1,0 +1,2 @@
+pixelator/logs/**/*.log
+pipeline_info/*.{html,json,txt,yml}

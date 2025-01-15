@@ -25,7 +25,7 @@ process PIXELATOR_COLLAPSE {
     script:
     assert meta.design != null
 
-    prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
     def readsArg = reads.join(' ')
     def panelOpt = (
@@ -46,6 +46,22 @@ process PIXELATOR_COLLAPSE {
         $panelOpt \\
         $args \\
         $readsArg
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir collapse
+    touch "${prefix}.pixelator-collapse.log"
+    touch "collapse/${prefix}.collapsed.parquet"
+    touch "collapse/${prefix}.report.json"
+    touch "collapse/${prefix}.meta.json"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

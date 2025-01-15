@@ -1,0 +1,70 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_GRAPH"
+    script "../main.nf"
+    process "PIXELATOR_GRAPH"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/mpx"
+    tag "pixelator/single_cell_mpx_graph"
+
+
+    test("Test MPX graph - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.collapsed.parquet', checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() },
+
+            )
+        }
+    }
+
+    test("Test MPX graph - SCSP v1 | Immunology-I") {
+
+        when {
+            params {
+                save_all = true
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.collapsed.parquet', checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                        process.out.edgelist,
+                        process.out.report_json,
+                        process.out.metadata
+                    ).match()
+                },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator graph")
+                    }
+                },
+            )
+        }
+    }
+}
+

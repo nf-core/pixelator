@@ -28,4 +28,22 @@ process PIXELATOR_LIST_OPTIONS {
         pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
+
+    stub:
+    """
+    cat <<-END_DESIGN > design_options.txt
+    D21
+    END_DESIGN
+
+    cat <<-END_PANELS > panel_options.txt
+    human-sc-immunology-spatial-proteomics-1
+    human-sc-immunology-spatial-proteomics-2
+    human-sc-immunology-spatial-proteomics
+    END_PANELS
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
 }
