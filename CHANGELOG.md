@@ -3,6 +3,55 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[1.4.0](https://github.com/nf-core/pixelator/releases/tag/1.4.0)] - 2024-01-22
+
+### Enhancements & fixes
+
+- [[PR #111](https://github.com/nf-core/pixelator/pull/111)] - Template update for nf-core/tools v3.0.2
+- [[PR #112](https://github.com/nf-core/pixelator/pull/112)] - Add graph refinement options for pixelator 0.19
+- [[PR #113](https://github.com/nf-core/pixelator/pull/113)] - Fix validation issues after nf-core/tools v3.0.2 update
+- [[PR #114](https://github.com/nf-core/pixelator/pull/114)] - Remove `--save_recovered_components` options for graph outputs
+- [[PR #115](https://github.com/nf-core/pixelator/pull/115)] - Update containers for pixelator 0.19
+- [[PR #116](https://github.com/nf-core/pixelator/pull/116)] - Bump version to 1.4
+- [[PR #117](https://github.com/nf-core/pixelator/pull/117)] - Template update for nf-core/tools v3.1.0
+- [[PR #118](https://github.com/nf-core/pixelator/pull/118)] - Update metromap, bump conda versions
+- [[PR #120](https://github.com/nf-core/pixelator/pull/120)] - Add process_long to AMPLICON and COLLAPSE steps
+- [[PR #122](https://github.com/nf-core/pixelator/pull/122)] - Template update for nf-core/tools v3.1.1
+- [[PR #124](https://github.com/nf-core/pixelator/pull/124)] - Add manifest.contributors metadata to nextflow.config
+- [[PR #125](https://github.com/nf-core/pixelator/pull/125)] - Use environment.yml files for all conda process directives
+- [[PR #123](https://github.com/nf-core/pixelator/pull/123)] - Add nf-test tests for local modules and subworkflows
+
+### Parameters
+
+| Old parameter                        | New parameter                            |
+| ------------------------------------ | ---------------------------------------- |
+|                                      | `--help_full`                            |
+|                                      | `--show_hidden`                          |
+| `--validationFailUnrecognisedParams` |                                          |
+| `--validationLenientMode`            |                                          |
+| `--validationSchemaIgnoreParams`     |                                          |
+| `--validationShowHiddenParams`       |                                          |
+| `--leiden_iterations`                | `--graph_max_refinement_recursion_depth` |
+|                                      | `--graph_max_edges_to_split`             |
+|                                      | `--graph_max_edges_to_split`             |
+| `--save_recovered_components`        |                                          |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.18.2      | 0.19.0      |
+
+> [!NOTE]
+> Dependency has been **updated** if both old and new parameter information is present.
+> Dependency has been **added** if just the new parameter information is present.
+> Dependency has been **removed** if new parameter information isn't present.
+
 ## [[1.3.1](https://github.com/nf-core/pixelator/releases/tag/1.3.1)] - 2024-07-31
 
 ### Enhancements & fixes

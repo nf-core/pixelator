@@ -4,7 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR_REPORT            } from '../../modules/local/pixelator/single-cell/report/main'
+include { PIXELATOR_REPORT            } from '../../../modules/local/pixelator/single-cell/report/main'
 
 
 /*
@@ -29,15 +29,14 @@ workflow GENERATE_REPORTS {
     main:
     ch_versions = Channel.empty()
 
+    // Combine meta maps for all input samples
     ch_meta_col = panel_files
-        .map { meta, data -> [ meta.id, meta] }
+        .map { meta, _path -> [ meta.id, meta] }
         .groupTuple()
         .map { id, data ->
             if (data instanceof List) {
                 def newMeta = [:]
-                for (item in data) {
-                    newMeta += item
-                }
+                data.forEach { newMeta += it }
                 return [id, newMeta]
             }
             return [id, data]
@@ -62,7 +61,7 @@ workflow GENERATE_REPORTS {
 
     //
     // Combine all inputs and group them, then split them up again.
-    // This is neded to have the per subcommand outputs in the sample order
+    // This is needed to have the per subcommand outputs in the sample order
     //
     // ch_report_data: [
     //    [
@@ -102,16 +101,18 @@ workflow GENERATE_REPORTS {
 
     // If no `panel_file` (data[1]) is given we need to pass in `panel` from the samplesheet instead
     //
-    ch_panel_files_grouped  = ch_report_data.map { id, data -> [ data[0], data[1], data[1] ? null : data[0].panel ] }
-    ch_amplicon_grouped     = ch_report_data.map { id, data -> data[2] ? data[2].flatten() : [] }
-    ch_preqc_grouped        = ch_report_data.map { id, data -> data[3] ? data[3].flatten() : [] }
-    ch_adapterqc_grouped    = ch_report_data.map { id, data -> data[4] ? data[4].flatten() : [] }
-    ch_demux_grouped        = ch_report_data.map { id, data -> data[5] ? data[5].flatten() : [] }
-    ch_collapse_grouped     = ch_report_data.map { id, data -> data[6] ? data[6].flatten() : [] }
-    ch_graph_grouped        = ch_report_data.map { id, data -> data[7] ? data[7].flatten() : [] }
-    ch_annotate_grouped     = ch_report_data.map { id, data -> data[8] ? data[8].flatten() : [] }
-    ch_analysis_grouped     = ch_report_data.map { id, data -> data[9] ? data[9].flatten() : [] }
-    ch_layout_grouped       = ch_report_data.map { id, data -> data[10] ? data[10].flatten() : [] }
+    ch_report_inputs = ch_report_data.multiMap { _id, data ->
+        panels: [ data[0], data[1], data[1] ? null : data[0].panel ]
+        amplicon: data[2] ? data[2].flatten() : []
+        preqc: data[3] ? data[3].flatten() : []
+        adapterqc: data[4] ? data[4].flatten() : []
+        demux: data[5] ? data[5].flatten() : []
+        collapse: data[6] ? data[6].flatten() : []
+        graph: data[7] ? data[7].flatten() : []
+        annotate: data[8] ? data[8].flatten() : []
+        analysis: data[9] ? data[9].flatten() : []
+        layout: data[10] ? data[10].flatten() : []
+    }
 
     //
     // MODULE: Run pixelator single-cell report for each samples
@@ -119,16 +120,16 @@ workflow GENERATE_REPORTS {
     // NB: These channels need to be split per stage to allow PIXELATOR_REPORT to
     //     use stageAs directives to reorder the inputs and prevent filename collisions
     PIXELATOR_REPORT (
-        ch_panel_files_grouped,
-        ch_amplicon_grouped,
-        ch_preqc_grouped,
-        ch_adapterqc_grouped,
-        ch_demux_grouped,
-        ch_collapse_grouped,
-        ch_graph_grouped,
-        ch_annotate_grouped,
-        ch_analysis_grouped,
-        ch_layout_grouped,
+        ch_report_inputs.panels,
+        ch_report_inputs.amplicon,
+        ch_report_inputs.preqc,
+        ch_report_inputs.adapterqc,
+        ch_report_inputs.demux,
+        ch_report_inputs.collapse,
+        ch_report_inputs.graph,
+        ch_report_inputs.annotate,
+        ch_report_inputs.analysis,
+        ch_report_inputs.layout
     )
 
     ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions.first())

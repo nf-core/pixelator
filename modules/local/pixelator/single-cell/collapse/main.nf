@@ -1,11 +1,12 @@
 process PIXELATOR_COLLAPSE {
     tag "$meta.id"
     label 'process_medium'
+    label 'process_long'
 
-    conda "bioconda::pixelator=0.18.2"
+    conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.18.2--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.18.2--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
+        'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel)
@@ -24,7 +25,7 @@ process PIXELATOR_COLLAPSE {
     script:
     assert meta.design != null
 
-    prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
     def readsArg = reads.join(' ')
     def panelOpt = (
@@ -45,6 +46,22 @@ process PIXELATOR_COLLAPSE {
         $panelOpt \\
         $args \\
         $readsArg
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir collapse
+    touch "${prefix}.pixelator-collapse.log"
+    touch "collapse/${prefix}.collapsed.parquet"
+    touch "collapse/${prefix}.report.json"
+    touch "collapse/${prefix}.meta.json"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

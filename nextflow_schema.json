@@ -1,10 +1,10 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://raw.githubusercontent.com/nf-core/pixelator/master/nextflow_schema.json",
     "title": "nf-core/pixelator pipeline parameters",
     "description": "Pipeline for analysis of Molecular Pixelation assays",
     "type": "object",
-    "definitions": {
+    "$defs": {
         "input_output_options": {
             "title": "Input/output options",
             "type": "object",
@@ -26,7 +26,6 @@
                 "input_basedir": {
                     "type": "string",
                     "format": "directory-path",
-                    "exists": false,
                     "description": "Path to a local or remote directory that is the \"current working directory\" for relative paths defined in the input samplesheet",
                     "fa_icon": "fas fa-folder"
                 },
@@ -210,10 +209,6 @@
                     "minimum": 1,
                     "type": "integer"
                 },
-                "collapse_use_counts": {
-                    "description": "Use counts when collapsing (the difference in counts between two molecules must be more than double in order to be collapsed)",
-                    "type": "boolean"
-                },
                 "save_collapsed_reads": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
@@ -232,13 +227,22 @@
                     "type": "boolean",
                     "default": true
                 },
-                "leiden_iterations": {
-                    "fa_icon": "fas repeat",
-                    "description": "Number of iterations for the leiden algorithm, high values will decrease the variance of the results but increase the runtime [default: 10; 1<=x<=100]",
+                "graph_max_refinement_recursion_depth": {
+                    "fa_icon": "fas less-than-equal",
+                    "description": "The number of times a component can be broken down into smaller components during the multiplet recovery process.",
                     "type": "integer",
+                    "default": 5,
                     "minimum": 1,
                     "maximum": 100,
-                    "default": 10,
+                    "hidden": true
+                },
+                "graph_max_edges_to_split": {
+                    "fa_icon": "fas less-than-equal",
+                    "description": "Maximum number of edges between the produced components as a result of a component split operation during the multiplet recovery process.",
+                    "type": "integer",
+                    "default": 5,
+                    "minimum": 1,
+                    "maximum": 1000,
                     "hidden": true
                 },
                 "graph_min_count": {
@@ -256,13 +260,6 @@
                     "default": false,
                     "description": "Save an intermediate CSV file containing the unfiltered graph edge list.",
                     "help": "By default, the unfiltered edge list will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
-                },
-                "save_recovered_components": {
-                    "fa_icon": "fas fa-save",
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Save an intermediate CSV file containing the recovered components after multiplet recovery.",
-                    "help": "By default, the recovered component will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 }
             }
         },
@@ -279,7 +276,8 @@
                     "type": "integer"
                 },
                 "dynamic_filter": {
-                    "description": " Enable the estimation of dynamic size filters using a log-rank approach both: estimate both min and max size, min: estimate min size (--min-size), max: estimate max size (--max-size)",
+                    "description": "Enable the estimation of dynamic size filters using a log-rank approach.",
+                    "help_text": "Following options are available:\n- both: estimates both minimum and maximum component size\n- min: estimates the minimum component size (or uses {MINIMUM_N_EDGES_CELL_SIZE} edges, whichever is smallest)\n- max: estimates the maximum component size.\n\nNote that this cannot be set at the same time as `--min-size` or `--max-size`.",
                     "type": "string",
                     "enum": ["both", "min", "max"],
                     "default": "min"
@@ -431,7 +429,7 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Save all intermediate results.",
-                    "help": "This option is equivalent to passing:\n`--save_amplicon_reads --save_qc_passed_reads --save_qc_failed_reads --save_demux_processed_reads --save_demux_failed_reads --save_collapsed_reads --save_edgelist --save_recovered_components --save_annotate_dataset --save_analysis_dataset`"
+                    "help": "This option is equivalent to passing:\n`--save_amplicon_reads --save_qc_passed_reads --save_qc_failed_reads --save_demux_processed_reads --save_demux_failed_reads --save_collapsed_reads --save_edgelist --save_annotate_dataset --save_analysis_dataset`"
                 }
             }
         },
@@ -483,41 +481,6 @@
                 }
             }
         },
-        "max_job_request_options": {
-            "title": "Max job request options",
-            "type": "object",
-            "fa_icon": "fab fa-acquisitions-incorporated",
-            "description": "Set the top limit for requested resources for any single job.",
-            "help_text": "If you are running on a smaller system, a pipeline step requesting more resources than are available may cause the Nextflow to stop the run with an error. These options allow you to cap the maximum resources requested by any single job so that the pipeline will run on your system.\n\nNote that you can not _increase_ the resources requested by any job using these options. For that you will need your own configuration file. See [the nf-core website](https://nf-co.re/usage/configuration) for details.",
-            "properties": {
-                "max_cpus": {
-                    "type": "integer",
-                    "description": "Maximum number of CPUs that can be requested for any single job.",
-                    "default": 16,
-                    "fa_icon": "fas fa-microchip",
-                    "hidden": true,
-                    "help_text": "Use to set an upper-limit for the CPU requirement for each process. Should be an integer e.g. `--max_cpus 1`"
-                },
-                "max_memory": {
-                    "type": "string",
-                    "description": "Maximum amount of memory that can be requested for any single job.",
-                    "default": "128.GB",
-                    "fa_icon": "fas fa-memory",
-                    "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
-                    "hidden": true,
-                    "help_text": "Use to set an upper-limit for the memory requirement for each process. Should be a string in the format integer-unit e.g. `--max_memory '8.GB'`"
-                },
-                "max_time": {
-                    "type": "string",
-                    "description": "Maximum amount of time that can be requested for any single job.",
-                    "default": "240.h",
-                    "fa_icon": "far fa-clock",
-                    "pattern": "^(\\d+\\.?\\s*(s|m|h|d|day)\\s*)+$",
-                    "hidden": true,
-                    "help_text": "Use to set an upper-limit for the time requirement for each process. Should be a string in the format integer-unit e.g. `--max_time '2.h'`"
-                }
-            }
-        },
         "generic_options": {
             "title": "Generic options",
             "type": "object",
@@ -525,12 +488,6 @@
             "description": "Less common options for the pipeline, typically set in a config file.",
             "help_text": "These options are common to all nf-core pipelines and allow you to customise some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
             "properties": {
-                "help": {
-                    "type": "boolean",
-                    "description": "Display help text.",
-                    "fa_icon": "fas fa-question-circle",
-                    "hidden": true
-                },
                 "version": {
                     "type": "boolean",
                     "description": "Display version and exit.",
@@ -580,32 +537,17 @@
                     "fa_icon": "fas fa-check-square",
                     "hidden": true
                 },
-                "validationShowHiddenParams": {
-                    "type": "boolean",
-                    "fa_icon": "far fa-eye-slash",
-                    "description": "Show all params when using `--help`",
-                    "hidden": true,
-                    "help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters."
-                },
-                "validationFailUnrecognisedParams": {
-                    "type": "boolean",
-                    "fa_icon": "far fa-check-circle",
-                    "description": "Validation of parameters fails when an unrecognised parameter is found.",
-                    "hidden": true,
-                    "help_text": "By default, when an unrecognised parameter is found, it returns a warning."
-                },
-                "validationLenientMode": {
-                    "type": "boolean",
-                    "fa_icon": "far fa-check-circle",
-                    "description": "Validation of parameters in lenient more.",
-                    "hidden": true,
-                    "help_text": "Allows string values that are parseable as numbers or booleans. For further information see [JSONSchema docs](https://github.com/everit-org/json-schema#lenient-mode)."
-                },
                 "pipelines_testdata_base_path": {
                     "type": "string",
                     "fa_icon": "far fa-check-circle",
                     "description": "Base URL or local path to location of pipeline test dataset files",
-                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/",
+                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/",
+                    "hidden": true
+                },
+                "trace_report_suffix": {
+                    "type": "string",
+                    "fa_icon": "far calendar",
+                    "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
                     "hidden": true
                 }
             }
@@ -613,46 +555,43 @@
     },
     "allOf": [
         {
-            "$ref": "#/definitions/input_output_options"
+            "$ref": "#/$defs/input_output_options"
         },
         {
-            "$ref": "#/definitions/amplicon_options"
+            "$ref": "#/$defs/amplicon_options"
         },
         {
-            "$ref": "#/definitions/qc_options"
+            "$ref": "#/$defs/qc_options"
         },
         {
-            "$ref": "#/definitions/demux_options"
+            "$ref": "#/$defs/demux_options"
         },
         {
-            "$ref": "#/definitions/collapse_options"
+            "$ref": "#/$defs/collapse_options"
         },
         {
-            "$ref": "#/definitions/graph_options"
+            "$ref": "#/$defs/graph_options"
         },
         {
-            "$ref": "#/definitions/annotate_options"
+            "$ref": "#/$defs/annotate_options"
         },
         {
-            "$ref": "#/definitions/analysis_options"
+            "$ref": "#/$defs/analysis_options"
         },
         {
-            "$ref": "#/definitions/layout_options"
+            "$ref": "#/$defs/layout_options"
         },
         {
-            "$ref": "#/definitions/report_options"
+            "$ref": "#/$defs/report_options"
         },
         {
-            "$ref": "#/definitions/global_config_options"
+            "$ref": "#/$defs/global_config_options"
         },
         {
-            "$ref": "#/definitions/institutional_config_options"
+            "$ref": "#/$defs/institutional_config_options"
         },
         {
-            "$ref": "#/definitions/max_job_request_options"
-        },
-        {
-            "$ref": "#/definitions/generic_options"
+            "$ref": "#/$defs/generic_options"
         }
     ]
 }

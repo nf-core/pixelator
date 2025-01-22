@@ -3,8 +3,7 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-
-include { paramsSummaryMap       } from 'plugin/nf-validation'
+include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
@@ -29,7 +28,7 @@ params.samplesheet_sha = ch_input.bytes.digest('sha-1')
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
-include { GENERATE_REPORTS            } from '../subworkflows/local/generate_reports'
+include { GENERATE_REPORTS            } from '../subworkflows/local/generate_reports/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,15 +49,15 @@ include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 //
 // MODULE: Defined locally
 //
-include { PIXELATOR_COLLECT_METADATA    } from '../modules/local/pixelator/collect_metadata'
-include { PIXELATOR_AMPLICON            } from '../modules/local/pixelator/single-cell/amplicon/main'
-include { PIXELATOR_QC                  } from '../modules/local/pixelator/single-cell/qc/main'
-include { PIXELATOR_DEMUX               } from '../modules/local/pixelator/single-cell/demux/main'
-include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/single-cell/collapse/main'
-include { PIXELATOR_GRAPH               } from '../modules/local/pixelator/single-cell/graph/main'
-include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/single-cell/analysis/main'
-include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/single-cell/annotate/main'
-include { PIXELATOR_LAYOUT              } from '../modules/local/pixelator/single-cell/layout/main'
+include { PIXELATOR_COLLECT_METADATA    } from '../modules/local/collect_metadata'
+include { PIXELATOR_AMPLICON            } from '../modules/local/pixelator/single-cell/amplicon'
+include { PIXELATOR_QC                  } from '../modules/local/pixelator/single-cell/qc'
+include { PIXELATOR_DEMUX               } from '../modules/local/pixelator/single-cell/demux'
+include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/single-cell/collapse'
+include { PIXELATOR_GRAPH               } from '../modules/local/pixelator/single-cell/graph'
+include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/single-cell/analysis'
+include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/single-cell/annotate'
+include { PIXELATOR_LAYOUT              } from '../modules/local/pixelator/single-cell/layout'
 
 /*
 ========================================================================================
@@ -68,12 +67,10 @@ include { PIXELATOR_LAYOUT              } from '../modules/local/pixelator/singl
 
 workflow PIXELATOR {
     take:
-    ch_samplesheet            // channel: [ meta, path(panel_file | []), path(sample_1.fq), path(sample_2.fq) ]
-
+    ch_samplesheet // channel: samplesheet read in from --input
     main:
 
     ch_versions = Channel.empty()
-
     //
     // Split the samplesheet channel in reads and panel_files
     //
@@ -247,13 +244,12 @@ workflow PIXELATOR {
     softwareVersionsToYAML(ch_versions)
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
-            name: 'nf_core_pipeline_software_mqc_versions.yml',
+            name: 'nf_core_'  +  'pixelator_software_'  + 'mqc_'  + 'versions.yml',
             sort: true,
             newLine: true
         ).set { ch_collated_versions }
 
     // TODO: Add MultiQC when plugins are ready
-
 
     emit:
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
@@ -264,3 +260,6 @@ workflow PIXELATOR {
     THE END
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+
+
+

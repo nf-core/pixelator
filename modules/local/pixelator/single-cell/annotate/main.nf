@@ -2,11 +2,10 @@ process PIXELATOR_ANNOTATE {
     tag "$meta.id"
     label 'process_high'
 
-
-    conda "bioconda::pixelator=0.18.2"
+    conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.18.2--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.18.2--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
+        'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(dataset), path(panel_file), val(panel)
@@ -24,8 +23,7 @@ process PIXELATOR_ANNOTATE {
     task.ext.when == null || task.ext.when
 
     script:
-
-    prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
     def panelOpt = (
         panel      ? "--panel $panel"      :
@@ -44,6 +42,22 @@ process PIXELATOR_ANNOTATE {
         $panelOpt \\
         $args \\
         $dataset \\
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir annotate
+    touch "${prefix}.pixelator-annotate.log"
+    touch "annotate/${prefix}.dataset.pxl"
+    touch "annotate/${prefix}.report.json"
+    touch "annotate/${prefix}.meta.json"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

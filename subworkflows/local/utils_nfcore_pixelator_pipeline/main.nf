@@ -8,31 +8,27 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { UTILS_NFVALIDATION_PLUGIN } from '../../nf-core/utils_nfvalidation_plugin'
-include { paramsSummaryMap          } from 'plugin/nf-validation'
-include { fromSamplesheet           } from 'plugin/nf-validation'
-include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipeline'
+include { UTILS_NFSCHEMA_PLUGIN     } from '../../nf-core/utils_nfschema_plugin'
+include { paramsSummaryMap          } from 'plugin/nf-schema'
+include { samplesheetToList         } from 'plugin/nf-schema'
 include { completionEmail           } from '../../nf-core/utils_nfcore_pipeline'
 include { completionSummary         } from '../../nf-core/utils_nfcore_pipeline'
-include { dashedLine                } from '../../nf-core/utils_nfcore_pipeline'
-include { nfCoreLogo                } from '../../nf-core/utils_nfcore_pipeline'
 include { imNotification            } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NFCORE_PIPELINE     } from '../../nf-core/utils_nfcore_pipeline'
-include { workflowCitation          } from '../../nf-core/utils_nfcore_pipeline'
+include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipeline'
 
-include { PIXELATOR_LIST_OPTIONS    } from '../../../modules/local/pixelator/list_options.nf'
+include { PIXELATOR_LIST_OPTIONS    } from '../../../modules/local/pixelator/list_options'
 
 /*
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     SUBWORKFLOW TO INITIALISE PIPELINE
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
 workflow PIPELINE_INITIALISATION {
 
     take:
     version           // boolean: Display version and exit
-    help              // boolean: Display help text
     validate_params   // boolean: Boolean whether to validate parameters against the schema at runtime
     monochrome_logs   // boolean: Do not use coloured log outputs
     nextflow_cli_args //   array: List of positional nextflow CLI args
@@ -57,16 +53,10 @@ workflow PIPELINE_INITIALISATION {
     //
     // Validate parameters and generate parameter summary to stdout
     //
-    pre_help_text = nfCoreLogo(monochrome_logs)
-    post_help_text = '\n' + workflowCitation() + '\n' + dashedLine(monochrome_logs)
-    def String workflow_command = "nextflow run ${workflow.manifest.name} -profile <docker/singularity/.../institute> --input samplesheet.csv --outdir <OUTDIR>"
-    UTILS_NFVALIDATION_PLUGIN (
-        help,
-        workflow_command,
-        pre_help_text,
-        post_help_text,
+    UTILS_NFSCHEMA_PLUGIN (
+        workflow,
         validate_params,
-        "nextflow_schema.json"
+        null
     )
 
     //
@@ -75,6 +65,7 @@ workflow PIPELINE_INITIALISATION {
     UTILS_NFCORE_PIPELINE (
         nextflow_cli_args
     )
+
     //
     // Custom validation for pipeline parameters
     //
@@ -83,6 +74,7 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
+
     ch_versions = Channel.empty()
 
     //
@@ -93,11 +85,14 @@ workflow PIPELINE_INITIALISATION {
 
     log.info "Resolving relative paths in samplesheet relative to: ${inputBaseDir}"
 
-    ch_input = Channel.fromSamplesheet("input")
+    //
+    // Create channel from input file provided through params.input
+    //
+    ch_input = Channel
+        .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
         .map {
             validate_input_samplesheet(inputBaseDir, it)
         }
-
 
     //
     // Validate design and panel samplesheet fields agains a dynamic set of allowed values
@@ -108,16 +103,14 @@ workflow PIPELINE_INITIALISATION {
     // Create a set of valid pixelator options to pass to --design
     ch_design_options = PIXELATOR_LIST_OPTIONS.out.designs
         .splitText()
-        .map( text -> text.trim())
+        .map { it.trim() }
         .reduce( new HashSet() ) { prev, curr -> prev << curr }
 
     // Create a set of valid pixelator panel keys to pass using --panel
     ch_panel_options = PIXELATOR_LIST_OPTIONS.out.panels
         .splitText()
-        .map( text -> text.trim())
+        .map { it.trim() }
         .reduce( new HashSet() ) { prev, curr -> prev << curr }
-
-
 
     //
     // Combine the validated inputs again in a single channel
@@ -141,9 +134,9 @@ workflow PIPELINE_INITIALISATION {
 }
 
 /*
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     SUBWORKFLOW FOR PIPELINE COMPLETION
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
 workflow PIPELINE_COMPLETION {
@@ -158,7 +151,6 @@ workflow PIPELINE_COMPLETION {
     multiqc_report  //  string: Path to MultiQC report
 
     main:
-
     summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
 
     //
@@ -166,11 +158,18 @@ workflow PIPELINE_COMPLETION {
     //
     workflow.onComplete {
         if (email || email_on_fail) {
-            completionEmail(summary_params, email, email_on_fail, plaintext_email, outdir, monochrome_logs, multiqc_report.toList())
+            completionEmail(
+                summary_params,
+                email,
+                email_on_fail,
+                plaintext_email,
+                outdir,
+                monochrome_logs,
+                multiqc_report,
+            )
         }
 
         completionSummary(monochrome_logs)
-
         if (hook_url) {
             imNotification(summary_params, hook_url)
         }
@@ -182,16 +181,14 @@ workflow PIPELINE_COMPLETION {
 }
 
 /*
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     FUNCTIONS
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 //
 // Check and validate pipeline parameters
 //
 def validateInputParameters() {
-    // Keep this commented here to closely follow the template
-    // genomeExistsError()
 }
 
 //
@@ -201,7 +198,7 @@ def validateInputSamplesheet(input) {
     def (metas, fastqs) = input[1..2]
 
     // Check that multiple runs of the same sample are of the same datatype i.e. single-end / paired-end
-    def endedness_ok = metas.collect{ it.single_end }.unique().size == 1
+    def endedness_ok = metas.collect{ meta -> meta.single_end }.unique().size == 1
     if (!endedness_ok) {
         error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
     }
@@ -233,7 +230,6 @@ def genomeExistsError() {
         error(error_string)
     }
 }
-
 //
 // Generate methods description for MultiQC
 //
@@ -264,7 +260,7 @@ def toolBibliographyText() {
 }
 
 def methodsDescriptionText(mqc_methods_yaml) {
-    // Convert  to a named map so can be used as with familar NXF ${workflow} variable syntax in the MultiQC YML file
+    // Convert  to a named map so can be used as with familiar NXF ${workflow} variable syntax in the MultiQC YML file
     def meta = [:]
     meta.workflow = workflow.toMap()
     meta["manifest_map"] = workflow.manifest.toMap()
@@ -275,8 +271,10 @@ def methodsDescriptionText(mqc_methods_yaml) {
         // Removing `https://doi.org/` to handle pipelines using DOIs vs DOI resolvers
         // Removing ` ` since the manifest.doi is a string and not a proper list
         def temp_doi_ref = ""
-        String[] manifest_doi = meta.manifest_map.doi.tokenize(",")
-        for (String doi_ref: manifest_doi) temp_doi_ref += "(doi: <a href=\'https://doi.org/${doi_ref.replace("https://doi.org/", "").replace(" ", "")}\'>${doi_ref.replace("https://doi.org/", "").replace(" ", "")}</a>), "
+        def manifest_doi = meta.manifest_map.doi.tokenize(",")
+        manifest_doi.each { doi_ref ->
+            temp_doi_ref += "(doi: <a href=\'https://doi.org/${doi_ref.replace("https://doi.org/", "").replace(" ", "")}\'>${doi_ref.replace("https://doi.org/", "").replace(" ", "")}</a>), "
+        }
         meta["doi_text"] = temp_doi_ref.substring(0, temp_doi_ref.length() - 2)
     } else meta["doi_text"] = ""
     meta["nodoi_text"] = meta.manifest_map.doi ? "" : "<li>If available, make sure to update the text to include the Zenodo DOI of version of the pipeline used. </li>"
@@ -338,12 +336,12 @@ def resolve_relative_path(relative_path, URI samplesheet_path) {
 // Validate a given panel key if present against the (dynamic) set of panel options retrieved from pixelator
 //
 def validate_panel(LinkedHashMap meta, HashSet options) {
-    if (meta.panel == null) {
+    if (meta.panel == null || meta.panel == []) {
         return meta
     }
 
     if (!options.contains(meta.panel)) {
-        options_list_str = " - ${options.join("\n - ")}"
+        def options_list_str = " - ${options.join("\n - ")}"
         exit 1, "Please check input samplesheet -> panel field does not contains a valid key!\n\nInput: ${meta.panel}\nValid options:\n${options_list_str}"
     }
 
@@ -355,12 +353,12 @@ def validate_panel(LinkedHashMap meta, HashSet options) {
 // Validate a given design key if present against the (dynamic) set of design options retrieved from pixelator
 //
 def validate_design(LinkedHashMap meta, HashSet options) {
-    if (meta.design == null) {
+    if (meta.design == null || meta.design == []) {
         return meta
     }
 
     if (!options.contains(meta.design)) {
-        options_list_str = " - ${options.join("\n - ")}"
+        def options_list_str = " - ${options.join("\n - ")}"
         exit 1, "Please check input samplesheet -> design field does not contains a valid key!\n\nInput: ${meta.design}\nValid options:\n${options_list_str}"
     }
 
@@ -398,10 +396,13 @@ def get_data_basedir(URI samplesheet, String input_basedir) {
         return uri
     }
 
-    f = file(input_basedir)
+    def f = file(input_basedir)
     if (!f.exists()) {
         exit 1, "ERROR: data path passed with --input_basedir does not exist!"
     }
+
+    def data_root = null
+
     if (f.isDirectory()) {
         data_root = new URI(f.toString() + '/')
     } else {

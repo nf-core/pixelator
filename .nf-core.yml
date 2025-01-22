@@ -1,8 +1,24 @@
-repository_type: pipeline
-nf_core_version: "2.14.1"
 lint:
-  # No multiqc support for now
+  actions_ci: false
   multiqc_config: false
+  files_unchanged:
+    - assets/nf-core-pixelator_logo_light.png
   files_exist:
     - assets/multiqc_config.yml
     - conf/igenomes.config
+    - conf/igenomes_ignored.config
+nf_core_version: 3.1.1
+repository_type: pipeline
+template:
+  author: Pixelgen Technologies AB
+  description: Pipeline for analysis of Molecular Pixelation assays
+  force: false
+  is_nfcore: true
+  name: pixelator
+  org: nf-core
+  outdir: .
+  skip_features:
+    - fastqc
+    - multiqc
+    - igenomes
+  version: 1.4.0

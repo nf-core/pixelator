@@ -2,11 +2,10 @@ process PIXELATOR_REPORT {
     tag "$meta.id"
     label 'process_low'
 
-
-    conda "bioconda::pixelator=0.18.2"
+    conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.18.2--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.18.2--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
+        'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(panel_file), val(panel)
@@ -22,9 +21,9 @@ process PIXELATOR_REPORT {
 
 
     output:
-    path "report/*.html"        , emit: reports
-    path "versions.yml"         , emit: versions
-    path "*pixelator-*.log"     , emit: log
+    tuple val(meta), path("report/*.html")        , emit: reports
+    tuple val(meta), path("*pixelator-*.log")     , emit: log
+    path "versions.yml"                           , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -49,6 +48,21 @@ process PIXELATOR_REPORT {
         $panelOpt \\
         $args \\
         results
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
+
+    stub:
+
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir report
+    touch "${prefix}.pixelator-report.log"
+    touch "report/${prefix}.html"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
