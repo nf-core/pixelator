@@ -6,7 +6,7 @@
     "type": "array",
     "items": {
         "type": "object",
-        "required": ["sample", "design", "fastq_1", "panel"],
+        "required": ["sample", "design", "fastq_1"],
         "properties": {
             "sample": {
                 "type": "string",
@@ -30,11 +30,6 @@
                         "type": "string",
                         "pattern": "^\\S+.(csv|tsv|ya?ml)$",
                         "errorMessage": "Panel file cannot contain spaces and must have extension '.csv', '.tsv' or '.yaml'"
-                    },
-                    {
-                        "type": "string",
-                        "maxLength": 0,
-                        "errorMessage": "Panel file can be left empty"
                     }
                 ]
             },
