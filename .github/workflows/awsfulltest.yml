@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get PR reviews
-        uses: octokit/request-action@v2.x
+        uses: octokit/request-action@v4.x
         if: github.event_name != 'workflow_dispatch'
         id: check_approvals
         continue-on-error: true
