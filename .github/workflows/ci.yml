@@ -63,12 +63,12 @@ jobs:
           java-version: "17"
 
       - name: Set up Nextflow
-        uses: nf-core/setup-nextflow@v2
+        uses: nf-core/setup-nextflow@v4
         with:
           version: "${{ matrix.NXF_VER }}"
 
       - name: Set up nf-test
-        uses: nf-core/setup-nf-test@v1
+        uses: nf-core/setup-nf-test@v4
         with:
           version: ${{ env.NFT_VER }}
 
