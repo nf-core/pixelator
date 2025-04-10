@@ -49,14 +49,14 @@ include { CAT_FASTQ }                   from '../modules/nf-core/cat/fastq/main'
 // MODULE: Defined locally
 //
 include { PIXELATOR_COLLECT_METADATA    } from '../modules/local/collect_metadata'
-include { PIXELATOR_AMPLICON            } from '../modules/local/pixelator/single-cell/amplicon'
-include { PIXELATOR_QC                  } from '../modules/local/pixelator/single-cell/qc'
-include { PIXELATOR_DEMUX               } from '../modules/local/pixelator/single-cell/demux'
-include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/single-cell/collapse'
-include { PIXELATOR_GRAPH               } from '../modules/local/pixelator/single-cell/graph'
-include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/single-cell/analysis'
-include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/single-cell/annotate'
-include { PIXELATOR_LAYOUT              } from '../modules/local/pixelator/single-cell/layout'
+include { PIXELATOR_AMPLICON            } from '../modules/local/pixelator/single-cell-mpx/amplicon'
+include { PIXELATOR_QC                  } from '../modules/local/pixelator/single-cell-mpx/qc'
+include { PIXELATOR_DEMUX               } from '../modules/local/pixelator/single-cell-mpx/demux'
+include { PIXELATOR_COLLAPSE            } from '../modules/local/pixelator/single-cell-mpx/collapse'
+include { PIXELATOR_GRAPH               } from '../modules/local/pixelator/single-cell-mpx/graph'
+include { PIXELATOR_ANALYSIS            } from '../modules/local/pixelator/single-cell-mpx/analysis'
+include { PIXELATOR_ANNOTATE            } from '../modules/local/pixelator/single-cell-mpx/annotate'
+include { PIXELATOR_LAYOUT              } from '../modules/local/pixelator/single-cell-mpx/layout'
 
 /*
 ========================================================================================

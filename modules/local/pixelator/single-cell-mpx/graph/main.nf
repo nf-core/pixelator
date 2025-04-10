@@ -1,23 +1,23 @@
 process PIXELATOR_GRAPH {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_high'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-3ee9c4e'}"
 
     input:
     tuple val(meta), path(edge_list)
 
     output:
-    tuple val(meta), path("graph/*.edgelist.parquet")        , emit: edgelist
-    tuple val(meta), path("graph/*.report.json")             , emit: report_json
-    tuple val(meta), path("graph/*.meta.json")               , emit: metadata
-    tuple val(meta), path("graph/*")                         , emit: all_results
-    tuple val(meta), path("*pixelator-graph.log")            , emit: log
+    tuple val(meta), path("graph/*.edgelist.parquet"), emit: edgelist
+    tuple val(meta), path("graph/*.report.json"), emit: report_json
+    tuple val(meta), path("graph/*.meta.json"), emit: metadata
+    tuple val(meta), path("graph/*"), emit: all_results
+    tuple val(meta), path("*pixelator-graph.log"), emit: log
 
-    path "versions.yml"                                      , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -29,13 +29,13 @@ process PIXELATOR_GRAPH {
 
     """
     pixelator \\
-        --cores $task.cpus \\
+        --cores ${task.cpus} \\
         --log-file ${prefix}.pixelator-graph.log \\
         --verbose \\
-        single-cell \\
+        single-cell-mpx \\
         graph \\
         --output . \\
-        $args \\
+        ${args} \\
         ${edge_list}
 
     cat <<-END_VERSIONS > versions.yml

@@ -1,23 +1,23 @@
 process PIXELATOR_COLLAPSE {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
     label 'process_long'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-3ee9c4e'}"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel)
 
     output:
     tuple val(meta), path("collapse/*.collapsed.parquet"), emit: collapsed
-    tuple val(meta), path("collapse/*.report.json")      , emit: report_json
-    tuple val(meta), path("collapse/*.meta.json")        , emit: metadata
-    tuple val(meta), path("*pixelator-collapse.log")     , emit: log
+    tuple val(meta), path("collapse/*.report.json"), emit: report_json
+    tuple val(meta), path("collapse/*.meta.json"), emit: metadata
+    tuple val(meta), path("*pixelator-collapse.log"), emit: log
 
-    path "versions.yml"                                  , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -28,24 +28,24 @@ process PIXELATOR_COLLAPSE {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
     def readsArg = reads.join(' ')
-    def panelOpt = (
-        panel      ? "--panel $panel"      :
-        panel_file ? "--panel $panel_file" :
-        ""
-    )
+    def panelOpt = (panel
+        ? "--panel ${panel}"
+        : panel_file
+            ? "--panel ${panel_file}"
+            : "")
 
     """
     pixelator \\
-        --cores $task.cpus \\
+        --cores ${task.cpus} \\
         --log-file ${prefix}.pixelator-collapse.log \\
         --verbose \\
-        single-cell \\
+        single-cell-mpx \\
         collapse \\
         --output . \\
         --design ${meta.design} \\
-        $panelOpt \\
-        $args \\
-        $readsArg
+        ${panelOpt} \\
+        ${args} \\
+        ${readsArg}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

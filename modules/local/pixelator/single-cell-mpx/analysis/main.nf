@@ -1,23 +1,23 @@
 process PIXELATOR_ANALYSIS {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-3ee9c4e'}"
 
     input:
     tuple val(meta), path(data)
 
     output:
-    tuple val(meta), path("analysis/*dataset.pxl")  , emit: dataset
-    tuple val(meta), path("analysis/*report.json")  , emit: report_json
-    tuple val(meta), path("analysis/*.meta.json")   , emit: metadata
-    tuple val(meta), path("analysis/*")             , emit: all_results
+    tuple val(meta), path("analysis/*dataset.pxl"), emit: dataset
+    tuple val(meta), path("analysis/*report.json"), emit: report_json
+    tuple val(meta), path("analysis/*.meta.json"), emit: metadata
+    tuple val(meta), path("analysis/*"), emit: all_results
     tuple val(meta), path("*pixelator-analysis.log"), emit: log
 
-    path "versions.yml"                             , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -28,14 +28,14 @@ process PIXELATOR_ANALYSIS {
 
     """
     pixelator \\
-        --cores $task.cpus \\
+        --cores ${task.cpus} \\
         --log-file ${prefix}.pixelator-analysis.log \\
         --verbose \\
-        single-cell \\
+        single-cell-mpx \\
         analysis \\
         --output . \\
-        $args \\
-        $data
+        ${args} \\
+        ${data}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

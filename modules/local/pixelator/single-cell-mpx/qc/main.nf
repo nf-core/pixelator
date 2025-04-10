@@ -1,46 +1,46 @@
 process PIXELATOR_QC {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-3ee9c4e'}"
 
     input:
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("adapterqc/*.processed.{fq,fastq}.gz")     , emit: processed
+    tuple val(meta), path("adapterqc/*.processed.{fq,fastq}.gz"), emit: processed
 
-    tuple val(meta), path("adapterqc/*.processed.{fq,fastq}.gz")     , emit: adapterqc_processed
-    tuple val(meta), path("preqc/*.processed.{fq,fastq}.gz")         , emit: preqc_processed
+    tuple val(meta), path("adapterqc/*.processed.{fq,fastq}.gz"), emit: adapterqc_processed
+    tuple val(meta), path("preqc/*.processed.{fq,fastq}.gz"), emit: preqc_processed
 
-    tuple val(meta), path("adapterqc/*.failed.{fq,fastq}.gz")        , emit: adapterqc_failed
-    tuple val(meta), path("preqc/*.failed.{fq,fastq}.gz")            , emit: preqc_failed
+    tuple val(meta), path("adapterqc/*.failed.{fq,fastq}.gz"), emit: adapterqc_failed
+    tuple val(meta), path("preqc/*.failed.{fq,fastq}.gz"), emit: preqc_failed
     tuple val(meta), path("{adapterqc,preqc}/*.failed.{fq,fastq}.gz"), emit: failed
 
-    tuple val(meta), path("adapterqc/*.report.json")                 , emit: adapterqc_report_json
-    tuple val(meta), path("preqc/*.report.json")                     , emit: preqc_report_json
-    tuple val(meta), path("{adapterqc,preqc}/*.report.json")         , emit: report_json
+    tuple val(meta), path("adapterqc/*.report.json"), emit: adapterqc_report_json
+    tuple val(meta), path("preqc/*.report.json"), emit: preqc_report_json
+    tuple val(meta), path("{adapterqc,preqc}/*.report.json"), emit: report_json
 
-    tuple val(meta), path("preqc/*.qc-report.html")                  , emit: preqc_report_html
+    tuple val(meta), path("preqc/*.qc-report.html"), emit: preqc_report_html
 
-    tuple val(meta), path("adapterqc/*.meta.json")                   , emit: adapterqc_metadata
-    tuple val(meta), path("preqc/*.meta.json")                       , emit: preqc_metadata
-    tuple val(meta), path("{adapterqc,preqc}/*.meta.json")           , emit: metadata
+    tuple val(meta), path("adapterqc/*.meta.json"), emit: adapterqc_metadata
+    tuple val(meta), path("preqc/*.meta.json"), emit: preqc_metadata
+    tuple val(meta), path("{adapterqc,preqc}/*.meta.json"), emit: metadata
 
-    tuple val(meta), path("*pixelator-preqc.log")                    , emit: preqc_log
-    tuple val(meta), path("*pixelator-adapterqc.log")                , emit: adapterqc_log
-    tuple val(meta), path("*pixelator-*.log")                        , emit: log
+    tuple val(meta), path("*pixelator-preqc.log"), emit: preqc_log
+    tuple val(meta), path("*pixelator-adapterqc.log"), emit: adapterqc_log
+    tuple val(meta), path("*pixelator-*.log"), emit: log
 
-    path "versions.yml"                                              , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
-    assert meta.design : "Missing `design` field in meta map"
+    assert meta.design, "Missing `design` field in meta map"
 
     def prefix = task.ext.prefix ?: "${meta.id}"
     def preqc_args = task.ext.args ?: ''
@@ -49,10 +49,10 @@ process PIXELATOR_QC {
     // --design is passed in meta and added to args and args2 through modules.conf
     """
     pixelator \\
-        --cores $task.cpus \\
+        --cores ${task.cpus} \\
         --log-file ${prefix}.pixelator-preqc.log \\
         --verbose \\
-        single-cell \\
+        single-cell-mpx \\
         preqc \\
         --output . \\
         ${preqc_args} \\
@@ -64,10 +64,10 @@ process PIXELATOR_QC {
     shopt -u nullglob # Turn off nullglob to make sure it doesn't interfere with anything later
 
     pixelator \\
-        --cores $task.cpus \\
+        --cores ${task.cpus} \\
         --log-file ${prefix}.pixelator-adapterqc.log \\
         --verbose \\
-        single-cell \\
+        single-cell-mpx \\
         adapterqc \\
         --output . \\
         ${adapterqc_args} \\

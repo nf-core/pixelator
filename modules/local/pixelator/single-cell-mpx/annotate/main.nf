@@ -1,23 +1,23 @@
 process PIXELATOR_ANNOTATE {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_high'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-3ee9c4e'}"
 
     input:
     tuple val(meta), path(dataset), path(panel_file), val(panel)
 
     output:
-    tuple val(meta), path("annotate/*.dataset.pxl") , emit: dataset
-    tuple val(meta), path("annotate/*.report.json") , emit: report_json
-    tuple val(meta), path("annotate/*.meta.json")   , emit: metadata
-    tuple val(meta), path("annotate/*")             , emit: all_results
+    tuple val(meta), path("annotate/*.dataset.pxl"), emit: dataset
+    tuple val(meta), path("annotate/*.report.json"), emit: report_json
+    tuple val(meta), path("annotate/*.meta.json"), emit: metadata
+    tuple val(meta), path("annotate/*"), emit: all_results
     tuple val(meta), path("*pixelator-annotate.log"), emit: log
 
-    path "versions.yml"                             , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -25,23 +25,23 @@ process PIXELATOR_ANNOTATE {
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
-    def panelOpt = (
-        panel      ? "--panel $panel"      :
-        panel_file ? "--panel $panel_file" :
-        ""
-    )
+    def panelOpt = (panel
+        ? "--panel ${panel}"
+        : panel_file
+            ? "--panel ${panel_file}"
+            : "")
 
     """
     pixelator \\
-        --cores $task.cpus \\
+        --cores ${task.cpus} \\
         --log-file ${prefix}.pixelator-annotate.log \\
         --verbose \\
-        single-cell \\
+        single-cell-mpx \\
         annotate \\
         --output . \\
-        $panelOpt \\
-        $args \\
-        $dataset \\
+        ${panelOpt} \\
+        ${args} \\
+        ${dataset} \\
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

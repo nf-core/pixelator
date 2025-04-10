@@ -1,16 +1,15 @@
-
 process PIXELATOR_COLLECT_METADATA {
     label 'process_single'
     cache false
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-3ee9c4e'}"
 
     output:
     path "metadata.json", emit: metadata
-    path "versions.yml" , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -61,8 +60,8 @@ process PIXELATOR_COLLECT_METADATA {
     def metadata = [
         nextflow: nextflow_dict,
         manifest: manifest_dict,
-        workflow : workflow_dict,
-        parameters: params
+        workflow: workflow_dict,
+        parameters: params,
     ]
 
     def nextflowJson = groovy.json.JsonOutput.toJson(metadata)
@@ -117,8 +116,8 @@ process PIXELATOR_COLLECT_METADATA {
     def metadata = [
         nextflow: nextflow_dict,
         manifest: manifest_dict,
-        workflow : workflow_dict,
-        parameters: params
+        workflow: workflow_dict,
+        parameters: params,
     ]
 
     """

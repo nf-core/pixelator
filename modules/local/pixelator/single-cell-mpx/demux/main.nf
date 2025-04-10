@@ -1,23 +1,23 @@
 process PIXELATOR_DEMUX {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0' :
-        'biocontainers/pixelator:0.19.0--pyhdfd78af_0' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-3ee9c4e'}"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel)
 
     output:
     tuple val(meta), path("demux/*processed*.{fq,fastq}.gz"), emit: processed
-    tuple val(meta), path("demux/*failed.{fq,fastq}.gz")    , emit: failed
-    tuple val(meta), path("demux/*.report.json")            , emit: report_json
-    tuple val(meta), path("demux/*.meta.json")              , emit: metadata
-    tuple val(meta), path("*pixelator-demux.log")           , emit: log
+    tuple val(meta), path("demux/*failed.{fq,fastq}.gz"), emit: failed
+    tuple val(meta), path("demux/*.report.json"), emit: report_json
+    tuple val(meta), path("demux/*.meta.json"), emit: metadata
+    tuple val(meta), path("*pixelator-demux.log"), emit: log
 
-    path "versions.yml"                                     , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -27,22 +27,22 @@ process PIXELATOR_DEMUX {
 
     def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
-    def panelOpt = (
-        panel      ? "--panel $panel"      :
-        panel_file ? "--panel $panel_file" :
-        ""
-    )
+    def panelOpt = (panel
+        ? "--panel ${panel}"
+        : panel_file
+            ? "--panel ${panel_file}"
+            : "")
 
     """
     pixelator \\
-        --cores $task.cpus \\
+        --cores ${task.cpus} \\
         --log-file ${prefix}.pixelator-demux.log \\
         --verbose \\
-        single-cell \\
+        single-cell-mpx \\
         demux \\
         --output . \\
-        $panelOpt \\
-        $args \\
+        ${panelOpt} \\
+        ${args} \\
         ${reads}
 
     cat <<-END_VERSIONS > versions.yml
