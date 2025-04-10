@@ -40,7 +40,7 @@ process PIXELATOR_QC {
     task.ext.when == null || task.ext.when
 
     script:
-    assert meta.design, "Missing `design` field in meta map"
+    assert meta.design
 
     def prefix = task.ext.prefix ?: "${meta.id}"
     def preqc_args = task.ext.args ?: ''

@@ -76,7 +76,7 @@ workflow MPX {
 
     ch_amplicon_input = fastq.map { meta, reads ->
         {
-            [meta, reads, meta.design]
+            [meta, reads]
         }
     }
 
