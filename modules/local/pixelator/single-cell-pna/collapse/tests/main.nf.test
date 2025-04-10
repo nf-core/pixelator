@@ -1,0 +1,93 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_PNA_COLLAPSE"
+    script "../main.nf"
+    process "PIXELATOR_PNA_COLLAPSE"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/pna"
+    tag "pixelator/single_cell_pna_collapse"
+
+    test("PNA collapse - small test - single file") {
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/demux/PNA055_Sample07_filtered_S7.demux.m1.part_000.parquet', checkIfExists: true)
+                    ],
+                    [],                     // panel_file
+                    'proxiome-immuno-155',   // panel
+                    'pna-2'                 // design
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                {
+                    with(process.out.collapsed) {
+                        assert get(0).get(1).every { file(it).exists() }
+                    }
+                },
+                { assert snapshot(process.out.metadata_json).match("metadata") },
+                { assert snapshot(process.out.versions).match("versions") },
+                {
+                    with(process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator collapse")
+                    }
+                },
+                {
+                    with(process.out.report_json) {
+                        assert snapshot(path(get(0).get(1).get(0)).readLines()[0..2]).match("header")
+                    }
+                }
+            )
+        }
+    }
+
+    test("PNA collapse - small test - multiple files") {
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/demux/PNA055_Sample07_filtered_S7.demux.m1.part_000.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/demux/PNA055_Sample07_filtered_S7.demux.m1.part_001.parquet', checkIfExists: true)
+                    ],
+                    [],                      // panel_file
+                    'proxiome-immuno-155',   // panel
+                    'pna-2'                  // design
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                {
+                    with(process.out.collapsed) {
+                        assert get(0).get(1).every { file(it).exists() }
+                    }
+                },
+                { assert snapshot(process.out.metadata_json).match("multi_metadata") },
+                { assert snapshot(process.out.versions).match("multi_versions") },
+                {
+                    with(process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator collapse")
+                    }
+                },
+                {
+                    with(process.out.report_json) {
+                        assert snapshot(path(get(0).get(1).get(0)).readLines()[0..2]).match("multi_header")
+                    }
+                }
+            )
+        }
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "PNA combine collapse - multiple files": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "PNA055_Sample07_filtered_S7",
+                        "design": "pna-2",
+                        "panel": "proxiome-immuno-155",
+                        "technology": "pna"
+                    },
+                    "PNA055_Sample07_filtered_S7.report.json:md5,f072efda6e9a17670d903151390b4c40"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "PNA055_Sample07_filtered_S7",
+                        "design": "pna-2",
+                        "panel": "proxiome-immuno-155",
+                        "technology": "pna"
+                    },
+                    "PNA055_Sample07_filtered_S7.meta.json:md5,b5dec890f6bc2cb309626e9db9d9bad9"
+                ]
+            ],
+            [
+                "versions.yml:md5,b75a7804181809bfd5bf434d1658238c"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.5"
+        },
+        "timestamp": "2025-04-03T13:53:27.297636724"
+    }
+}
