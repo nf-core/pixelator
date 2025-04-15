@@ -22,8 +22,8 @@ nextflow_process {
                 input[0] = [
                     [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
                     [
-                        file(params.pipelines_testdata_base_path + 'testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R1.fastq.gz', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R2.fastq.gz', checkIfExists: true)
+                        file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R1.fastq.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R2.fastq.gz', checkIfExists: true)
                     ]
                 ]
                 """
@@ -49,8 +49,8 @@ nextflow_process {
                 input[0] = [
                     [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
                     [
-                        file(params.pipelines_testdata_base_path + 'testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R1.fastq.gz', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R2.fastq.gz', checkIfExists: true)
+                        file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R1.fastq.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/fastq/sample01_1k_pbmcs_scsp_v1_immunology1_R2.fastq.gz', checkIfExists: true)
                     ]
                 ]
                 """

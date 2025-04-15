@@ -1,25 +1,24 @@
 process PIXELATOR_PNA_COMBINE_COLLAPSE {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
 
     // TODO: Add conda
     // conda "bioconda::pixelator=0.18.2"
 
-    // TODO: Add containers
-    // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    //     'https://depot.galaxyproject.org/singularity/pixelator:0.18.2--pyhdfd78af_0' :
-    //     'biocontainers/pixelator:0.18.2--pyhdfd78af_0' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-5cdfb71'}"
 
     input:
     tuple val(meta), path(parquet_files, stageAs: "parquet/*"), path(json_report_files, stageAs: "reports/*")
 
     output:
-    tuple val(meta), path("collapse/*.parquet", arity: 1)             , emit: parquet
-    tuple val(meta), path("collapse/*.report.json")                   , emit: report_json
-    tuple val(meta), path("collapse/*.meta.json")                     , emit: metadata_json
-    tuple val(meta), path("*pixelator-combine-collapse.log")          , emit: log
+    tuple val(meta), path("collapse/*.parquet", arity: 1),    emit: parquet
+    tuple val(meta), path("collapse/*.report.json"),          emit: report_json
+    tuple val(meta), path("collapse/*.meta.json"),            emit: metadata_json
+    tuple val(meta), path("*pixelator-combine-collapse.log"), emit: log
 
-    path "versions.yml"                                               , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -39,7 +38,7 @@ process PIXELATOR_PNA_COMBINE_COLLAPSE {
         single-cell-pna \\
         combine-collapse \\
         --output . \\
-        $args \\
+        ${args} \\
         --parquet ${parquetArgs} \\
         --report ${reportArgs}
 

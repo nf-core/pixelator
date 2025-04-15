@@ -5,7 +5,7 @@ process PIXELATOR_QC {
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
-        : 'ghcr.io/pixelgentechnologies/pixelator:sha-58558e6'}"
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-5cdfb71'}"
 
     input:
     tuple val(meta), path(reads)

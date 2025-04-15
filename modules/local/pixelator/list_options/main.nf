@@ -5,7 +5,7 @@ process PIXELATOR_LIST_OPTIONS {
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
-        : 'ghcr.io/pixelgentechnologies/pixelator:sha-3ee9c4e'}"
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-5cdfb71'}"
 
     output:
     path "design_options.txt", emit: designs
@@ -22,6 +22,9 @@ process PIXELATOR_LIST_OPTIONS {
     """
     pixelator single-cell-mpx --list-designs ${args} > design_options.txt
     pixelator single-cell-mpx --list-panels ${args2} > panel_options.txt
+
+    pixelator single-cell-pna --list-designs ${args} >> design_options.txt
+    pixelator single-cell-pna --list-panels ${args2} >> panel_options.txt
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

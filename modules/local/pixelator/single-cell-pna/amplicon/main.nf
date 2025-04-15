@@ -1,24 +1,23 @@
 process PIXELATOR_PNA_AMPLICON {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
 
     // TODO: Add conda
     // conda "bioconda::pixelator=0.18.2"
-    // TODO: Add containers
-    // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    //     'https://depot.galaxyproject.org/singularity/pixelator:0.18.2--pyhdfd78af_0' :
-    //     'biocontainers/pixelator:0.18.2--pyhdfd78af_0' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-5cdfb71'}"
 
     input:
     tuple val(meta), path(reads, arity: '1..*'), val(design)
 
     output:
     tuple val(meta), path("amplicon/*.amplicon.{fq,fastq}.zst"), emit: amplicon
-    tuple val(meta), path("amplicon/*.report.json")            , emit: report_json
-    tuple val(meta), path("amplicon/*.meta.json")              , emit: metadata_json
-    tuple val(meta), path("*pixelator-amplicon.log")           , emit: log
+    tuple val(meta), path("amplicon/*.report.json"),             emit: report_json
+    tuple val(meta), path("amplicon/*.meta.json"),               emit: metadata_json
+    tuple val(meta), path("*pixelator-amplicon.log"),            emit: log
 
-    path "versions.yml"                                        , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -30,18 +29,16 @@ process PIXELATOR_PNA_AMPLICON {
 
     // Make list of old name and new name pairs to use for renaming
     // Use R1/R2 style suffixes for limited backward compatibility with pixelator<0.17
-    def old_new_pairs = (
-        (reads.size() == 1) ?
-        [[ reads[0], "${prefix}${getFileSuffix(reads[0])}" ]]
-        : reads.withIndex().collect { entry, index -> [ entry, "${prefix}_R${index + 1}${getFileSuffix(entry)}" ] }
-    )
+    def old_new_pairs = (reads.size() == 1
+        ? [[reads[0], "${prefix}${getFileSuffix(reads[0])}"]]
+        : reads.withIndex().collect { entry, index -> [entry, "${prefix}_R${index + 1}${getFileSuffix(entry)}"] })
     // Flatten a list of tuples into a single string joined with spaces
     def rename_to = old_new_pairs.flatten().join(' ')
     def renamed_reads = old_new_pairs.collect { old_name, new_name -> new_name }.join(' ')
 
 
     """
-    printf "%s %s\\n" $rename_to | while read old_name new_name; do
+    printf "%s %s\\n" ${rename_to} | while read old_name new_name; do
         [ -f "\${new_name}" ] || ln -s \$old_name \$new_name
     done
 
@@ -50,10 +47,10 @@ process PIXELATOR_PNA_AMPLICON {
         --verbose \\
         single-cell-pna \\
         amplicon \\
-        --threads $task.cpus \\
+        --threads ${task.cpus} \\
         --output . \\
-        --design $design \\
-        $args \\
+        --design ${design} \\
+        ${args} \\
         ${renamed_reads}
 
     cat <<-END_VERSIONS > versions.yml

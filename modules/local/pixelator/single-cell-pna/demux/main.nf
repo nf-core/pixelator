@@ -1,27 +1,26 @@
 process PIXELATOR_PNA_DEMUX {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
 
     // TODO: Add conda
     // conda "bioconda::pixelator=0.18.2"
 
-    // TODO: Add containers
-    // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    //     'https://depot.galaxyproject.org/singularity/pixelator:0.18.2--pyhdfd78af_0' :
-    //     'biocontainers/pixelator:0.18.2--pyhdfd78af_0' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-5cdfb71'}"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel), val(design)
 
     output:
-    tuple val(meta), path("demux/*.parquet", arity: "1..*")        , emit: demuxed
-    tuple val(meta), path("demux/*demux.passed*.{fq,fastq}.zst")   , emit: passed
-    tuple val(meta), path("demux/*demux.failed.{fq,fastq}.zst")    , emit: failed
-    tuple val(meta), path("demux/*.report.json")                   , emit: report_json
-    tuple val(meta), path("demux/*.meta.json")                     , emit: metadata_json
-    tuple val(meta), path("*pixelator-demux.log")                  , emit: log
+    tuple val(meta), path("demux/*.parquet", arity: "1..*"),      emit: demuxed
+    tuple val(meta), path("demux/*demux.passed*.{fq,fastq}.zst"), emit: passed
+    tuple val(meta), path("demux/*demux.failed.{fq,fastq}.zst"),  emit: failed
+    tuple val(meta), path("demux/*.report.json"),                 emit: report_json
+    tuple val(meta), path("demux/*.meta.json"),                   emit: metadata_json
+    tuple val(meta), path("*pixelator-demux.log"),                emit: log
 
-    path "versions.yml"                                            , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -31,11 +30,10 @@ process PIXELATOR_PNA_DEMUX {
 
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
-    def panelOpt = (
-        panel ? "--panel $panel" :
-        panel_file ? "--panel $panel_file" : ""
-    )
-    def designOpt = "--design $design"
+    def panelOpt = (panel
+        ? "--panel ${panel}"
+        : panel_file ? "--panel ${panel_file}" : "")
+    def designOpt = "--design ${design}"
 
     """
     pixelator \\
@@ -43,11 +41,11 @@ process PIXELATOR_PNA_DEMUX {
         --verbose \\
         single-cell-pna \\
         demux \\
-        --threads $task.cpus \\
+        --threads ${task.cpus} \\
         --output . \\
-        $panelOpt \\
-        $designOpt \\
-        $args \\
+        ${panelOpt} \\
+        ${designOpt} \\
+        ${args} \\
         ${reads}
 
     cat <<-END_VERSIONS > versions.yml
