@@ -17,16 +17,16 @@ nextflow_process {
                 input[0] = [
                     [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
                     [
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.parquet', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_001.parquet', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_000.parquet', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_001.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_001.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_000.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_001.parquet', checkIfExists: true),
                     ],
                     [
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.report.json', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_001.report.json', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_000.report.json', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_001.report.json', checkIfExists: true)
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_001.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_000.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_001.report.json', checkIfExists: true)
                     ]
                 ]
                 """

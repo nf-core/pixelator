@@ -6,7 +6,7 @@ process PIXELATOR_PNA_AMPLICON {
     // conda "bioconda::pixelator=0.18.2"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
-        : 'ghcr.io/pixelgentechnologies/pixelator:sha-5cdfb71'}"
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-47ad6e1'}"
 
     input:
     tuple val(meta), path(reads, arity: '1..*'), val(design)

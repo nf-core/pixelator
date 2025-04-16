@@ -14,7 +14,7 @@ nextflow_process {
                 """
                 input[0] = [
                     [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/pna/full_run/graph/PNA055_Sample07_filtered_S7.graph.pxl', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/graph/PNA055_Sample07_filtered_S7.graph.pxl', checkIfExists: true),
                 ]
                 """
             }

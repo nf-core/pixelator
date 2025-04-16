@@ -5,7 +5,7 @@ process PIXELATOR_PNA_GRAPH {
 
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'https://depot.galaxyproject.org/singularity/pixelator:0.19.0--pyhdfd78af_0'
-        : 'ghcr.io/pixelgentechnologies/pixelator:sha-5cdfb71'}"
+        : 'ghcr.io/pixelgentechnologies/pixelator:sha-47ad6e1'}"
 
     input:
     tuple val(meta), path(edge_list), path(panel_file), val(panel)

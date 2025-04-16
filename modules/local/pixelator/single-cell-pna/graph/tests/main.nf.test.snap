@@ -2,14 +2,14 @@
     "versions": {
         "content": [
             [
-                "versions.yml:md5,9c61b990d1c57936f075efa56847fc61"
+                "versions.yml:md5,adf4fe60c2cc084b07e391a066fa803a"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.4"
+            "nextflow": "24.10.5"
         },
-        "timestamp": "2025-03-03T15:42:26.876301379"
+        "timestamp": "2025-04-16T15:56:26.50487735"
     },
     "report_json": {
         "content": [
@@ -21,7 +21,7 @@
                         "panel": "proxiome-immuno-155",
                         "technology": "pna"
                     },
-                    "PNA055_Sample07_filtered_S7.report.json:md5,25236e45949c32ce93506db00eda246a"
+                    "PNA055_Sample07_filtered_S7.report.json:md5,44c0c42d4dbb382f7d1541719182ca08"
                 ]
             ]
         ],
@@ -29,7 +29,7 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.5"
         },
-        "timestamp": "2025-04-03T14:02:47.555677709"
+        "timestamp": "2025-04-16T15:56:26.49718139"
     },
     "metadata_json": {
         "content": [
@@ -41,7 +41,7 @@
                         "panel": "proxiome-immuno-155",
                         "technology": "pna"
                     },
-                    "PNA055_Sample07_filtered_S7.meta.json:md5,a5fb5308aa82dd9b96d36defdea5e6a8"
+                    "PNA055_Sample07_filtered_S7.meta.json:md5,b15fffdd71ae59f5e36f7237e76b1b98"
                 ]
             ]
         ],
@@ -49,6 +49,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.5"
         },
-        "timestamp": "2025-04-03T12:55:57.890097209"
+        "timestamp": "2025-04-16T15:56:26.489197437"
     }
 }
