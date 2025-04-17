@@ -149,7 +149,6 @@ workflow PNA {
     PIXELATOR_PNA_ANALYSIS(ch_graph)
     ch_analysis = PIXELATOR_PNA_ANALYSIS.out.pixelfile
     ch_versions = ch_versions.mix(PIXELATOR_PNA_ANALYSIS.out.versions.first())
-    ch_analysis.dump(tag: "ch_analysis")
 
     //
     // MODULE: Run pixelator single-cell layout
