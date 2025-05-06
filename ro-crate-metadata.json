@@ -127,14 +127,10 @@
         },
         {
             "@id": "main.nf",
-            "@type": [
-                "File",
-                "SoftwareSourceCode",
-                "ComputationalWorkflow"
-            ],
+            "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
             "creator": [
                 {
-                    "@id": "#florian.detemmerman@pixelgen.com"
+                    "@id": "https://orcid.org/0009-0006-0086-2470"
                 }
             ],
             "dateCreated": "",
@@ -150,25 +146,16 @@
                 "single-cell",
                 "single-cell-omics"
             ],
-            "license": [
-                "MIT"
-            ],
-            "name": [
-                "nf-core/pixelator"
-            ],
+            "license": ["MIT"],
+            "name": ["nf-core/pixelator"],
             "programmingLanguage": {
                 "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow"
             },
             "sdPublisher": {
                 "@id": "https://nf-co.re/"
             },
-            "url": [
-                "https://github.com/nf-core/pixelator",
-                "https://nf-co.re/pixelator/1.4.0/"
-            ],
-            "version": [
-                "1.4.0"
-            ]
+            "url": ["https://github.com/nf-core/pixelator", "https://nf-co.re/pixelator/dev/"],
+            "version": ["1.5.0dev"]
         },
         {
             "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow",
@@ -335,7 +322,7 @@
             "url": "https://nf-co.re/"
         },
         {
-            "@id": "#florian.detemmerman@pixelgen.com",
+            "@id": "https://orcid.org/0009-0006-0086-2470",
             "@type": "Person",
             "email": "florian.detemmerman@pixelgen.com",
             "name": "Florian De Temmerman"
