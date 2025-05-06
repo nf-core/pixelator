@@ -207,7 +207,7 @@
                     "fa_icon": "fas not-equal",
                     "description": "The number of mismatches allowed in marker barcodes.",
                     "type": "number",
-                    "default": 2,
+                    "default": 1,
                     "minimum": 0,
                     "maximum": 2
                 },
@@ -676,7 +676,7 @@
                 "pna_layout_wpmds_k": {
                     "type": "integer",
                     "description": "The window size used when computing probability weights for the wpmds layout method. Only used when layout algorithm is set to wpmds.",
-                    "default": 3,
+                    "default": 5,
                     "minimum": 1,
                     "maximum": 10
                 }
@@ -833,7 +833,6 @@
                     "type": "string",
                     "fa_icon": "far calendar",
                     "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
-                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/",
                     "hidden": true
                 }
             }
