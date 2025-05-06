@@ -21,17 +21,25 @@
 
 ## Introduction
 
-**nf-core/pixelator** is a bioinformatics pipeline that ...
+**nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for analysis of Molecular Pixelation assays.
+It takes a samplesheet as input and will process your data using `pixelator` to produce final antibody counts.
 
-<!-- TODO nf-core:
-   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
-   major pipeline sections and the types of output it produces. You're giving an overview to someone new
-   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
--->
+![](./docs/images/nf-core-pixelator-metromap.svg)
 
-<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
-     workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+1. Build amplicon from input reads ([`pixelator amplicon`](https://github.com/PixelgenTechnologies/pixelator))
+2. Read QC and filtering, correctness of the pixel binding sequence sequences ([`pixelator preqc | pixelator adapterqc`](https://github.com/PixelgenTechnologies/pixelator))
+3. Assign a marker (barcode) to each read ([`pixelator demux`](https://github.com/PixelgenTechnologies/pixelator))
+4. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://github.com/PixelgenTechnologies/pixelator))
+5. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator graph`](https://github.com/PixelgenTechnologies/pixelator))
+6. Call and annotate cells ([`pixelator annotate`](https://github.com/PixelgenTechnologies/pixelator))
+7. Analyze the cells for polarization and colocalization ([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
+8. Generate 3D graph layouts for visualization of cells ([`pixelator layout`](https://github.com/PixelgenTechnologies/pixelator))
+9. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
+
+> [!WARNING]
+> Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
+> This causes issues in some dependencies. As a workaround, you can revert to the old behavior by setting the environment variable
+> `NXF_APPTAINER_HOME_MOUNT` or `NXF_SINGULARITY_HOME_MOUNT` to `true` in the machine from which you launch the pipeline.
 
 ## Usage
 
@@ -85,8 +93,7 @@ For further information or help, don't hesitate to get in touch on the [Slack `#
 
 ## Citations
 
-<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
-<!-- If you use nf-core/pixelator for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) --><!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
+If you use nf-core/pixelator for your analysis, please cite it using the following doi: [10.5281/zenodo.10015112](https://doi.org/10.5281/zenodo.10015112)
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 
