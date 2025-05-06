@@ -9,7 +9,7 @@
                         "panel": "human-sc-immunology-spatial-proteomics-1",
                         "technology": "mpx"
                     },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.collapsed.parquet:md5,c92632a8e4866e6be9cc9a490362804a"
+                    "sample01_1k_pbmcs_scsp_v1_immunology1.collapsed.parquet:md5,309a0b8c40bfb3e7cc6f05bd9a94b9e9"
                 ]
             ],
             [
@@ -31,15 +31,15 @@
                         "panel": "human-sc-immunology-spatial-proteomics-1",
                         "technology": "mpx"
                     },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d0606874047996db5aa7da532c9d0624"
+                    "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,69a3436261bc4e09d841b7be641aafbd"
                 ]
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.3"
+            "nextflow": "24.10.6"
         },
-        "timestamp": "2025-01-14T16:07:43.798024301"
+        "timestamp": "2025-05-06T15:11:44.266641701"
     },
     "Test MPX collapse - stub": {
         "content": [
@@ -89,7 +89,7 @@
                     ]
                 ],
                 "4": [
-                    "versions.yml:md5,efd747c4e8243f4ec1cd38ea7873d137"
+                    "versions.yml:md5,33ceab3376a4210ddbc799ac7a7ebe0e"
                 ],
                 "collapsed": [
                     [
@@ -136,14 +136,14 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,efd747c4e8243f4ec1cd38ea7873d137"
+                    "versions.yml:md5,33ceab3376a4210ddbc799ac7a7ebe0e"
                 ]
             }
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.3"
+            "nextflow": "24.10.6"
         },
-        "timestamp": "2025-01-14T13:52:13.085170439"
+        "timestamp": "2025-05-06T15:11:14.246480277"
     }
 }

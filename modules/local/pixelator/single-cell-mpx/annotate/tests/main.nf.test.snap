@@ -9,7 +9,7 @@
                         "panel": "human-sc-immunology-spatial-proteomics-1",
                         "technology": "mpx"
                     },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,24c4e9dad0344dc099e76a41fe258882"
+                    "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,46497e565adecc96af90e90faffaf372"
                 ]
             ],
             [
@@ -20,25 +20,25 @@
                         "panel": "human-sc-immunology-spatial-proteomics-1",
                         "technology": "mpx"
                     },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,167ea8f99901e16236aa771e84886cc3"
+                    "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d665597d94d168a92632ec419a79617f"
                 ]
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.3"
+            "nextflow": "24.10.6"
         },
-        "timestamp": "2025-01-14T13:52:02.738078158"
+        "timestamp": "2025-05-06T15:10:43.635775337"
     },
     "pxl": {
         "content": [
-            "metadata.json:md5,5f73e696c17306072fb528d529165b5d"
+            "metadata.json:md5,ac897f1995d7b8c3dc037e5bb0cf8026"
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.3"
+            "nextflow": "24.10.6"
         },
-        "timestamp": "2025-01-14T13:52:02.762658591"
+        "timestamp": "2025-05-06T15:10:43.651855906"
     },
     "Test MPX annotate - stub": {
         "content": [
@@ -103,7 +103,7 @@
                     ]
                 ],
                 "5": [
-                    "versions.yml:md5,6bd537721b173686314a17aec8eecbb8"
+                    "versions.yml:md5,362a461b413bba48ee271ac7c2c00644"
                 ],
                 "all_results": [
                     [
@@ -165,14 +165,14 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,6bd537721b173686314a17aec8eecbb8"
+                    "versions.yml:md5,362a461b413bba48ee271ac7c2c00644"
                 ]
             }
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.3"
+            "nextflow": "24.10.6"
         },
-        "timestamp": "2025-01-14T13:51:36.347630055"
+        "timestamp": "2025-05-06T15:10:06.901396439"
     }
 }

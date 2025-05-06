@@ -58,7 +58,7 @@
                     ]
                 ],
                 "5": [
-                    "versions.yml:md5,45a1e09467ac109bf6e69b74c0daeb8c"
+                    "versions.yml:md5,ae56fdfb0890b69ef107b2940c461b33"
                 ],
                 "failed": [
                     [
@@ -116,15 +116,15 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,45a1e09467ac109bf6e69b74c0daeb8c"
+                    "versions.yml:md5,ae56fdfb0890b69ef107b2940c461b33"
                 ]
             }
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.3"
+            "nextflow": "24.10.6"
         },
-        "timestamp": "2025-01-14T16:07:56.483066923"
+        "timestamp": "2025-05-06T15:12:03.324003268"
     },
     "Test MPX demux - SCSP v1 | Immunology-I": {
         "content": [
@@ -239,18 +239,18 @@
                         "panel": "human-sc-immunology-spatial-proteomics-1",
                         "technology": "mpx"
                     },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,e3cc30548a00bfb53e9e3474be0ee495"
+                    "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,1d2c212818a2970b9ee9b3665f2baeba"
                 ]
             ],
             [
-                "versions.yml:md5,45a1e09467ac109bf6e69b74c0daeb8c"
+                "versions.yml:md5,ae56fdfb0890b69ef107b2940c461b33"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.3"
+            "nextflow": "24.10.6"
         },
-        "timestamp": "2025-01-14T14:03:39.282659716"
+        "timestamp": "2025-05-06T15:12:31.35960066"
     },
     "report_json": {
         "content": [
@@ -260,9 +260,9 @@
                     0,
                     3
                 ],
-                "cutadapt_version": "4.9",
-                "python_version": "3.11.11",
-                "cores": 8,
+                "cutadapt_version": "5.0",
+                "python_version": "3.11.12",
+                "cores": 16,
                 "input": {
                     "path1": "sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz",
                     "path2": null,
@@ -2868,8 +2868,8 @@
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.3"
+            "nextflow": "24.10.6"
         },
-        "timestamp": "2025-01-14T14:03:39.782385981"
+        "timestamp": "2025-05-06T15:12:31.953138619"
     }
 }
