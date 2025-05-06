@@ -16,9 +16,9 @@ nextflow_process {
             process {
                 """
                 demuxed_input = [
-                    file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AAAGCAAC.fastq.gz', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACAAGAC.fastq.gz', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACCTTCC.fastq.gz', checkIfExists: true)
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AAAGCAAC.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACAAGAC.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACCTTCC.fastq.gz', checkIfExists: true)
                 ]
 
                 input[0] = [
@@ -49,11 +49,11 @@ nextflow_process {
             process {
                 """
                 demuxed_input = [
-                    file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AAAGCAAC.fastq.gz', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACAAGAC.fastq.gz', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACCTTCC.fastq.gz', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACGGCTA.fastq.gz', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'mpx/testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AAGCATAG.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AAAGCAAC.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACAAGAC.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACCTTCC.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACGGCTA.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AAGCATAG.fastq.gz', checkIfExists: true),
                 ]
 
                 input[0] = [
