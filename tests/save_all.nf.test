@@ -7,8 +7,11 @@ nextflow_pipeline {
 
         when {
             params {
-                outdir = "$outputDir"
-                save_all = true
+                pipelines_testdata_base_path = "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/"
+                input                        = "$pipelines_testdata_base_path/samplesheet/mpx/samplesheet_mpx_scsp_v1_immunology1.csv"
+                input_basedir                = "$pipelines_testdata_base_path/testdata/mpx/"
+                outdir                       = "$outputDir"
+                save_all                     = true
             }
         }
 
@@ -38,6 +41,9 @@ nextflow_pipeline {
 
         when {
             params {
+                pipelines_testdata_base_path = "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/"
+                input                        = "$pipelines_testdata_base_path/samplesheet/mpx/samplesheet_mpx_scsp_v1_immunology1.csv"
+                input_basedir                = "$pipelines_testdata_base_path/testdata/mpx/"
                 outdir = "$outputDir"
             }
         }
