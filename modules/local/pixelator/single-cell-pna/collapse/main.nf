@@ -55,13 +55,21 @@ process PIXELATOR_PNA_COLLAPSE {
     END_VERSIONS
     """
 
+    //prefix = task.ext.prefix ?: "${meta.id}"
     stub:
+    prefix = "${reads.name.replace('.parquet', '')}"
+
     """
     mkdir "collapse"
-    touch collapse/${prefix}.meta.json
+
     touch collapse/${prefix}.report.json
-    touch collapse/${prefix}.part_000.parquet
+    touch collapse/${prefix}.meta.json
+    touch collapse/${prefix}.parquet
     touch ${prefix}.pixelator-collapse.log
-    touch versions.yml
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
     """
 }

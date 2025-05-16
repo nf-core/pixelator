@@ -54,6 +54,10 @@ process PIXELATOR_PNA_LAYOUT {
     touch layout/${prefix}.meta.json
     touch layout/${prefix}.pxl
     touch ${prefix}.pixelator-layout.log
-    touch versions.yml
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
     """
 }

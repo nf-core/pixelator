@@ -45,4 +45,21 @@ process PIXELATOR_PNA_ANALYSIS {
         pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
+
+
+    stub:
+    prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir "analysis"
+    touch analysis/${prefix}.meta.json
+    touch analysis/${prefix}.report.json
+    touch analysis/${prefix}.pxl
+    touch ${prefix}.pixelator-analysis.log
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
 }

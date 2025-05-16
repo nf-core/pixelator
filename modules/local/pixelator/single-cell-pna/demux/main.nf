@@ -63,7 +63,14 @@ process PIXELATOR_PNA_DEMUX {
     touch demux/${prefix}.meta.json
     touch demux/${prefix}.demux.passed.fq.zst
     touch demux/${prefix}.demux.failed.fq.zst
+    touch demux/${prefix}.demux.m1.part_000.parquet
+    touch demux/${prefix}.demux.m2.part_000.parquet
     touch ${prefix}.pixelator-demux.log
-    touch versions.yml
+
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
     """
 }

@@ -97,6 +97,7 @@ workflow PNA {
         }
         .flatMap()
 
+
     PIXELATOR_PNA_COLLAPSE(ch_collapse_input)
     ch_collapsed = PIXELATOR_PNA_COLLAPSE.out.collapsed
     ch_collapsed_reports = PIXELATOR_PNA_COLLAPSE.out.report_json

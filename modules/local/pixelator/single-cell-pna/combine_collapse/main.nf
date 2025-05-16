@@ -49,11 +49,19 @@ process PIXELATOR_PNA_COMBINE_COLLAPSE {
     """
 
     stub:
+
+    prefix = task.ext.prefix ?: "${meta.id}"
+
     """
-    mkdir demux
+    mkdir collapse
     touch collapse/${prefix}.collapse.parquet
     touch collapse/${prefix}.collapse.meta.json
+    touch collapse/${prefix}.report.json
     touch ${prefix}.pixelator-combine-collapse.log
-    touch versions.yml
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
     """
 }

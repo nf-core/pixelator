@@ -68,7 +68,11 @@ process PIXELATOR_PNA_AMPLICON {
     touch amplicon/${prefix}.meta.json
     touch amplicon/${prefix}.amplicon.fq.zst
     touch ${prefix}.pixelator-amplicon.log
-    touch versions.yml
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
     """
 }
 

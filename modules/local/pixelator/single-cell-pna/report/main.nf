@@ -61,6 +61,10 @@ process PIXELATOR_PNA_REPORT {
     mkdir report
     touch report/${prefix}.report.html
     touch ${prefix}.pixelator-report.log
-    touch versions.yml
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
     """
 }
