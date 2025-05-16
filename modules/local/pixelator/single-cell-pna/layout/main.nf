@@ -44,4 +44,16 @@ process PIXELATOR_PNA_LAYOUT {
         pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
+
+    stub:
+    prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir layout
+    touch layout/${prefix}.report.json
+    touch layout/${prefix}.meta.json
+    touch layout/${prefix}.pxl
+    touch ${prefix}.pixelator-layout.log
+    touch versions.yml
+    """
 }

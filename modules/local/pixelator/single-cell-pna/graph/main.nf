@@ -47,4 +47,16 @@ process PIXELATOR_PNA_GRAPH {
         pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
+
+    stub:
+    prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir graph
+    touch graph/${prefix}.report.json
+    touch graph/${prefix}.meta.json
+    touch graph/${prefix}.pxl
+    touch ${prefix}.pixelator-graph.log
+    touch versions.yml
+    """
 }

@@ -53,4 +53,14 @@ process PIXELATOR_PNA_REPORT {
         pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
+
+    stub:
+    prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir report
+    touch report/${prefix}.report.html
+    touch ${prefix}.pixelator-report.log
+    touch versions.yml
+    """
 }

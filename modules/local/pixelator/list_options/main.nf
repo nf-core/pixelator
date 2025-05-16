@@ -36,12 +36,14 @@ process PIXELATOR_LIST_OPTIONS {
     """
     cat <<-END_DESIGN > design_options.txt
     D21
+    pna-2
     END_DESIGN
 
     cat <<-END_PANELS > panel_options.txt
     human-sc-immunology-spatial-proteomics-1
     human-sc-immunology-spatial-proteomics-2
     human-sc-immunology-spatial-proteomics
+    proxiome-immuno-155
     END_PANELS
 
     cat <<-END_VERSIONS > versions.yml

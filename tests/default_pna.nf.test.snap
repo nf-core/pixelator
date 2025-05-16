@@ -1,0 +1,87 @@
+{
+    "Params: default - stub": {
+        "content": [
+            2,
+            [
+                "pipeline_info",
+                "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
+                "pipeline_info/nf_core_pixelator_software_versions.yml",
+                "pixelator",
+                "pixelator/amplicon",
+                "pixelator/amplicon/PNA055_Sample07_filtered_S7.amplicon.fq.zst",
+                "pixelator/amplicon/PNA055_Sample07_filtered_S7.meta.json",
+                "pixelator/amplicon/PNA055_Sample07_filtered_S7.report.json",
+                "pixelator/logs",
+                "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-amplicon.log"
+            ],
+            [
+                
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.6"
+        },
+        "timestamp": "2025-05-15T15:25:36.965627533"
+    },
+    "Params: default": {
+        "content": [
+            9,
+            [
+                "pipeline_info",
+                "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
+                "pipeline_info/nf_core_pixelator_software_versions.yml",
+                "pixelator",
+                "pixelator/amplicon",
+                "pixelator/amplicon/PNA055_Sample07_filtered_S7.amplicon.fq.zst",
+                "pixelator/amplicon/PNA055_Sample07_filtered_S7.meta.json",
+                "pixelator/amplicon/PNA055_Sample07_filtered_S7.report.json",
+                "pixelator/analysis",
+                "pixelator/analysis/PNA055_Sample07_filtered_S7.analysis.pxl",
+                "pixelator/analysis/PNA055_Sample07_filtered_S7.meta.json",
+                "pixelator/analysis/PNA055_Sample07_filtered_S7.report.json",
+                "pixelator/collapse",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.meta.json",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.parquet",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.report.json",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_000.meta.json",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_000.parquet",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_000.report.json",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.parquet",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.meta.json",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.report.json",
+                "pixelator/demux",
+                "pixelator/demux/PNA055_Sample07_filtered_S7.demux.failed.fq.zst",
+                "pixelator/demux/PNA055_Sample07_filtered_S7.demux.m1.part_000.parquet",
+                "pixelator/demux/PNA055_Sample07_filtered_S7.demux.m2.part_000.parquet",
+                "pixelator/demux/PNA055_Sample07_filtered_S7.demux.passed.fq.zst",
+                "pixelator/demux/PNA055_Sample07_filtered_S7.meta.json",
+                "pixelator/demux/PNA055_Sample07_filtered_S7.report.json",
+                "pixelator/graph",
+                "pixelator/graph/PNA055_Sample07_filtered_S7.graph.pxl",
+                "pixelator/graph/PNA055_Sample07_filtered_S7.meta.json",
+                "pixelator/graph/PNA055_Sample07_filtered_S7.report.json",
+                "pixelator/layout",
+                "pixelator/layout/PNA055_Sample07_filtered_S7.layout.pxl",
+                "pixelator/layout/PNA055_Sample07_filtered_S7.meta.json",
+                "pixelator/layout/PNA055_Sample07_filtered_S7.report.json",
+                "pixelator/logs",
+                "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-amplicon.log",
+                "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-analysis.log",
+                "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-collapse.log",
+                "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-combine-collapse.log",
+                "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-demux.log",
+                "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-graph.log",
+                "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-layout.log"
+            ],
+            [
+                
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.6"
+        },
+        "timestamp": "2025-05-15T14:51:44.009938682"
+    }
+}

@@ -55,6 +55,8 @@ process PIXELATOR_PNA_DEMUX {
     """
 
     stub:
+    prefix = task.ext.prefix ?: "${meta.id}"
+
     """
     mkdir demux
     touch demux/${prefix}.report.json
