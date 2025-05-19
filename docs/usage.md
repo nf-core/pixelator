@@ -15,7 +15,8 @@ Use this parameter to specify its location.
 --input '[path to samplesheet file]'
 ```
 
-An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+We provide example samplesheets for [MXP data](../assets/samplesheet_mpx.csv) and for [PNA data](../assets/samplesheet_pna.csv),
+that can be used as a template to create your own samplesheet.
 
 ### Format
 
@@ -30,8 +31,8 @@ Below is an example of a simple samplesheet with two samples.
 
 ```csv
 sample,design,panel,fastq_1,fastq_2
-uropod_control,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_R1_001.fastq.gz,uropod_control_S1_R2_001.fastq.gz
-uropod_stimulated,D21,human-sc-immunology-spatial-proteomics,uropod_stimulated_S1_R1_001.fastq.gz,uropod_stimulated_S1_R2_001.fastq.gz
+sample1,pna-2,proxiome-immuno-155,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample2,pna-2,proxiome-immuno-155,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
 ```
 
 Columns not defined in the table below are ignored by the pipeline but can be useful
@@ -56,9 +57,9 @@ The `sample` identifiers have to be the same when you have re-sequenced the same
 
 ```csv title="samplesheet.csv"
 sample,design,panel,fastq_1,fastq_2
-uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
-uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
-uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
+uropod_control_1,pna-2,proxiome-immuno-155,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
+uropod_control_1,pna-2,proxiome-immuno-155,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
+uropod_control_1,pna-2,proxiome-immuno-155,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
 ```
 
 ### Relative paths
@@ -80,7 +81,7 @@ You can use following samplesheet:
 
 ```csv title="samplesheet.csv"
 sample,design,panel,panel_file,fastq_1,fastq_2
-sample1,D21,human-sc-immunology-spatial-proteomics,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
+sample1,pna-2,proxiome-immuno-155,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
 ```
 
 Using the `--input_basedir` option you can specify a different location that will be used to resolve relative paths.
@@ -103,12 +104,11 @@ The `design` column specifies the name of the pixelator assay design configurati
 A list of available designs can be listed by running following command:
 
 ```shell
-pixelator single-cell --list-designs
+pixelator single-cell-mpx --list-designs
+pixelator single-cell-pna --list-designs
 ```
 
-Currently, a single design is available:
-
-- `D21`
+Currently, a single design is available for MPX (`D21`) and one for PNA (`pna-2`).
 
 ### Panels
 
@@ -124,15 +124,18 @@ Every sample should have either `panel` or `panel_file` specified.
 A list of available panels can be listed by running following command:
 
 ```shell
-pixelator single-cell --list-panels
+pixelator single-cell-mpx --list-panels
+pixelator single-cell-pna --list-panels
 ```
 
-Currently, two built-in panels are available:
+Currently, two built-in panels are available for MPX:
 
 - `human-sc-immunology-spatial-proteomics-1`
 - `human-sc-immunology-spatial-proteomics-2`
 
-`human-sc-immunology-spatial-proteomics` is also an allowed value and is an alias to `human-sc-immunology-spatial-proteomics-1`.
+And one for PNA:
+
+- `proxiome-immuno-155`
 
 ## Running the pipeline
 
