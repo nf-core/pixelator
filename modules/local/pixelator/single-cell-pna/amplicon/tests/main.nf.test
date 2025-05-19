@@ -1,0 +1,42 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_PNA_AMPLICON"
+    script "../main.nf"
+    process "PIXELATOR_PNA_AMPLICON"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/pna"
+    tag "pixelator/single_cell_pna_amplicon"
+
+    test("PNA amplicon - small test") {
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/PNA055_Sample07_filtered_S7_R1_001.fastq.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/PNA055_Sample07_filtered_S7_R2_001.fastq.gz', checkIfExists: true)
+                    ],
+                    "pna-2"
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out.amplicon).match("amplicon") },
+                { assert snapshot(process.out.report_json).match("report_json") },
+                { assert snapshot(process.out.metadata_json).match("metadata_json") },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator amplicon")
+                    }
+                },
+            )
+        }
+    }
+}
+

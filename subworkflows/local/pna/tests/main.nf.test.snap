@@ -1,0 +1,20 @@
+{
+    "versions": {
+        "content": [
+            [
+                "versions.yml:md5,008d461c0a873cba26e5acce42c5a30b",
+                "versions.yml:md5,3287aa1204587f64ea633234091d2858",
+                "versions.yml:md5,a472e3de71bcfc5aba6d8433c610762a",
+                "versions.yml:md5,b1e342fded9151f1ea3de7c3a3e1e27c",
+                "versions.yml:md5,bc1bd306f1ade35c060c42e383a59990",
+                "versions.yml:md5,cf4872baac4b98fbffa390aac56d3bbf",
+                "versions.yml:md5,d9f448e5ec1ad5a222482d2882c55193"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.6"
+        },
+        "timestamp": "2025-05-06T15:32:59.670096405"
+    }
+}
