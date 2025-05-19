@@ -82,6 +82,11 @@ nextflow run nf-core/pixelator \
 ```
 
 > [!WARNING]
+> This version of the pipeline does not support conda environments, due to issues with upstream dependencies.
+> This means you cannot use the `conda` and `mamba` profiles. Please use `docker` or `singularity` instead.
+> We hope to add support for conda environments in the future.
+
+> [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
 For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/pixelator/usage) and the [parameter documentation](https://nf-co.re/pixelator/parameters).
