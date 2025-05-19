@@ -10,19 +10,19 @@ process PIXELATOR_PNA_REPORT {
 
     input:
     tuple val(meta), path(panel_file), val(panel)
-    path amplicon_data, stageAs: "results/amplicon/*"
-    path demux_data,    stageAs: "results/demux/*"
-    path collapse_data, stageAs: "results/collapse/*"
-    path graph_data,    stageAs: "results/graph/*"
-    path analysis_data, stageAs: "results/analysis/*"
+    path amplicon_data,      stageAs: "results/amplicon/*"
+    path demux_data,         stageAs: "results/demux/*"
+    path collapse_data,      stageAs: "results/collapse/*"
+    path graph_data,         stageAs: "results/graph/*"
+    path analysis_data,      stageAs: "results/analysis/*"
     path post_analysis_data, stageAs: "results/post_analysis/*"
-    path layout_data, stageAs: "results/layout/*"
+    path layout_data,        stageAs: "results/layout/*"
 
     output:
-    tuple val(meta), path("report/*.html"), emit: report
+    tuple val(meta), path("report/*.html"),    emit: report
     tuple val(meta), path("*pixelator-*.log"), emit: log
 
-    path "versions.yml", emit: versions
+    path "versions.yml",                       emit: versions
 
     when:
     task.ext.when == null || task.ext.when

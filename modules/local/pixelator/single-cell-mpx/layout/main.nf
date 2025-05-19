@@ -11,13 +11,13 @@ process PIXELATOR_LAYOUT {
     tuple val(meta), path(data)
 
     output:
-    tuple val(meta), path("layout/*dataset.pxl"), emit: dataset
-    tuple val(meta), path("layout/*report.json"), emit: report_json
-    tuple val(meta), path("layout/*.meta.json"), emit: metadata
-    tuple val(meta), path("layout/*"), emit: all_results
+    tuple val(meta), path("layout/*dataset.pxl"),   emit: dataset
+    tuple val(meta), path("layout/*report.json"),   emit: report_json
+    tuple val(meta), path("layout/*.meta.json"),    emit: metadata
+    tuple val(meta), path("layout/*"),              emit: all_results
     tuple val(meta), path("*pixelator-layout.log"), emit: log
 
-    path "versions.yml", emit: versions
+    path "versions.yml",                            emit: versions
 
     when:
     task.ext.when == null || task.ext.when

@@ -51,7 +51,7 @@ include { PNA_GENERATE_REPORTS           } from '../pna/generate_reports'
 workflow PNA {
     take:
     fastq       // channel: [ meta, [path(sample_1.fq), path(sample_2.fq)] ]
-    panel_files // channel [ meta, path(panel_file) |  ]
+    panel_files // channel: [ meta, path(panel_file) |  ]
 
     main:
     ch_versions = Channel.empty()

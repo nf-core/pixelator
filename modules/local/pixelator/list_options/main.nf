@@ -9,8 +9,8 @@ process PIXELATOR_LIST_OPTIONS {
 
     output:
     path "design_options.txt", emit: designs
-    path "panel_options.txt", emit: panels
-    path "versions.yml", emit: versions
+    path "panel_options.txt",  emit: panels
+    path "versions.yml",       emit: versions
 
     when:
     task.ext.when == null || task.ext.when

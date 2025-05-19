@@ -11,30 +11,30 @@ process PIXELATOR_QC {
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("adapterqc/*.processed.{fq,fastq}.gz"), emit: processed
+    tuple val(meta), path("adapterqc/*.processed.{fq,fastq}.gz"),      emit: processed
 
-    tuple val(meta), path("adapterqc/*.processed.{fq,fastq}.gz"), emit: adapterqc_processed
-    tuple val(meta), path("preqc/*.processed.{fq,fastq}.gz"), emit: preqc_processed
+    tuple val(meta), path("adapterqc/*.processed.{fq,fastq}.gz"),      emit: adapterqc_processed
+    tuple val(meta), path("preqc/*.processed.{fq,fastq}.gz"),          emit: preqc_processed
 
-    tuple val(meta), path("adapterqc/*.failed.{fq,fastq}.gz"), emit: adapterqc_failed
-    tuple val(meta), path("preqc/*.failed.{fq,fastq}.gz"), emit: preqc_failed
+    tuple val(meta), path("adapterqc/*.failed.{fq,fastq}.gz"),         emit: adapterqc_failed
+    tuple val(meta), path("preqc/*.failed.{fq,fastq}.gz"),             emit: preqc_failed
     tuple val(meta), path("{adapterqc,preqc}/*.failed.{fq,fastq}.gz"), emit: failed
 
-    tuple val(meta), path("adapterqc/*.report.json"), emit: adapterqc_report_json
-    tuple val(meta), path("preqc/*.report.json"), emit: preqc_report_json
-    tuple val(meta), path("{adapterqc,preqc}/*.report.json"), emit: report_json
+    tuple val(meta), path("adapterqc/*.report.json"),                  emit: adapterqc_report_json
+    tuple val(meta), path("preqc/*.report.json"),                      emit: preqc_report_json
+    tuple val(meta), path("{adapterqc,preqc}/*.report.json"),          emit: report_json
 
-    tuple val(meta), path("preqc/*.qc-report.html"), emit: preqc_report_html
+    tuple val(meta), path("preqc/*.qc-report.html"),                   emit: preqc_report_html
 
-    tuple val(meta), path("adapterqc/*.meta.json"), emit: adapterqc_metadata
-    tuple val(meta), path("preqc/*.meta.json"), emit: preqc_metadata
-    tuple val(meta), path("{adapterqc,preqc}/*.meta.json"), emit: metadata
+    tuple val(meta), path("adapterqc/*.meta.json"),                    emit: adapterqc_metadata
+    tuple val(meta), path("preqc/*.meta.json"),                        emit: preqc_metadata
+    tuple val(meta), path("{adapterqc,preqc}/*.meta.json"),            emit: metadata
 
-    tuple val(meta), path("*pixelator-preqc.log"), emit: preqc_log
-    tuple val(meta), path("*pixelator-adapterqc.log"), emit: adapterqc_log
-    tuple val(meta), path("*pixelator-*.log"), emit: log
+    tuple val(meta), path("*pixelator-preqc.log"),                     emit: preqc_log
+    tuple val(meta), path("*pixelator-adapterqc.log"),                 emit: adapterqc_log
+    tuple val(meta), path("*pixelator-*.log"),                         emit: log
 
-    path "versions.yml", emit: versions
+    path "versions.yml",                                               emit: versions
 
     when:
     task.ext.when == null || task.ext.when

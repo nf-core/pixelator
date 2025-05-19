@@ -128,7 +128,7 @@ workflow GENERATE_REPORTS {
         ch_report_inputs.graph,
         ch_report_inputs.annotate,
         ch_report_inputs.analysis,
-        ch_report_inputs.layout,
+        ch_report_inputs.layout
     )
 
     ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions.first())

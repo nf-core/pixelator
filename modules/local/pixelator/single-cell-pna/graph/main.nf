@@ -17,7 +17,7 @@ process PIXELATOR_PNA_GRAPH {
     tuple val(meta), path("graph/*.meta.json"),    emit: metadata_json
     tuple val(meta), path("*pixelator-graph.log"), emit: log
 
-    path "versions.yml", emit: versions
+    path "versions.yml",                           emit: versions
 
     when:
     task.ext.when == null || task.ext.when
