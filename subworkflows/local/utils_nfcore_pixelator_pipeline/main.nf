@@ -39,6 +39,12 @@ workflow PIPELINE_INITIALISATION {
 
     ch_versions = Channel.empty()
 
+    // Thrown an error if the pipeline is run with conda or mamba
+    // as this is not supported in the pipeline at the moment
+    if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1) {
+        exit(1, "ERROR: Conda and Mamba are not supported in the pipeline at the moment. Please use docker or singularity.")
+    }
+
     //
     // Print version and exit if required and dump pipeline parameters to JSON file
     //
