@@ -24,4 +24,4 @@ template:
     - fastqc
     - multiqc
     - igenomes
-  version: 1.5.0dev
+  version: 2.0.0dev
