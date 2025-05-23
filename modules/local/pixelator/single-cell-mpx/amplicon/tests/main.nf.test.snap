@@ -37,9 +37,9 @@
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nextflow": "25.04.2"
         },
-        "timestamp": "2025-05-06T15:06:14.972053842"
+        "timestamp": "2025-05-22T17:14:02.644424062"
     },
     "Test MPX amplicon - stub": {
         "content": [
@@ -142,8 +142,8 @@
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nextflow": "25.04.2"
         },
-        "timestamp": "2025-05-06T15:05:40.728453379"
+        "timestamp": "2025-05-22T17:13:19.244421007"
     }
 }

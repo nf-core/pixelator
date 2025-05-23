@@ -149,14 +149,14 @@
                         "panel": "proxiome-immuno-155",
                         "technology": "pna"
                     },
-                    "PNA055_Sample07_filtered_S7.meta.json:md5,857222ab33b343937c187f083ca2c491"
+                    "PNA055_Sample07_filtered_S7.meta.json:md5,76e64fbe2518c5c56da1316c2e6afbd3"
                 ]
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.5"
+            "nextflow": "25.04.2"
         },
-        "timestamp": "2025-04-16T15:55:26.687009116"
+        "timestamp": "2025-05-22T17:34:08.919733329"
     }
 }

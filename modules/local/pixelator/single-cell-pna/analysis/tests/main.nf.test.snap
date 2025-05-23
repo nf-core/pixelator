@@ -18,15 +18,15 @@
                 "    \"sample_id\": \"PNA055_Sample07_filtered_S7\",",
                 "    \"product_id\": \"single-cell-pna\",",
                 "    \"report_type\": \"analysis\",",
-                "    \"proximity\": null,",
-                "    \"k_cores\": null,"
+                "    \"proximity\": {},",
+                "    \"k_cores\": {"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.5"
+            "nextflow": "25.04.2"
         },
-        "timestamp": "2025-04-16T15:53:34.421336115"
+        "timestamp": "2025-05-22T17:31:47.907028898"
     },
     "metadata_json": {
         "content": [
@@ -38,14 +38,14 @@
                         "panel": "proxiome-immuno-155",
                         "technology": "pna"
                     },
-                    "PNA055_Sample07_filtered_S7.meta.json:md5,2df457e4a597bc5635c75141cffb6d7b"
+                    "PNA055_Sample07_filtered_S7.meta.json:md5,2a6eaa66228775591525f74416f0b87f"
                 ]
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.5"
+            "nextflow": "25.04.2"
         },
-        "timestamp": "2025-04-16T15:53:34.410759655"
+        "timestamp": "2025-05-22T17:31:47.884573212"
     }
 }
