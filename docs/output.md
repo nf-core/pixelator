@@ -222,7 +222,7 @@ The PXL dataset files can be from either the `graph`, `analysis` or `layout` ste
 
 With default parameters, the `<sample-id>.layout.pxl` will be copied to the output directory.
 If the `layout` stage is skipped (using `--skip_layout`) the `<sample-id>.analysis.pxl` files will be included and
-if the `analysis` stage is skipped (using `--skip_analysis`) the `<sample-id>.graphdatasets.pxl` will be copied.
+if the `analysis` stage is skipped (using `--skip_analysis`) the `<sample-id>.graph.pxl` will be copied.
 
 Various flags are available to store intermediate files and are described in the input parameter documentation. Alternatively, you can keep all intermediate files using `--save_all`.
 
