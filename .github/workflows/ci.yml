@@ -36,13 +36,14 @@ jobs:
           - "24.04.2"
           - "latest-everything"
         filter: ["workflow", "function", "pipeline"]
-        profile: ["conda", "docker", "singularity"]
+        # TODO: Add conda back when pixelator is available on bioconda again
+        profile: ["docker", "singularity"]
         shard: [1, 2, 3, 4, 5]
         isMaster:
           - ${{ github.base_ref == 'master' }}
         exclude:
-          - isMaster: false
-            profile: "conda"
+          # - isMaster: false
+          #   profile: "conda"
           - isMaster: false
             profile: "singularity"
 
