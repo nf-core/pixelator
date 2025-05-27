@@ -67,7 +67,7 @@ workflow depending on which design is specified in the input samplesheet.
 
 | Dependency  | Old version | New version |
 | ----------- | ----------- | ----------- |
-| `pixelator` | 0.19.0      | 0.21.1      |
+| `pixelator` | 0.19.0      | 0.20.1      |
 
 > [!NOTE]
 > Dependency has been **updated** if both old and new parameter information is present.
