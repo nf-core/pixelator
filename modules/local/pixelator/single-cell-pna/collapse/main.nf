@@ -47,7 +47,7 @@ process PIXELATOR_PNA_COLLAPSE {
         --design ${design} \\
         ${panel_opt} \\
         ${args} \\
-        ${reads_arg}
+        ${read_args}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -55,7 +55,6 @@ process PIXELATOR_PNA_COLLAPSE {
     END_VERSIONS
     """
 
-    //prefix = task.ext.prefix ?: "${meta.id}"
     stub:
     prefix = "${reads.name.replace('.parquet', '')}"
 
