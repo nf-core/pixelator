@@ -2,7 +2,8 @@ process PIXELATOR_PNA_LAYOUT {
     tag "${meta.id}"
     label 'process_high_memory'
 
-    conda "bioconda::pixelator=0.18.2"
+    // TODO: Add conda
+    // conda "bioconda::pixelator=0.18.2"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'ghcr.io/pixelgentechnologies/pixelator:0.20.1'
         : 'ghcr.io/pixelgentechnologies/pixelator:0.20.1'}"

@@ -3,7 +3,8 @@ process PIXELATOR_PNA_REPORT {
     label 'process_low'
 
 
-    conda "bioconda::pixelator=0.18.2"
+    // TODO: Add conda
+    // conda "bioconda::pixelator=0.18.2"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'ghcr.io/pixelgentechnologies/pixelator:0.20.1'
         : 'ghcr.io/pixelgentechnologies/pixelator:0.20.1'}"
