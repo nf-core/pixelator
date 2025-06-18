@@ -9,9 +9,12 @@ of [`pixelator`](https://github.com/PixelgenTechnologies/pixelator).
 
 The directories listed below will be created in the results directory after the pipeline has finished. All paths are relative to the top-level results directory.
 
-The pipeline will create different output files depending on if it is run for [Molecular Pixelation (MPX)](#molecular-pixelation-mpx)
-or [Proximity Network Assay (PNA)](#proximity-network-assay-pna) samples. Please refer to the correct section below,
-depending on the type of samples you are analyzing.
+The pipeline will create different output files depending on the type of run:
+
+1. [Molecular Pixelation (MPX)](#molecular-pixelation-mpx)
+2. [Proximity Network Assay (PNA)](#proximity-network-assay-pna)
+
+Please refer to the correct section below, depending on the type of samples you are analyzing.
 
 ## Proximity Network Assay (PNA)
 
@@ -256,7 +259,7 @@ The MPX pipeline consists of the following steps:
 - [Downstream analysis](#downstream-analysis)
 - [Generate layouts for visualization](#compute-layouts-for-visualization)
 - [Generate reports](#generate-reports)
-- [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
+- [Pipeline information](#pipeline-information)
 
 #### Preprocessing
 
