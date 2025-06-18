@@ -29,7 +29,7 @@ The PNA pipeline consists of the following steps:
 - [Analysis](#analysis)
 - [Layout creation](#compute-layouts-for-visualization)
 - [Report generation](#report-generation)
-- [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
+- [Pipeline information](#pipeline-information)
 
 The output of the Proximity Network Assay (PNA) pipeline is organized into several directories, each corresponding to a specific step in the pipeline. Below is an overview of the output structure and the files generated at each step:
 
@@ -42,14 +42,10 @@ It will also filter reads based on the presence of the pixel binding sequences a
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `amplicon`
-
-    - `<sample-id>.amplizon.fq.zst`:
-      Combine R1 and R2 reads into full amplicon reads.
+    - `<sample-id>.amplizon.fq.zst`: Combine R1 and R2 reads into full amplicon reads.
     - `<sample-id>.report.json`: QC metrics collected by the amplicon step.
     - `<sample-id>.meta.json`: Command invocation metadata.
-
   - `logs`
     - `<sample-id>.pixelator-amplicon.log`: pixelator log output.
 
@@ -127,8 +123,7 @@ the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/px
 
   - `graph`
 
-    - `<sample-id>.graph.pxl`:
-      Edge list dataframe after recovering technical multiplets.
+    - `<sample-id>.graph.pxl`: Edge list dataframe after recovering technical multiplets.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: QC metrics for the graph step.
 
@@ -195,8 +190,11 @@ More information on the report can be found in the [pixelator documentation](htt
 <summary>Output files</summary>
 
 - `pixelator`
+
   - `report`
+
     - `<sample-id>_report.html`: Pixelator summary report.
+
   - `logs`
     - `<sample-id>.pixelator-report.log`: Pixelator log output.
 
@@ -442,13 +440,16 @@ Set `--save_annotate_dataset` to include these files.
 - `pixelator`
 
   - `annotate`
+
     - `<sample-id>.annotate.dataset.pxl`: The annotated PXL dataset,
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.raw_components_metrics.csv.gz`
     - `<sample-id>.report.json`: Statistics for the analysis step.
+
   - `logs`
     - `<sample-id>.pixelator-annotate.log`: pixelator log output.
-    </details>
+
+</details>
 
 ### Downstream analysis
 
