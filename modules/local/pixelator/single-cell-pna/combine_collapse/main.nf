@@ -25,11 +25,10 @@ process PIXELATOR_PNA_COMBINE_COLLAPSE {
 
     script:
     // --design is passed in meta and added to args through modules.conf
-
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
-    def parquetArgs = parquet_files.join(' --parquet ')
-    def reportArgs = json_report_files.join(' --report ')
+    def parquet_args = parquet_files.join(' --parquet ')
+    def report_args = json_report_files.join(' --report ')
 
     """
     pixelator \\
@@ -39,8 +38,8 @@ process PIXELATOR_PNA_COMBINE_COLLAPSE {
         combine-collapse \\
         --output . \\
         ${args} \\
-        --parquet ${parquetArgs} \\
-        --report ${reportArgs}
+        --parquet ${parquet_args} \\
+        --report ${report_args}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -49,7 +48,6 @@ process PIXELATOR_PNA_COMBINE_COLLAPSE {
     """
 
     stub:
-
     prefix = task.ext.prefix ?: "${meta.id}"
 
     """
