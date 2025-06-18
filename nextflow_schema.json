@@ -645,9 +645,18 @@
                     "default": false
                 },
                 "layout_algorithm": {
-                    "description": "Select a layout algorithm to use. This can be specified as a comma separated list to compute multiple layouts. Possible values are: fruchterman_reingold, fruchterman_reingold_3d, kamada_kawai, kamada_kawai_3d, pmds, pmds_3d",
+                    "description": "Select a layout algorithm to use. This can be specified as a comma separated list to compute multiple layouts. Possible values are: fruchterman_reingold, fruchterman_reingold_3d, kamada_kawai, kamada_kawai_3d, pmds, pmds_3d, wpmds, wpmds_3d",
                     "type": "string",
-                    "pattern": "(\\S+)?(,\\S+)*",
+                    "enum": [
+                        "fruchterman_reingold",
+                        "fruchterman_reingold_3d",
+                        "kamada_kawai",
+                        "kamada_kawai_3d",
+                        "pmds",
+                        "pmds_3d",
+                        "wpmds",
+                        "wpmds_3d"
+                    ],
                     "default": "wpmds_3d"
                 }
             }
@@ -662,9 +671,9 @@
                     "default": false
                 },
                 "pna_layout_layout_algorithm": {
-                    "description": "Select a layout algorithm to use. This can be specified as a comma separated list to compute multiple layouts. Possible values are: fruchterman_reingold, fruchterman_reingold_3d, kamada_kawai, kamada_kawai_3d, pmds, pmds_3d",
+                    "description": "Select a layout algorithm to use. This can be specified as a comma separated list to compute multiple layouts. Possible values are: pmds, pmds_3d, wpmds, wpmds_3d.",
                     "type": "string",
-                    "pattern": "(\\S+)?(,\\S+)*",
+                    "enum": ["pmds_3d", "wpmds_3d"],
                     "default": "wpmds_3d"
                 },
                 "pna_layout_pmds_pivots": {
