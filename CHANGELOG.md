@@ -25,7 +25,7 @@ Any run of the pipeline will now run the appropriate workflow depending on which
 |               | `--save_pna_collapsed_reads`                                |
 |               | `--save_pna_graph_pixelfile`                                |
 |               | `--save_pna_analysis_pixelfile`                             |
-|               | `--save_pna_all`                                            |
+|               | `--save_json`                                               |
 |               | `--pna_amplicon_mismatches`                                 |
 |               | `--pna_amplicon_remove_polyg`                               |
 |               | `--pna_amplicon_quality_cutoff`                             |
