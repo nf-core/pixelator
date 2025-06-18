@@ -29,8 +29,8 @@ process PIXELATOR_PNA_COLLAPSE {
 
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
-    def readsArg = reads.join(' ')
-    def panelOpt = (panel
+    def read_args = reads.join(' ')
+    def panel_opt = (panel
         ? "--panel ${panel}"
         : panel_file
             ? "--panel ${panel_file}"
@@ -45,9 +45,9 @@ process PIXELATOR_PNA_COLLAPSE {
         --threads ${task.cpus} \\
         --output . \\
         --design ${design} \\
-        ${panelOpt} \\
+        ${panel_opt} \\
         ${args} \\
-        ${readsArg}
+        ${reads_arg}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
