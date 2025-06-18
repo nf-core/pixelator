@@ -59,13 +59,7 @@ workflow PNA {
     //
     // MODULE: Run pixelator single-cell-pna amplicon
     //
-    ch_amplicon_input = fastq.map { meta, reads ->
-        {
-            [meta, reads, meta.design]
-        }
-    }
-
-    PIXELATOR_PNA_AMPLICON(ch_amplicon_input)
+    PIXELATOR_PNA_AMPLICON ( fastq )
     ch_amplicon = PIXELATOR_PNA_AMPLICON.out.amplicon
     ch_versions = ch_versions.mix(PIXELATOR_PNA_AMPLICON.out.versions.first())
 

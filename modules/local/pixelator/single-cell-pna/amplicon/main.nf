@@ -9,7 +9,7 @@ process PIXELATOR_PNA_AMPLICON {
         : 'ghcr.io/pixelgentechnologies/pixelator:0.20.1'}"
 
     input:
-    tuple val(meta), path(reads, arity: '1..*'), val(design)
+    tuple val(meta), path(reads, arity: '1..*')
 
     output:
     tuple val(meta), path("amplicon/*.amplicon.{fq,fastq}.zst"), emit: amplicon
@@ -49,7 +49,6 @@ process PIXELATOR_PNA_AMPLICON {
         amplicon \\
         --threads ${task.cpus} \\
         --output . \\
-        --design ${design} \\
         ${args} \\
         ${renamed_reads}
 

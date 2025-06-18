@@ -78,7 +78,7 @@ workflow MPX {
     //
     // MODULE: Run pixelator single-cell-mpx amplicon
     //
-    PIXELATOR_AMPLICON ( ch_amplicon_input)
+    PIXELATOR_AMPLICON ( fastq )
     ch_merged = PIXELATOR_AMPLICON.out.merged
     ch_versions = ch_versions.mix(PIXELATOR_AMPLICON.out.versions.first())
 

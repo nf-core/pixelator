@@ -17,8 +17,7 @@ nextflow_process {
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/PNA055_Sample07_filtered_S7_R1_001.fastq.gz', checkIfExists: true),
                         file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/PNA055_Sample07_filtered_S7_R2_001.fastq.gz', checkIfExists: true)
-                    ],
-                    "pna-2"
+                    ]
                 ]
                 """
             }
