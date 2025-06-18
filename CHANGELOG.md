@@ -6,8 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [[2.0.0](https://github.com/nf-core/pixelator/releases/tag/2.0.0)] - 2024-05-27
 
 This release is a major update of the nf-core/pixelator pipeline. It brings in support for the
-Proximity Network Analysis (PNA) workflow. Any run of the pipeline will now run the appropriate
-workflow depending on which design is specified in the input samplesheet.
+Proximity Network Analysis (PNA) workflow in addition to the Molecular Pixelation (MPX) workflow.
+Any run of the pipeline will now run the appropriate workflow depending on which design is specified in the input samplesheet.
 
 ### Enhancements & fixes
 
