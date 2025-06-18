@@ -81,7 +81,7 @@ workflow PIXELATOR {
     //
     // MODULE: Concatenate FastQ files from the same sample if required
     //
-    ch_fastq_split.multiple.dump(tag: "ch_fastq_split_multiple")
+    ch_fastq_split.multiple
 
     ch_cat_fastq = CAT_FASTQ ( ch_fastq_split.multiple )
         .reads
