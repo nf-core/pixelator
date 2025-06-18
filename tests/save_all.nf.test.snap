@@ -159,6 +159,30 @@
                 "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
                 "pipeline_info/nf_core_pixelator_software_versions.yml",
                 "pixelator",
+                "pixelator/adapterqc",
+                "pixelator/adapterqc/sample01.meta.json",
+                "pixelator/adapterqc/sample01.report.json",
+                "pixelator/amplicon",
+                "pixelator/amplicon/sample01.meta.json",
+                "pixelator/amplicon/sample01.report.json",
+                "pixelator/analysis",
+                "pixelator/analysis/sample01.meta.json",
+                "pixelator/analysis/sample01.report.json",
+                "pixelator/annotate",
+                "pixelator/annotate/sample01.meta.json",
+                "pixelator/annotate/sample01.report.json",
+                "pixelator/collapse",
+                "pixelator/collapse/sample01.meta.json",
+                "pixelator/collapse/sample01.report.json",
+                "pixelator/demux",
+                "pixelator/demux/sample01.meta.json",
+                "pixelator/demux/sample01.report.json",
+                "pixelator/graph",
+                "pixelator/graph/sample01.meta.json",
+                "pixelator/graph/sample01.report.json",
+                "pixelator/layout",
+                "pixelator/layout/sample01.meta.json",
+                "pixelator/layout/sample01.report.json",
                 "pixelator/logs",
                 "pixelator/logs/sample01",
                 "pixelator/logs/sample01/sample01.pixelator-adapterqc.log",
@@ -171,6 +195,9 @@
                 "pixelator/logs/sample01/sample01.pixelator-layout.log",
                 "pixelator/logs/sample01/sample01.pixelator-preqc.log",
                 "pixelator/logs/sample01/sample01.pixelator-report.log",
+                "pixelator/preqc",
+                "pixelator/preqc/sample01.meta.json",
+                "pixelator/preqc/sample01.report.json",
                 "pixelator/sample01.html",
                 "pixelator/sample01.layout.dataset.pxl"
             ],
@@ -180,8 +207,8 @@
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nextflow": "25.04.2"
         },
-        "timestamp": "2025-05-15T14:17:54.380972477"
+        "timestamp": "2025-06-18T14:21:26.46401542"
     }
 }
