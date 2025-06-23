@@ -4,7 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR_REPORT            } from '../../../modules/local/pixelator/single-cell/report/main'
+include { PIXELATOR_REPORT } from '../../../modules/local/pixelator/single-cell-mpx/report/main'
 
 
 /*
@@ -15,23 +15,23 @@ include { PIXELATOR_REPORT            } from '../../../modules/local/pixelator/s
 
 workflow GENERATE_REPORTS {
     take:
-    panel_files              // channel: [meta, path(panel_file) | []]
-    amplicon_data            // channel: [meta, [path, ...]]
-    preqc_data               // channel: [meta, [path, ...]]
-    adapterqc_data           // channel: [meta, [path, ...]]
-    demux_data               // channel: [meta, [path, ...]]
-    collapse_data            // channel: [meta, [path, ...]]
-    graph_data               // channel: [meta, [path, ...]]
-    annotate_data            // channel: [meta, [path, ...]]
-    analysis_data            // channel: [meta, [path, ...]]
-    layout_data              // channel: [meta, [path, ...]]
+    panel_files    // channel: [meta, path(panel_file) | []]
+    amplicon_data  // channel: [meta, [path, ...]]
+    preqc_data     // channel: [meta, [path, ...]]
+    adapterqc_data // channel: [meta, [path, ...]]
+    demux_data     // channel: [meta, [path, ...]]
+    collapse_data  // channel: [meta, [path, ...]]
+    graph_data     // channel: [meta, [path, ...]]
+    annotate_data  // channel: [meta, [path, ...]]
+    analysis_data  // channel: [meta, [path, ...]]
+    layout_data    // channel: [meta, [path, ...]]
 
     main:
     ch_versions = Channel.empty()
 
     // Combine meta maps for all input samples
     ch_meta_col = panel_files
-        .map { meta, _path -> [ meta.id, meta] }
+        .map { meta, _path -> [meta.id, meta] }
         .groupTuple()
         .map { id, data ->
             if (data instanceof List) {
@@ -42,22 +42,21 @@ workflow GENERATE_REPORTS {
             return [id, data]
         }
 
-    ch_panel_col = panel_files
-        .map { meta, data -> [ meta.id, data] }
+    ch_panel_col = panel_files.map { meta, data -> [meta.id, data] }
 
     //
     // These first subcommands each return two files per sample used by the reporting
     // A json file with stats and a command invocation metadata json file
     //
-    ch_amplicon_col         = amplicon_data.map { meta, data -> [ meta.id, data] }
-    ch_preqc_col            = preqc_data.map { meta, data -> [ meta.id, data] }
-    ch_adapterqc_col        = adapterqc_data.map { meta, data -> [ meta.id, data] }
-    ch_demux_col            = demux_data.map { meta, data -> [ meta.id, data] }
-    ch_collapse_col         = collapse_data.map { meta, data -> [ meta.id, data] }
-    ch_graph_col            = graph_data.map { meta, data -> [meta.id, data] }
-    ch_annotate_col         = annotate_data.map { meta, data -> [meta.id, data] }
-    ch_analysis_col         = analysis_data.map { meta, data -> [meta.id, data] }
-    ch_layout_col           = layout_data.map { meta, data -> [meta.id, data] }
+    ch_amplicon_col = amplicon_data.map { meta, data -> [meta.id, data] }
+    ch_preqc_col = preqc_data.map { meta, data -> [meta.id, data] }
+    ch_adapterqc_col = adapterqc_data.map { meta, data -> [meta.id, data] }
+    ch_demux_col = demux_data.map { meta, data -> [meta.id, data] }
+    ch_collapse_col = collapse_data.map { meta, data -> [meta.id, data] }
+    ch_graph_col = graph_data.map { meta, data -> [meta.id, data] }
+    ch_annotate_col = annotate_data.map { meta, data -> [meta.id, data] }
+    ch_analysis_col = analysis_data.map { meta, data -> [meta.id, data] }
+    ch_layout_col = layout_data.map { meta, data -> [meta.id, data] }
 
     //
     // Combine all inputs and group them, then split them up again.
@@ -79,17 +78,17 @@ workflow GENERATE_REPORTS {
     // ]
 
     ch_report_data = ch_meta_col
-        .concat ( ch_panel_col )
-        .concat ( ch_amplicon_col )
-        .concat ( ch_preqc_col )
-        .concat ( ch_adapterqc_col )
-        .concat ( ch_demux_col )
-        .concat ( ch_collapse_col )
-        .concat ( ch_graph_col )
-        .concat ( ch_annotate_col )
-        .concat ( ch_analysis_col )
-        .concat ( ch_layout_col )
-        .groupTuple (size: 10)
+        .concat(ch_panel_col)
+        .concat(ch_amplicon_col)
+        .concat(ch_preqc_col)
+        .concat(ch_adapterqc_col)
+        .concat(ch_demux_col)
+        .concat(ch_collapse_col)
+        .concat(ch_graph_col)
+        .concat(ch_annotate_col)
+        .concat(ch_analysis_col)
+        .concat(ch_layout_col)
+        .groupTuple(size: 10)
 
     //
     // Split up everything per stage so we can recreate the expected directory structure for
@@ -102,7 +101,7 @@ workflow GENERATE_REPORTS {
     // If no `panel_file` (data[1]) is given we need to pass in `panel` from the samplesheet instead
     //
     ch_report_inputs = ch_report_data.multiMap { _id, data ->
-        panels: [ data[0], data[1], data[1] ? null : data[0].panel ]
+        panels: [data[0], data[1], data[1] ? null : data[0].panel]
         amplicon: data[2] ? data[2].flatten() : []
         preqc: data[3] ? data[3].flatten() : []
         adapterqc: data[4] ? data[4].flatten() : []
@@ -119,7 +118,7 @@ workflow GENERATE_REPORTS {
     //
     // NB: These channels need to be split per stage to allow PIXELATOR_REPORT to
     //     use stageAs directives to reorder the inputs and prevent filename collisions
-    PIXELATOR_REPORT (
+    PIXELATOR_REPORT(
         ch_report_inputs.panels,
         ch_report_inputs.amplicon,
         ch_report_inputs.preqc,
@@ -136,5 +135,5 @@ workflow GENERATE_REPORTS {
 
     emit:
     pixelator_reports = PIXELATOR_REPORT.out.reports
-    versions         = ch_versions
+    versions          = ch_versions
 }

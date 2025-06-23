@@ -41,7 +41,6 @@ workflow NFCORE_PIXELATOR {
     PIXELATOR (
         samplesheet
     )
-    // TODO: Emit MultiQC report once implemented
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -82,7 +81,6 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        []
     )
 }
 

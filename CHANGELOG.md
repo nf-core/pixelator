@@ -3,6 +3,77 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[2.0.0](https://github.com/nf-core/pixelator/releases/tag/2.0.0)] - 2025-06-23
+
+This release is a major update of the nf-core/pixelator pipeline. It brings in support for the
+Proximity Network Analysis (PNA) workflow in addition to the Molecular Pixelation (MPX) workflow.
+Any run of the pipeline will now run the appropriate workflow depending on which design is specified in the input samplesheet.
+
+### Enhancements & fixes
+
+- [[PR #131](https://github.com/nf-core/pixelator/pull/131)] - Update to pixelator 0.20.1, and add PNA workflows
+- [[PR #132](https://github.com/nf-core/pixelator/pull/132)] - Template update for nf-core/tools v3.2.1
+- [[PR #133](https://github.com/nf-core/pixelator/pull/133)] - Documentation updates
+
+### Parameters
+
+| Old parameter | New parameter                                               |
+| ------------- | ----------------------------------------------------------- |
+|               | `--save_pna_demux_parquet`                                  |
+|               | `--save_pna_demux_passed_reads`                             |
+|               | `--save_pna_demux_failed_reads`                             |
+|               | `--save_pna_collapsed_reads`                                |
+|               | `--save_pna_graph_pixelfile`                                |
+|               | `--save_pna_analysis_pixelfile`                             |
+|               | `--save_json`                                               |
+|               | `--pna_amplicon_mismatches`                                 |
+|               | `--pna_amplicon_remove_polyg`                               |
+|               | `--pna_amplicon_quality_cutoff`                             |
+|               | `--pna_demux_mismatches`                                    |
+|               | `--pna_demux_output_chunk_reads`                            |
+|               | `--pna_demux_output_max_chunks`                             |
+|               | `--pna_demux_strategy`                                      |
+|               | `--pna_collapse_mismatches`                                 |
+|               | `--pna_collapse_algorithm`                                  |
+|               | `--pna_graph_multiplet_recovery`                            |
+|               | `--pna_graph_leiden_iterations`                             |
+|               | `--pna_graph_initial_stage_leiden_resolution`               |
+|               | `--pna_graph_refinement_stage_leiden_resolution`            |
+|               | `--pna_graph_min_count`                                     |
+|               | `--pna_graph_min_component_size_in_refinement`              |
+|               | `--pna_graph_max_refinement_recursion_depth`                |
+|               | `--pna_graph_initial_stage_max_edges_to_remove`             |
+|               | `--pna_graph_refinement_stage_max_edges_to_remove`          |
+|               | `--pna_graph_initial_stage_max_edges_to_remove_relative`    |
+|               | `--pna_graph_refinement_stage_max_edges_to_remove_relative` |
+|               | `--pna_graph_graph_min_component_size_to_prune`             |
+|               | `--pna_graph_component_size_min_threshold`                  |
+|               | `--pna_analysis_compute_proximity`                          |
+|               | `--pna_analysis_proximity_nbr_of_permutations`              |
+|               | `--pna_analysis_compute_k_cores`                            |
+|               | `--pna_analysis_compute_svd_var_explained`                  |
+|               | `--pna_analysis_svd_nbr_of_pivots`                          |
+|               | `--pna_layout_no_node_marker_counts`                        |
+|               | `--pna_layout_layout_algorithm`                             |
+|               | `--pna_layout_pmds_pivots`                                  |
+|               | `--pna_layout_wpmds_k`                                      |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.19.0      | 0.20.1      |
+
+> [!NOTE]
+> Dependency has been **updated** if both old and new parameter information is present.
+> Dependency has been **added** if just the new parameter information is present.
+> Dependency has been **removed** if new parameter information isn't present.
+
 ## [[1.4.0](https://github.com/nf-core/pixelator/releases/tag/1.4.0)] - 2024-01-22
 
 ### Enhancements & fixes

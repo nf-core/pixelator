@@ -3,8 +3,12 @@
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/nf-core-pixelator_logo_dark.png">
     <img alt="nf-core/pixelator" src="docs/images/nf-core-pixelator_logo_light.png">
   </picture>
-</h1>[![GitHub Actions CI Status](https://github.com/nf-core/pixelator/actions/workflows/ci.yml/badge.svg)](https://github.com/nf-core/pixelator/actions/workflows/ci.yml)
-[![GitHub Actions Linting Status](https://github.com/nf-core/pixelator/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/pixelator/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/pixelator/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.10015112-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.10015112)
+</h1>
+
+[![GitHub Actions CI Status](https://github.com/nf-core/pixelator/actions/workflows/ci.yml/badge.svg)](https://github.com/nf-core/pixelator/actions/workflows/ci.yml)
+[![GitHub Actions Linting Status](https://github.com/nf-core/pixelator/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/pixelator/actions/workflows/linting.yml)
+[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/pixelator/results)
+[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.10015112-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.10015112)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.04.2-23aa62.svg)](https://www.nextflow.io/)
@@ -17,20 +21,35 @@
 
 ## Introduction
 
-**nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for analysis of Molecular Pixelation assays.
-It takes a samplesheet as input and will process your data using `pixelator` to produce final antibody counts.
+**nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for analysis of data from the
+Molecular Pixelation (MPX) and Proximity Network (PNA) assays. It takes a samplesheet as input and will process your data
+using `pixelator` to produce a PXL file containing single-cell protein abundance and protein interactomics data.
 
 ![](./docs/images/nf-core-pixelator-metromap.svg)
 
-1. Build amplicon from input reads ([`pixelator amplicon`](https://github.com/PixelgenTechnologies/pixelator))
-2. Read QC and filtering, correctness of the pixel binding sequence sequences ([`pixelator preqc | pixelator adapterqc`](https://github.com/PixelgenTechnologies/pixelator))
-3. Assign a marker (barcode) to each read ([`pixelator demux`](https://github.com/PixelgenTechnologies/pixelator))
-4. Error correction, duplicate removal, compute read counts ([`pixelator collapse`](https://github.com/PixelgenTechnologies/pixelator))
-5. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator graph`](https://github.com/PixelgenTechnologies/pixelator))
-6. Call and annotate cells ([`pixelator annotate`](https://github.com/PixelgenTechnologies/pixelator))
-7. Analyze the cells for polarization and colocalization ([`pixelator analysis`](https://github.com/PixelgenTechnologies/pixelator))
-8. Generate 3D graph layouts for visualization of cells ([`pixelator layout`](https://github.com/PixelgenTechnologies/pixelator))
-9. Report generation ([`pixelator report`](https://github.com/PixelgenTechnologies/pixelator))
+Depending on the input data the pipeline will run different steps.
+
+For PNA data, the pipeline will run the following steps:
+
+1. Do quality control checks of input reads and build amplicons ([`pixelator single-cell-pna amplicon`](https://github.com/PixelgenTechnologies/pixelator))
+2. Create groups of amplicons based on their marker assignments ([`pixelator single-cell-pna demux`](https://github.com/PixelgenTechnologies/pixelator))
+3. Derive original molecules to use as edge list downstream by error correcting, and counting input amplicons ([`pixelator single-cell-pna collapse`](https://github.com/PixelgenTechnologies/pixelator))
+4. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator single-cell-pna graph`](https://github.com/PixelgenTechnologies/pixelator))
+5. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
+6. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
+7. Report generation ([`pixelator single-cell-pna report`](https://github.com/PixelgenTechnologies/pixelator))
+
+For MPX data, the pipeline will run the following steps:
+
+1. Build an amplicons from the input reads ([`pixelator single-cell-mpx amplicon`](https://github.com/PixelgenTechnologies/pixelator))
+2. Read QC and filtering, correctness of the pixel binding sequence sequences ([`pixelator single-cell-mpx preqc | pixelator adapterqc`](https://github.com/PixelgenTechnologies/pixelator))
+3. Assign a marker (barcode) to each read ([`pixelator single-cell-mpx demux`](https://github.com/PixelgenTechnologies/pixelator))
+4. Error correction, duplicate removal, compute read counts ([`pixelator single-cell-mpx collapse`](https://github.com/PixelgenTechnologies/pixelator))
+5. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator single-cell-mpx graph`](https://github.com/PixelgenTechnologies/pixelator))
+6. Call and annotate cells ([`pixelator single-cell-mpx annotate`](https://github.com/PixelgenTechnologies/pixelator))
+7. Analyze the cells for polarization and colocalization ([`pixelator single-cell-mpx analysis`](https://github.com/PixelgenTechnologies/pixelator))
+8. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-mpx layout`](https://github.com/PixelgenTechnologies/pixelator))
+9. Report generation ([`pixelator single-cell-mpx report`](https://github.com/PixelgenTechnologies/pixelator))
 
 > [!WARNING]
 > Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
@@ -40,15 +59,15 @@ It takes a samplesheet as input and will process your data using `pixelator` to 
 ## Usage
 
 > [!NOTE]
-> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow.Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
+> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-First, prepare a samplesheet with your input data that looks as follows:
+First, prepare a samplesheet with your input data that looks as follows (the exact values you need to input depend on the design and panel you are using):
 
 `samplesheet.csv`:
 
 ```csv
 sample,design,panel,fastq_1,fastq_2
-uropod_control,D21,human-sc-immunology-spatial-proteomics,uropod_control_300k_S1_R1_001.fastq.gz,uropod_control_300k_S1_R2_001.fastq.gz
+sample1,pna-2,proxiome-immuno-155,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
 ```
 
 Each row represents a sample and gives the design, a panel file and the input fastq files.
@@ -61,6 +80,11 @@ nextflow run nf-core/pixelator \
    --input samplesheet.csv \
    --outdir <OUTDIR>
 ```
+
+> [!WARNING]
+> This version of the pipeline does not support conda environments, due to issues with upstream dependencies.
+> This means you cannot use the `conda` and `mamba` profiles. Please use `docker` or `singularity` instead.
+> We hope to add support for conda environments in the future.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
