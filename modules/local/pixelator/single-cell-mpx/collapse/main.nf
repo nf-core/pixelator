@@ -6,8 +6,8 @@ process PIXELATOR_COLLAPSE {
     // TODO: Add conda back
     // conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'ghcr.io/pixelgentechnologies/pixelator:0.21.0'
-        : 'ghcr.io/pixelgentechnologies/pixelator:0.21.0'}"
+        ? 'ghcr.io/pixelgentechnologies/pixelator:0.21.1'
+        : 'ghcr.io/pixelgentechnologies/pixelator:0.21.1'}"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel)

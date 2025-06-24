@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Dependency  | Old version | New version |
 | ----------- | ----------- | ----------- |
-| `pixelator` | 0.20.1      | 0.21.0      |
+| `pixelator` | 0.20.1      | 0.21.1      |
 
 > [!NOTE]
 > Dependency has been **updated** if both old and new parameter information is present.
