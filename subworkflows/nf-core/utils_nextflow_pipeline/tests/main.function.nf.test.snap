@@ -4,10 +4,10 @@
             "v9.9.9"
         ],
         "meta": {
-            "nf-test": "0.8.4",
-            "nextflow": "23.10.1"
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.2"
         },
-        "timestamp": "2024-02-28T12:02:05.308243"
+        "timestamp": "2025-06-26T13:20:08.944676306"
     },
     "Test Function checkCondaChannels": {
         "content": null,
