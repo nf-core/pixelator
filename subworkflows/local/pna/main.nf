@@ -21,6 +21,7 @@ include { PIXELATOR_PNA_AMPLICON         } from '../../../modules/local/pixelato
 include { PIXELATOR_PNA_DEMUX            } from '../../../modules/local/pixelator/single-cell-pna/demux/main'
 include { PIXELATOR_PNA_COLLAPSE         } from '../../../modules/local/pixelator/single-cell-pna/collapse/main'
 include { PIXELATOR_PNA_GRAPH            } from '../../../modules/local/pixelator/single-cell-pna/graph/main'
+include { PIXELATOR_PNA_DENOISE          } from '../../../modules/local/pixelator/single-cell-pna/denoise/main'
 include { PIXELATOR_PNA_ANALYSIS         } from '../../../modules/local/pixelator/single-cell-pna/analysis/main'
 include { PIXELATOR_PNA_COMBINE_COLLAPSE } from '../../../modules/local/pixelator/single-cell-pna/combine_collapse/main'
 include { PIXELATOR_PNA_LAYOUT           } from '../../../modules/local/pixelator/single-cell-pna/layout/main'
@@ -140,9 +141,17 @@ workflow PNA {
     ch_versions = ch_versions.mix(PIXELATOR_PNA_GRAPH.out.versions.first())
 
     //
+    // MODULE: Run pixelator single-cell denoise
+    //
+    PIXELATOR_PNA_DENOISE ( ch_graph )
+    ch_denoise = PIXELATOR_PNA_DENOISE.out.pixelfile
+    ch_versions = ch_versions.mix(PIXELATOR_PNA_DENOISE.out.versions.first())
+    ch_denoise.dump(tag: "ch_denoise")
+
+    //
     // MODULE: Run pixelator single-cell analysis
     //
-    PIXELATOR_PNA_ANALYSIS(ch_graph)
+    PIXELATOR_PNA_ANALYSIS(ch_denoise)
     ch_analysis = PIXELATOR_PNA_ANALYSIS.out.pixelfile
     ch_versions = ch_versions.mix(PIXELATOR_PNA_ANALYSIS.out.versions.first())
 

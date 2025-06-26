@@ -45,4 +45,20 @@ process PIXELATOR_PNA_DENOISE {
         pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
     END_VERSIONS
     """
+
+    stub:
+    prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    mkdir denoise
+    touch denoise/${prefix}.report.json
+    touch denoise/${prefix}.meta.json
+    touch denoise/${prefix}.pxl
+    touch ${prefix}.pixelator-denoise.log
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
+    END_VERSIONS
+    """
 }
