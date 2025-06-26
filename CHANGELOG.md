@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Enhancements & fixes
 
+- Move to using quay.io as the container source, to avoid issues with users needing to
+  login to access the Github Container Registry.
+
 ### Parameters
 
 | Old parameter | New parameter |
@@ -22,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Dependency  | Old version | New version |
 | ----------- | ----------- | ----------- |
-| `pixelator` | 0.20.1      | 0.21.1      |
+| `pixelator` | 0.20.1      | 0.21.2      |
 
 > [!NOTE]
 > Dependency has been **updated** if both old and new parameter information is present.
