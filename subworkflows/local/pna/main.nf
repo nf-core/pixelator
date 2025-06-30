@@ -146,12 +146,12 @@ workflow PNA {
     PIXELATOR_PNA_DENOISE ( ch_graph )
     ch_denoise = PIXELATOR_PNA_DENOISE.out.pixelfile
     ch_versions = ch_versions.mix(PIXELATOR_PNA_DENOISE.out.versions.first())
-    ch_denoise.dump(tag: "ch_denoise")
 
     //
     // MODULE: Run pixelator single-cell analysis
     //
-    PIXELATOR_PNA_ANALYSIS(ch_denoise)
+    ch_analysis_input = params.skip_denoise ? ch_graph : ch_denoise
+    PIXELATOR_PNA_ANALYSIS(ch_analysis_input)
     ch_analysis = PIXELATOR_PNA_ANALYSIS.out.pixelfile
     ch_versions = ch_versions.mix(PIXELATOR_PNA_ANALYSIS.out.versions.first())
 
