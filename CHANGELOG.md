@@ -3,7 +3,37 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[2.0.0](https://github.com/nf-core/pixelator/releases/tag/2.0.0)] - 2025-06-23
+## [[x.x.x](https://github.com/nf-core/pixelator/releases/tag/x.x.x)] - YYYY-MM-DD
+
+### Enhancements & fixes
+
+- Add a denoise step to the PNA workflow, that cleans data between the graph and analysis steps.
+- Move to using quay.io as the container source, to avoid issues with users needing to
+  login to access the Github Container Registry.
+
+### Parameters
+
+| Old parameter | New parameter |
+| ------------- | ------------- |
+|               |               |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.20.1      | 0.21.2      |
+
+> [!NOTE]
+> Dependency has been **updated** if both old and new parameter information is present.
+> Dependency has been **added** if just the new parameter information is present.
+> Dependency has been **removed** if new parameter information isn't present.
+
+## [[2.0.0](https://github.com/nf-core/pixelator/releases/tag/2.0.0)] - 2024-05-27
 
 This release is a major update of the nf-core/pixelator pipeline. It brings in support for the
 Proximity Network Analysis (PNA) workflow in addition to the Molecular Pixelation (MPX) workflow.
