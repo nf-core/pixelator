@@ -26,6 +26,7 @@ The PNA pipeline consists of the following steps:
 - [Demultiplexing](#demultiplexing)
 - [Molecule collapsing and error correction](#molecule-collapsing-and-error-correction)
 - [Graph construction](#graph-construction)
+- [Denoising](#denoising)
 - [Analysis](#analysis)
 - [Layout creation](#compute-layouts-for-visualization)
 - [Report generation](#report-generation)
@@ -123,12 +124,38 @@ the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/px
 
   - `graph`
 
-    - `<sample-id>.graph.pxl`: Edge list dataframe after recovering technical multiplets.
+    - `<sample-id>.graph.pxl`: The pixel file containing all data after resolving multiplets.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: QC metrics for the graph step.
 
   - `logs`
     - `<sample-id>.pixelator-graph.log`: pixelator log output.
+
+</details>
+
+### Denoising
+
+This step uses the `pixelator single-cell-pna denoise` command. It will try to find differences between
+the well-connected parts of each component graph and the less well-connected parts of the graph. It will
+then try to find differences in marker profiles between these two parts of the graph and use these
+differences to denoise the graph. This reduces the effect of marker bleed-over due to incorrect cutting
+in the graph step.
+
+The denoised graph will be saved as a new PXL file.
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `pixelator`
+
+  - `denoise`
+
+    - `<sample-id>.denoise.pxl`: The pixel file containing the denoised data.
+    - `<sample-id>.meta.json`: Command invocation metadata.
+    - `<sample-id>.report.json`: QC metrics for the graph step.
+
+  - `logs`
+    - `<sample-id>.pixelator-denoise.log`: pixelator log output.
 
 </details>
 
