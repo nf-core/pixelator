@@ -1,7 +1,7 @@
 {
     "Params: default - stub": {
         "content": [
-            10,
+            11,
             [
                 "pipeline_info",
                 "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
@@ -37,6 +37,7 @@
                 "pixelator/logs",
                 "pixelator/logs/PNA055_Sample07_filtered_S7",
                 "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-combine-collapse.log",
+                "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-report.log",
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.demux.m1.part_000.pixelator-collapse.log",
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.demux.m2.part_000.pixelator-collapse.log",
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-amplicon.log",
@@ -44,7 +45,9 @@
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-demux.log",
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-denoise.log",
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-graph.log",
-                "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-layout.log"
+                "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-layout.log",
+                "pixelator/report",
+                "pixelator/report/PNA055_Sample07_filtered_S7.report.html"
             ],
             [
                 
@@ -54,11 +57,11 @@
             "nf-test": "0.9.2",
             "nextflow": "25.04.2"
         },
-        "timestamp": "2025-06-30T10:19:04.37457545"
+        "timestamp": "2025-07-02T11:05:22.261487467"
     },
     "Params: default": {
         "content": [
-            10,
+            11,
             [
                 "pipeline_info",
                 "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
@@ -94,13 +97,16 @@
                 "pixelator/logs",
                 "pixelator/logs/PNA055_Sample07_filtered_S7",
                 "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-combine-collapse.log",
+                "pixelator/logs/PNA055_Sample07_filtered_S7.pixelator-report.log",
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-amplicon.log",
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-analysis.log",
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-collapse.log",
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-demux.log",
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-denoise.log",
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-graph.log",
-                "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-layout.log"
+                "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-layout.log",
+                "pixelator/report",
+                "pixelator/report/PNA055_Sample07_filtered_S7.qc-report.html"
             ],
             [
                 
@@ -110,6 +116,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.04.2"
         },
-        "timestamp": "2025-06-30T10:18:15.042376101"
+        "timestamp": "2025-07-02T11:03:45.12819079"
     }
 }
