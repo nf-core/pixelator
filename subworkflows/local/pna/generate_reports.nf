@@ -58,14 +58,11 @@ workflow PNA_GENERATE_REPORTS {
     //    [
     //       meta, panel_files,
     //      [amplicon files...],
-    //      [preqc files...],
-    //      [adapterqc files...],
     //      [demux files...],
     //      [collapse files...],
-    //      [cluster files],
-    //      [annotate files...],
+    //      [graph files],
     //      [analysis files...]
-    //      [post analysis files...]
+    //      [layout files...],
     //    ],
     //    [ same structure repeated for each sample ]
     // ]
@@ -78,7 +75,7 @@ workflow PNA_GENERATE_REPORTS {
         .concat(ch_graph_col)
         .concat(ch_analysis_col)
         .concat(ch_layout_col)
-        .groupTuple(size: 9)
+        .groupTuple(size: 8)
 
     //
     // Split up everything per stage so we can recreate the expected directory structure for
