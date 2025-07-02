@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add a denoise step to the PNA workflow, that cleans data between the graph and analysis steps.
 - Move to using quay.io as the container source, to avoid issues with users needing to
   login to access the Github Container Registry.
+- Fix the PNA report not being generated.
 
 ### Parameters
 
