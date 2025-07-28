@@ -3,6 +3,7 @@ lint:
     - assets/multiqc_config.yml
     - conf/igenomes.config
     - conf/igenomes_ignored.config
+    - tests/default.nf.test
   files_unchanged:
     - assets/nf-core-pixelator_logo_light.png
     - .github/PULL_REQUEST_TEMPLATE.md
