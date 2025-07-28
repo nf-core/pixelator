@@ -1,0 +1,86 @@
+nextflow_process {
+    name "Test Process PIXELATOR_COLLAPSE"
+    script "../main.nf"
+    process "PIXELATOR_COLLAPSE"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/mpx"
+    tag "pixelator/single_cell_mpx_collapse"
+
+
+    test("Test MPX collapse - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                demuxed_input = [
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AAAGCAAC.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACAAGAC.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACCTTCC.fastq.gz', checkIfExists: true)
+                ]
+
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel: "human-sc-immunology-spatial-proteomics-1", technology:'mpx' ],
+                    demuxed_input,
+                    [],
+                    "human-sc-immunology-spatial-proteomics-1"
+                ]
+                input.dump()
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+
+    test("Test MPX collapse - - SCSP v1 | Immunology-I") {
+        when {
+            params {
+                save_all = true
+            }
+            process {
+                """
+                demuxed_input = [
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AAAGCAAC.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACAAGAC.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACCTTCC.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AACGGCTA.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.processed-AAGCATAG.fastq.gz', checkIfExists: true),
+                ]
+
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel: "human-sc-immunology-spatial-proteomics-1", technology:'mpx' ],
+                    demuxed_input,
+                    [],
+                    "human-sc-immunology-spatial-proteomics-1"
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                        process.out.collapsed,
+                        process.out.report_json,
+                        process.out.metadata
+                    ).match()
+                },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator collapse")
+                    }
+                },
+            )
+        }
+    }
+}

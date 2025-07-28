@@ -32,6 +32,9 @@
                     "@id": "assets/"
                 },
                 {
+                    "@id": "bin/"
+                },
+                {
                     "@id": "conf/"
                 },
                 {
@@ -39,6 +42,15 @@
                 },
                 {
                     "@id": "docs/images/"
+                },
+                {
+                    "@id": "modules/"
+                },
+                {
+                    "@id": "modules/local/"
+                },
+                {
+                    "@id": "modules/nf-core/"
                 },
                 {
                     "@id": "workflows/"
@@ -115,8 +127,15 @@
         },
         {
             "@id": "main.nf",
-            "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow"
+            ],
             "creator": [
+                {
+                    "@id": "#johan.dahlberg@pixelgen.tech"
+                },
                 {
                     "@id": "https://orcid.org/0009-0006-0086-2470"
                 }
@@ -134,8 +153,20 @@
                 "single-cell",
                 "single-cell-omics"
             ],
-            "license": ["MIT"],
-            "name": ["nf-core/pixelator"],
+            "license": [
+                "MIT"
+            ],
+            "maintainer": [
+                {
+                    "@id": "#johan.dahlberg@pixelgen.tech"
+                },
+                {
+                    "@id": "https://orcid.org/0009-0006-0086-2470"
+                }
+            ],
+            "name": [
+                "nf-core/pixelator"
+            ],
             "programmingLanguage": {
                 "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow"
             },
@@ -194,6 +225,11 @@
             "description": "Additional files"
         },
         {
+            "@id": "bin/",
+            "@type": "Dataset",
+            "description": "Scripts that must be callable from a pipeline process"
+        },
+        {
             "@id": "conf/",
             "@type": "Dataset",
             "description": "Configuration files"
@@ -207,6 +243,21 @@
             "@id": "docs/images/",
             "@type": "Dataset",
             "description": "Images for the documentation files"
+        },
+        {
+            "@id": "modules/",
+            "@type": "Dataset",
+            "description": "Modules used by the pipeline"
+        },
+        {
+            "@id": "modules/local/",
+            "@type": "Dataset",
+            "description": "Pipeline-specific modules"
+        },
+        {
+            "@id": "modules/nf-core/",
+            "@type": "Dataset",
+            "description": "nf-core modules"
         },
         {
             "@id": "workflows/",
@@ -288,6 +339,12 @@
             "@type": "Organization",
             "name": "nf-core",
             "url": "https://nf-co.re/"
+        },
+        {
+            "@id": "#johan.dahlberg@pixelgen.tech",
+            "@type": "Person",
+            "email": "johan.dahlberg@pixelgen.tech",
+            "name": "Johan Dahlberg"
         },
         {
             "@id": "https://orcid.org/0009-0006-0086-2470",

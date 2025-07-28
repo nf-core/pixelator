@@ -1,0 +1,3 @@
+sample,design,panel,fastq_1,fastq_2
+sample1,pna-2,proxiome-immuno-155,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample2,pna-2,proxiome-immuno-155,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz

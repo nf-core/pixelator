@@ -1,0 +1,80 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_DEMUX"
+    script "../main.nf"
+    process "PIXELATOR_DEMUX"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/mpx"
+    tag "pixelator/single_cell_mpx_demux"
+
+
+    test("Test MPX demux - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz', checkIfExists: true),
+                    [],
+                    "human-sc-immunology-spatial-proteomics-1"
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("Test MPX demux - SCSP v1 | Immunology-I") {
+        when {
+            params {
+                save_all = true
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz', checkIfExists: true),
+                    [],
+                    "human-sc-immunology-spatial-proteomics-1"
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                        process.out.processed,
+                        process.out.failed,
+                        process.out.metadata,
+                        process.out.versions
+                    ).match()
+                },
+                {
+                    with (process.out.report_json) {
+                        def data = path(get(0).get(1)).json
+                        data.remove("command_line_arguments")
+                        assert snapshot(data).match("report_json")
+                    }
+                },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator demux")
+                    }
+                },
+            )
+        }
+    }
+}
+
