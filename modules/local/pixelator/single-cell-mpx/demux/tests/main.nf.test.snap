@@ -262,7 +262,7 @@
                 ],
                 "cutadapt_version": "5.0",
                 "python_version": "3.12.11",
-                "cores": 8,
+                "cores": 4,
                 "input": {
                     "path1": "sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz",
                     "path2": null,
