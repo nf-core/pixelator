@@ -3,7 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[x.x.x](https://github.com/nf-core/pixelator/releases/tag/x.x.x)] - YYYY-MM-DD
+## [[2.1.0](https://github.com/nf-core/pixelator/releases/tag/x.x.x)] - YYYY-MM-DD
+
+### Enhancements & fixes
+
+- Template update for nf-core/tools v3.3.2
+
+## v2.0.0 - [date]
 
 ### Enhancements & fixes
 

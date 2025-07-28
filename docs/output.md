@@ -67,9 +67,7 @@ These processed and discarded FASTQ reads are intermediate and by default not pl
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `demux`
-
     - `<sample-id>.demux.failed.fq.zst`: Discarded reads that do not match a marker.
     - `<sample-id>.demux.m1.part_000.parquet`: Marker 1 reads in parquet format.
     - `<sample-id>.demux.m2.part_000.parquet`: Marker 2 reads in parquet format.
@@ -95,9 +93,7 @@ The output of this step is then used as an edge list input for the graph constru
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `collapse`
-
     - `<sample-id>.collapse.parquet`: Edge list of the graph.
     - `<sample-id>.report.json`: QC metrics for the collapse step.
     - `<sample-id>.meta.json`: Command invocation metadata.
@@ -121,9 +117,7 @@ the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/px
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `graph`
-
     - `<sample-id>.graph.pxl`: The pixel file containing all data after resolving multiplets.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: QC metrics for the graph step.
@@ -147,9 +141,7 @@ The denoised graph will be saved as a new PXL file.
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `denoise`
-
     - `<sample-id>.denoise.pxl`: The pixel file containing the denoised data.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: QC metrics for the graph step.
@@ -167,9 +159,7 @@ This step uses the `pixelator single-cell-pna analysis` command to calculate spa
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `analysis`
-
     - `<sample-id>.analysis.dataset.pxl`: PXL file with the analysis results added to it.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: Statistics for the analysis step.
@@ -192,9 +182,7 @@ This entire step can also be skipped using the `--skip_layout` option.
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `layout`
-
     - `<sample-id>.layout.pxl`: PXL file with the layout results added to it.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: Statistics for the layout step.
@@ -217,9 +205,7 @@ More information on the report can be found in the [pixelator documentation](htt
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `report`
-
     - `<sample-id>_report.html`: Pixelator summary report.
 
   - `logs`
@@ -258,9 +244,7 @@ Below is an example output structure for a pipeline run using the default settin
 
 - `pipeline_info/`
 - `pixelator/`
-
   - `logs/`
-
     - `<sample-id>/`:
       - `*.log`
 
@@ -299,9 +283,7 @@ Set `--save_amplicon_reads` or `--save_all` to enable publishing of these files 
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `amplicon`
-
     - `<sample-id>.merged.fastq.gz`:
       Combine R1 and R2 reads into full amplicon reads and calculate Q30 scores for the amplicon regions.
     - `<sample-id>.report.json`: Q30 metrics of the amplicon.
@@ -332,9 +314,7 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `preqc`
-
     - `<sample-id>.processed.fastq.gz`: Processed reads.
     - `<sample-id>.failed.fastq.gz`: Discarded reads.
     - `<sample-id>.report.json`: Fastp json report.
@@ -342,7 +322,6 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
     - `<sample-id>.meta.json`: Command invocation metadata.
 
   - `adapterqc`
-
     - `<sample-id>.processed.fastq.gz`: Processed reads.
     - `<sample-id>.failed.fastq.gz`: Discarded reads.
     - `<sample-id>.report.json`: Cutadapt json report.
@@ -367,9 +346,7 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `demux`
-
     - `<sample-id>.processed-<antibody_name>.fastq.gz`: Reads demultiplexed per antibody.
     - `<sample-id>.failed.fastq.gz`: Discarded reads that do not match an antibody barcode.
     - `<sample-id>.report.json`: Cutadapt json report.
@@ -399,9 +376,7 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `collapse`
-
     - `<sample-id>.collapsed.parquet`: Edge list of the graph.
     - `<sample-id>.report.json`: Statistics for the collapse step.
     - `<sample-id>.meta.json`: Command invocation metadata.
@@ -431,9 +406,7 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `graph`
-
     - `<sample-id>.edgelist.parquet`:
       Edge list dataframe after recovering technical multiplets.
     - `<sample-id>.components_recovered.csv`:
@@ -465,9 +438,7 @@ Set `--save_annotate_dataset` to include these files.
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `annotate`
-
     - `<sample-id>.annotate.dataset.pxl`: The annotated PXL dataset,
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.raw_components_metrics.csv.gz`
@@ -501,9 +472,7 @@ Alternatively, set `--save_all` to keep all intermediary outputs of all steps.
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `analysis`
-
     - `<sample-id>.analysis.dataset.pxl`: PXL file with the analysis results added to it.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: Statistics for the analysis step.
@@ -527,9 +496,7 @@ Set `--save_all` to keep all intermediary outputs of all steps.
 <summary>Output files</summary>
 
 - `pixelator`
-
   - `layout`
-
     - `<sample-id>.layout.dataset.pxl`: PXL file with the layout results added to it.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: Statistics for the layout step.
@@ -591,9 +558,7 @@ Below is an example output structure for a pipeline run using the default settin
 
 - `pipeline_info/`
 - `pixelator/`
-
   - `logs/`
-
     - `<sample-id>/`:
       - `*.log`
 

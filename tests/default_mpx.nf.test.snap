@@ -5,7 +5,6 @@
             [
                 "pipeline_info",
                 "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
-                "pipeline_info/nf_core_pixelator_software_versions.yml",
                 "pixelator",
                 "pixelator/adapterqc",
                 "pixelator/adapterqc/sample01.meta.json",
@@ -55,17 +54,48 @@
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "25.04.2"
+            "nextflow": "24.10.3"
         },
-        "timestamp": "2025-06-18T14:11:56.861718339"
+        "timestamp": "2025-07-28T15:15:34.886989428"
     },
     "Params: default": {
         "content": [
             10,
+            {
+                "PIXELATOR_AMPLICON": {
+                    "pixelator": "0.21.2"
+                },
+                "PIXELATOR_ANALYSIS": {
+                    "pixelator": "0.21.2"
+                },
+                "PIXELATOR_ANNOTATE": {
+                    "pixelator": "0.21.2"
+                },
+                "PIXELATOR_COLLAPSE": {
+                    "pixelator": "0.21.2"
+                },
+                "PIXELATOR_DEMUX": {
+                    "pixelator": "0.21.2"
+                },
+                "PIXELATOR_GRAPH": {
+                    "pixelator": "0.21.2"
+                },
+                "PIXELATOR_LAYOUT": {
+                    "pixelator": "0.21.2"
+                },
+                "PIXELATOR_QC": {
+                    "pixelator": "0.21.2"
+                },
+                "PIXELATOR_REPORT": {
+                    "pixelator": "0.21.2"
+                },
+                "Workflow": {
+                    "nf-core/pixelator": "v2.0.0"
+                }
+            },
             [
                 "pipeline_info",
                 "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
-                "pipeline_info/nf_core_pixelator_software_versions.yml",
                 "pixelator",
                 "pixelator/adapterqc",
                 "pixelator/adapterqc/sample01.meta.json",
@@ -115,8 +145,8 @@
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "25.04.2"
+            "nextflow": "24.10.3"
         },
-        "timestamp": "2025-06-18T14:11:19.987334253"
+        "timestamp": "2025-07-28T15:20:55.474023282"
     }
 }
