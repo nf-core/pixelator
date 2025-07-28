@@ -262,7 +262,7 @@
                 ],
                 "cutadapt_version": "5.0",
                 "python_version": "3.12.11",
-                "cores": 16,
+                "cores": 8,
                 "input": {
                     "path1": "sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz",
                     "path2": null,
@@ -2870,6 +2870,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.04.2"
         },
-        "timestamp": "2025-06-24T17:01:00.835348309"
+        "timestamp": "2025-07-28T11:11:51.071540948"
     }
 }
