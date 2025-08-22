@@ -1,0 +1,26 @@
+{
+    "versions": {
+        "content": [
+            [
+                "versions.yml:md5,727128de0a36c320a733109a17c6d6b4"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
+        },
+        "timestamp": "2025-08-22T15:40:56.97952889"
+    },
+    "stub-versions": {
+        "content": [
+            [
+                "versions.yml:md5,727128de0a36c320a733109a17c6d6b4"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
+        },
+        "timestamp": "2025-08-22T15:45:15.101730032"
+    }
+}

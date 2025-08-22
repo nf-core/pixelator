@@ -16,7 +16,6 @@ process PIXELATOR_PNA_REPORT {
     path collapse_data,      stageAs: "results/collapse/*"
     path graph_data,         stageAs: "results/graph/*"
     path analysis_data,      stageAs: "results/analysis/*"
-    path post_analysis_data, stageAs: "results/post_analysis/*"
     path layout_data,        stageAs: "results/layout/*"
 
     output:

@@ -68,8 +68,8 @@ First, prepare a samplesheet with your input data that looks as follows (the exa
 `samplesheet.csv`:
 
 ```csv
-sample,design,panel,fastq_1,fastq_2
-sample1,pna-2,proxiome-immuno-155,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+sample1,s1,control,pna-2,proxiome-immuno-155,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
 ```
 
 Each row represents a sample and gives the design, a panel file and the input fastq files.
