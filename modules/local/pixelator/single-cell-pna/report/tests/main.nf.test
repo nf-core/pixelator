@@ -39,10 +39,6 @@ nextflow_process {
                     file(params.pipelines_testdata_base_path + 'testdata/pna/modules/analysis/PNA055_Sample07_filtered_S7.report.json', checkIfExists: true),
                 ]
                 input[6] = [
-                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/post_analysis/PNA055_Sample07_filtered_S7.meta.json', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/post_analysis/PNA055_Sample07_filtered_S7.report.json', checkIfExists: true),
-                ]
-                input[7] = [
                     file(params.pipelines_testdata_base_path + 'testdata/pna/modules/layout/PNA055_Sample07_filtered_S7.meta.json', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + 'testdata/pna/modules/layout/PNA055_Sample07_filtered_S7.report.json', checkIfExists: true),
                 ]
