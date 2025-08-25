@@ -943,6 +943,9 @@
             "$ref": "#/$defs/report_options"
         },
         {
+            "$ref": "#/$defs/experiment_summary_options"
+        },
+        {
             "$ref": "#/$defs/global_config_options"
         },
         {
