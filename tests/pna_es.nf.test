@@ -10,7 +10,8 @@ nextflow_pipeline {
 
         when {
             params {
-                pipelines_testdata_base_path           = "$projectDir/../nf-core-pixelator-datasets/"
+
+                pipelines_testdata_base_path           = "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/"
                 input                                  = "$pipelines_testdata_base_path/samplesheet/pna/samplesheet_pna_es.csv"
                 input_basedir                          = "$pipelines_testdata_base_path/testdata/pna/"
                 outdir                                 = "$outputDir"
