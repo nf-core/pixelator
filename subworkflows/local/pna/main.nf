@@ -177,20 +177,27 @@ workflow PNA {
         .groupTuple(size: 2)
 
     ch_cluster_data = PIXELATOR_PNA_GRAPH.out.all_results
+    ch_denoise_data = PIXELATOR_PNA_DENOISE.out.all_results
     ch_analysis_data = PIXELATOR_PNA_ANALYSIS.out.all_results
 
     ch_layout_data = PIXELATOR_PNA_LAYOUT.out.report_json
         .concat(PIXELATOR_PNA_LAYOUT.out.metadata_json)
         .groupTuple(size: 2)
 
+
+    ch_input = Channel.of(params.input)
+
     PNA_GENERATE_REPORTS(
+        ch_input,
         panel_files,
         ch_amplicon_data,
         ch_demux_data,
         ch_collapse_data,
         ch_cluster_data,
+        ch_denoise_data,
         ch_analysis_data,
         ch_layout_data,
+        params.skip_experiment_summary
     )
     ch_versions = ch_versions.mix(PNA_GENERATE_REPORTS.out.versions)
 

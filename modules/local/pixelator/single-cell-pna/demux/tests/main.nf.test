@@ -10,6 +10,9 @@ nextflow_process {
 
     test("PNA demux - small test") {
         when {
+            params {
+                skip_experiment_summary = true
+            }
             process {
                 """
                 input[0] = [
@@ -48,6 +51,9 @@ nextflow_process {
         config "./multiple_chunks.config"
 
         when {
+            params {
+                skip_experiment_summary = true
+            }
             process {
                 """
                 input[0] = [

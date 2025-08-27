@@ -8,21 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Enhancements & fixes
 
 - Template update for nf-core/tools v3.3.2
-
-## v2.0.0 - [date]
-
-### Enhancements & fixes
-
 - Add a denoise step to the PNA workflow, that cleans data between the graph and analysis steps.
 - Move to using quay.io as the container source, to avoid issues with users needing to
   login to access the Github Container Registry.
 - Fix the PNA report not being generated.
+- Add the `experiment_summary` step which generates the Proximity Experiment Summary report.
 
 ### Parameters
 
-| Old parameter | New parameter |
-| ------------- | ------------- |
-|               |               |
+| Old parameter | New parameter                                |
+| ------------- | -------------------------------------------- |
+|               | `--skip_denoise`                             |
+|               | `--save_pna_denoise_pixelfile`               |
+|               | `--pna_denoise_run_one_core_graph_denoising` |
+|               | `--pna_denoise_pval_threshold`               |
+|               | `--pna_denoise_inflate_factor`               |
+|               | `--pna_denoise_inflate_factor`               |
 
 > [!NOTE]
 > Parameter has been **updated** if both old and new parameter information is present.
@@ -31,9 +32,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Software dependencies
 
-| Dependency  | Old version | New version |
-| ----------- | ----------- | ----------- |
-| `pixelator` | 0.20.1      | 0.21.2      |
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.20.1      | 0.21.2      |
+| `pixelatorES` |             | 0.4.3       |
 
 > [!NOTE]
 > Dependency has been **updated** if both old and new parameter information is present.

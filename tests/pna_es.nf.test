@@ -1,23 +1,23 @@
 nextflow_pipeline {
 
-    name "Test PNA pipeline with default settings"
+    name "Test PNA pipeline with experiment summary"
     script "../main.nf"
 
     tag "pixelator"
     tag "pixelator/pna"
 
-    test("Params: default") {
+    test("small") {
 
         when {
             params {
+
                 pipelines_testdata_base_path           = "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/"
-                input                                  = "$pipelines_testdata_base_path/samplesheet/pna/samplesheet_pna.csv"
+                input                                  = "$pipelines_testdata_base_path/samplesheet/pna/samplesheet_pna_es.csv"
                 input_basedir                          = "$pipelines_testdata_base_path/testdata/pna/"
                 outdir                                 = "$outputDir"
 
                 pna_graph_component_size_min_threshold = 100
-                skip_experiment_summary                = true
-
+                skip_experiment_summary                = false
             }
         }
 
@@ -43,18 +43,18 @@ nextflow_pipeline {
         }
     }
 
-    test("Params: default - stub") {
+    test("small - stub") {
 
         options "-stub"
+        tag "stub"
 
         when {
             params {
-                pipelines_testdata_base_path = "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/"
-                input                        = "$pipelines_testdata_base_path/samplesheet/pna/samplesheet_pna.csv"
-                input_basedir                = "$pipelines_testdata_base_path/testdata/pna/"
+                pipelines_testdata_base_path           = "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/"
+                input                                  = "$pipelines_testdata_base_path/samplesheet/pna/samplesheet_pna_es.csv"
+                input_basedir                          = "$pipelines_testdata_base_path/testdata/pna/"
                 outdir                       = "$outputDir"
-
-                skip_experiment_summary      = true
+                skip_experiment_summary      = false
             }
         }
 

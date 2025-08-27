@@ -735,6 +735,16 @@
                 }
             }
         },
+        "experiment_summary_options": {
+            "title": "Options for experiment summary.",
+            "type": "object",
+            "properties": {
+                "skip_experiment_summary": {
+                    "description": "Skip experiment summary generation",
+                    "type": "boolean"
+                }
+            }
+        },
         "global_config_options": {
             "title": "Global options",
             "type": "object",
@@ -931,6 +941,9 @@
         },
         {
             "$ref": "#/$defs/report_options"
+        },
+        {
+            "$ref": "#/$defs/experiment_summary_options"
         },
         {
             "$ref": "#/$defs/global_config_options"
