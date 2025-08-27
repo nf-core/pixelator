@@ -4,7 +4,7 @@
             22,
             {
                 "EXPERIMENT_SUMMARY": {
-                    "experiment-summary": "0.4.2"
+                    "experiment-summary": "0.4.3"
                 },
                 "PIXELATOR_PNA_AMPLICON": {
                     "pixelator": "0.21.2"
@@ -122,7 +122,7 @@
             "nf-test": "0.9.2",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-08-25T11:36:20.935253412"
+        "timestamp": "2025-08-27T08:04:38.973408779"
     },
     "small - stub": {
         "content": [

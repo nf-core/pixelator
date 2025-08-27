@@ -2,8 +2,8 @@ process EXPERIMENT_SUMMARY {
     tag "${meta.id}"
     label "process_medium"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelatores:0.4.2'
-        : 'quay.io/pixelgen-technologies/pixelatores:0.4.2'}"
+        ? 'quay.io/pixelgen-technologies/pixelatores:0.4.3'
+        : 'quay.io/pixelgen-technologies/pixelatores:0.4.3'}"
 
     input:
     val(meta)
