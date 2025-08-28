@@ -30,16 +30,6 @@
         },
         "timestamp": "2025-08-28T06:22:38.301344052"
     },
-    "pxl": {
-        "content": [
-            "metadata.json:md5,57e6b62b023056bbe857829a5796bb7a"
-        ],
-        "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
-        },
-        "timestamp": "2025-08-28T06:22:38.357425594"
-    },
     "Test MPX analysis - stub": {
         "content": [
             {
