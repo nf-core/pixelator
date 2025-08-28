@@ -1,35 +1,4 @@
 {
-    "Test MPX annotate - SCSP v1 | Immunology-I": {
-        "content": [
-            [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,46497e565adecc96af90e90faffaf372"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d665597d94d168a92632ec419a79617f"
-                ]
-            ]
-        ],
-        "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
-        },
-        "timestamp": "2025-08-28T06:22:57.930988153"
-    },
     "pxl": {
         "content": [
             "metadata.json:md5,74c84444915851c0ef2e79f8c50a5265"
