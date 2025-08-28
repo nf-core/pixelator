@@ -4,31 +4,31 @@
             10,
             {
                 "PIXELATOR_AMPLICON": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_ANALYSIS": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_ANNOTATE": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_COLLAPSE": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_DEMUX": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_GRAPH": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_LAYOUT": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_QC": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_REPORT": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "Workflow": {
                     "nf-core/pixelator": "v2.0.0"
