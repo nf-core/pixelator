@@ -4,8 +4,8 @@ process PIXELATOR_PNA_GRAPH {
     label 'process_long'
 
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.21.2'
-        : 'quay.io/pixelgen-technologies/pixelator:0.21.2'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.21.4'
+        : 'quay.io/pixelgen-technologies/pixelator:0.21.4'}"
 
     input:
     tuple val(meta), path(edge_list), path(panel_file), val(panel)

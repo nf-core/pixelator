@@ -7,31 +7,31 @@
                     "experiment-summary": "0.4.3"
                 },
                 "PIXELATOR_PNA_AMPLICON": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_PNA_ANALYSIS": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_PNA_COLLAPSE": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_PNA_COMBINE_COLLAPSE": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_PNA_DEMUX": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_PNA_DENOISE": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_PNA_GRAPH": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_PNA_LAYOUT": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "PIXELATOR_PNA_REPORT": {
-                    "pixelator": "0.21.2"
+                    "pixelator": "0.21.4"
                 },
                 "Workflow": {
                     "nf-core/pixelator": "v2.0.0"

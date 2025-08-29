@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Dependency    | Old version | New version |
 | ------------- | ----------- | ----------- |
-| `pixelator`   | 0.20.1      | 0.21.2      |
+| `pixelator`   | 0.20.1      | 0.21.4      |
 | `pixelatorES` |             | 0.4.3       |
 
 > [!NOTE]
