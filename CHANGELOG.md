@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Enhancements & fixes
 
+- Switch PIXELATOR_PNA_LAYOUT process label to process_high to allocate less memory.
 - Template update for nf-core/tools v3.3.2
 - Add a denoise step to the PNA workflow, that cleans data between the graph and analysis steps.
 - Move to using quay.io as the container source, to avoid issues with users needing to

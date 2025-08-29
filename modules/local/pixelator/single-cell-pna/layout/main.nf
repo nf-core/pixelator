@@ -1,6 +1,6 @@
 process PIXELATOR_PNA_LAYOUT {
     tag "${meta.id}"
-    label 'process_high_memory'
+    label 'process_high'
 
     // TODO: Add conda
     // conda "bioconda::pixelator=0.18.2"
