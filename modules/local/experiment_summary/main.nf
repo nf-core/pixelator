@@ -42,11 +42,9 @@ process EXPERIMENT_SUMMARY {
     """
     touch experiment-summary.html
 
-    # Hard coding the version for the stub, since for some
-    # reason it work in nf-test otherwise.
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        experiment-summary: 0.4.2
+        experiment-summary: \$(Rscript -e 'cat(as.character(packageVersion("pixelatorES")), "\\n")')
     END_VERSIONS
     """
 }
