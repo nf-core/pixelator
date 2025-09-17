@@ -1,0 +1,51 @@
+{
+    "versions": {
+        "content": [
+            [
+                "versions.yml:md5,f5d5ee43ffc7aa33ba098ca7c17411a5"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
+        },
+        "timestamp": "2025-08-28T06:27:05.223650997"
+    },
+    "report_json": {
+        "content": [
+            [
+                "{",
+                "    \"sample_id\": \"PNA055_Sample07_filtered_S7\",",
+                "    \"product_id\": \"single-cell-pna\",",
+                "    \"report_type\": \"denoise\",",
+                "    \"number_of_umis_removed\": 599,",
+                "    \"ratio_of_umis_removed\": 0.019271604143877484,"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.2"
+        },
+        "timestamp": "2025-06-27T14:53:31.61894306"
+    },
+    "metadata_json": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "PNA055_Sample07_filtered_S7",
+                        "design": "pna-2",
+                        "panel": "proxiome-immuno-155",
+                        "technology": "pna"
+                    },
+                    "PNA055_Sample07_filtered_S7.meta.json:md5,d0728a1efc25964039497c7bc22cdc35"
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.2"
+        },
+        "timestamp": "2025-06-27T14:53:31.58914569"
+    }
+}

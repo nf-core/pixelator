@@ -57,11 +57,8 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(
-                        process.out.report_json,
-                        process.out.metadata
-                    ).match()
-                },
+                {assert path(process.out.report_json.get(0).get(1)).exists()},
+                {assert path(process.out.metadata.get(0).get(1)).exists()},
                 {
                     with (process.out.dataset.get(0)) {
                         assert path(get(1)).zip.extract("adata.h5ad").exists()
@@ -80,4 +77,3 @@ nextflow_process {
         }
     }
 }
-

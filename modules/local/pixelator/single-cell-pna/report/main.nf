@@ -6,18 +6,22 @@ process PIXELATOR_PNA_REPORT {
     // TODO: Add conda
     // conda "bioconda::pixelator=0.18.2"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'ghcr.io/pixelgentechnologies/pixelator:0.20.1'
-        : 'ghcr.io/pixelgentechnologies/pixelator:0.20.1'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.21.4'
+        : 'quay.io/pixelgen-technologies/pixelator:0.21.4'}"
 
     input:
-    tuple val(meta), path(panel_file), val(panel)
-    path amplicon_data,      stageAs: "results/amplicon/*"
-    path demux_data,         stageAs: "results/demux/*"
-    path collapse_data,      stageAs: "results/collapse/*"
-    path graph_data,         stageAs: "results/graph/*"
-    path analysis_data,      stageAs: "results/analysis/*"
-    path post_analysis_data, stageAs: "results/post_analysis/*"
-    path layout_data,        stageAs: "results/layout/*"
+    tuple (
+        val(meta),
+        path(panel_file),
+        val(panel),
+        path(amplicon_data, stageAs: "results/amplicon/*"),
+        path(demux_data, stageAs: "results/demux/*"),
+        path(collapse_data, stageAs: "results/collapse/*"),
+        path(graph_data, stageAs: "results/graph/*"),
+        path(denoise_data, stageAs: "results/denoise/*"),
+        path(analysis_data, stageAs: "results/analysis/*"),
+        path(layout_data, stageAs: "results/layout/*")
+    )
 
     output:
     tuple val(meta), path("report/*.html"),    emit: report

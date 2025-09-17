@@ -38,13 +38,15 @@ sample2,pna-2,proxiome-immuno-155,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.g
 Columns not defined in the table below are ignored by the pipeline but can be useful
 to add extra information for downstream processing.
 
-| Column                              | Required | Description                                                                                                                                                                            |
-| ----------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`                            | Yes      | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `design`                            | Yes      | The name of the pixelator design configuration.                                                                                                                                        |
-| `panel` <br />or<br /> `panel_file` | Yes      | Name of the panel to use. <br />or<br /> Path to a CSV file containing a custom panel.                                                                                                 |
-| `fastq_1`                           | Yes      | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
-| `fastq_2`                           | No       | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". Parameter only used if you are running paired-end.               |
+| Column                              | Required                | Description                                                                                                                                                                            |
+| ----------------------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`                            | Yes                     | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
+| `sample_alias`                      | Yes (Only for PNA runs) | Custom sample alias. Will be used to identify the sample in reports and visualizations.                                                                                                |
+| `condition`                         | Yes (Only for PNA run)  | Experimental condition for the sample (e.g. control, treatment).                                                                                                                       |
+| `design`                            | Yes                     | The name of the pixelator design configuration.                                                                                                                                        |
+| `panel` <br />or<br /> `panel_file` | Yes                     | Name of the panel to use. <br />or<br /> Path to a CSV file containing a custom panel.                                                                                                 |
+| `fastq_1`                           | Yes                     | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
+| `fastq_2`                           | No                      | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". Parameter only used if you are running paired-end.               |
 
 The `panel` and `panel_file` options are mutually exclusive. If both are specified, the pipeline will throw an error.
 One of them has to be specified.
@@ -56,10 +58,10 @@ The pipeline will auto-detect whether a sample is single- or paired-end based on
 The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
 
 ```csv title="samplesheet.csv"
-sample,design,panel,fastq_1,fastq_2
-uropod_control_1,pna-2,proxiome-immuno-155,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
-uropod_control_1,pna-2,proxiome-immuno-155,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
-uropod_control_1,pna-2,proxiome-immuno-155,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
+sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+uropod_control_1,s1,control,pna-2,proxiome-immuno-155,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
+uropod_control_1,s1,control,pna-2,proxiome-immuno-155,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
+uropod_control_1,s1,control,pna-2,proxiome-immuno-155,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
 ```
 
 ### Relative paths
@@ -80,8 +82,8 @@ Given following directory structure:
 You can use following samplesheet:
 
 ```csv title="samplesheet.csv"
-sample,design,panel,panel_file,fastq_1,fastq_2
-sample1,pna-2,proxiome-immuno-155,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
+sample,sample_alias,condition,design,panel,panel_file,fastq_1,fastq_2
+sample1,s1,control,pna-2,proxiome-immuno-155,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
 ```
 
 Using the `--input_basedir` option you can specify a different location that will be used to resolve relative paths.
@@ -213,8 +215,10 @@ Use this parameter to choose a configuration profile. Profiles can give configur
 
 Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Apptainer, Conda) - see below.
 
-> [!IMPORTANT]
-> We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+> [!WARNING]
+> This version of the pipeline does not support conda environments, due to issues with upstream dependencies.
+> This means you cannot use the `conda` and `mamba` profiles. Please use `docker` or `singularity` instead.
+> We hope to add support for conda environments in the future.
 
 The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to check if your system is supported, please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 
@@ -240,8 +244,6 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
   - A generic configuration profile to be used with [Apptainer](https://apptainer.org/)
 - `wave`
   - A generic configuration profile to enable [Wave](https://seqera.io/wave/) containers. Use together with one of the above (requires Nextflow ` 24.03.0-edge` or later).
-- `conda`
-  - A generic configuration profile to be used with [Conda](https://conda.io/docs/). Please only use Conda as a last resort i.e. when it's not possible to run the pipeline with Docker, Singularity, Podman, Shifter, Charliecloud, or Apptainer.
 
 :::warning
 Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.

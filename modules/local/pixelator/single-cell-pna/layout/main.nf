@@ -1,12 +1,12 @@
 process PIXELATOR_PNA_LAYOUT {
     tag "${meta.id}"
-    label 'process_high_memory'
+    label 'process_high'
 
     // TODO: Add conda
     // conda "bioconda::pixelator=0.18.2"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'ghcr.io/pixelgentechnologies/pixelator:0.20.1'
-        : 'ghcr.io/pixelgentechnologies/pixelator:0.20.1'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.21.4'
+        : 'quay.io/pixelgen-technologies/pixelator:0.21.4'}"
 
     input:
     tuple val(meta), path(data)

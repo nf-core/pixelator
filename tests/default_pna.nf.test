@@ -3,6 +3,9 @@ nextflow_pipeline {
     name "Test PNA pipeline with default settings"
     script "../main.nf"
 
+    tag "pixelator"
+    tag "pixelator/pna"
+
     test("Params: default") {
 
         when {
@@ -13,6 +16,7 @@ nextflow_pipeline {
                 outdir                                 = "$outputDir"
 
                 pna_graph_component_size_min_threshold = 100
+                skip_experiment_summary                = true
 
             }
         }
@@ -28,6 +32,8 @@ nextflow_pipeline {
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
+                    // pipeline versions.yml file for multiqc from which Nextflow version is removed because we tests pipelines on multiple Nextflow versions
+                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_pixelator_software_mqc_versions.yml"),
                     // All stable path name, with a relative path
                     stable_name,
                     // All files with stable contents
@@ -47,6 +53,8 @@ nextflow_pipeline {
                 input                        = "$pipelines_testdata_base_path/samplesheet/pna/samplesheet_pna.csv"
                 input_basedir                = "$pipelines_testdata_base_path/testdata/pna/"
                 outdir                       = "$outputDir"
+
+                skip_experiment_summary      = true
             }
         }
 

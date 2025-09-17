@@ -511,6 +511,40 @@
                 }
             }
         },
+        "pna_denoise_options": {
+            "title": "Options for pixelator denoise command.",
+            "type": "object",
+            "properties": {
+                "skip_denoise": {
+                    "description": "Skip denoise step",
+                    "type": "boolean"
+                },
+                "save_pna_denoise_pixelfile": {
+                    "fa_icon": "fas fa-save",
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Save the PXL dataset after the denoise stage.",
+                    "help": "By default, the PXL file after denoise will not be saved to the results directory."
+                },
+                "pna_denoise_run_one_core_graph_denoising": {
+                    "description": "Activate the one-core graph denoising algorithm",
+                    "type": "boolean",
+                    "default": true
+                },
+                "pna_denoise_pval_threshold": {
+                    "type": "number",
+                    "description": "The p-value threshold for the a marker to be considered significantly over-expressed in the one-core layer of a component",
+                    "default": 0.05,
+                    "minimum": 0.0
+                },
+                "pna_denoise_inflate_factor": {
+                    "type": "number",
+                    "description": "The inflate factor for the number of nodes from over-expressed markers to be removed from the one-core layer of a component",
+                    "default": 1.5,
+                    "minimum": 1.0
+                }
+            }
+        },
         "analysis_options": {
             "title": "Options for pixelator analysis command.",
             "type": "object",
@@ -701,6 +735,16 @@
                 }
             }
         },
+        "experiment_summary_options": {
+            "title": "Options for experiment summary.",
+            "type": "object",
+            "properties": {
+                "skip_experiment_summary": {
+                    "description": "Skip experiment summary generation",
+                    "type": "boolean"
+                }
+            }
+        },
         "global_config_options": {
             "title": "Global options",
             "type": "object",
@@ -878,6 +922,9 @@
             "$ref": "#/$defs/pna_graph_options"
         },
         {
+            "$ref": "#/$defs/pna_denoise_options"
+        },
+        {
             "$ref": "#/$defs/annotate_options"
         },
         {
@@ -894,6 +941,9 @@
         },
         {
             "$ref": "#/$defs/report_options"
+        },
+        {
+            "$ref": "#/$defs/experiment_summary_options"
         },
         {
             "$ref": "#/$defs/global_config_options"

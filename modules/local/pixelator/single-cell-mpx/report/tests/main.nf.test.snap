@@ -25,7 +25,7 @@
                     ]
                 ],
                 "2": [
-                    "versions.yml:md5,60f4a660ecd6dce3dfb7943f258f40a5"
+                    "versions.yml:md5,d0e22c07271c3e669b70e748959a0ffb"
                 ],
                 "log": [
                     [
@@ -50,27 +50,27 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,60f4a660ecd6dce3dfb7943f258f40a5"
+                    "versions.yml:md5,d0e22c07271c3e669b70e748959a0ffb"
                 ]
             }
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-05-06T15:15:36.810505624"
+        "timestamp": "2025-08-28T06:24:33.575047855"
     },
     "Test MPX report - SCSP v1 | Immunology-I": {
         "content": [
             null,
             [
-                "versions.yml:md5,60f4a660ecd6dce3dfb7943f258f40a5"
+                "versions.yml:md5,d0e22c07271c3e669b70e748959a0ffb"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-05-06T15:16:03.182142967"
+        "timestamp": "2025-08-28T06:24:42.203502039"
     }
 }

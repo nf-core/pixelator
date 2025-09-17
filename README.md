@@ -11,13 +11,14 @@
 [![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.10015112-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.10015112)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
-[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.04.2-23aa62.svg)](https://www.nextflow.io/)
+[![Nextflow](https://img.shields.io/badge/version-%E2%89%A524.10.5-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
+[![nf-core template version](https://img.shields.io/badge/nf--core_template-3.3.2-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/3.3.2)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 [![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/nf-core/pixelator)
 
-[![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23pixelator-4A154B?labelColor=000000&logo=slack)](https://nfcore.slack.com/channels/pixelator)[![Follow on Twitter](http://img.shields.io/badge/twitter-%40nf__core-1DA1F2?labelColor=000000&logo=twitter)](https://twitter.com/nf_core)[![Follow on Mastodon](https://img.shields.io/badge/mastodon-nf__core-6364ff?labelColor=FFFFFF&logo=mastodon)](https://mstdn.science/@nf_core)[![Watch on YouTube](http://img.shields.io/badge/youtube-nf--core-FF0000?labelColor=000000&logo=youtube)](https://www.youtube.com/c/nf-core)
+[![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23pixelator-4A154B?labelColor=000000&logo=slack)](https://nfcore.slack.com/channels/pixelator)[![Follow on Bluesky](https://img.shields.io/badge/bluesky-%40nf__core-1185fe?labelColor=000000&logo=bluesky)](https://bsky.app/profile/nf-co.re)[![Follow on Mastodon](https://img.shields.io/badge/mastodon-nf__core-6364ff?labelColor=FFFFFF&logo=mastodon)](https://mstdn.science/@nf_core)[![Watch on YouTube](http://img.shields.io/badge/youtube-nf--core-FF0000?labelColor=000000&logo=youtube)](https://www.youtube.com/c/nf-core)
 
 ## Introduction
 
@@ -35,9 +36,10 @@ For PNA data, the pipeline will run the following steps:
 2. Create groups of amplicons based on their marker assignments ([`pixelator single-cell-pna demux`](https://github.com/PixelgenTechnologies/pixelator))
 3. Derive original molecules to use as edge list downstream by error correcting, and counting input amplicons ([`pixelator single-cell-pna collapse`](https://github.com/PixelgenTechnologies/pixelator))
 4. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator single-cell-pna graph`](https://github.com/PixelgenTechnologies/pixelator))
-5. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
-6. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
-7. Report generation ([`pixelator single-cell-pna report`](https://github.com/PixelgenTechnologies/pixelator))
+5. Denoise the cell graphs ([`pixelator single-cell-pna denoise`](https://github.com/PixelgenTechnologies/pixelator))
+6. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
+7. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
+8. Report generation ([`pixelator single-cell-pna report`](https://github.com/PixelgenTechnologies/pixelator))
 
 For MPX data, the pipeline will run the following steps:
 
@@ -66,8 +68,8 @@ First, prepare a samplesheet with your input data that looks as follows (the exa
 `samplesheet.csv`:
 
 ```csv
-sample,design,panel,fastq_1,fastq_2
-sample1,pna-2,proxiome-immuno-155,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+sample1,s1,control,pna-2,proxiome-immuno-155,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
 ```
 
 Each row represents a sample and gives the design, a panel file and the input fastq files.

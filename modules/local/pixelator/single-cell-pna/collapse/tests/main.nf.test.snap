@@ -59,26 +59,26 @@
     "versions": {
         "content": [
             [
-                "versions.yml:md5,bb0a7cb4ba82775da4724188e0adafaf"
+                "versions.yml:md5,a39e602f828076585b3e314469f16297"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-05-06T15:22:20.885778521"
+        "timestamp": "2025-08-28T06:25:53.937757371"
     },
     "multi_versions": {
         "content": [
             [
-                "versions.yml:md5,bb0a7cb4ba82775da4724188e0adafaf"
+                "versions.yml:md5,a39e602f828076585b3e314469f16297"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-05-06T15:22:45.539202416"
+        "timestamp": "2025-08-28T06:26:04.668538674"
     },
     "header": {
         "content": [

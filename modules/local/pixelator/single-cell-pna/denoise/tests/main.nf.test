@@ -1,0 +1,40 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_PNA_DENOISE"
+    script "../main.nf"
+    process "PIXELATOR_PNA_DENOISE"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/pna"
+    tag "pixelator/single_cell_pna_denoise"
+
+    test("PNA denoise - small test") {
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/graph/PNA055_Sample07_filtered_S7.graph.pxl', checkIfExists: true),
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out.metadata_json).match("metadata_json") },
+                {
+                    with (process.out.report_json) {
+                        assert snapshot(path(get(0).get(1)).readLines()[0..5]).match("report_json") }
+                },
+                { assert snapshot(process.out.versions).match("versions") },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator denoise")
+                    }
+                },
+            )
+        }
+    }
+}

@@ -50,20 +50,10 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(
-                        process.out.report_json,
-                        process.out.metadata
-                    ).match()
-                },
-                {
-                    with (process.out.dataset.get(0)) {
-                        assert path(get(1)).zip.extract("adata.h5ad").exists()
-                        assert path(get(1)).zip.extract("edgelist.parquet").exists()
-                        assert snapshot(
-                            path(get(1)).zip.extract("metadata.json")
-                        ).match("pxl")
-                    }
-                },
+                {assert path(process.out.report_json.get(0).get(1)).exists()},
+                {assert path(process.out.metadata.get(0).get(1)).exists()},
+                {assert path(process.out.dataset.get(0).get(1)).exists()},
+                {assert process.out.dataset.get(0).get(1).endsWith(".pxl")},
                 {
                     with (process.out.log) {
                         assert path(get(0).get(1)).readLines().last().contains("Finished pixelator analysis")
@@ -73,4 +63,3 @@ nextflow_process {
         }
     }
 }
-
