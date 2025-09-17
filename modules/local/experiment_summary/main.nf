@@ -1,21 +1,23 @@
 process EXPERIMENT_SUMMARY {
     tag "${meta.id}"
     label "process_medium"
+
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'quay.io/pixelgen-technologies/pixelatores:0.4.3'
         : 'quay.io/pixelgen-technologies/pixelatores:0.4.3'}"
 
     input:
-    val(meta)
     path samplesheet_path
-    path amplicon_data                    , stageAs: "results/amplicon/*"
-    path demux_data                       , stageAs: "results/demux/*"
-    path collapse_data                    , stageAs: "results/collapse/*"
-    path graph_data                       , stageAs: "results/graph/*"
-    path denoise_data                     , stageAs: "results/denoise/*"
-    path analysis_data                    , stageAs: "results/analysis/*"
-    path layout_data                      , stageAs: "results/layout/*"
-
+    tuple (
+        val(meta),
+        path(amplicon_data , stageAs: "results/amplicon/*"),
+        path(demux_data    , stageAs: "results/demux/*"),
+        path(collapse_data , stageAs: "results/collapse/*"),
+        path(graph_data    , stageAs: "results/graph/*"),
+        path(denoise_data  , stageAs: "results/denoise/*"),
+        path(analysis_data , stageAs: "results/analysis/*"),
+        path(layout_data   , stageAs: "results/layout/*")
+    )
 
     output:
     tuple val(meta), path("*experiment-summary.html")  , emit: html
