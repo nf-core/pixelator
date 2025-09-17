@@ -86,6 +86,8 @@ workflow PNA_GENERATE_REPORTS {
     }.map { acc ->
         [ acc.meta, acc.amplicon, acc.demux, acc.collapse, acc.graph, acc.denoise, acc.analysis, acc.layout ]
     }
+    // Filter out the entry if it just contains empty lists, eg when no PNA samples are present
+    .filter { it -> it[0].samples.size() > 0 }
 
     if (!skip_experiment_summary) {
         EXPERIMENT_SUMMARY ( samplesheet, ch_grouped_data )
