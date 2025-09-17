@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[2.1.0](https://github.com/nf-core/pixelator/releases/tag/x.x.x)] - YYYY-MM-DD
+## [[2.1.0](https://github.com/nf-core/pixelator/releases/tag/2.1.0)] - 2025-09-17
 
 ### Enhancements & fixes
 
@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Template update for nf-core/tools v3.3.2 by @fbdtemme in [#143](https://github.com/nf-core/pixelator/pull/143)
 - Add the `experiment_summary` step which generates the Proximity Experiment Summary report by @johandahlberg in [#144](https://github.com/nf-core/pixelator/pull/144)
 - Switch PIXELATOR_PNA_LAYOUT process label to process_high to allocate less memory by @ptajvar in [#147](https://github.com/nf-core/pixelator/pull/147)
+- Simplify PNA_GENERATE_REPORTS subworkflow by @fbdtemme in [#150](https://github.com/nf-core/pixelator/pull/50)
 
 ### Parameters
 
