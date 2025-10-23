@@ -1,0 +1,162 @@
+{
+    "-profile test": {
+        "content": [
+            {
+                "PIXELATOR_AMPLICON": {
+                    "pixelator": "0.21.4"
+                },
+                "PIXELATOR_ANALYSIS": {
+                    "pixelator": "0.21.4"
+                },
+                "PIXELATOR_ANNOTATE": {
+                    "pixelator": "0.21.4"
+                },
+                "PIXELATOR_COLLAPSE": {
+                    "pixelator": "0.21.4"
+                },
+                "PIXELATOR_DEMUX": {
+                    "pixelator": "0.21.4"
+                },
+                "PIXELATOR_GRAPH": {
+                    "pixelator": "0.21.4"
+                },
+                "PIXELATOR_LAYOUT": {
+                    "pixelator": "0.21.4"
+                },
+                "PIXELATOR_QC": {
+                    "pixelator": "0.21.4"
+                },
+                "PIXELATOR_REPORT": {
+                    "pixelator": "0.21.4"
+                },
+                "Workflow": {
+                    "nf-core/pixelator": "v2.1.0"
+                }
+            },
+            [
+                "pipeline_info",
+                "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
+                "pixelator",
+                "pixelator/adapterqc",
+                "pixelator/adapterqc/pbmcs_unstimulated.meta.json",
+                "pixelator/adapterqc/pbmcs_unstimulated.report.json",
+                "pixelator/adapterqc/uropod_control.meta.json",
+                "pixelator/adapterqc/uropod_control.report.json",
+                "pixelator/amplicon",
+                "pixelator/amplicon/pbmcs_unstimulated.meta.json",
+                "pixelator/amplicon/pbmcs_unstimulated.report.json",
+                "pixelator/amplicon/uropod_control.meta.json",
+                "pixelator/amplicon/uropod_control.report.json",
+                "pixelator/analysis",
+                "pixelator/analysis/pbmcs_unstimulated.meta.json",
+                "pixelator/analysis/pbmcs_unstimulated.report.json",
+                "pixelator/analysis/uropod_control.meta.json",
+                "pixelator/analysis/uropod_control.report.json",
+                "pixelator/annotate",
+                "pixelator/annotate/pbmcs_unstimulated.meta.json",
+                "pixelator/annotate/pbmcs_unstimulated.report.json",
+                "pixelator/annotate/uropod_control.meta.json",
+                "pixelator/annotate/uropod_control.report.json",
+                "pixelator/collapse",
+                "pixelator/collapse/pbmcs_unstimulated.meta.json",
+                "pixelator/collapse/pbmcs_unstimulated.report.json",
+                "pixelator/collapse/uropod_control.meta.json",
+                "pixelator/collapse/uropod_control.report.json",
+                "pixelator/demux",
+                "pixelator/demux/pbmcs_unstimulated.meta.json",
+                "pixelator/demux/pbmcs_unstimulated.report.json",
+                "pixelator/demux/uropod_control.meta.json",
+                "pixelator/demux/uropod_control.report.json",
+                "pixelator/graph",
+                "pixelator/graph/pbmcs_unstimulated.meta.json",
+                "pixelator/graph/pbmcs_unstimulated.report.json",
+                "pixelator/graph/uropod_control.meta.json",
+                "pixelator/graph/uropod_control.report.json",
+                "pixelator/layout",
+                "pixelator/layout/pbmcs_unstimulated.meta.json",
+                "pixelator/layout/pbmcs_unstimulated.report.json",
+                "pixelator/layout/uropod_control.meta.json",
+                "pixelator/layout/uropod_control.report.json",
+                "pixelator/logs",
+                "pixelator/logs/pbmcs_unstimulated",
+                "pixelator/logs/pbmcs_unstimulated/pbmcs_unstimulated.pixelator-adapterqc.log",
+                "pixelator/logs/pbmcs_unstimulated/pbmcs_unstimulated.pixelator-amplicon.log",
+                "pixelator/logs/pbmcs_unstimulated/pbmcs_unstimulated.pixelator-analysis.log",
+                "pixelator/logs/pbmcs_unstimulated/pbmcs_unstimulated.pixelator-annotate.log",
+                "pixelator/logs/pbmcs_unstimulated/pbmcs_unstimulated.pixelator-collapse.log",
+                "pixelator/logs/pbmcs_unstimulated/pbmcs_unstimulated.pixelator-demux.log",
+                "pixelator/logs/pbmcs_unstimulated/pbmcs_unstimulated.pixelator-graph.log",
+                "pixelator/logs/pbmcs_unstimulated/pbmcs_unstimulated.pixelator-layout.log",
+                "pixelator/logs/pbmcs_unstimulated/pbmcs_unstimulated.pixelator-preqc.log",
+                "pixelator/logs/pbmcs_unstimulated/pbmcs_unstimulated.pixelator-report.log",
+                "pixelator/logs/uropod_control",
+                "pixelator/logs/uropod_control/uropod_control.pixelator-adapterqc.log",
+                "pixelator/logs/uropod_control/uropod_control.pixelator-amplicon.log",
+                "pixelator/logs/uropod_control/uropod_control.pixelator-analysis.log",
+                "pixelator/logs/uropod_control/uropod_control.pixelator-annotate.log",
+                "pixelator/logs/uropod_control/uropod_control.pixelator-collapse.log",
+                "pixelator/logs/uropod_control/uropod_control.pixelator-demux.log",
+                "pixelator/logs/uropod_control/uropod_control.pixelator-graph.log",
+                "pixelator/logs/uropod_control/uropod_control.pixelator-layout.log",
+                "pixelator/logs/uropod_control/uropod_control.pixelator-preqc.log",
+                "pixelator/logs/uropod_control/uropod_control.pixelator-report.log",
+                "pixelator/pbmcs_unstimulated.layout.dataset.pxl",
+                "pixelator/pbmcs_unstimulated.qc-report.html",
+                "pixelator/preqc",
+                "pixelator/preqc/pbmcs_unstimulated.meta.json",
+                "pixelator/preqc/pbmcs_unstimulated.report.json",
+                "pixelator/preqc/uropod_control.meta.json",
+                "pixelator/preqc/uropod_control.report.json",
+                "pixelator/uropod_control.layout.dataset.pxl",
+                "pixelator/uropod_control.qc-report.html"
+            ],
+            [
+                "pbmcs_unstimulated.meta.json:md5,ac8846f1f105a23c090b26ce2dd3ff66",
+                "pbmcs_unstimulated.report.json:md5,11565c5fa39d7fc8218d2a9832088dd5",
+                "uropod_control.meta.json:md5,ac8846f1f105a23c090b26ce2dd3ff66",
+                "uropod_control.report.json:md5,deb97b75edab3c10876656ba8ac1fc1d",
+                "pbmcs_unstimulated.meta.json:md5,40db76b696434ea585851070cabe8baa",
+                "pbmcs_unstimulated.report.json:md5,78e82338ab613b17da08979953f41b01",
+                "uropod_control.meta.json:md5,40db76b696434ea585851070cabe8baa",
+                "uropod_control.report.json:md5,979b5cd040239455f5f277ea024efe28",
+                "pbmcs_unstimulated.meta.json:md5,62ff235b5ed8a284e80b33ddb44447f8",
+                "pbmcs_unstimulated.report.json:md5,4978a6a396bdeabf23c2941678d69a3d",
+                "uropod_control.meta.json:md5,62ff235b5ed8a284e80b33ddb44447f8",
+                "uropod_control.report.json:md5,480aede1044e828c1180b44c280ada8d",
+                "pbmcs_unstimulated.meta.json:md5,437fb3b932eec6f1295180d3f5c75b26",
+                "pbmcs_unstimulated.report.json:md5,1da8583b13378f459831cdfac12a1854",
+                "uropod_control.meta.json:md5,437fb3b932eec6f1295180d3f5c75b26",
+                "uropod_control.report.json:md5,21844cfa128e69bf86367b950a4f2152",
+                "pbmcs_unstimulated.meta.json:md5,6c803385508aa00fb08fc0ce2034d28d",
+                "pbmcs_unstimulated.report.json:md5,603f5ccb27f30fd655214882ed3c2d52",
+                "uropod_control.meta.json:md5,6c803385508aa00fb08fc0ce2034d28d",
+                "uropod_control.report.json:md5,eecd35994305315fd382e67174eb4979",
+                "pbmcs_unstimulated.meta.json:md5,189213aa015f796a11ea5dff00eb3ffd",
+                "pbmcs_unstimulated.report.json:md5,d359955360d85987a7bfbcfd54dfb3b5",
+                "uropod_control.meta.json:md5,189213aa015f796a11ea5dff00eb3ffd",
+                "uropod_control.report.json:md5,ea70a8c6664ec5d66429f679abb034fa",
+                "pbmcs_unstimulated.meta.json:md5,19d11c140f3cacde4f9dd68ddd8a7721",
+                "pbmcs_unstimulated.report.json:md5,896ed6147ecf6da886e5959f5642137b",
+                "uropod_control.meta.json:md5,19d11c140f3cacde4f9dd68ddd8a7721",
+                "uropod_control.report.json:md5,8849c1af2022248eb1d1d1af7e806d57",
+                "pbmcs_unstimulated.meta.json:md5,39056acdce8c39c1a3f4c91b642d7b9a",
+                "pbmcs_unstimulated.report.json:md5,7b83e6f7bff038003230270ba39eb862",
+                "uropod_control.meta.json:md5,39056acdce8c39c1a3f4c91b642d7b9a",
+                "uropod_control.report.json:md5,1f149c95d4ebd5f1bb7267d990a97d35",
+                "pbmcs_unstimulated.layout.dataset.pxl:md5,cff46c62fc96487c08a615716af485f7",
+                "pbmcs_unstimulated.qc-report.html:md5,b58750a0b0cb2bdfc8d6b74faef63ccc",
+                "pbmcs_unstimulated.meta.json:md5,9d232817c2c7c9770c2c6af040bae8ed",
+                "pbmcs_unstimulated.report.json:md5,bf7c24a16f0c3ffa3db20801d36ef542",
+                "uropod_control.meta.json:md5,9d232817c2c7c9770c2c6af040bae8ed",
+                "uropod_control.report.json:md5,16495a2ad330e0f70a8a56286337fd7e",
+                "uropod_control.layout.dataset.pxl:md5,441cbd20c10232fd2953ba187aac228e",
+                "uropod_control.qc-report.html:md5,fa924360218037257348ad941c584e2c"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-10-23T17:51:12.551944361"
+    }
+}
