@@ -1,0 +1,90 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_PNA_DEMUX"
+    script "../main.nf"
+    process "PIXELATOR_PNA_DEMUX"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/pna"
+    tag "pixelator/single_cell_pna_demux"
+
+    test("PNA demux - small test") {
+        when {
+            params {
+                skip_experiment_summary = true
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/amplicon/PNA055_Sample07_filtered_S7.amplicon.fq.zst', checkIfExists: true),
+                    [],
+                    'proxiome-immuno-155',
+                    'pna-2'
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                {
+                    with(process.out.demuxed) {
+                        assert get(0).get(1).each { file(it).exists() }
+                    }
+                },
+                { assert snapshot(process.out.passed).match("passed") },
+                { assert snapshot(process.out.failed).match("failed") },
+                { assert snapshot(process.out.report_json).match("report_json") },
+                { assert snapshot(process.out.metadata_json).match("metadata_json") },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator demux")
+                    }
+                },
+            )
+        }
+    }
+
+    test("PNA demux - multiple chunks") {
+        config "./multiple_chunks.config"
+
+        when {
+            params {
+                skip_experiment_summary = true
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/amplicon/PNA055_Sample07_filtered_S7.amplicon.fq.zst', checkIfExists: true),
+                    [],
+                    'proxiome-immuno-155',
+                    'pna-2'
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                {
+                    with(process.out.demuxed) {
+                        assert get(0).get(1).each { file(it).exists() }
+                    }
+                },
+                { assert snapshot(process.out.passed).match("multi_passed") },
+                { assert snapshot(process.out.failed).match("multi_failed") },
+                { assert snapshot(process.out.report_json).match("multi_report_json") },
+                { assert snapshot(process.out.metadata_json).match("multi_metadata_json") },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator demux")
+                    }
+                },
+            )
+        }
+    }
+}

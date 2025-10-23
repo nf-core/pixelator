@@ -1,0 +1,59 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_PNA_COMBINE_COLLAPSE"
+    script "../main.nf"
+    process "PIXELATOR_PNA_COMBINE_COLLAPSE"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/pna"
+    tag "modules_pixelator"
+    tag "pixelator/single_cell_pna_combine_collapse"
+
+
+    test("PNA combine collapse - multiple files") {
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_001.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_000.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_001.parquet', checkIfExists: true),
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_001.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_000.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.m2.part_001.report.json', checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+
+        then {
+            assertAll(
+                { assert process.success },
+                {
+                    with(process.out.parquet) {
+                        assert path(get(0).get(1)).exists()
+                    }
+                },
+                { assert snapshot(
+                        process.out.report_json,
+                        process.out.metadata_json,
+                        process.out.versions
+                    ).match()
+                },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator combine-collapse")
+                    }
+                },
+            )
+        }
+    }
+}

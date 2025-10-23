@@ -7,3 +7,7 @@ testing/
 testing*
 *.pyc
 null/
+.idea
+.vscode
+
+.nf-test*

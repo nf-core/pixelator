@@ -1,0 +1,54 @@
+{
+    "versions": {
+        "content": [
+            [
+                "versions.yml:md5,c2b5282ea89815e5acfa1149ebc9e585"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
+        },
+        "timestamp": "2025-08-28T06:27:13.929297872"
+    },
+    "report_json": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "PNA055_Sample07_filtered_S7",
+                        "design": "pna-2",
+                        "panel": "proxiome-immuno-155",
+                        "technology": "pna"
+                    },
+                    "PNA055_Sample07_filtered_S7.report.json:md5,8c7cfca24198dc8d0dd2fd9551c08b97"
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.2"
+        },
+        "timestamp": "2025-06-24T17:10:53.237758536"
+    },
+    "metadata_json": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "PNA055_Sample07_filtered_S7",
+                        "design": "pna-2",
+                        "panel": "proxiome-immuno-155",
+                        "technology": "pna"
+                    },
+                    "PNA055_Sample07_filtered_S7.meta.json:md5,a5fb5308aa82dd9b96d36defdea5e6a8"
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.2"
+        },
+        "timestamp": "2025-05-22T17:35:26.895238955"
+    }
+}

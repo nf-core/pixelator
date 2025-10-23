@@ -1,0 +1,68 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_PNA_REPORT"
+    script "../main.nf"
+    process "PIXELATOR_PNA_REPORT"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/pna"
+    tag "pixelator/single_cell_pna_report"
+
+    test("PNA report - small test") {
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [],
+                    'proxiome-immuno-155',
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/amplicon/PNA055_Sample07_filtered_S7.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/amplicon/PNA055_Sample07_filtered_S7.report.json', checkIfExists: true),
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/PNA055_Sample07_filtered_S7.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/PNA055_Sample07_filtered_S7.report.json', checkIfExists: true),
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.report.json', checkIfExists: true),
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/graph/PNA055_Sample07_filtered_S7.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/graph/PNA055_Sample07_filtered_S7.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/graph/PNA055_Sample07_filtered_S7.graph.pxl', checkIfExists: true),
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/denoise/PNA055_Sample07_filtered_S7.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/denoise/PNA055_Sample07_filtered_S7.report.json', checkIfExists: true),
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/analysis/PNA055_Sample07_filtered_S7.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/analysis/PNA055_Sample07_filtered_S7.report.json', checkIfExists: true),
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/layout/PNA055_Sample07_filtered_S7.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/layout/PNA055_Sample07_filtered_S7.report.json', checkIfExists: true),
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                {
+                    with(process.out.report) {
+                        with(get(0)) {
+                            assert get(1).endsWith("qc-report.html")
+                            assert file(get(1)).exists()
+                        }
+                    }
+                },
+                { assert snapshot(process.out.versions).match("versions") },
+            )
+        }
+    }
+}

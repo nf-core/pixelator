@@ -1,0 +1,43 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_PNA_GRAPH"
+    script "../main.nf"
+    process "PIXELATOR_PNA_GRAPH"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/pna"
+    tag "pixelator/single_cell_pna_graph"
+
+    test("PNA graph - small test") {
+        when {
+            params {
+                pna_graph_component_size_min_threshold = 100
+            }
+
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.parquet', checkIfExists: true),
+                    [],
+                    'proxiome-immuno-155',
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out.metadata_json).match("metadata_json") },
+                { assert snapshot(process.out.report_json).match("report_json") },
+                { assert snapshot(process.out.versions).match("versions") },
+                {
+                    with (process.out.log) {
+                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator graph")
+                    }
+                },
+            )
+        }
+    }
+}

@@ -1,0 +1,200 @@
+nextflow_workflow {
+    name "Test Subworkflow GENERATE_REPORTS"
+    script "../main.nf"
+    workflow "GENERATE_REPORTS"
+
+    test("Test MPX Generate reports - stub") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                def meta = [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ]
+
+                input[0] = Channel.of([
+                    meta,
+                    []
+                ])
+
+                input[1] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/amplicon/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/amplicon/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                    ]
+                ])
+                input[2] =  Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                    ]
+                ])
+                input[3] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                    ]
+                ])
+                input[4] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                    ]
+                ])
+                input[5] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                    ]
+                ])
+                input[6] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/graph/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/graph/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/graph/sample01_1k_pbmcs_scsp_v1_immunology1.edgelist.parquet', checkIfExists: true),
+                    ]
+                ])
+                input[7] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.annotate.dataset.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.raw_components_metrics.csv.gz', checkIfExists: true),
+                    ]
+                ])
+                input[8] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/analysis/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/analysis/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/analysis/sample01_1k_pbmcs_scsp_v1_immunology1.analysis.dataset.pxl', checkIfExists: true),
+                    ]
+                ])
+                input[9] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/layout/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/layout/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/layout/sample01_1k_pbmcs_scsp_v1_immunology1.layout.dataset.pxl', checkIfExists: true),
+                    ]
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success},
+                { assert snapshot(workflow.out).match() }
+            )
+        }
+    }
+
+    test("Test MPX Generate reports - SCSP v1 | Immunology-I") {
+        when {
+            params {
+                save_all = true
+            }
+            workflow {
+                """
+                def meta = [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ]
+
+                input[0] = Channel.of([
+                    meta,
+                    []
+                ])
+
+                input[1] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/amplicon/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/amplicon/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                    ]
+                ])
+                input[2] =  Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                    ]
+                ])
+                input[3] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                    ]
+                ])
+                input[4] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/demux/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                    ]
+                ])
+                input[5] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                    ]
+                ])
+                input[6] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/graph/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/graph/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/graph/sample01_1k_pbmcs_scsp_v1_immunology1.edgelist.parquet', checkIfExists: true),
+                    ]
+                ])
+                input[7] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.annotate.dataset.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.raw_components_metrics.csv.gz', checkIfExists: true),
+                    ]
+                ])
+                input[8] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/analysis/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/analysis/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/analysis/sample01_1k_pbmcs_scsp_v1_immunology1.analysis.dataset.pxl', checkIfExists: true),
+                    ]
+                ])
+                input[9] = Channel.of([
+                    meta,
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/layout/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/layout/sample01_1k_pbmcs_scsp_v1_immunology1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/layout/sample01_1k_pbmcs_scsp_v1_immunology1.layout.dataset.pxl', checkIfExists: true),
+                    ]
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success},
+                { assert snapshot(workflow.out.versions).match() },
+                {
+                    with (workflow.out.pixelator_reports) {
+                        assert path(get(0).get(1)).exists()
+                    }
+                }
+            )
+        }
+    }
+}
