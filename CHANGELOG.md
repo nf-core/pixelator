@@ -3,6 +3,30 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## dev - xxxx-xx-xx
+
+This new minor version of nf-core/pixelator introduces new panel files with clearer names. These new
+panels are now the default. To use the old version of the panels, append `-v1` to the panel name in
+the samplesheet, e.g. `proxiome-immuno-155-v1`.
+
+### Enhancements & fixes
+
+- Update panel files with new names for marker ids
+- New panel file with FLAG add-on
+- Template update for nf-core/tools v3.4.1 by @Aratz in [#151](https://github.com/nf-core/pixelator/pull/151)
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.21.4      | 0.22.0      |
+
+> [!NOTE]
+> Dependency has been **updated** if both old and new parameter information is present.
+> Dependency has been **added** if just the new parameter information is present.
+> Dependency has been **removed** if new parameter information isn't present.
+
+
 ## [[2.1.0](https://github.com/nf-core/pixelator/releases/tag/2.1.0)] - 2025-09-17
 
 ### Enhancements & fixes
