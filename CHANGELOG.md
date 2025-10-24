@@ -11,8 +11,8 @@ the samplesheet, e.g. `proxiome-immuno-155-v1`.
 
 ### Enhancements & fixes
 
-- Update panel files with new names for marker ids
-- New panel file with FLAG add-on
+- Update panel files with new names for marker ids by @Aratz [#152](https://github.com/nf-core/pixelator/pull/152)
+- New panel file with FLAG add-on by @Aratz [#152](https://github.com/nf-core/pixelator/pull/152)
 - Template update for nf-core/tools v3.4.1 by @Aratz in [#151](https://github.com/nf-core/pixelator/pull/151)
 
 ### Software dependencies
