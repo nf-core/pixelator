@@ -26,7 +26,6 @@ the samplesheet, e.g. `proxiome-immuno-155-v1`.
 > Dependency has been **added** if just the new parameter information is present.
 > Dependency has been **removed** if new parameter information isn't present.
 
-
 ## [[2.1.0](https://github.com/nf-core/pixelator/releases/tag/2.1.0)] - 2025-09-17
 
 ### Enhancements & fixes
