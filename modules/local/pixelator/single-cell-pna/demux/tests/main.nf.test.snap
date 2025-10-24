@@ -9,15 +9,15 @@
                         "panel": "proxiome-immuno-155",
                         "technology": "pna"
                     },
-                    "PNA055_Sample07_filtered_S7.demux.passed.fq.zst:md5,22d1ba0788bc719ff5086df10efc79c0"
+                    "PNA055_Sample07_filtered_S7.demux.passed.fq.zst:md5,bffd9af4224cb63d02a243b7297d9a20"
                 ]
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.5"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-03-20T10:45:19.870166753"
+        "timestamp": "2025-10-24T11:05:05.618019276"
     },
     "report_json": {
         "content": [
@@ -29,15 +29,15 @@
                         "panel": "proxiome-immuno-155",
                         "technology": "pna"
                     },
-                    "PNA055_Sample07_filtered_S7.report.json:md5,7ebfb9ffcdad63735bf7db85f95b2375"
+                    "PNA055_Sample07_filtered_S7.report.json:md5,83e19c1b9ce2e5b3b5b568e7523511be"
                 ]
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.5"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-03-20T10:44:33.650948168"
+        "timestamp": "2025-10-24T11:04:38.685868559"
     },
     "multi_failed": {
         "content": [
@@ -49,15 +49,15 @@
                         "panel": "proxiome-immuno-155",
                         "technology": "pna"
                     },
-                    "PNA055_Sample07_filtered_S7.demux.failed.fq.zst:md5,ec839fc21a49891f10d87bbe122c3896"
+                    "PNA055_Sample07_filtered_S7.demux.failed.fq.zst:md5,44e8bee4f2f2bfbb2edcec1217b3ebc5"
                 ]
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.5"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-03-20T10:45:20.092313742"
+        "timestamp": "2025-10-24T11:05:05.73169804"
     },
     "passed": {
         "content": [
@@ -69,15 +69,15 @@
                         "panel": "proxiome-immuno-155",
                         "technology": "pna"
                     },
-                    "PNA055_Sample07_filtered_S7.demux.passed.fq.zst:md5,22d1ba0788bc719ff5086df10efc79c0"
+                    "PNA055_Sample07_filtered_S7.demux.passed.fq.zst:md5,bffd9af4224cb63d02a243b7297d9a20"
                 ]
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.5"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-03-20T10:44:33.487122857"
+        "timestamp": "2025-10-24T11:04:38.519824084"
     },
     "failed": {
         "content": [
@@ -89,15 +89,15 @@
                         "panel": "proxiome-immuno-155",
                         "technology": "pna"
                     },
-                    "PNA055_Sample07_filtered_S7.demux.failed.fq.zst:md5,ec839fc21a49891f10d87bbe122c3896"
+                    "PNA055_Sample07_filtered_S7.demux.failed.fq.zst:md5,44e8bee4f2f2bfbb2edcec1217b3ebc5"
                 ]
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.5"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-03-20T10:44:33.568673937"
+        "timestamp": "2025-10-24T11:04:38.605523473"
     },
     "multi_report_json": {
         "content": [
@@ -109,15 +109,15 @@
                         "panel": "proxiome-immuno-155",
                         "technology": "pna"
                     },
-                    "PNA055_Sample07_filtered_S7.report.json:md5,7ebfb9ffcdad63735bf7db85f95b2375"
+                    "PNA055_Sample07_filtered_S7.report.json:md5,83e19c1b9ce2e5b3b5b568e7523511be"
                 ]
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.5"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-03-20T10:45:20.283348049"
+        "timestamp": "2025-10-24T11:05:05.848152808"
     },
     "multi_metadata_json": {
         "content": [
