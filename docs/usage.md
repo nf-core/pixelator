@@ -135,9 +135,11 @@ Currently, two built-in panels are available for MPX:
 - `human-sc-immunology-spatial-proteomics-1`
 - `human-sc-immunology-spatial-proteomics-2`
 
-And one for PNA:
+And three for PNA:
 
 - `proxiome-immuno-155`
+- `proxiome-immuno-156-FMC63`
+- `proxiome-immuno-156-FLAG`
 
 ## Running the pipeline
 
