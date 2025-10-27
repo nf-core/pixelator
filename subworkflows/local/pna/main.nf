@@ -185,7 +185,7 @@ workflow PNA {
         .groupTuple(size: 2)
 
 
-    ch_input = Channel.of(params.input)
+    ch_input = Channel.fromPath(params.input)
 
     PNA_GENERATE_REPORTS(
         ch_input,
