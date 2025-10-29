@@ -1,4 +1,14 @@
 {
+    "multi_meta_json": {
+        "content": [
+            "{cli={command=pixelator single-cell-pna demux, options={--mismatches=1, --output-chunk-reads=40000, --output-max-chunks=8, --strategy=independent, --design=pna-2, --panel=proxiome-immuno-155, --output=.}}}"
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
+        },
+        "timestamp": "2025-10-29T09:53:59.371397444"
+    },
     "multi_passed": {
         "content": [
             [
@@ -22,22 +32,17 @@
     "report_json": {
         "content": [
             [
-                [
-                    {
-                        "id": "PNA055_Sample07_filtered_S7",
-                        "design": "pna-2",
-                        "panel": "proxiome-immuno-155",
-                        "technology": "pna"
-                    },
-                    "PNA055_Sample07_filtered_S7.report.json:md5,83e19c1b9ce2e5b3b5b568e7523511be"
-                ]
+                "{",
+                "    \"sample_id\": \"PNA055_Sample07_filtered_S7\",",
+                "    \"product_id\": \"single-cell-pna\",",
+                "    \"report_type\": \"demux\","
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-10-24T11:04:38.685868559"
+        "timestamp": "2025-10-29T09:44:08.052610022"
     },
     "multi_failed": {
         "content": [
@@ -102,61 +107,26 @@
     "multi_report_json": {
         "content": [
             [
-                [
-                    {
-                        "id": "PNA055_Sample07_filtered_S7",
-                        "design": "pna-2",
-                        "panel": "proxiome-immuno-155",
-                        "technology": "pna"
-                    },
-                    "PNA055_Sample07_filtered_S7.report.json:md5,83e19c1b9ce2e5b3b5b568e7523511be"
-                ]
-            ]
-        ],
-        "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
-        },
-        "timestamp": "2025-10-24T11:05:05.848152808"
-    },
-    "multi_metadata_json": {
-        "content": [
-            [
-                [
-                    {
-                        "id": "PNA055_Sample07_filtered_S7",
-                        "design": "pna-2",
-                        "panel": "proxiome-immuno-155",
-                        "technology": "pna"
-                    },
-                    "PNA055_Sample07_filtered_S7.meta.json:md5,e264dd4b88e2ef36d8af6640adbe79ac"
-                ]
+                "{",
+                "    \"sample_id\": \"PNA055_Sample07_filtered_S7\",",
+                "    \"product_id\": \"single-cell-pna\",",
+                "    \"report_type\": \"demux\","
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "25.04.2"
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-06-24T17:10:34.346405357"
+        "timestamp": "2025-10-29T09:53:59.351576099"
     },
-    "metadata_json": {
+    "meta_json": {
         "content": [
-            [
-                [
-                    {
-                        "id": "PNA055_Sample07_filtered_S7",
-                        "design": "pna-2",
-                        "panel": "proxiome-immuno-155",
-                        "technology": "pna"
-                    },
-                    "PNA055_Sample07_filtered_S7.meta.json:md5,2bd1ff0d69fc6584e455196d8805f587"
-                ]
-            ]
+            "{cli={command=pixelator single-cell-pna demux, options={--mismatches=1, --output-chunk-reads=50000000, --output-max-chunks=8, --strategy=independent, --design=pna-2, --panel=proxiome-immuno-155, --output=.}}}"
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "25.04.2"
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-06-24T17:09:59.60486159"
+        "timestamp": "2025-10-29T09:44:08.093627475"
     }
 }

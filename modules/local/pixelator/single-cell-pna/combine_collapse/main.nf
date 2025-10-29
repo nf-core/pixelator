@@ -29,14 +29,19 @@ process PIXELATOR_PNA_COMBINE_COLLAPSE {
     def args = task.ext.args ?: ''
     def parquet_args = parquet_files.join(' --parquet ')
     def report_args = json_report_files.join(' --report ')
+    def memory_factor = 0.75
 
+    // The memory limit here needs to keep some buffer. This limit is used in DuckDB but it is not a hard limit.
+    // Setting it too close to the actual RAM available may cause to not spill to disk soon enough and run out of memory.
     """
     pixelator \\
+        --cores ${task.cpus} \\
         --log-file ${prefix}.pixelator-combine-collapse.log \\
         --verbose \\
         single-cell-pna \\
         combine-collapse \\
         --output . \\
+        --memory ${Math.ceil(task.memory.toMega() * memory_factor).intValue()}M \\
         ${args} \\
         --parquet ${parquet_args} \\
         --report ${report_args}
