@@ -13,24 +13,23 @@
                 ]
             ],
             [
-                [
-                    {
-                        "id": "PNA055_Sample07_filtered_S7",
-                        "design": "pna-2",
-                        "panel": "proxiome-immuno-155",
-                        "technology": "pna"
-                    },
-                    "PNA055_Sample07_filtered_S7.meta.json:md5,e28f2491c50d9c55edb42a143e45ba50"
-                ]
-            ],
-            [
                 "versions.yml:md5,09b47145a7333736cd2aacdec779d79b"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-10-24T11:04:10.416243367"
+        "timestamp": "2025-10-29T09:53:01.528309376"
+    },
+    "meta_json": {
+        "content": [
+            "{cli={command=pixelator single-cell-pna combine-collapse, options={--parquet=[parquet/PNA055_Sample07_filtered_S7.collapse.m1.part_000.parquet, parquet/PNA055_Sample07_filtered_S7.collapse.m1.part_001.parquet, parquet/PNA055_Sample07_filtered_S7.collapse.m2.part_000.parquet, parquet/PNA055_Sample07_filtered_S7.collapse.m2.part_001.parquet], --report=[reports/PNA055_Sample07_filtered_S7.collapse.m1.part_000.report.json, reports/PNA055_Sample07_filtered_S7.collapse.m1.part_001.report.json, reports/PNA055_Sample07_filtered_S7.collapse.m2.part_000.report.json, reports/PNA055_Sample07_filtered_S7.collapse.m2.part_001.report.json], --parquet-pattern=null, --report-pattern=null, --output=.}}}"
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
+        },
+        "timestamp": "2025-10-29T09:53:01.500262602"
     }
 }

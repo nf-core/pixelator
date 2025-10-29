@@ -34,14 +34,18 @@ process PIXELATOR_PNA_DEMUX {
         ? "--panel ${panel}"
         : panel_file ? "--panel ${panel_file}" : "")
     def designOpt = "--design ${design}"
+    def memory_factor = 0.75
 
+    // The memory limit here needs to keep some buffer. This limit is used in DuckDB but it is not a hard limit.
+    // Setting it too close to the actual RAM available may cause to not spill to disk soon enough and run out of memory.
     """
     pixelator \\
+        --cores ${task.cpus} \\
         --log-file ${prefix}.pixelator-demux.log \\
         --verbose \\
         single-cell-pna \\
         demux \\
-        --threads ${task.cpus} \\
+        --memory ${Math.ceil(task.memory.toMega() * memory_factor).intValue()}M \\
         --output . \\
         ${panelOpt} \\
         ${designOpt} \\

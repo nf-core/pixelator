@@ -25,7 +25,6 @@ nextflow_process {
                 """
             }
         }
-
         then {
             assertAll(
                 { assert process.success },
@@ -36,8 +35,19 @@ nextflow_process {
                 },
                 { assert snapshot(process.out.passed).match("passed") },
                 { assert snapshot(process.out.failed).match("failed") },
-                { assert snapshot(process.out.report_json).match("report_json") },
-                { assert snapshot(process.out.metadata_json).match("metadata_json") },
+                {
+                    with (process.out.report_json) {
+                        assert snapshot(path(get(0).get(1)).readLines()[0..3]).match("report_json")
+                    }
+                },
+                {
+                    // Filter out execution env related options from cli.options map
+                    with (process.out.metadata_json) {
+                        def metaContent = path(get(0).get(1)).json
+                        metaContent["cli"]["options"].removeAll { it.key in ["--threads", "--memory"] }
+                        assert snapshot(metaContent.toString()).match("meta_json")
+                    }
+                },
                 {
                     with (process.out.log) {
                         assert path(get(0).get(1)).readLines().last().contains("Finished pixelator demux")
@@ -77,8 +87,19 @@ nextflow_process {
                 },
                 { assert snapshot(process.out.passed).match("multi_passed") },
                 { assert snapshot(process.out.failed).match("multi_failed") },
-                { assert snapshot(process.out.report_json).match("multi_report_json") },
-                { assert snapshot(process.out.metadata_json).match("multi_metadata_json") },
+                {
+                    with (process.out.report_json) {
+                        assert snapshot(path(get(0).get(1)).readLines()[0..3]).match("multi_report_json")
+                    }
+                },
+                {
+                    // Filter out execution env related options from cli.options map
+                    with (process.out.metadata_json) {
+                        def metaContent = path(get(0).get(1)).json
+                        metaContent["cli"]["options"].removeAll { it.key in ["--threads", "--memory"] }
+                        assert snapshot(metaContent.toString()).match("multi_meta_json")
+                    }
+                },
                 {
                     with (process.out.log) {
                         assert path(get(0).get(1)).readLines().last().contains("Finished pixelator demux")
