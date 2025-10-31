@@ -2,14 +2,14 @@
     "versions": {
         "content": [
             [
-                "versions.yml:md5,2d2c574c000c8e5f1503eb8a8cada90b"
+                "versions.yml:md5,ca60633f194ab0e5f36e097c4b1e0569"
             ]
         ],
         "meta": {
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-24T11:03:22.927316873"
+        "timestamp": "2025-10-31T13:34:59.516988966"
     },
     "report_json": {
         "content": [
