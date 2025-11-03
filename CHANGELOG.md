@@ -16,12 +16,13 @@ the samplesheet, e.g. `proxiome-immuno-155-v1`.
 - Template update for nf-core/tools v3.4.1 by @Aratz in [#151](https://github.com/nf-core/pixelator/pull/151)
 - `--input` now accepts relative paths by @Aratz [#153](https://github.com/nf-core/pixelator/pull/153)
 - Pass down memory limits in PNA demux and combine-collapse by @fbdtemme [#154](https://github.com/nf-core/pixelator/pull/154)
+- Fix custom panel usage by @Aratz [#156](https://github.com/nf-core/pixelator/pull/156)
 
 ### Software dependencies
 
 | Dependency  | Old version | New version |
 | ----------- | ----------- | ----------- |
-| `pixelator` | 0.21.4      | 0.22.0      |
+| `pixelator` | 0.21.4      | 0.22.1      |
 
 > [!NOTE]
 > Dependency has been **updated** if both old and new parameter information is present.
