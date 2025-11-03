@@ -1,13 +1,13 @@
 {
     "pxl": {
         "content": [
-            "metadata.json:md5,338091b8ff27462becd5ed06d90f5940"
+            "metadata.json:md5,82b35492f5e5067481c04c8612f466ee"
         ],
         "meta": {
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-24T10:59:18.912768269"
+        "timestamp": "2025-10-31T13:30:45.331289297"
     },
     "Test MPX annotate - stub": {
         "content": [
@@ -72,7 +72,7 @@
                     ]
                 ],
                 "5": [
-                    "versions.yml:md5,d00bd722b0a184642e7b085a59a4311b"
+                    "versions.yml:md5,f96c065a146a6d0667467f30beb8092b"
                 ],
                 "all_results": [
                     [
@@ -134,7 +134,7 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,d00bd722b0a184642e7b085a59a4311b"
+                    "versions.yml:md5,f96c065a146a6d0667467f30beb8092b"
                 ]
             }
         ],
@@ -142,6 +142,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-24T10:58:57.805739546"
+        "timestamp": "2025-10-31T13:30:22.30561325"
     }
 }

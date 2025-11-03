@@ -4,31 +4,31 @@
             10,
             {
                 "PIXELATOR_AMPLICON": {
-                    "pixelator": "0.22.0"
+                    "pixelator": "0.22.1"
                 },
                 "PIXELATOR_ANALYSIS": {
-                    "pixelator": "0.22.0"
+                    "pixelator": "0.22.1"
                 },
                 "PIXELATOR_ANNOTATE": {
-                    "pixelator": "0.22.0"
+                    "pixelator": "0.22.1"
                 },
                 "PIXELATOR_COLLAPSE": {
-                    "pixelator": "0.22.0"
+                    "pixelator": "0.22.1"
                 },
                 "PIXELATOR_DEMUX": {
-                    "pixelator": "0.22.0"
+                    "pixelator": "0.22.1"
                 },
                 "PIXELATOR_GRAPH": {
-                    "pixelator": "0.22.0"
+                    "pixelator": "0.22.1"
                 },
                 "PIXELATOR_LAYOUT": {
-                    "pixelator": "0.22.0"
+                    "pixelator": "0.22.1"
                 },
                 "PIXELATOR_QC": {
-                    "pixelator": "0.22.0"
+                    "pixelator": "0.22.1"
                 },
                 "PIXELATOR_REPORT": {
-                    "pixelator": "0.22.0"
+                    "pixelator": "0.22.1"
                 },
                 "Workflow": {
                     "nf-core/pixelator": "v2.1.0"
@@ -180,7 +180,7 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-24T11:27:51.627957238"
+        "timestamp": "2025-10-31T14:01:22.783604168"
     },
     "Params: --save_all - stub": {
         "content": [

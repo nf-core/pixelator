@@ -6,8 +6,8 @@ process PIXELATOR_AMPLICON {
     // TODO: Add conda back
     // conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.22.0'
-        : 'quay.io/pixelgen-technologies/pixelator:0.22.0'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.22.1'
+        : 'quay.io/pixelgen-technologies/pixelator:0.22.1'}"
 
     input:
     tuple val(meta), path(reads)

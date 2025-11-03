@@ -58,7 +58,7 @@
                     ]
                 ],
                 "5": [
-                    "versions.yml:md5,bf71a33af9d07af6d13463b40ac6521f"
+                    "versions.yml:md5,e046bd710e4ef6dc9a7fffa8edd9d26e"
                 ],
                 "failed": [
                     [
@@ -116,7 +116,7 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,bf71a33af9d07af6d13463b40ac6521f"
+                    "versions.yml:md5,e046bd710e4ef6dc9a7fffa8edd9d26e"
                 ]
             }
         ],
@@ -124,7 +124,7 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-24T10:59:50.087524376"
+        "timestamp": "2025-10-31T13:31:18.820549773"
     },
     "Test MPX demux - SCSP v1 | Immunology-I": {
         "content": [
@@ -243,14 +243,14 @@
                 ]
             ],
             [
-                "versions.yml:md5,bf71a33af9d07af6d13463b40ac6521f"
+                "versions.yml:md5,e046bd710e4ef6dc9a7fffa8edd9d26e"
             ]
         ],
         "meta": {
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-24T11:00:06.552973036"
+        "timestamp": "2025-10-31T13:31:36.148658933"
     },
     "report_json": {
         "content": [
@@ -260,7 +260,7 @@
                     0,
                     3
                 ],
-                "cutadapt_version": "5.1",
+                "cutadapt_version": "5.2",
                 "python_version": "3.12.12",
                 "cores": 2,
                 "input": {
@@ -2870,6 +2870,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-24T11:00:06.924927722"
+        "timestamp": "2025-10-31T13:31:36.52595872"
     }
 }

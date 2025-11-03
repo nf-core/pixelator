@@ -2,14 +2,14 @@
     "Test MPX Generate reports - SCSP v1 | Immunology-I": {
         "content": [
             [
-                "versions.yml:md5,76408716b135c967a691f93b963fa0b8"
+                "versions.yml:md5,a7151b6c0424376e5821c074ad03bdf4"
             ]
         ],
         "meta": {
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-24T11:06:30.470310408"
+        "timestamp": "2025-10-31T13:38:44.106466875"
     },
     "Test MPX Generate reports - stub": {
         "content": [
@@ -26,7 +26,7 @@
                     ]
                 ],
                 "1": [
-                    "versions.yml:md5,76408716b135c967a691f93b963fa0b8"
+                    "versions.yml:md5,a7151b6c0424376e5821c074ad03bdf4"
                 ],
                 "pixelator_reports": [
                     [
@@ -40,7 +40,7 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,76408716b135c967a691f93b963fa0b8"
+                    "versions.yml:md5,a7151b6c0424376e5821c074ad03bdf4"
                 ]
             }
         ],
@@ -48,6 +48,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-24T11:06:15.375662204"
+        "timestamp": "2025-10-31T13:38:27.660723073"
     }
 }

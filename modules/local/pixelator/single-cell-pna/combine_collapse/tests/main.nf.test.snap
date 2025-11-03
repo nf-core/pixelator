@@ -13,23 +13,23 @@
                 ]
             ],
             [
-                "versions.yml:md5,09b47145a7333736cd2aacdec779d79b"
+                "versions.yml:md5,fdd993fc8aaed7c5185c5d6ab77e479f"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-29T09:53:01.528309376"
+        "timestamp": "2025-10-31T14:31:30.520706186"
     },
     "meta_json": {
         "content": [
             "{cli={command=pixelator single-cell-pna combine-collapse, options={--parquet=[parquet/PNA055_Sample07_filtered_S7.collapse.m1.part_000.parquet, parquet/PNA055_Sample07_filtered_S7.collapse.m1.part_001.parquet, parquet/PNA055_Sample07_filtered_S7.collapse.m2.part_000.parquet, parquet/PNA055_Sample07_filtered_S7.collapse.m2.part_001.parquet], --report=[reports/PNA055_Sample07_filtered_S7.collapse.m1.part_000.report.json, reports/PNA055_Sample07_filtered_S7.collapse.m1.part_001.report.json, reports/PNA055_Sample07_filtered_S7.collapse.m2.part_000.report.json, reports/PNA055_Sample07_filtered_S7.collapse.m2.part_001.report.json], --parquet-pattern=null, --report-pattern=null, --output=.}}}"
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-29T09:53:01.500262602"
+        "timestamp": "2025-10-31T14:31:30.509966414"
     }
 }
