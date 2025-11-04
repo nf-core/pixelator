@@ -16,7 +16,7 @@ nextflow_pipeline {
                 outdir                                 = "$outputDir"
 
                 pna_graph_component_size_min_threshold = 100
-                skip_experiment_summary                = true
+                skip_experiment_summary                = false
 
             }
         }
@@ -54,7 +54,7 @@ nextflow_pipeline {
                 input_basedir                = "$pipelines_testdata_base_path/testdata/pna/"
                 outdir                       = "$outputDir"
 
-                skip_experiment_summary      = true
+                skip_experiment_summary      = false
             }
         }
 
