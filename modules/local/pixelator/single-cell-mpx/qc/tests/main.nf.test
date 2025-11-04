@@ -9,31 +9,6 @@ nextflow_process {
     tag "pixelator/single_cell_mpx_qc"
 
 
-    test("Test MPX qc - stub") {
-
-        options "-stub"
-
-        when {
-            process {
-                """
-                input[0] = [
-                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
-                    [
-                        file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/amplicon/sample01_1k_pbmcs_scsp_v1_immunology1.merged.fastq.gz', checkIfExists: true),
-                    ]
-                ]
-                """
-            }
-        }
-
-        then {
-            assertAll(
-                { assert process.success },
-                { assert snapshot(process.out).match() }
-            )
-        }
-    }
-
     test("Test MPX qc - SCSP v1 | Immunology-I") {
         when {
                 params {

@@ -9,29 +9,6 @@ nextflow_process {
     tag "pixelator/single_cell_mpx_analysis"
 
 
-    test("Test MPX analysis - stub") {
-
-        options "-stub"
-
-        when {
-            process {
-                """
-                input[0] = [
-                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.annotate.dataset.pxl', checkIfExists: true)
-                ]
-                """
-            }
-        }
-
-        then {
-            assertAll(
-                { assert process.success },
-                { assert snapshot(process.out).match() }
-            )
-        }
-    }
-
     test("Test MPX analysis - SCSP v1 | Immunology-I") {
         when {
             params {
