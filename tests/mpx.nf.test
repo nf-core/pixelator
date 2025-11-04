@@ -1,9 +1,9 @@
 nextflow_pipeline {
 
-    name "Test pipeline with --save_all"
+    name "Test MPX pipeline with default settings"
     script "../main.nf"
 
-    test("Params: --save_all") {
+    test("Params: default") {
 
         when {
             params {
@@ -37,7 +37,7 @@ nextflow_pipeline {
         }
     }
 
-    test("Params: --save_all - stub") {
+    test("Params: default - stub") {
 
         options "-stub"
 
@@ -46,7 +46,7 @@ nextflow_pipeline {
                 pipelines_testdata_base_path = "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/"
                 input                        = "$pipelines_testdata_base_path/samplesheet/mpx/samplesheet_mpx_scsp_v1_immunology1.csv"
                 input_basedir                = "$pipelines_testdata_base_path/testdata/mpx/"
-                outdir = "$outputDir"
+                outdir                       = "$outputDir"
             }
         }
 
