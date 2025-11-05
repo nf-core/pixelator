@@ -1,6 +1,6 @@
 nextflow_pipeline {
 
-    name "Test MPX pipeline with default settings"
+    name "Test MPX pipeline"
     script "../main.nf"
 
     test("MPX pipeline") {
