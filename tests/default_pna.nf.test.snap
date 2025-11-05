@@ -90,7 +90,7 @@
                     "pixelator": "0.22.1"
                 },
                 "Workflow": {
-                    "nf-core/pixelator": "v2.2.0"
+                    "nf-core/pixelator": "v2.3.0dev"
                 }
             },
             [
@@ -146,6 +146,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-11-03T13:41:31.057134035"
+        "timestamp": "2025-11-05T09:28:52.43513999"
     }
 }
