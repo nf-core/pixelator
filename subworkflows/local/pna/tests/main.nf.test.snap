@@ -2,21 +2,21 @@
     "versions": {
         "content": [
             [
-                "versions.yml:md5,2b76dc677520f080b38a835b42d9234f",
-                "versions.yml:md5,45d66075b78e83ca12377ce2a8f00a41",
-                "versions.yml:md5,69408cfc661c191ca717e63d776a730f",
-                "versions.yml:md5,72ca8b012eed35b9680b7579c1a4cdcc",
-                "versions.yml:md5,7fc022b3ebfc95329e61f5333d13cfb6",
-                "versions.yml:md5,8682cffd6978e21db0c33352e6b129ef",
-                "versions.yml:md5,cb883de819d1f83c67c8f2ce4fcc22d6",
-                "versions.yml:md5,dafb241aadf5e309e534b364769a5f85",
-                "versions.yml:md5,fd40ac67016fc5a1d101f556bd9b4987"
+                "versions.yml:md5,07827affe5e02f3bf5876bc6a143322b",
+                "versions.yml:md5,0eddaffb752d61e6f84fd9389503db06",
+                "versions.yml:md5,2a235d854b0de2c001022e3a0b75db36",
+                "versions.yml:md5,5979e7443d33df2bc1d5535048d69fe4",
+                "versions.yml:md5,5c82cefeb09e4e26929dc38721e5ce05",
+                "versions.yml:md5,6b2ef1c32dd32cd7793037872d8226bf",
+                "versions.yml:md5,90bb5dfe9c82b2e36ed0559d73de90bd",
+                "versions.yml:md5,ba050a673a094bc584a79090768b336b",
+                "versions.yml:md5,d885a07d6905ff5cf5fb2fd7c19a6cc1"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-08-28T06:29:54.809801941"
+        "timestamp": "2025-10-31T13:42:12.626709109"
     }
 }

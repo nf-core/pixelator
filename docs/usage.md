@@ -135,9 +135,11 @@ Currently, two built-in panels are available for MPX:
 - `human-sc-immunology-spatial-proteomics-1`
 - `human-sc-immunology-spatial-proteomics-2`
 
-And one for PNA:
+And three for PNA:
 
 - `proxiome-immuno-155`
+- `proxiome-immuno-156-FMC63`
+- `proxiome-immuno-156-FLAG`
 
 ## Running the pipeline
 
@@ -239,7 +241,7 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
 - `shifter`
   - A generic configuration profile to be used with [Shifter](https://nersc.gitlab.io/development/shifter/how-to-use/)
 - `charliecloud`
-  - A generic configuration profile to be used with [Charliecloud](https://hpc.github.io/charliecloud/)
+  - A generic configuration profile to be used with [Charliecloud](https://charliecloud.io/)
 - `apptainer`
   - A generic configuration profile to be used with [Apptainer](https://apptainer.org/)
 - `wave`

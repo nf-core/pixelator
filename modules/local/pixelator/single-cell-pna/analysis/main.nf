@@ -6,8 +6,8 @@ process PIXELATOR_PNA_ANALYSIS {
     // conda "bioconda::pixelator=0.18.2"
 
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.21.4'
-        : 'quay.io/pixelgen-technologies/pixelator:0.21.4'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.22.1'
+        : 'quay.io/pixelgen-technologies/pixelator:0.22.1'}"
 
     input:
     tuple val(meta), path(data)

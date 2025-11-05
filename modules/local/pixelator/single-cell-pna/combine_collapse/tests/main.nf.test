@@ -42,9 +42,16 @@ nextflow_process {
                         assert path(get(0).get(1)).exists()
                     }
                 },
+                {
+                    // Filter out execution env related options from cli.options map
+                    with (process.out.metadata_json) {
+                        def metaContent = path(get(0).get(1)).json
+                        metaContent["cli"]["options"].removeAll { it.key in ["--threads", "--memory"] }
+                        assert snapshot(metaContent.toString()).match("meta_json")
+                    }
+                },
                 { assert snapshot(
                         process.out.report_json,
-                        process.out.metadata_json,
                         process.out.versions
                     ).match()
                 },

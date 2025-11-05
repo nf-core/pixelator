@@ -58,7 +58,7 @@
                     ]
                 ],
                 "5": [
-                    "versions.yml:md5,bbc9fbac3b95e696dacd1284c006c59b"
+                    "versions.yml:md5,e046bd710e4ef6dc9a7fffa8edd9d26e"
                 ],
                 "failed": [
                     [
@@ -116,15 +116,15 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,bbc9fbac3b95e696dacd1284c006c59b"
+                    "versions.yml:md5,e046bd710e4ef6dc9a7fffa8edd9d26e"
                 ]
             }
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-08-28T06:23:19.18525599"
+        "timestamp": "2025-10-31T13:31:18.820549773"
     },
     "Test MPX demux - SCSP v1 | Immunology-I": {
         "content": [
@@ -243,14 +243,14 @@
                 ]
             ],
             [
-                "versions.yml:md5,bbc9fbac3b95e696dacd1284c006c59b"
+                "versions.yml:md5,e046bd710e4ef6dc9a7fffa8edd9d26e"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-08-28T06:23:31.586233595"
+        "timestamp": "2025-10-31T13:31:36.148658933"
     },
     "report_json": {
         "content": [
@@ -260,9 +260,9 @@
                     0,
                     3
                 ],
-                "cutadapt_version": "5.0",
-                "python_version": "3.12.11",
-                "cores": 4,
+                "cutadapt_version": "5.2",
+                "python_version": "3.12.12",
+                "cores": 2,
                 "input": {
                     "path1": "sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz",
                     "path2": null,
@@ -2867,9 +2867,9 @@
             }
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-08-28T06:23:31.865830713"
+        "timestamp": "2025-10-31T13:31:36.52595872"
     }
 }
