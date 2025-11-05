@@ -10,44 +10,5 @@
             "nextflow": "25.10.0"
         },
         "timestamp": "2025-10-31T13:38:44.106466875"
-    },
-    "Test MPX Generate reports - stub": {
-        "content": [
-            {
-                "0": [
-                    [
-                        {
-                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                            "design": "D21",
-                            "panel": "human-sc-immunology-spatial-proteomics-1",
-                            "technology": "mpx"
-                        },
-                        "sample01_1k_pbmcs_scsp_v1_immunology1.html:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "1": [
-                    "versions.yml:md5,a7151b6c0424376e5821c074ad03bdf4"
-                ],
-                "pixelator_reports": [
-                    [
-                        {
-                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                            "design": "D21",
-                            "panel": "human-sc-immunology-spatial-proteomics-1",
-                            "technology": "mpx"
-                        },
-                        "sample01_1k_pbmcs_scsp_v1_immunology1.html:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "versions": [
-                    "versions.yml:md5,a7151b6c0424376e5821c074ad03bdf4"
-                ]
-            }
-        ],
-        "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
-        },
-        "timestamp": "2025-10-31T13:38:27.660723073"
     }
 }
