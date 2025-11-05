@@ -1,6 +1,6 @@
 nextflow_pipeline {
 
-    name "Test PNA pipeline with default settings"
+    name "Test PNA pipeline"
     script "../main.nf"
 
     tag "pixelator"
