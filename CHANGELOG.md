@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## dev - xxxx-xx-xx
 
+### Enhancements & fixes
+
+- Refactor nf-tests by @Aratz [#161](https://github.com/nf-core/pixelator/pull/161)
+
 ## [[2.2.0](https://github.com/nf-core/pixelator/releases/tag/2.2.0)] - 2025-11-02
 
 This new minor version of nf-core/pixelator introduces new panel files with clearer names. These new
