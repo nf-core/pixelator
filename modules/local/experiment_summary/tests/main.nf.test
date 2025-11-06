@@ -88,6 +88,9 @@ nextflow_process {
 
 
     test("PNA experiment summary - stub") {
+
+        options "-stub"
+
         when {
             process {
                 """

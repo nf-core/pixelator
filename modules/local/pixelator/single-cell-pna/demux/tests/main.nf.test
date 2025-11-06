@@ -8,6 +8,34 @@ nextflow_process {
     tag "pixelator/pna"
     tag "pixelator/single_cell_pna_demux"
 
+    test("PNA demux - stub") {
+
+        options "-stub"
+
+        when {
+            params {
+                skip_experiment_summary = true
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/amplicon/PNA055_Sample07_filtered_S7.amplicon.fq.zst', checkIfExists: true),
+                    [],
+                    'proxiome-immuno-155',
+                    'pna-2'
+                ]
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
     test("PNA demux - small test") {
         when {
             params {
