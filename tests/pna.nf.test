@@ -5,6 +5,7 @@ nextflow_pipeline {
 
     tag "pixelator"
     tag "pixelator/pna"
+    tag "smoke_test"
 
     test("Params: all") {
 
