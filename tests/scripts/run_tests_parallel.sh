@@ -6,7 +6,7 @@ ARGS=$@
 
 nf-test test --profile test,docker $ARGS \
     modules/local/pixelator/experiment_summary/ \
-    --tap /tmp/pixelator_mpx_modules_tests.txt &> /dev/null &
+    --tap /tmp/pixelator_es_tests.txt &> /dev/null &
 nf-test test --profile test,docker $ARGS \
     modules/local/pixelator/single-cell-mpx/ \
     --tap /tmp/pixelator_mpx_modules_tests.txt &> /dev/null &
@@ -25,7 +25,8 @@ nf-test test --profile test,docker $ARGS \
 
 wait
 
-cat /tmp/pixelator_mpx_modules_tests.txt  \
+cat /tmp/pixelator_es_tests.txt           \
+    /tmp/pixelator_mpx_modules_tests.txt  \
     /tmp/pixelator_pna_modules_tests.txt  \
     /tmp/pixelator_subworkflow_tests.txt  \
     /tmp/pixelator_pna_pipeline_tests.txt \
