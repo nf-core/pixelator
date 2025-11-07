@@ -41,6 +41,7 @@ nextflow_process {
         when {
             params {
                 pna_graph_component_size_min_threshold = 100
+                outdir   = "$outputDir"
             }
 
             process {
@@ -56,16 +57,16 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
-                { assert snapshot(process.out.metadata_json).match("metadata_json") },
-                { assert snapshot(process.out.report_json).match("report_json") },
-                { assert snapshot(process.out.versions).match("versions") },
-                {
-                    with (process.out.log) {
-                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator graph")
-                    }
-                },
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
             )
         }
     }

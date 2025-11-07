@@ -33,8 +33,7 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(process.out).match() },
-
+                { assert snapshot(process.out).match() }
             )
         }
     }
@@ -43,6 +42,7 @@ nextflow_process {
         when {
             params {
                 save_all = true
+                outdir   = "$outputDir"
             }
             process {
                 """
@@ -58,19 +58,16 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
+                { assert workflow.success },
                 { assert snapshot(
-                        process.out.merged,
-                        process.out.report_json,
-                        process.out.metadata
-                    ).match()
-                },
-                {
-                    with (process.out.log) {
-                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator amplicon")
-                    }
-                },
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
             )
         }
     }

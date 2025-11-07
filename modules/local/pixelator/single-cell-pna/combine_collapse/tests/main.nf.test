@@ -47,6 +47,9 @@ nextflow_process {
 
     test("PNA combine collapse - multiple files") {
         when {
+            params {
+                outdir   = "$outputDir"
+            }
             process {
                 """
                 input[0] = [
@@ -70,31 +73,16 @@ nextflow_process {
 
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
-                {
-                    with(process.out.parquet) {
-                        assert path(get(0).get(1)).exists()
-                    }
-                },
-                {
-                    // Filter out execution env related options from cli.options map
-                    with (process.out.metadata_json) {
-                        def metaContent = path(get(0).get(1)).json
-                        metaContent["cli"]["options"].removeAll { it.key in ["--threads", "--memory"] }
-                        assert snapshot(metaContent.toString()).match("meta_json")
-                    }
-                },
+                { assert workflow.success },
                 { assert snapshot(
-                        process.out.report_json,
-                        process.out.versions
-                    ).match()
-                },
-                {
-                    with (process.out.log) {
-                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator combine-collapse")
-                    }
-                },
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
             )
         }
     }

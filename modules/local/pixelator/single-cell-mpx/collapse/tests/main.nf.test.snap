@@ -1,45 +1,26 @@
 {
     "Test MPX collapse - - SCSP v1 | Immunology-I": {
         "content": [
+            1,
             [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.collapsed.parquet:md5,309a0b8c40bfb3e7cc6f05bd9a94b9e9"
-                ]
+                "pixelator",
+                "pixelator/collapse",
+                "pixelator/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.collapsed.parquet",
+                "pixelator/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json",
+                "pixelator/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-collapse.log"
             ],
             [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,dd843f96bca3802fa558afefabf1864f"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,69a3436261bc4e09d841b7be641aafbd"
-                ]
+                "versions.yml:md5,29fb76a9bb02ad5d3c0fac614e6a6b58"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-05-06T15:11:44.266641701"
+        "timestamp": "2025-11-07T10:14:23.568911654"
     },
     "Test MPX collapse - stub": {
         "content": [

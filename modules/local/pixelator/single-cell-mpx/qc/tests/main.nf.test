@@ -36,8 +36,9 @@ nextflow_process {
 
     test("Test MPX qc - SCSP v1 | Immunology-I") {
         when {
-                params {
+            params {
                 save_all = true
+                outdir   = "$outputDir"
             }
             process {
                 """
@@ -52,35 +53,16 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
+                { assert workflow.success },
                 { assert snapshot(
-                        process.out.adapterqc_processed,
-                        process.out.preqc_processed,
-                        process.out.adapterqc_failed,
-                        process.out.preqc_failed,
-                        process.out.adapterqc_report_json,
-                        process.out.preqc_report_json,
-                        process.out.adapterqc_metadata,
-                        process.out.preqc_metadata,
-                        process.out.versions
-                    )
-                },
-                {
-                    with(process.out.preqc_report_html) {
-                        assert path(get(0).get(1)).exists()
-                    }
-                },
-                {
-                    with (process.out.preqc_log) {
-                        assert path(get(0).get(1)).readLines().any { it.contains("Finished pixelator preqc") }
-                    }
-                },
-                {
-                    with (process.out.adapterqc_log) {
-                        assert path(get(0).get(1)).readLines().any { it.contains("Finished pixelator adapterqc") }
-                    }
-                },
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
             )
         }
     }

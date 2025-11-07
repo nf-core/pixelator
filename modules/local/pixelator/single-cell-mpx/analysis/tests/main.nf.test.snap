@@ -1,4 +1,27 @@
 {
+    "Test MPX analysis - SCSP v1 | Immunology-I": {
+        "content": [
+            1,
+            [
+                "pixelator",
+                "pixelator/analysis",
+                "pixelator/analysis/sample01_1k_pbmcs_scsp_v1_immunology1.analysis.dataset.pxl",
+                "pixelator/analysis/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json",
+                "pixelator/analysis/sample01_1k_pbmcs_scsp_v1_immunology1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-analysis.log"
+            ],
+            [
+                "versions.yml:md5,294239a503f1320c924038c6554443a2"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-07T10:12:24.48353731"
+    },
     "Test MPX analysis - stub": {
         "content": [
             {

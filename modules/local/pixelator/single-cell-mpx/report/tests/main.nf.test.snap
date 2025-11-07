@@ -62,7 +62,14 @@
     },
     "Test MPX report - SCSP v1 | Immunology-I": {
         "content": [
-            null,
+            1,
+            [
+                "pixelator",
+                "pixelator/logs",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-report.log",
+                "pixelator/sample01_1k_pbmcs_scsp_v1_immunology1.qc-report.html"
+            ],
             [
                 "versions.yml:md5,2a9fd8a87a02fbd4b9c0d087aee3643b"
             ]
@@ -71,6 +78,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-31T13:33:24.598297308"
+        "timestamp": "2025-11-07T10:18:52.832542041"
     }
 }

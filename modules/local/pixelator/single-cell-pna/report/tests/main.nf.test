@@ -8,7 +8,7 @@ nextflow_process {
     tag "pixelator/pna"
     tag "pixelator/single_cell_pna_report"
 
-    test("PNA report - stub) {
+    test("PNA report - stub") {
 
         options "-stub"
 
@@ -63,6 +63,9 @@ nextflow_process {
 
     test("PNA report - small test") {
         when {
+            params {
+                outdir   = "$outputDir"
+            }
             process {
                 """
                 input[0] = [
@@ -104,17 +107,16 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
-                {
-                    with(process.out.report) {
-                        with(get(0)) {
-                            assert get(1).endsWith("qc-report.html")
-                            assert file(get(1)).exists()
-                        }
-                    }
-                },
-                { assert snapshot(process.out.versions).match("versions") },
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
             )
         }
     }

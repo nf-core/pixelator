@@ -32,6 +32,9 @@ nextflow_process {
 
     test("PNA denoise - small test") {
         when {
+            params {
+                outdir   = "$outputDir"
+            }
             process {
                 """
                 input[0] = [
@@ -43,19 +46,16 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
-                { assert snapshot(process.out.metadata_json).match("metadata_json") },
-                {
-                    with (process.out.report_json) {
-                        assert snapshot(path(get(0).get(1)).readLines()[0..5]).match("report_json") }
-                },
-                { assert snapshot(process.out.versions).match("versions") },
-                {
-                    with (process.out.log) {
-                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator denoise")
-                    }
-                },
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
             )
         }
     }

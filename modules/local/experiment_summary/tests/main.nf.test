@@ -8,7 +8,12 @@ nextflow_process {
     tag "pixelator/pna"
     tag "pixelator/experiment_summary"
 
-    test("PNA experiment summary - small") {
+
+
+    test("PNA experiment summary - stub") {
+
+        options "-stub"
+
         when {
             process {
                 """
@@ -80,21 +85,19 @@ nextflow_process {
                         assert path(get(0).get(1)).exists()
                     }
                 },
-                { assert snapshot(process.out.versions).match("versions") },
+                { assert snapshot(process.out.versions).match() },
             )
         }
     }
 
-
-
-    test("PNA experiment summary - stub") {
-
-        options "-stub"
-
+    test("PNA experiment summary - small") {
         when {
+            params {
+                outdir   = "$outputDir"
+            }
             process {
                 """
-                input[0] = [ file(params.pipelines_testdata_base_path + 'samplesheet/pna/samplesheet_pna_es.csv', checkIfExists: true) ]
+                input[0] = [ file(params.pipelines_testdata_base_path + 'samplesheet/pna/samplesheet_pna.csv', checkIfExists: true) ]
                 input[1] = [
                     [id:'all', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
                     // amplicon
@@ -154,15 +157,16 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
-                {
-                    with(process.out.html) {
-                        assert path(get(0).get(1)).endsWith("experiment-summary.html")
-                        assert path(get(0).get(1)).exists()
-                    }
-                },
-                { assert snapshot(process.out.versions).match("stub-versions") },
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
             )
         }
     }
