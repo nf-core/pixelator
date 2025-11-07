@@ -5,6 +5,9 @@
 ARGS=$@
 
 nf-test test --profile test,docker $ARGS \
+    modules/local/pixelator/experiment_summary/ \
+    --tap /tmp/pixelator_mpx_modules_tests.txt &> /dev/null &
+nf-test test --profile test,docker $ARGS \
     modules/local/pixelator/single-cell-mpx/ \
     --tap /tmp/pixelator_mpx_modules_tests.txt &> /dev/null &
 nf-test test --profile test,docker $ARGS \
