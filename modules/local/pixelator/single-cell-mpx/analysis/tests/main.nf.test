@@ -35,7 +35,8 @@ nextflow_process {
     test("Test MPX analysis - SCSP v1 | Immunology-I") {
         when {
             params {
-                save_all
+                save_all = true
+                outdir   = "$outputDir"
             }
             process {
                 """
@@ -48,17 +49,16 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
-                {assert path(process.out.report_json.get(0).get(1)).exists()},
-                {assert path(process.out.metadata.get(0).get(1)).exists()},
-                {assert path(process.out.dataset.get(0).get(1)).exists()},
-                {assert process.out.dataset.get(0).get(1).endsWith(".pxl")},
-                {
-                    with (process.out.log) {
-                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator analysis")
-                    }
-                },
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
             )
         }
     }
