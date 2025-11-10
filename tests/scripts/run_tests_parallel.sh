@@ -4,24 +4,41 @@
 
 ARGS=$@
 
+echo Running tests: experiment summary...
 nf-test test --profile test,docker $ARGS \
-    modules/local/pixelator/experiment_summary/ \
-    --tap /tmp/pixelator_es_tests.txt &> /dev/null &
+    modules/local/experiment_summary/ \
+    &> /tmp/pixelator_es_tests.txt \
+    && echo "Completed tests: experiment summary" &
+
+echo Running tests: MPX modules...
 nf-test test --profile test,docker $ARGS \
     modules/local/pixelator/single-cell-mpx/ \
-    --tap /tmp/pixelator_mpx_modules_tests.txt &> /dev/null &
+    &> /tmp/pixelator_mpx_modules_tests.txt \
+    && echo "Completed tests: MPX modules" &
+
+echo Running tests: PNA modules...
 nf-test test --profile test,docker $ARGS \
     modules/local/pixelator/single-cell-pna/ \
-    --tap /tmp/pixelator_pna_modules_tests.txt &> /dev/null &
+    &> /tmp/pixelator_pna_modules_tests.txt \
+    && echo "Completed tests: PNA modules" &
+
+echo Running tests: subworkflows...
 nf-test test --profile test,docker $ARGS \
     subworkflows/ \
-    --tap /tmp/pixelator_subworkflow_tests.txt &> /dev/null &
+    &> /tmp/pixelator_subworkflow_tests.txt \
+    && echo "Completed tests: subworkflows" &
+
+echo Running tests: PNA pipeline...
 nf-test test --profile test,docker $ARGS \
     tests/pna.nf.test \
-    --tap /tmp/pixelator_pna_pipeline_tests.txt &> /dev/null &
+    &> /tmp/pixelator_pna_pipeline_tests.txt \
+    && echo "Completed tests: PNA pipeline" &
+
+echo Running tests: MPX pipeline...
 nf-test test --profile test,docker $ARGS \
     tests/mpx.nf.test \
-    --tap /tmp/pixelator_mpx_pipeline_tests.txt &> /dev/null &
+    &> /tmp/pixelator_mpx_pipeline_tests.txt \
+    && echo "Completed tests: MPX pipeline" &
 
 wait
 
