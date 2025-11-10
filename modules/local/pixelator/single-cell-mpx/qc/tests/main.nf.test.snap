@@ -1,4 +1,35 @@
 {
+    "Test MPX qc - SCSP v1 | Immunology-I": {
+        "content": [
+            1,
+            [
+                "pixelator",
+                "pixelator/adapterqc",
+                "pixelator/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.failed.fastq.gz",
+                "pixelator/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json",
+                "pixelator/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz",
+                "pixelator/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-adapterqc.log",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-preqc.log",
+                "pixelator/preqc",
+                "pixelator/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.failed.fastq.gz",
+                "pixelator/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json",
+                "pixelator/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz",
+                "pixelator/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.qc-report.html",
+                "pixelator/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.report.json"
+            ],
+            [
+                "versions.yml:md5,2c93dd7d724759bc9c3e339548090edb"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-07T10:18:14.071438596"
+    },
     "Test MPX qc - stub": {
         "content": [
             {
