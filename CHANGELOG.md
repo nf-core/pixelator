@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Enhancements & fixes
 
 - Improve test suite by @Aratz [#163](https://github.com/nf-core/pixelator/pull/163)
+- Publish samplesheet to output directory by @Aratz [#164](https://github.com/nf-core/pixelator/pull/164)
 
 ## [[2.2.0](https://github.com/nf-core/pixelator/releases/tag/2.2.0)] - 2025-11-02
 
