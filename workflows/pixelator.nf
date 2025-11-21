@@ -60,6 +60,8 @@ workflow PIXELATOR {
 
     main:
 
+    file(params.input).copyTo("${params.outdir}/pipeline_info")
+
     ch_versions = Channel.empty()
 
     //
