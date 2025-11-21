@@ -1,26 +1,29 @@
 nextflow_process {
 
-    name "Test Process PIXELATOR_DEMUX"
+    name "Test Process PIXELATOR_PNA_LAYOUT"
     script "../main.nf"
-    process "PIXELATOR_DEMUX"
+    process "PIXELATOR_PNA_LAYOUT"
     tag "modules"
     tag "pixelator"
     tag "pixelator/mpx"
-    tag "pixelator/single_cell_mpx_demux"
+    tag "pixelator/single_cell_mpx_layout"
 
 
-    test("Test MPX demux - stub") {
+    test("Test PNA layout - stub") {
 
         options "-stub"
 
         when {
+            params {
+                save_all = true
+                layout_algorithm = "fruchterman_reingold_3d"
+                skip_layout = false
+            }
             process {
                 """
                 input[0] = [
-                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz', checkIfExists: true),
-                    [],
-                    "human-sc-immunology-spatial-proteomics-1"
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design: 'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/analysis/PNA055_Sample07_filtered_S7.analysis.pxl', checkIfExists: true)
                 ]
                 """
             }
@@ -34,19 +37,19 @@ nextflow_process {
         }
     }
 
-    test("Test MPX demux - SCSP v1 | Immunology-I") {
+    test("Test PNA layout - small test") {
         when {
             params {
                 save_all = true
+                layout_algorithm = "fruchterman_reingold_3d"
+                skip_layout = false
                 outdir   = "$outputDir"
             }
             process {
                 """
                 input[0] = [
-                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design:'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/mpx/modules/adapterqc/sample01_1k_pbmcs_scsp_v1_immunology1.processed.fastq.gz', checkIfExists: true),
-                    [],
-                    "human-sc-immunology-spatial-proteomics-1"
+                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design: 'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/analysis/PNA055_Sample07_filtered_S7.analysis.pxl', checkIfExists: true)
                 ]
                 """
             }

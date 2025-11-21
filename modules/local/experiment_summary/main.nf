@@ -24,13 +24,14 @@ process EXPERIMENT_SUMMARY {
     path("versions.yml")                                , emit: versions
 
     script:
-
+    def args = task.ext.args ?: ''
     """
     # Copy the full quarto dir from the read-only image into the workdir
     cp -r /workspace/inst/quarto/ ./quarto/
     quarto render ./quarto/pixelatorES.qmd \\
         -P sample_sheet="\$PWD/${samplesheet_path}" \\
-        -P data_folder="\$PWD/results/"
+        -P data_folder="\$PWD/results/" \\
+        $args \\
 
     mv ./quarto/pixelatorES.html experiment-summary.html
 

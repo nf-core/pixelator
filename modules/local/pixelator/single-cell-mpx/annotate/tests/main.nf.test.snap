@@ -1,13 +1,26 @@
 {
-    "pxl": {
+    "Test MPX annotate - SCSP v1 | Immunology-I": {
         "content": [
-            "metadata.json:md5,82b35492f5e5067481c04c8612f466ee"
+            1,
+            [
+                "pixelator",
+                "pixelator/annotate",
+                "pixelator/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.annotate.dataset.pxl",
+                "pixelator/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json",
+                "pixelator/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-annotate.log"
+            ],
+            [
+                "versions.yml:md5,f96c065a146a6d0667467f30beb8092b"
+            ]
         ],
         "meta": {
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-10-31T13:30:45.331289297"
+        "timestamp": "2025-11-07T10:13:35.389069003"
     },
     "Test MPX annotate - stub": {
         "content": [

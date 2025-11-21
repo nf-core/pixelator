@@ -42,6 +42,7 @@ nextflow_process {
                 save_all = true
                 layout_algorithm = "fruchterman_reingold_3d"
                 skip_layout = false
+                outdir   = "$outputDir"
             }
             process {
                 """
@@ -54,27 +55,16 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
+                { assert workflow.success },
                 { assert snapshot(
-                        process.out.report_json,
-                        process.out.metadata
-                    ).match()
-                },
-                {
-                    with (process.out.dataset.get(0)) {
-                        assert path(get(1)).zip.extract("adata.h5ad").exists()
-                        assert path(get(1)).zip.extract("edgelist.parquet").exists()
-                        assert snapshot(
-                            path(get(1)).zip.extract("metadata.json")
-                        ).match("pxl")
-                    }
-                },
-                {
-                    with (process.out.log) {
-                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator layout")
-                    }
-                },
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
             )
         }
     }

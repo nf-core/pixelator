@@ -41,6 +41,7 @@ nextflow_process {
         when {
             params {
                 save_all = true
+                outdir   = "$outputDir"
             }
             process {
                 """
@@ -55,24 +56,16 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
-                {assert path(process.out.report_json.get(0).get(1)).exists()},
-                {assert path(process.out.metadata.get(0).get(1)).exists()},
-                {
-                    with (process.out.dataset.get(0)) {
-                        assert path(get(1)).zip.extract("adata.h5ad").exists()
-                        assert path(get(1)).zip.extract("edgelist.parquet").exists()
-                        assert snapshot(
-                            path(get(1)).zip.extract("metadata.json")
-                        ).match("pxl")
-                    }
-                },
-                {
-                    with (process.out.log) {
-                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator annotate")
-                    }
-                },
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
             )
         }
     }

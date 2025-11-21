@@ -1,44 +1,26 @@
 {
-    "pxl": {
-        "content": [
-            "metadata.json:md5,f2fb857ccf3ee1b600c6903b7406444d"
-        ],
-        "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.3"
-        },
-        "timestamp": "2025-01-14T13:53:40.923684802"
-    },
     "Test MPX layout - SCSP v1 | Immunology-I": {
         "content": [
+            1,
             [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,479afd25dcacc45540d81d1d8b7b5346"
-                ]
+                "pixelator",
+                "pixelator/layout",
+                "pixelator/layout/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json",
+                "pixelator/layout/sample01_1k_pbmcs_scsp_v1_immunology1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-layout.log",
+                "pixelator/sample01_1k_pbmcs_scsp_v1_immunology1.layout.dataset.pxl"
             ],
             [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,39056acdce8c39c1a3f4c91b642d7b9a"
-                ]
+                "versions.yml:md5,9aaf581b41217ea43db5731b1ab5ecf2"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-05-06T15:14:12.951779201"
+        "timestamp": "2025-11-07T10:17:23.257807724"
     },
     "Test MPX layout - stub": {
         "content": [

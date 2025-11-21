@@ -1,45 +1,26 @@
 {
     "Test MPX amplicon - SCSP v1 | Immunology-I": {
         "content": [
+            1,
             [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.merged.fastq.gz:md5,b66b4946d695f8e2202e2018dcfd6a15"
-                ]
+                "pixelator",
+                "pixelator/amplicon",
+                "pixelator/amplicon/sample01_1k_pbmcs_scsp_v1_immunology1.merged.fastq.gz",
+                "pixelator/amplicon/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json",
+                "pixelator/amplicon/sample01_1k_pbmcs_scsp_v1_immunology1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-amplicon.log"
             ],
             [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,5c15027e9dd0e441f8695a166817c9a5"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,40db76b696434ea585851070cabe8baa"
-                ]
+                "versions.yml:md5,60a7a0bbc070d248db9f89ab0972c46e"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.2"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-07-28T11:06:59.496585652"
+        "timestamp": "2025-11-07T08:29:01.551421256"
     },
     "Test MPX amplicon - stub": {
         "content": [
