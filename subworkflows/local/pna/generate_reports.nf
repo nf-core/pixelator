@@ -4,7 +4,6 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR_PNA_REPORT } from '../../../modules/local/pixelator/single-cell-pna/report/main'
 include { EXPERIMENT_SUMMARY    } from '../../../modules/local/experiment_summary/main'
 
 /*
@@ -28,7 +27,7 @@ workflow PNA_GENERATE_REPORTS {
     skip_experiment_summary  // boolean
 
     main:
-    ch_versions = Channel.empty()
+    ch_versions = channel.empty()
 
     ch_meta_col = panel_files
         .map { meta, _data -> [meta.id, meta] }
@@ -52,12 +51,8 @@ workflow PNA_GENERATE_REPORTS {
         .join( analysis_data.map { meta, data -> [ meta.id, data ] } )
         .join( layout_data.map   { meta, data -> [ meta.id, data ] } )
 
-    ch_pna_report_input = ch_report_data.map {
-        _id, meta, panels, amplicon, demux, collapse, graph, denoise, analysis, layout ->
-            [meta, panels, panels ? null : meta.panel, amplicon, demux, collapse, graph, denoise, analysis, layout]
-        }
 
-    PIXELATOR_PNA_REPORT ( ch_pna_report_input )
+
 
     // Accumulate results across all samples grouped per stage
 
@@ -98,10 +93,8 @@ workflow PNA_GENERATE_REPORTS {
         ch_experiment_summary = ch_grouped_data.map { it -> it[0] }.combine(Channel.of([]))
     }
 
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_REPORT.out.versions.first())
 
     emit:
-    pixelator_reports    = PIXELATOR_PNA_REPORT.out.report
     experiment_summary   = ch_experiment_summary
     versions             = ch_versions
 }
