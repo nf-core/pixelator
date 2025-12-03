@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## dev - xxxx-xx-xx
 
+### Removed
+
+- Removed QC Report step from PNA pipeline (functionality is covered by the more extensive Experiment Summary step)
+  by @johandahlberg [#167](https://github.com/nf-core/pixelator/pull/166)
+
 ### Enhancements & fixes
 
 - Improve test suite by @Aratz [#163](https://github.com/nf-core/pixelator/pull/163)
