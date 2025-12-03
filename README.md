@@ -40,7 +40,7 @@ For PNA data, the pipeline will run the following steps:
 5. Denoise the cell graphs ([`pixelator single-cell-pna denoise`](https://github.com/PixelgenTechnologies/pixelator))
 6. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
 7. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
-8. Report generation ([`pixelator single-cell-pna report`](https://github.com/PixelgenTechnologies/pixelator))
+8. Proxiome Experiment Summary generation using [PixelatorES](https://github.com/PixelgenTechnologies/pixelatorES)
 
 For MPX data, the pipeline will run the following steps:
 
