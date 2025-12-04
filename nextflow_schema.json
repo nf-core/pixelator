@@ -92,7 +92,7 @@
                     "default": true,
                     "description": "Enable filtering of amplicons with low complexity UMI sequences."
                 },
-                "pna_amplicon_umi_complexity_threshold": {
+                "pna_amplicon_low_complexity_threshold": {
                     "type": "number",
                     "default": 0.8,
                     "minimum": 0.5,
