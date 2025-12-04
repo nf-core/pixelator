@@ -27,6 +27,13 @@ Following table provides an overview of all possible columns in the samplesheet.
 The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 5 columns
 to match those defined in the table below.
 
+> [!WARNING]
+> It is important that you select a panel file that matches the kit lot version you are
+> using for your experiment. Using a mismatched panel file will lead to incorrect antibody
+> assignments and erroneous results.
+> An update list of which panel files correspond to which kit lot versions can be found
+> on the Pixelgen Technologies website: [TODO FIX ME!](https://pixelgen.com/support/)
+
 Below is an example of a simple samplesheet with two samples.
 
 ```csv
