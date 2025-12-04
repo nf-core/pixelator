@@ -16,13 +16,13 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/PNA055_Sample07_filtered_S7.demux.m1.part_000.parquet', checkIfExists: true)
                     ],
-                    [],                     // panel_file
-                    'proxiome-immuno-155',   // panel
-                    'pna-2'                 // design
+                    [],                         // panel_file
+                    'proxiome-immuno-155-v2',   // panel
+                    'pna-2'                     // design
                 ]
                 """
             }
@@ -44,12 +44,12 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/PNA055_Sample07_filtered_S7.demux.m1.part_000.parquet', checkIfExists: true)
                     ],
                     [],                     // panel_file
-                    'proxiome-immuno-155',   // panel
+                    'proxiome-immuno-155-v2',   // panel
                     'pna-2'                 // design
                 ]
                 """
@@ -79,13 +79,13 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/PNA055_Sample07_filtered_S7.demux.m1.part_000.parquet', checkIfExists: true),
                         file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/PNA055_Sample07_filtered_S7.demux.m1.part_001.parquet', checkIfExists: true)
                     ],
                     [],                      // panel_file
-                    'proxiome-immuno-155',   // panel
+                    'proxiome-immuno-155-v2',   // panel
                     'pna-2'                  // design
                 ]
                 """

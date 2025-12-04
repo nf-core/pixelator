@@ -9,7 +9,7 @@ nextflow_workflow {
     tag "pixelator"
     tag "pixelator/pna"
 
-    test("Default parameters [design: pna-2, panel: proxiome-immuno-155]") {
+    test("Default parameters [design: pna-2, panel: proxiome-immuno-155-v2]") {
         when {
 
             params {
@@ -20,7 +20,7 @@ nextflow_workflow {
 
             workflow {
                 """
-                def meta = [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ]
+                def meta = [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ]
                 input[0] = Channel.of([
                         meta,
                         [

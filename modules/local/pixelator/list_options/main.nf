@@ -5,8 +5,8 @@ process PIXELATOR_LIST_OPTIONS {
     // TODO: Add conda back
     // conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.22.1'
-        : 'quay.io/pixelgen-technologies/pixelator:0.22.1'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.23.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.23.0'}"
 
     output:
     path "design_options.txt", emit: designs
@@ -44,7 +44,7 @@ process PIXELATOR_LIST_OPTIONS {
     human-sc-immunology-spatial-proteomics-1
     human-sc-immunology-spatial-proteomics-2
     human-sc-immunology-spatial-proteomics
-    proxiome-immuno-155
+    proxiome-immuno-155-v2
     END_PANELS
 
     cat <<-END_VERSIONS > versions.yml

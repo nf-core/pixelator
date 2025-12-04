@@ -13,14 +13,14 @@
                 "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-layout.log"
             ],
             [
-                "versions.yml:md5,e84e8dd4dae447e3ce5f424e81e54fdc"
+                "versions.yml:md5,b21b8c091dfe00f7afd98459723d6850"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-11-07T10:21:16.437766273"
+        "timestamp": "2025-12-04T10:35:38.070896358"
     },
     "Test PNA layout - stub": {
         "content": [
@@ -85,7 +85,7 @@
                     ]
                 ],
                 "5": [
-                    "versions.yml:md5,e84e8dd4dae447e3ce5f424e81e54fdc"
+                    "versions.yml:md5,b21b8c091dfe00f7afd98459723d6850"
                 ],
                 "all_results": [
                     [
@@ -147,14 +147,14 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,e84e8dd4dae447e3ce5f424e81e54fdc"
+                    "versions.yml:md5,b21b8c091dfe00f7afd98459723d6850"
                 ]
             }
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-11-07T10:20:46.091141717"
+        "timestamp": "2025-12-04T10:35:24.747459593"
     }
 }

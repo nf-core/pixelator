@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## dev - xxxx-xx-xx
 
+From this release onwards, there will not be a default panel selected, i.e. as a user you
+must specify an exact version of the panel you want to use in your samplesheet, e.g. `proxiome-immuno-155-v2`.
+The version to use will depend on which kit lot of the Proxiome Immuno kit you are using. See [NNN](...) for
+an update list of which panel version to use with which kit lot.
+
 ### Removed
 
 - Removed QC Report step from PNA pipeline (functionality is covered by the more extensive Experiment Summary step)
@@ -14,6 +19,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improve test suite by @Aratz [#163](https://github.com/nf-core/pixelator/pull/163)
 - Publish samplesheet to output directory by @Aratz [#164](https://github.com/nf-core/pixelator/pull/164)
+- Updated pixelatorES to 0.6.0 in PNA experiment summary step by @johandahlberg [#168](https://github.com/nf-core/pixelator/pull/168)
+- Updated pixelator to 0.23.0 in associated steps by @johandahlberg [#168](https://github.com/nf-core/pixelator/pull/168)
+
+### Parameters
+
+| Old parameter | New parameter                             |
+| ------------- | ----------------------------------------- |
+|               | `--pna_amplicon_low_complexity_filter`    |
+|               | `--pna_amplicon_low_complexity_threshold` |
+|               | `--pna_amplicon_lbs_filter`               |
+|               | `--pna_amplicon_lbs_filter_min_overlap`   |
+|               | `--pna_amplicon_lbs_filter_error_rate`    |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.22.1      | 0.23.0      |
+| `pixelatorES` | 0.4.3       | 0.6.0       |
 
 ## [[2.2.0](https://github.com/nf-core/pixelator/releases/tag/2.2.0)] - 2025-11-02
 

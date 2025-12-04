@@ -19,7 +19,7 @@ nextflow_process {
                 """
                 input[0] = [ file(params.pipelines_testdata_base_path + 'samplesheet/pna/samplesheet_pna.csv', checkIfExists: true) ]
                 input[1] = [
-                    [id:'all', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [id:'all', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     // amplicon
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/modules/amplicon/PNA055_Sample07_filtered_S7.meta.json', checkIfExists: true),
@@ -99,7 +99,7 @@ nextflow_process {
                 """
                 input[0] = [ file(params.pipelines_testdata_base_path + 'samplesheet/pna/samplesheet_pna.csv', checkIfExists: true) ]
                 input[1] = [
-                    [id:'all', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [id:'all', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     // amplicon
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/modules/amplicon/PNA055_Sample07_filtered_S7.meta.json', checkIfExists: true),
