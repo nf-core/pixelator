@@ -31,8 +31,8 @@ Below is an example of a simple samplesheet with two samples.
 
 ```csv
 sample,design,panel,fastq_1,fastq_2
-sample1,pna-2,proxiome-immuno-155,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
-sample2,pna-2,proxiome-immuno-155,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
+sample1,pna-2,proxiome-immuno-155-v2,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample2,pna-2,proxiome-immuno-155-v2,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
 ```
 
 Columns not defined in the table below are ignored by the pipeline but can be useful
@@ -59,9 +59,9 @@ The `sample` identifiers have to be the same when you have re-sequenced the same
 
 ```csv title="samplesheet.csv"
 sample,sample_alias,condition,design,panel,fastq_1,fastq_2
-uropod_control_1,s1,control,pna-2,proxiome-immuno-155,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
-uropod_control_1,s1,control,pna-2,proxiome-immuno-155,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
-uropod_control_1,s1,control,pna-2,proxiome-immuno-155,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
+uropod_control_1,s1,control,pna-2,proxiome-immuno-155-v2,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
+uropod_control_1,s1,control,pna-2,proxiome-immuno-155-v2,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
+uropod_control_1,s1,control,pna-2,proxiome-immuno-155-v2,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
 ```
 
 ### Relative paths
@@ -83,7 +83,7 @@ You can use following samplesheet:
 
 ```csv title="samplesheet.csv"
 sample,sample_alias,condition,design,panel,panel_file,fastq_1,fastq_2
-sample1,s1,control,pna-2,proxiome-immuno-155,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
+sample1,s1,control,pna-2,proxiome-immuno-155-v2,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
 ```
 
 Using the `--input_basedir` option you can specify a different location that will be used to resolve relative paths.

@@ -12,14 +12,14 @@
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-collapse.log"
             ],
             [
-                "versions.yml:md5,462d418a2ce35a965e966e432ae04ba1"
+                "versions.yml:md5,4fd0121a142c2d853dda5791ed97dda4"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-11-07T10:15:36.444308344"
+        "timestamp": "2025-12-04T10:44:51.673452909"
     },
     "PNA collapse - stub": {
         "content": [
@@ -29,7 +29,7 @@
                         {
                             "id": "PNA055_Sample07_filtered_S7",
                             "design": "pna-2",
-                            "panel": "proxiome-immuno-155",
+                            "panel": "proxiome-immuno-155-v2",
                             "technology": "pna"
                         },
                         [
@@ -42,7 +42,7 @@
                         {
                             "id": "PNA055_Sample07_filtered_S7",
                             "design": "pna-2",
-                            "panel": "proxiome-immuno-155",
+                            "panel": "proxiome-immuno-155-v2",
                             "technology": "pna"
                         },
                         [
@@ -55,7 +55,7 @@
                         {
                             "id": "PNA055_Sample07_filtered_S7",
                             "design": "pna-2",
-                            "panel": "proxiome-immuno-155",
+                            "panel": "proxiome-immuno-155-v2",
                             "technology": "pna"
                         },
                         "PNA055_Sample07_filtered_S7.demux.m1.part_000.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -66,21 +66,21 @@
                         {
                             "id": "PNA055_Sample07_filtered_S7",
                             "design": "pna-2",
-                            "panel": "proxiome-immuno-155",
+                            "panel": "proxiome-immuno-155-v2",
                             "technology": "pna"
                         },
                         "PNA055_Sample07_filtered_S7.demux.m1.part_000.pixelator-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "4": [
-                    "versions.yml:md5,462d418a2ce35a965e966e432ae04ba1"
+                    "versions.yml:md5,4fd0121a142c2d853dda5791ed97dda4"
                 ],
                 "collapsed": [
                     [
                         {
                             "id": "PNA055_Sample07_filtered_S7",
                             "design": "pna-2",
-                            "panel": "proxiome-immuno-155",
+                            "panel": "proxiome-immuno-155-v2",
                             "technology": "pna"
                         },
                         [
@@ -93,7 +93,7 @@
                         {
                             "id": "PNA055_Sample07_filtered_S7",
                             "design": "pna-2",
-                            "panel": "proxiome-immuno-155",
+                            "panel": "proxiome-immuno-155-v2",
                             "technology": "pna"
                         },
                         "PNA055_Sample07_filtered_S7.demux.m1.part_000.pixelator-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -104,7 +104,7 @@
                         {
                             "id": "PNA055_Sample07_filtered_S7",
                             "design": "pna-2",
-                            "panel": "proxiome-immuno-155",
+                            "panel": "proxiome-immuno-155-v2",
                             "technology": "pna"
                         },
                         "PNA055_Sample07_filtered_S7.demux.m1.part_000.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -115,7 +115,7 @@
                         {
                             "id": "PNA055_Sample07_filtered_S7",
                             "design": "pna-2",
-                            "panel": "proxiome-immuno-155",
+                            "panel": "proxiome-immuno-155-v2",
                             "technology": "pna"
                         },
                         [
@@ -124,15 +124,15 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,462d418a2ce35a965e966e432ae04ba1"
+                    "versions.yml:md5,4fd0121a142c2d853dda5791ed97dda4"
                 ]
             }
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-11-07T10:15:03.206390933"
+        "timestamp": "2025-12-04T10:44:40.979459782"
     },
     "PNA collapse - small test - multiple files": {
         "content": [
@@ -149,13 +149,13 @@
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-collapse.log"
             ],
             [
-                "versions.yml:md5,462d418a2ce35a965e966e432ae04ba1"
+                "versions.yml:md5,4fd0121a142c2d853dda5791ed97dda4"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-11-07T10:25:13.540232073"
+        "timestamp": "2025-12-04T10:45:02.953779721"
     }
 }
