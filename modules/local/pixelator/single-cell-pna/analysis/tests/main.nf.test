@@ -1,0 +1,64 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_PNA_ANALYSIS"
+    script "../main.nf"
+    process "PIXELATOR_PNA_ANALYSIS"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/pna"
+    tag "pixelator/single_cell_pna_analysis"
+
+    test("PNA analysis - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/graph/PNA055_Sample07_filtered_S7.graph.pxl', checkIfExists: true),
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("PNA analysis - small test") {
+        when {
+            params {
+                outdir   = "$outputDir"
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/graph/PNA055_Sample07_filtered_S7.graph.pxl', checkIfExists: true),
+                ]
+                """
+            }
+        }
+
+        then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
+            )
+
+        }
+    }
+}

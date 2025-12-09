@@ -1,0 +1,161 @@
+{
+    "PNA collapse - small test - single file": {
+        "content": [
+            1,
+            [
+                "pixelator",
+                "pixelator/collapse",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.meta.json",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.report.json",
+                "pixelator/logs",
+                "pixelator/logs/PNA055_Sample07_filtered_S7",
+                "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-collapse.log"
+            ],
+            [
+                "versions.yml:md5,462d418a2ce35a965e966e432ae04ba1"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-07T10:15:36.444308344"
+    },
+    "PNA collapse - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155",
+                            "technology": "pna"
+                        },
+                        [
+                            "PNA055_Sample07_filtered_S7.demux.m1.part_000.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155",
+                            "technology": "pna"
+                        },
+                        [
+                            "PNA055_Sample07_filtered_S7.demux.m1.part_000.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.demux.m1.part_000.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "3": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.demux.m1.part_000.pixelator-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "4": [
+                    "versions.yml:md5,462d418a2ce35a965e966e432ae04ba1"
+                ],
+                "collapsed": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155",
+                            "technology": "pna"
+                        },
+                        [
+                            "PNA055_Sample07_filtered_S7.demux.m1.part_000.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "log": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.demux.m1.part_000.pixelator-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "metadata_json": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.demux.m1.part_000.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "report_json": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155",
+                            "technology": "pna"
+                        },
+                        [
+                            "PNA055_Sample07_filtered_S7.demux.m1.part_000.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,462d418a2ce35a965e966e432ae04ba1"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-07T10:15:03.206390933"
+    },
+    "PNA collapse - small test - multiple files": {
+        "content": [
+            1,
+            [
+                "pixelator",
+                "pixelator/collapse",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.meta.json",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_000.report.json",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_001.meta.json",
+                "pixelator/collapse/PNA055_Sample07_filtered_S7.collapse.m1.part_001.report.json",
+                "pixelator/logs",
+                "pixelator/logs/PNA055_Sample07_filtered_S7",
+                "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-collapse.log"
+            ],
+            [
+                "versions.yml:md5,462d418a2ce35a965e966e432ae04ba1"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-07T10:25:13.540232073"
+    }
+}

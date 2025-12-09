@@ -1,0 +1,73 @@
+nextflow_pipeline {
+
+    name "Test PNA pipeline"
+    script "../main.nf"
+
+    tag "pixelator"
+    tag "pixelator/pna"
+    tag "smoke_test"
+
+    test("Params: all") {
+
+        when {
+            params {
+                pipelines_testdata_base_path           = "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/"
+                input                                  = "$pipelines_testdata_base_path/samplesheet/pna/samplesheet_pna.csv"
+                input_basedir                          = "$pipelines_testdata_base_path/testdata/pna/"
+                outdir                                 = "$outputDir"
+
+                pna_graph_component_size_min_threshold = 100
+                skip_experiment_summary                = false
+                save_all                               = true
+
+            }
+        }
+
+        then {
+            // stable_name: All files + folders in ${params.outdir}/ with a stable name
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+
+            assertAll(
+                { assert workflow.success},
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // pipeline versions.yml file for multiqc from which Nextflow version is removed because we tests pipelines on multiple Nextflow versions
+                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_pixelator_software_mqc_versions.yml"),
+                    // All stable path name, with a relative path
+                    stable_name,
+                ).match() }
+            )
+        }
+    }
+
+    test("Params: default - stub") {
+
+        options "-stub"
+
+        when {
+            params {
+                pipelines_testdata_base_path = "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/"
+                input                        = "$pipelines_testdata_base_path/samplesheet/pna/samplesheet_pna.csv"
+                input_basedir                = "$pipelines_testdata_base_path/testdata/pna/"
+                outdir                       = "$outputDir"
+
+                skip_experiment_summary      = false
+            }
+        }
+
+        then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_pixelator_software_mqc_versions.yml"),
+                ).match() }
+            )
+        }
+    }
+}
