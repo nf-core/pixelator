@@ -12,14 +12,18 @@
                 "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-analysis.log"
             ],
             [
-                "versions.yml:md5,cc951246a76a13fe860b12ff883c70b6"
+                [
+                    "PIXELATOR_PNA_ANALYSIS",
+                    "pixelator",
+                    "0.23.0"
+                ]
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-04T10:27:42.929290537"
+        "timestamp": "2025-12-11T14:01:56.742281294"
     },
     "PNA analysis - stub": {
         "content": [
@@ -84,7 +88,11 @@
                     ]
                 ],
                 "5": [
-                    "versions.yml:md5,cc951246a76a13fe860b12ff883c70b6"
+                    [
+                        "PIXELATOR_PNA_ANALYSIS",
+                        "pixelator",
+                        "0.23.0"
+                    ]
                 ],
                 "all_results": [
                     [
@@ -145,15 +153,19 @@
                         "PNA055_Sample07_filtered_S7.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "versions": [
-                    "versions.yml:md5,cc951246a76a13fe860b12ff883c70b6"
+                "versions_pixelator": [
+                    [
+                        "PIXELATOR_PNA_ANALYSIS",
+                        "pixelator",
+                        "0.23.0"
+                    ]
                 ]
             }
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-04T10:43:49.994495229"
+        "timestamp": "2025-12-11T13:58:25.311094417"
     }
 }

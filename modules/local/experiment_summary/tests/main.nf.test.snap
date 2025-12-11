@@ -7,25 +7,33 @@
                 "pixelator/experiment-summary.html"
             ],
             [
-                "versions.yml:md5,9003ebecc0a2345dcb3ffb52a718d464"
+                [
+                    "EXPERIMENT_SUMMARY",
+                    "experiment-summary",
+                    "0.6.0 "
+                ]
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-04T15:25:07.062919148"
+        "timestamp": "2025-12-11T14:00:23.063912644"
     },
     "PNA experiment summary - stub": {
         "content": [
             [
-                "versions.yml:md5,9003ebecc0a2345dcb3ffb52a718d464"
+                [
+                    "EXPERIMENT_SUMMARY",
+                    "experiment-summary",
+                    "0.6.0 "
+                ]
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-04T15:24:04.588263415"
+        "timestamp": "2025-12-11T13:57:21.610883862"
     }
 }

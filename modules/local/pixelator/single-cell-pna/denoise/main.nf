@@ -19,7 +19,7 @@ process PIXELATOR_PNA_DENOISE {
     tuple val(meta), path("denoise/*")                 , emit: all_results
     tuple val(meta), path("*pixelator-denoise.log")    , emit: log
 
-    path "versions.yml"                                 , emit: versions
+    tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -39,11 +39,6 @@ process PIXELATOR_PNA_DENOISE {
         --output . \\
         $args \\
         $data
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 
     stub:
@@ -55,10 +50,5 @@ process PIXELATOR_PNA_DENOISE {
     touch denoise/${prefix}.meta.json
     touch denoise/${prefix}.pxl
     touch ${prefix}.pixelator-denoise.log
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 }

@@ -19,7 +19,7 @@ process PIXELATOR_PNA_COLLAPSE {
     tuple val(meta), path("collapse/*.meta.json"),                  emit: metadata_json
     tuple val(meta), path("*pixelator-collapse.log"),               emit: log
 
-    path "versions.yml", emit: versions
+    tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -48,11 +48,6 @@ process PIXELATOR_PNA_COLLAPSE {
         ${panel_opt} \\
         ${args} \\
         ${read_args}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 
     stub:
@@ -65,10 +60,5 @@ process PIXELATOR_PNA_COLLAPSE {
     touch collapse/${prefix}.meta.json
     touch collapse/${prefix}.parquet
     touch ${prefix}.pixelator-collapse.log
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 }

@@ -59,7 +59,7 @@ nextflow_process {
                     workflow.trace.succeeded().size(),
                     // All stable path name, with a relative path
                     stable_name,
-                    process.out.versions,
+                    process.out.versions_pixelator,
                 ).match() }
             )
         }

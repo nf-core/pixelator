@@ -21,7 +21,7 @@ process EXPERIMENT_SUMMARY {
 
     output:
     tuple val(meta), path("*experiment-summary.html")  , emit: html
-    path("versions.yml")                                , emit: versions
+    tuple val("${task.process}"), val('experiment-summary'), eval("Rscript -e 'cat(as.character(packageVersion(\"pixelatorES\")), \"\\n\")'"), emit: versions_experiment_summary, topic: versions
 
     script:
     def args = task.ext.args ?: ''
@@ -34,20 +34,10 @@ process EXPERIMENT_SUMMARY {
         $args \\
 
     mv ./quarto/pixelatorES.html experiment-summary.html
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        experiment-summary: \$(Rscript -e 'cat(as.character(packageVersion("pixelatorES")), "\\n")')
-    END_VERSIONS
     """
 
     stub:
     """
     touch experiment-summary.html
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        experiment-summary: \$(Rscript -e 'cat(as.character(packageVersion("pixelatorES")), "\\n")')
-    END_VERSIONS
     """
 }

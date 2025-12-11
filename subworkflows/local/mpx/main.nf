@@ -34,7 +34,7 @@ include { GENERATE_REPORTS            } from '../../local/generate_reports/main'
 //
 // MODULE: Installed directly from nf-core/modules
 //
-include { CAT_FASTQ }                   from '../../../modules/nf-core/cat/fastq/main'
+
 /*
 ========================================================================================
     IMPORT CUSTOM MODULES/SUBWORKFLOWS
@@ -44,7 +44,6 @@ include { CAT_FASTQ }                   from '../../../modules/nf-core/cat/fastq
 //
 // MODULE: Defined locally
 //
-include { PIXELATOR_COLLECT_METADATA    } from '../../../modules/local/collect_metadata'
 include { PIXELATOR_AMPLICON            } from '../../../modules/local/pixelator/single-cell-mpx/amplicon'
 include { PIXELATOR_QC                  } from '../../../modules/local/pixelator/single-cell-mpx/qc'
 include { PIXELATOR_DEMUX               } from '../../../modules/local/pixelator/single-cell-mpx/demux'
@@ -67,8 +66,6 @@ workflow MPX {
 
     main:
 
-    ch_versions = Channel.empty()
-
     ch_amplicon_input = fastq.map { meta, reads ->
         {
             [meta, reads]
@@ -80,7 +77,6 @@ workflow MPX {
     //
     PIXELATOR_AMPLICON ( fastq )
     ch_merged = PIXELATOR_AMPLICON.out.merged
-    ch_versions = ch_versions.mix(PIXELATOR_AMPLICON.out.versions.first())
 
     ch_input_reads = ch_merged
 
@@ -89,7 +85,6 @@ workflow MPX {
     //
     PIXELATOR_QC ( ch_input_reads )
     ch_qc = PIXELATOR_QC.out.processed
-    ch_versions = ch_versions.mix(PIXELATOR_QC.out.versions.first())
 
     ch_fq_and_panel = ch_qc
         .join(panel_files, failOnMismatch:true, failOnDuplicate:true)
@@ -100,7 +95,6 @@ workflow MPX {
     //
     PIXELATOR_DEMUX ( ch_fq_and_panel )
     ch_demuxed = PIXELATOR_DEMUX.out.processed
-    ch_versions = ch_versions.mix(PIXELATOR_DEMUX.out.versions.first())
 
     ch_demuxed_and_panel = ch_demuxed
         .join(panel_files, failOnMismatch:true, failOnDuplicate:true)
@@ -111,14 +105,12 @@ workflow MPX {
     //
     PIXELATOR_COLLAPSE ( ch_demuxed_and_panel )
     ch_collapsed = PIXELATOR_COLLAPSE.out.collapsed
-    ch_versions = ch_versions.mix( PIXELATOR_COLLAPSE.out.versions.first())
 
     //
     // MODULE: Run pixelator single-cell-mpx graph
     //
     PIXELATOR_GRAPH ( ch_collapsed )
     ch_clustered = PIXELATOR_GRAPH.out.edgelist
-    ch_versions = ch_versions.mix(PIXELATOR_GRAPH.out.versions.first())
 
     ch_clustered_and_panel = ch_clustered
         .join(panel_files, failOnMismatch:true, failOnDuplicate:true)
@@ -129,14 +121,12 @@ workflow MPX {
     //
     PIXELATOR_ANNOTATE ( ch_clustered_and_panel )
     ch_annotated = PIXELATOR_ANNOTATE.out.dataset
-    ch_versions = ch_versions.mix( PIXELATOR_ANNOTATE.out.versions.first() )
 
     //
     // MODULE: Run pixelator single-cell-mpx analysis
     //
     PIXELATOR_ANALYSIS ( ch_annotated )
     ch_analysed = PIXELATOR_ANALYSIS.out.dataset
-    ch_versions = ch_versions.mix(PIXELATOR_ANALYSIS.out.versions.first())
 
 
     //
@@ -145,7 +135,6 @@ workflow MPX {
     ch_layout_input = params.skip_analysis ? ch_annotated : ch_analysed
     PIXELATOR_LAYOUT ( ch_layout_input )
     _ch_layout = PIXELATOR_LAYOUT.out.dataset
-    ch_versions = ch_versions.mix(PIXELATOR_LAYOUT.out.versions.first())
 
     // Prepare all data needed by reporting for each pixelator step
 
@@ -189,12 +178,7 @@ workflow MPX {
         ch_layout_data
     )
 
-    ch_versions = ch_versions.mix(GENERATE_REPORTS.out.versions)
-
     // TODO: Add MultiQC when plugins are ready
-
-    emit:
-    versions       = ch_versions                 // channel: [ path(versions.yml) ]
 }
 
 /*

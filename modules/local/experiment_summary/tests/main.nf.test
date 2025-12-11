@@ -85,7 +85,7 @@ nextflow_process {
                         assert path(get(0).get(1)).exists()
                     }
                 },
-                { assert snapshot(process.out.versions).match() },
+                { assert snapshot(process.out.versions_experiment_summary).match() },
             )
         }
     }
@@ -165,7 +165,7 @@ nextflow_process {
                     workflow.trace.succeeded().size(),
                     // All stable path name, with a relative path
                     stable_name,
-                    process.out.versions,
+                    process.out.versions_experiment_summary,
                 ).match() }
             )
         }

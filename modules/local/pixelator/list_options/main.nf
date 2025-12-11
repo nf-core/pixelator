@@ -11,7 +11,7 @@ process PIXELATOR_LIST_OPTIONS {
     output:
     path "design_options.txt", emit: designs
     path "panel_options.txt",  emit: panels
-    path "versions.yml",       emit: versions
+    tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -26,11 +26,6 @@ process PIXELATOR_LIST_OPTIONS {
 
     pixelator single-cell-pna --list-designs ${args} >> design_options.txt
     pixelator single-cell-pna --list-panels ${args2} >> panel_options.txt
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 
     stub:
@@ -46,10 +41,5 @@ process PIXELATOR_LIST_OPTIONS {
     human-sc-immunology-spatial-proteomics
     proxiome-immuno-155-v2
     END_PANELS
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 }
