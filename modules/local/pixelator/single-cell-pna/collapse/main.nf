@@ -2,7 +2,7 @@ process PIXELATOR_PNA_COLLAPSE {
     tag "${meta.id}"
     label 'process_medium'
 
-    containerOptions 'shm-size': 2.GB
+    containerOptions 'shm-size': 4.GB
 
     // TODO: Add conda
     // conda "bioconda::pixelator=0.18.2"
