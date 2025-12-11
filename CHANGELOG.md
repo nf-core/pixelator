@@ -22,6 +22,7 @@ an updated list of which panel version to use with which kit lot.
 - Publish samplesheet to output directory by @Aratz [#164](https://github.com/nf-core/pixelator/pull/164)
 - Updated pixelatorES to 0.6.0 in PNA experiment summary step by @johandahlberg [#168](https://github.com/nf-core/pixelator/pull/168)
 - Updated pixelator to 0.23.0 in associated steps by @johandahlberg [#168](https://github.com/nf-core/pixelator/pull/168)
+- Give the `collapse` step more shared memory in the container to avoid out-of-memory errors by @stefanppetkov [#169](https://github.com/nf-core/pixelator/pull/169)
 
 ### Parameters
 
