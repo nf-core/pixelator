@@ -113,8 +113,6 @@ workflow PIXELATOR {
         .join(ch_checked_panel_files)
         .map { id, meta, panel_files -> [meta, panel_files] }
 
-    ch_versions = ch_versions.mix(CAT_FASTQ.out.versions.first())
-
     ch_fastq_technology_split = ch_cat_fastq
         .branch {
             meta, data ->
