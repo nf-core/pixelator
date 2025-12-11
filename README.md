@@ -64,13 +64,13 @@ For MPX data, the pipeline will run the following steps:
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-First, prepare a samplesheet with your input data that looks as follows (the exact values you need to input depend on the design and panel you are using):
+First, prepare a samplesheet with your input data that looks as follows (the exact values you need to input depend on the design and panel you are using - please see [https://nf-co.re/pixelator/usage](https://nf-co.re/pixelator/usage) for more details):
 
 `samplesheet.csv`:
 
 ```csv
 sample,sample_alias,condition,design,panel,fastq_1,fastq_2
-sample1,s1,control,pna-2,proxiome-immuno-155,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample1,s1,control,pna-2,proxiome-immuno-155-v2,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
 ```
 
 Each row represents a sample and gives the design, a panel file and the input fastq files.
@@ -135,3 +135,9 @@ You can cite the molecular pixelation technology as follows:
 > Filip Karlsson, Tomasz Kallas, Divya Thiagarajan, Max Karlsson, Maud Schweitzer, Jose Fernandez Navarro, Louise Leijonancker, Sylvain Geny, Erik Pettersson, Jan Rhomberg-Kauert, Ludvig Larsson, Hanna van Ooijen, Stefan Petkov, Marcela González-Granillo, Jessica Bunz, Johan Dahlberg, Michele Simonetti, Prajakta Sathe, Petter Brodin, Alvaro Martinez Barrio & Simon Fredriksson
 >
 > _Nat Methods._ 2024 May 08. doi: [10.1038/s41592-024-02268-9](https://doi.org/10.1038/s41592-024-02268-9)
+
+> **Single-Cell Protein Interactomes by the Proximity Network Assay.**
+>
+> Filip Karlsson, Michele Simonetti, Christina Galonska, Max Karlsson, Hanna van Ooijen, Tomasz Kallas, Divya Thiagarajan, Maud Schweitzer, Ludvig Larsson, Vincent van Hoef, Pouria Tajvar, Johan Dahlberg, Florian De Temmerman, Louise Leijonancker, Sylvain Geny, Rikard Forlin, Erika Negrini, Stefan Petkov, Lovisa Franzén, Jessica Bunz, Christine Moge, Henrik Everberg, Petter Brodin, Alvaro Martinez Barrio, Simon Fredriksson
+>
+> _bioRxiv_ 2025.06.19.660329; doi: [10.1101/2025.06.19.660329](https://doi.org/10.1101/2025.06.19.660329)

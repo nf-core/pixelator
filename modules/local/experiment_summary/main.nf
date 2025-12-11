@@ -3,8 +3,8 @@ process EXPERIMENT_SUMMARY {
     label "process_medium"
 
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelatores:0.4.3'
-        : 'quay.io/pixelgen-technologies/pixelatores:0.4.3'}"
+        ? 'quay.io/pixelgen-technologies/pixelatores:0.6.0'
+        : 'quay.io/pixelgen-technologies/pixelatores:0.6.0'}"
 
     input:
     path samplesheet_path
