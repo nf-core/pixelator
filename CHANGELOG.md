@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 From this release onwards, there will not be a default panel selected, i.e. as a user you
 must specify an exact version of the panel you want to use in your samplesheet, e.g. `proxiome-immuno-155-v2`.
-The version to use will depend on which kit lot of the Proxiome Immuno kit you are using. See [NNN](...) for
+The version to use will depend on which kit lot of the Proxiome Immuno kit you are using.
+See the [Pixelgen Technologies website](https://www.pixelgen.com/usermanual-dataprocessing/) for
 an updated list of which panel version to use with which kit lot.
 
 ### Removed

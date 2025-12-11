@@ -31,8 +31,9 @@ to match those defined in the table below.
 > It is important that you select a panel file that matches the kit lot version you are
 > using for your experiment. Using a mismatched panel file will lead to incorrect antibody
 > assignments and erroneous results.
+>
 > An update list of which panel files correspond to which kit lot versions can be found
-> on the Pixelgen Technologies website: [TODO FIX ME!](https://pixelgen.com/support/)
+> on the [Pixelgen Technologies website](https://www.pixelgen.com/usermanual-dataprocessing/)
 
 Below is an example of a simple samplesheet with two samples.
 
