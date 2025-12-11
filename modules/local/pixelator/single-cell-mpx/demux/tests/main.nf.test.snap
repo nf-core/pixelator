@@ -58,7 +58,11 @@
                     ]
                 ],
                 "5": [
-                    "versions.yml:md5,454356a9e186aed67b9db060e5536ad4"
+                    [
+                        "PIXELATOR_DEMUX",
+                        "pixelator",
+                        "0.23.0"
+                    ]
                 ],
                 "failed": [
                     [
@@ -115,16 +119,20 @@
                         "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "versions": [
-                    "versions.yml:md5,454356a9e186aed67b9db060e5536ad4"
+                "versions_pixelator": [
+                    [
+                        "PIXELATOR_DEMUX",
+                        "pixelator",
+                        "0.23.0"
+                    ]
                 ]
             }
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-04T10:25:13.088125844"
+        "timestamp": "2025-12-11T14:01:24.471171823"
     },
     "Test MPX demux - SCSP v1 | Immunology-I": {
         "content": [
@@ -220,13 +228,17 @@
                 "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-demux.log"
             ],
             [
-                "versions.yml:md5,454356a9e186aed67b9db060e5536ad4"
+                [
+                    "PIXELATOR_DEMUX",
+                    "pixelator",
+                    "0.23.0"
+                ]
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-04T10:25:25.585658758"
+        "timestamp": "2025-12-11T14:01:53.324974355"
     }
 }

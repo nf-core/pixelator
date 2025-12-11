@@ -68,6 +68,12 @@
                 "PIXELATOR_GRAPH": {
                     "pixelator": "0.23.0"
                 },
+                "PIXELATOR_LAYOUT": {
+                    "pixelator": "0.23.0"
+                },
+                "PIXELATOR_LIST_OPTIONS": {
+                    "pixelator": "0.23.0"
+                },
                 "PIXELATOR_QC": {
                     "pixelator": "0.23.0"
                 },
@@ -76,15 +82,14 @@
                 },
                 "Workflow": {
                     "nf-core/pixelator": "v2.3.0dev"
-                },
-                "pixelator": "0.23.0"
+                }
             }
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-04T12:55:52.348609164"
+        "timestamp": "2025-12-11T14:03:07.750278885"
     },
     "Params: default": {
         "content": [
@@ -109,6 +114,9 @@
                     "pixelator": "0.23.0"
                 },
                 "PIXELATOR_LAYOUT": {
+                    "pixelator": "0.23.0"
+                },
+                "PIXELATOR_LIST_OPTIONS": {
                     "pixelator": "0.23.0"
                 },
                 "PIXELATOR_QC": {
@@ -262,9 +270,9 @@
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-04T12:55:19.265332405"
+        "timestamp": "2025-12-11T14:01:43.404880637"
     }
 }
