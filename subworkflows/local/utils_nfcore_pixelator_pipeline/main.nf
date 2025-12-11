@@ -127,7 +127,6 @@ workflow PIPELINE_INITIALISATION {
     // Validate design and panel samplesheet fields agains a dynamic set of allowed values
     //
     PIXELATOR_LIST_OPTIONS()
-    ch_versions = ch_versions.mix(PIXELATOR_LIST_OPTIONS.out.versions)
 
     // Create a set of valid pixelator options to pass to --design
     ch_design_options = PIXELATOR_LIST_OPTIONS.out.designs

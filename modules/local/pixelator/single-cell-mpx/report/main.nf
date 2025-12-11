@@ -23,7 +23,7 @@ process PIXELATOR_REPORT {
     output:
     tuple val(meta), path("report/*.html"),    emit: reports
     tuple val(meta), path("*pixelator-*.log"), emit: log
-    path "versions.yml",                       emit: versions
+    tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -48,11 +48,6 @@ process PIXELATOR_REPORT {
         ${panelOpt} \\
         ${args} \\
         results
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 
     stub:
@@ -63,10 +58,5 @@ process PIXELATOR_REPORT {
     mkdir report
     touch "${prefix}.pixelator-report.log"
     touch "report/${prefix}.html"
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 }

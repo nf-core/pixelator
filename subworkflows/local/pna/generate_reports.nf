@@ -27,8 +27,6 @@ workflow PNA_GENERATE_REPORTS {
     skip_experiment_summary  // boolean
 
     main:
-    ch_versions = channel.empty()
-
     ch_meta_col = panel_files
         .map { meta, _data -> [meta.id, meta] }
         .groupTuple()
@@ -86,8 +84,6 @@ workflow PNA_GENERATE_REPORTS {
 
     if (!skip_experiment_summary) {
         EXPERIMENT_SUMMARY ( samplesheet, ch_grouped_data )
-
-        ch_versions           = ch_versions.mix(EXPERIMENT_SUMMARY.out.versions)
         ch_experiment_summary = EXPERIMENT_SUMMARY.out.html
     } else {
         ch_experiment_summary = ch_grouped_data.map { it -> it[0] }.combine(Channel.of([]))
@@ -96,5 +92,4 @@ workflow PNA_GENERATE_REPORTS {
 
     emit:
     experiment_summary   = ch_experiment_summary
-    versions             = ch_versions
 }

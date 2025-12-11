@@ -134,19 +134,15 @@ workflow PIXELATOR {
         ch_panel_files_technology_split.mpx
     )
 
-    ch_versions = ch_versions.mix(MPX.out.versions)
-
     PNA(
         ch_fastq_technology_split.pna,
         ch_panel_files_technology_split.pna
     )
 
-    ch_versions = ch_versions.mix(PNA.out.versions)
-
     //
     // Collate and save software versions
     //
-    def topic_versions = Channel.topic("versions")
+    def topic_versions = channel.topic("versions")
         .distinct()
         .branch { entry ->
             versions_file: entry instanceof Path
