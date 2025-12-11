@@ -16,7 +16,7 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/PNA055_Sample07_filtered_S7_R1_001.fastq.gz', checkIfExists: true),
                         file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/PNA055_Sample07_filtered_S7_R2_001.fastq.gz', checkIfExists: true)
@@ -42,7 +42,7 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/PNA055_Sample07_filtered_S7_R1_001.fastq.gz', checkIfExists: true),
                         file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/PNA055_Sample07_filtered_S7_R2_001.fastq.gz', checkIfExists: true)

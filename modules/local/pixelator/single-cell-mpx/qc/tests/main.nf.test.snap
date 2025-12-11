@@ -21,14 +21,14 @@
                 "pixelator/preqc/sample01_1k_pbmcs_scsp_v1_immunology1.report.json"
             ],
             [
-                "versions.yml:md5,2c93dd7d724759bc9c3e339548090edb"
+                "versions.yml:md5,939ea28f5d7676de367dfece155dd449"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-11-07T10:18:14.071438596"
+        "timestamp": "2025-12-04T10:26:19.523978718"
     },
     "Test MPX qc - stub": {
         "content": [
@@ -128,7 +128,7 @@
                     ]
                 ],
                 "16": [
-                    "versions.yml:md5,2c93dd7d724759bc9c3e339548090edb"
+                    "versions.yml:md5,939ea28f5d7676de367dfece155dd449"
                 ],
                 "2": [
                     [
@@ -413,14 +413,14 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,2c93dd7d724759bc9c3e339548090edb"
+                    "versions.yml:md5,939ea28f5d7676de367dfece155dd449"
                 ]
             }
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
         },
-        "timestamp": "2025-10-31T13:32:35.75886849"
+        "timestamp": "2025-12-04T10:26:04.761381417"
     }
 }
