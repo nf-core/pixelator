@@ -10,7 +10,8 @@ process PIXELATOR_COLLECT_METADATA {
 
     output:
     path "metadata.json", emit: metadata
-    path "versions.yml", emit: versions
+    tuple val("${task.process}"), val('collect-metadata'), eval("collect_metadata.py --version"), emit: versions_collect_metadata, topic: versions
+    tuple val("${task.process}"), val('python'), eval("python --version"), emit: versions_python, topic: versions
 
     when:
     task.ext.when == null || task.ext.when

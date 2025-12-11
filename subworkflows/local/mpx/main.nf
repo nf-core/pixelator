@@ -34,7 +34,7 @@ include { GENERATE_REPORTS            } from '../../local/generate_reports/main'
 //
 // MODULE: Installed directly from nf-core/modules
 //
-include { CAT_FASTQ }                   from '../../../modules/nf-core/cat/fastq/main'
+
 /*
 ========================================================================================
     IMPORT CUSTOM MODULES/SUBWORKFLOWS
@@ -44,7 +44,6 @@ include { CAT_FASTQ }                   from '../../../modules/nf-core/cat/fastq
 //
 // MODULE: Defined locally
 //
-include { PIXELATOR_COLLECT_METADATA    } from '../../../modules/local/collect_metadata'
 include { PIXELATOR_AMPLICON            } from '../../../modules/local/pixelator/single-cell-mpx/amplicon'
 include { PIXELATOR_QC                  } from '../../../modules/local/pixelator/single-cell-mpx/qc'
 include { PIXELATOR_DEMUX               } from '../../../modules/local/pixelator/single-cell-mpx/demux'

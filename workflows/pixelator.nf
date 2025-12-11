@@ -31,6 +31,8 @@ if (params.input) {
 include { MPX            } from '../subworkflows/local/mpx'
 include { PNA            } from '../subworkflows/local/pna'
 
+include { PIXELATOR_COLLECT_METADATA    } from '../../../modules/local/collect_metadata'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -79,6 +81,8 @@ workflow PIXELATOR {
                 multiple: fastq.size() > 1
                     return [ meta, fastq.flatten() ]
         }
+
+    PIXELATOR_COLLECT_METADATA()
 
     //
     // MODULE: Concatenate FastQ files from the same sample if required
