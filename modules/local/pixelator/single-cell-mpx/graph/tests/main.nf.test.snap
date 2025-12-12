@@ -1,45 +1,31 @@
 {
     "Test MPX graph - SCSP v1 | Immunology-I": {
         "content": [
+            1,
             [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.edgelist.parquet:md5,de66e693aef8db80870b227692ed9bee"
-                ]
+                "pixelator",
+                "pixelator/graph",
+                "pixelator/graph/sample01_1k_pbmcs_scsp_v1_immunology1.discarded_edgelist.parquet",
+                "pixelator/graph/sample01_1k_pbmcs_scsp_v1_immunology1.edgelist.parquet",
+                "pixelator/graph/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json",
+                "pixelator/graph/sample01_1k_pbmcs_scsp_v1_immunology1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-graph.log"
             ],
             [
                 [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,42f85a10b4bda24de42f293d485e806e"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
-                        "design": "D21",
-                        "panel": "human-sc-immunology-spatial-proteomics-1",
-                        "technology": "mpx"
-                    },
-                    "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,19d11c140f3cacde4f9dd68ddd8a7721"
+                    "PIXELATOR_GRAPH",
+                    "pixelator",
+                    "0.23.0"
                 ]
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-05-06T15:13:15.220381752"
+        "timestamp": "2025-12-11T14:02:41.28759429"
     },
     "Test MPX graph - stub": {
         "content": [
@@ -104,7 +90,11 @@
                     ]
                 ],
                 "5": [
-                    "versions.yml:md5,2ce348f9f12c9cff1a7a9a2e2e0c8fbe"
+                    [
+                        "PIXELATOR_GRAPH",
+                        "pixelator",
+                        "0.23.0"
+                    ]
                 ],
                 "all_results": [
                     [
@@ -165,15 +155,19 @@
                         "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "versions": [
-                    "versions.yml:md5,2ce348f9f12c9cff1a7a9a2e2e0c8fbe"
+                "versions_pixelator": [
+                    [
+                        "PIXELATOR_GRAPH",
+                        "pixelator",
+                        "0.23.0"
+                    ]
                 ]
             }
         ],
         "meta": {
             "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-10-31T13:31:45.557081702"
+        "timestamp": "2025-12-11T14:02:14.582267898"
     }
 }

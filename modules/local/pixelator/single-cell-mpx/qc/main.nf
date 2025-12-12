@@ -5,8 +5,8 @@ process PIXELATOR_QC {
     // TODO: Add conda back
     // conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.22.1'
-        : 'quay.io/pixelgen-technologies/pixelator:0.22.1'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.23.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.23.0'}"
 
     input:
     tuple val(meta), path(reads)
@@ -35,7 +35,7 @@ process PIXELATOR_QC {
     tuple val(meta), path("*pixelator-adapterqc.log"),                 emit: adapterqc_log
     tuple val(meta), path("*pixelator-*.log"),                         emit: log
 
-    path "versions.yml",                                               emit: versions
+    tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -73,11 +73,6 @@ process PIXELATOR_QC {
         --output . \\
         ${adapterqc_args} \\
         \${preqc_results[@]}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 
     stub:
@@ -98,10 +93,5 @@ process PIXELATOR_QC {
     touch "adapterqc/${prefix}.report.json"
     touch "adapterqc/${prefix}.meta.json"
     touch "${prefix}.pixelator-adapterqc.log"
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 }

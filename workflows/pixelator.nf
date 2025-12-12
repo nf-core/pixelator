@@ -60,7 +60,9 @@ workflow PIXELATOR {
 
     main:
 
-    ch_versions = Channel.empty()
+    file(params.input).copyTo("${params.outdir}/pipeline_info")
+
+    ch_versions = channel.empty()
 
     //
     // Split the samplesheet channel in reads and panel_files
@@ -107,8 +109,6 @@ workflow PIXELATOR {
         .join(ch_checked_panel_files)
         .map { id, meta, panel_files -> [meta, panel_files] }
 
-    ch_versions = ch_versions.mix(CAT_FASTQ.out.versions.first())
-
     ch_fastq_technology_split = ch_cat_fastq
         .branch {
             meta, data ->
@@ -132,19 +132,33 @@ workflow PIXELATOR {
         ch_panel_files_technology_split.mpx
     )
 
-    ch_versions = ch_versions.mix(MPX.out.versions)
-
     PNA(
         ch_fastq_technology_split.pna,
         ch_panel_files_technology_split.pna
     )
 
-    ch_versions = ch_versions.mix(PNA.out.versions)
-
     //
     // Collate and save software versions
     //
-    softwareVersionsToYAML(ch_versions)
+    def topic_versions = channel.topic("versions")
+        .distinct()
+        .branch { entry ->
+            versions_file: entry instanceof Path
+            versions_tuple: true
+        }
+
+    def topic_versions_string = topic_versions.versions_tuple
+        .map { process, tool, version ->
+            [ process[process.lastIndexOf(':')+1..-1], "  ${tool}: ${version}" ]
+        }
+        .groupTuple(by:0)
+        .map { process, tool_versions ->
+            tool_versions.unique().sort()
+            "${process}:\n${tool_versions.join('\n')}"
+        }
+
+    softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
+        .mix(topic_versions_string)
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
             name: 'nf_core_'  +  'pixelator_software_'  + 'mqc_'  + 'versions.yml',

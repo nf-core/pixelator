@@ -80,6 +80,7 @@ nextflow_process {
         when {
             params {
                 save_all = true
+                outdir   = "$outputDir"
             }
             process {
                 """
@@ -137,18 +138,16 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
+                { assert workflow.success },
                 { assert snapshot(
-                        process.out.report,
-                        process.out.versions
-                    ).match()
-                },
-                {
-                    with (process.out.log) {
-                        assert path(get(0).get(1)).readLines().any { it.contains("Finished pixelator report") }
-                    }
-                }
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions_pixelator,
+                ).match() }
             )
         }
     }

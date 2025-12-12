@@ -27,8 +27,6 @@ workflow GENERATE_REPORTS {
     layout_data    // channel: [meta, [path, ...]]
 
     main:
-    ch_versions = Channel.empty()
-
     // Combine meta maps for all input samples
     ch_meta_col = panel_files
         .map { meta, _path -> [meta.id, meta] }
@@ -131,9 +129,6 @@ workflow GENERATE_REPORTS {
         ch_report_inputs.layout
     )
 
-    ch_versions = ch_versions.mix(PIXELATOR_REPORT.out.versions.first())
-
     emit:
     pixelator_reports = PIXELATOR_REPORT.out.reports
-    versions          = ch_versions
 }

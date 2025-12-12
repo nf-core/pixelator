@@ -6,8 +6,8 @@ process PIXELATOR_PNA_COMBINE_COLLAPSE {
     // conda "bioconda::pixelator=0.18.2"
 
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.22.1'
-        : 'quay.io/pixelgen-technologies/pixelator:0.22.1'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.23.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.23.0'}"
 
     input:
     tuple val(meta), path(parquet_files, stageAs: "parquet/*"), path(json_report_files, stageAs: "reports/*")
@@ -18,7 +18,7 @@ process PIXELATOR_PNA_COMBINE_COLLAPSE {
     tuple val(meta), path("collapse/*.meta.json"),            emit: metadata_json
     tuple val(meta), path("*pixelator-combine-collapse.log"), emit: log
 
-    path "versions.yml", emit: versions
+    tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -45,11 +45,6 @@ process PIXELATOR_PNA_COMBINE_COLLAPSE {
         ${args} \\
         --parquet ${parquet_args} \\
         --report ${report_args}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 
     stub:
@@ -61,10 +56,5 @@ process PIXELATOR_PNA_COMBINE_COLLAPSE {
     touch collapse/${prefix}.collapse.meta.json
     touch collapse/${prefix}.report.json
     touch ${prefix}.pixelator-combine-collapse.log
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 }

@@ -55,14 +55,11 @@ workflow PNA {
     panel_files // channel: [ meta, path(panel_file) |  ]
 
     main:
-    ch_versions = Channel.empty()
-
     //
     // MODULE: Run pixelator single-cell-pna amplicon
     //
     PIXELATOR_PNA_AMPLICON ( fastq )
     ch_amplicon = PIXELATOR_PNA_AMPLICON.out.amplicon
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_AMPLICON.out.versions.first())
 
     //
     // MODULE: Run pixelator single-cell demux
@@ -74,7 +71,6 @@ workflow PNA {
 
     PIXELATOR_PNA_DEMUX(ch_demux_input)
     ch_demuxed = PIXELATOR_PNA_DEMUX.out.demuxed
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_DEMUX.out.versions.first())
 
     //
     // MODULE: Run pixelator single-cell collapse
@@ -96,7 +92,6 @@ workflow PNA {
     PIXELATOR_PNA_COLLAPSE(ch_collapse_input)
     ch_collapsed = PIXELATOR_PNA_COLLAPSE.out.collapsed
     ch_collapsed_reports = PIXELATOR_PNA_COLLAPSE.out.report_json
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_COLLAPSE.out.versions.first())
 
     // Collect the partitioned collapse.parquet files in a list per sample
     // use the dynamic size information from `meta.parts` to group the files
@@ -127,8 +122,6 @@ workflow PNA {
         .map { meta, parquet, _reports -> [meta, parquet] }
         .mix(PIXELATOR_PNA_COMBINE_COLLAPSE.out.parquet)
 
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_COMBINE_COLLAPSE.out.versions.first())
-
     //
     // MODULE: Run pixelator single-cell graph
     //
@@ -138,14 +131,12 @@ workflow PNA {
 
     PIXELATOR_PNA_GRAPH(ch_graph_input)
     ch_graph = PIXELATOR_PNA_GRAPH.out.pixelfile
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_GRAPH.out.versions.first())
 
     //
     // MODULE: Run pixelator single-cell denoise
     //
     PIXELATOR_PNA_DENOISE ( ch_graph )
     ch_denoise = PIXELATOR_PNA_DENOISE.out.pixelfile
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_DENOISE.out.versions.first())
 
     //
     // MODULE: Run pixelator single-cell analysis
@@ -153,14 +144,12 @@ workflow PNA {
     ch_analysis_input = params.skip_denoise ? ch_graph : ch_denoise
     PIXELATOR_PNA_ANALYSIS(ch_analysis_input)
     ch_analysis = PIXELATOR_PNA_ANALYSIS.out.pixelfile
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_ANALYSIS.out.versions.first())
 
     //
     // MODULE: Run pixelator single-cell layout
     //
 
     PIXELATOR_PNA_LAYOUT(ch_analysis)
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_LAYOUT.out.versions.first())
 
     // Prepare all data needed by reporting for each pixelator step
 
@@ -199,10 +188,8 @@ workflow PNA {
         ch_layout_data,
         params.skip_experiment_summary
     )
-    ch_versions = ch_versions.mix(PNA_GENERATE_REPORTS.out.versions)
 
     emit:
-    versions = ch_versions
     graph    = ch_graph
     analysis = ch_analysis
 }
