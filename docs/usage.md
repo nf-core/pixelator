@@ -33,7 +33,7 @@ to match those defined in the table below.
 > assignments and erroneous results.
 >
 > An update list of which panel files correspond to which kit lot versions can be found
-> on the [Pixelgen Technologies website](https://www.pixelgen.com/usermanual-dataprocessing/)
+> on the [Pixelgen Technologies website](https://www.pixelgen.com/panel-file-for-data-processing/)
 
 Below is an example of a simple samplesheet with two samples.
 
