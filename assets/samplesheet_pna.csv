@@ -1,3 +1,3 @@
 sample,sample_alias,condition,design,panel,fastq_1,fastq_2
-sample1,s1,control,pna-2,proxiome-immuno-155,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
-sample2,s2,treatment,pna-2,proxiome-immuno-155,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
+sample1,s1,control,pna-2,proxiome-immuno-155-v2,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample2,s2,treatment,pna-2,proxiome-immuno-155-v2,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz

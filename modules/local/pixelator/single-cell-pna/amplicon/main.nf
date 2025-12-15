@@ -5,8 +5,8 @@ process PIXELATOR_PNA_AMPLICON {
     // TODO: Add conda
     // conda "bioconda::pixelator=0.18.2"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.22.1'
-        : 'quay.io/pixelgen-technologies/pixelator:0.22.1'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.23.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.23.0'}"
 
     input:
     tuple val(meta), path(reads, arity: '1..*')
@@ -17,7 +17,7 @@ process PIXELATOR_PNA_AMPLICON {
     tuple val(meta), path("amplicon/*.meta.json"),               emit: metadata_json
     tuple val(meta), path("*pixelator-amplicon.log"),            emit: log
 
-    path "versions.yml", emit: versions
+    tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -51,11 +51,6 @@ process PIXELATOR_PNA_AMPLICON {
         --output . \\
         ${args} \\
         ${renamed_reads}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 
     stub:
@@ -67,11 +62,6 @@ process PIXELATOR_PNA_AMPLICON {
     touch amplicon/${prefix}.meta.json
     touch amplicon/${prefix}.amplicon.fq.zst
     touch ${prefix}.pixelator-amplicon.log
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 }
 

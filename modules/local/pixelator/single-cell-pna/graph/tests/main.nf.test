@@ -8,7 +8,10 @@ nextflow_process {
     tag "pixelator/pna"
     tag "pixelator/single_cell_pna_graph"
 
-    test("PNA graph - small test") {
+    test("PNA graph - stub") {
+
+        options "-stub"
+
         when {
             params {
                 pna_graph_component_size_min_threshold = 100
@@ -17,10 +20,10 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.parquet', checkIfExists: true),
                     [],
-                    'proxiome-immuno-155',
+                    'proxiome-immuno-155-v2',
                 ]
                 """
             }
@@ -29,14 +32,41 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(process.out.metadata_json).match("metadata_json") },
-                { assert snapshot(process.out.report_json).match("report_json") },
-                { assert snapshot(process.out.versions).match("versions") },
-                {
-                    with (process.out.log) {
-                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator graph")
-                    }
-                },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("PNA graph - small test") {
+        when {
+            params {
+                pna_graph_component_size_min_threshold = 100
+                outdir   = "$outputDir"
+            }
+
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/PNA055_Sample07_filtered_S7.collapse.parquet', checkIfExists: true),
+                    [],
+                    'proxiome-immuno-155-v2',
+                ]
+                """
+            }
+        }
+
+        then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions_pixelator,
+                ).match() }
             )
         }
     }

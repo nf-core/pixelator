@@ -5,8 +5,8 @@ process PIXELATOR_DEMUX {
     // TODO: Add conda back
     // conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.22.1'
-        : 'quay.io/pixelgen-technologies/pixelator:0.22.1'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.23.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.23.0'}"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel)
@@ -18,7 +18,7 @@ process PIXELATOR_DEMUX {
     tuple val(meta), path("demux/*.meta.json"),               emit: metadata
     tuple val(meta), path("*pixelator-demux.log"),            emit: log
 
-    path "versions.yml",                                      emit: versions
+    tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -45,11 +45,6 @@ process PIXELATOR_DEMUX {
         ${panelOpt} \\
         ${args} \\
         ${reads}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 
     stub:
@@ -62,10 +57,5 @@ process PIXELATOR_DEMUX {
     touch "demux/${prefix}.meta.json"
     echo "" | gzip >> "demux/${prefix}.processed.fq.gz"
     echo "" | gzip >> "demux/${prefix}.failed.fq.gz"
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 }

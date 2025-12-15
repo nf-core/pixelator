@@ -5,8 +5,8 @@ process PIXELATOR_ANALYSIS {
     // TODO: Add conda back
     // conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.22.1'
-        : 'quay.io/pixelgen-technologies/pixelator:0.22.1'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.23.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.23.0'}"
 
     input:
     tuple val(meta), path(data)
@@ -18,7 +18,7 @@ process PIXELATOR_ANALYSIS {
     tuple val(meta), path("analysis/*"),              emit: all_results
     tuple val(meta), path("*pixelator-analysis.log"), emit: log
 
-    path "versions.yml",                              emit: versions
+    tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -37,11 +37,6 @@ process PIXELATOR_ANALYSIS {
         --output . \\
         ${args} \\
         ${data}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 
     stub:
@@ -53,10 +48,5 @@ process PIXELATOR_ANALYSIS {
     touch "analysis/${prefix}.dataset.pxl"
     touch "analysis/${prefix}.report.json"
     touch "analysis/${prefix}.meta.json"
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 }

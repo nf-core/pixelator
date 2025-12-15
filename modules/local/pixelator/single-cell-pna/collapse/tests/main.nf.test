@@ -8,17 +8,48 @@ nextflow_process {
     tag "pixelator/pna"
     tag "pixelator/single_cell_pna_collapse"
 
-    test("PNA collapse - small test - single file") {
+    test("PNA collapse - stub") {
+
+        options "-stub"
+
         when {
             process {
                 """
                 input[0] = [
-                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/PNA055_Sample07_filtered_S7.demux.m1.part_000.parquet', checkIfExists: true)
+                    ],
+                    [],                         // panel_file
+                    'proxiome-immuno-155-v2',   // panel
+                    'pna-2'                     // design
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("PNA collapse - small test - single file") {
+        when {
+            params {
+                outdir   = "$outputDir"
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/PNA055_Sample07_filtered_S7.demux.m1.part_000.parquet', checkIfExists: true)
                     ],
                     [],                     // panel_file
-                    'proxiome-immuno-155',   // panel
+                    'proxiome-immuno-155-v2',   // panel
                     'pna-2'                 // design
                 ]
                 """
@@ -26,41 +57,35 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
-                {
-                    with(process.out.collapsed) {
-                        assert get(0).get(1).every { file(it).exists() }
-                    }
-                },
-                { assert snapshot(process.out.metadata_json).match("metadata") },
-                { assert snapshot(process.out.versions).match("versions") },
-                {
-                    with(process.out.log) {
-                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator collapse")
-                    }
-                },
-                {
-                    with(process.out.report_json) {
-                        assert snapshot(path(get(0).get(1).get(0)).readLines()[0..2]).match("header")
-                    }
-                }
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions_pixelator,
+                ).match() }
             )
         }
     }
 
     test("PNA collapse - small test - multiple files") {
         when {
+            params {
+                outdir   = "$outputDir"
+            }
             process {
                 """
                 input[0] = [
-                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155', technology:'pna' ],
+                    [ id:'PNA055_Sample07_filtered_S7', design:'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/PNA055_Sample07_filtered_S7.demux.m1.part_000.parquet', checkIfExists: true),
                         file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/PNA055_Sample07_filtered_S7.demux.m1.part_001.parquet', checkIfExists: true)
                     ],
                     [],                      // panel_file
-                    'proxiome-immuno-155',   // panel
+                    'proxiome-immuno-155-v2',   // panel
                     'pna-2'                  // design
                 ]
                 """
@@ -68,25 +93,16 @@ nextflow_process {
         }
 
         then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
-                { assert process.success },
-                {
-                    with(process.out.collapsed) {
-                        assert get(0).get(1).every { file(it).exists() }
-                    }
-                },
-                { assert snapshot(process.out.metadata_json).match("multi_metadata") },
-                { assert snapshot(process.out.versions).match("multi_versions") },
-                {
-                    with(process.out.log) {
-                        assert path(get(0).get(1)).readLines().last().contains("Finished pixelator collapse")
-                    }
-                },
-                {
-                    with(process.out.report_json) {
-                        assert snapshot(path(get(0).get(1).get(0)).readLines()[0..2]).match("multi_header")
-                    }
-                }
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
             )
         }
     }

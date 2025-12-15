@@ -1,12 +1,13 @@
 nextflow_pipeline {
 
-    name "Test PNA pipeline with default settings"
+    name "Test PNA pipeline"
     script "../main.nf"
 
     tag "pixelator"
     tag "pixelator/pna"
+    tag "smoke_test"
 
-    test("Params: default") {
+    test("Params: all") {
 
         when {
             params {
@@ -16,7 +17,8 @@ nextflow_pipeline {
                 outdir                                 = "$outputDir"
 
                 pna_graph_component_size_min_threshold = 100
-                skip_experiment_summary                = true
+                skip_experiment_summary                = false
+                save_all                               = true
 
             }
         }
@@ -24,8 +26,6 @@ nextflow_pipeline {
         then {
             // stable_name: All files + folders in ${params.outdir}/ with a stable name
             def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
-            // stable_path: All files in ${params.outdir}/ with stable content
-            def stable_path = []
 
             assertAll(
                 { assert workflow.success},
@@ -36,8 +36,6 @@ nextflow_pipeline {
                     removeNextflowVersion("$outputDir/pipeline_info/nf_core_pixelator_software_mqc_versions.yml"),
                     // All stable path name, with a relative path
                     stable_name,
-                    // All files with stable contents
-                    stable_path
                 ).match() }
             )
         }
@@ -54,15 +52,12 @@ nextflow_pipeline {
                 input_basedir                = "$pipelines_testdata_base_path/testdata/pna/"
                 outdir                       = "$outputDir"
 
-                skip_experiment_summary      = true
+                skip_experiment_summary      = false
             }
         }
 
         then {
-            // stable_name: All files + folders in ${params.outdir}/ with a stable name
             def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
-            // stable_path: All files in ${params.outdir}/ with stable content
-            def stable_path = []
             assertAll(
                 { assert workflow.success },
                 { assert snapshot(
@@ -70,8 +65,7 @@ nextflow_pipeline {
                     workflow.trace.succeeded().size(),
                     // All stable path name, with a relative path
                     stable_name,
-                    // All files with stable contents
-                    stable_path
+                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_pixelator_software_mqc_versions.yml"),
                 ).match() }
             )
         }

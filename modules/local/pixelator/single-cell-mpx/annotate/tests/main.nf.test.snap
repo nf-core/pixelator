@@ -1,13 +1,30 @@
 {
-    "pxl": {
+    "Test MPX annotate - SCSP v1 | Immunology-I": {
         "content": [
-            "metadata.json:md5,82b35492f5e5067481c04c8612f466ee"
+            1,
+            [
+                "pixelator",
+                "pixelator/annotate",
+                "pixelator/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.annotate.dataset.pxl",
+                "pixelator/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json",
+                "pixelator/annotate/sample01_1k_pbmcs_scsp_v1_immunology1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1",
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-annotate.log"
+            ],
+            [
+                [
+                    "PIXELATOR_ANNOTATE",
+                    "pixelator",
+                    "0.23.0"
+                ]
+            ]
         ],
         "meta": {
             "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-10-31T13:30:45.331289297"
+        "timestamp": "2025-12-11T14:00:18.248269201"
     },
     "Test MPX annotate - stub": {
         "content": [
@@ -72,7 +89,11 @@
                     ]
                 ],
                 "5": [
-                    "versions.yml:md5,f96c065a146a6d0667467f30beb8092b"
+                    [
+                        "PIXELATOR_ANNOTATE",
+                        "pixelator",
+                        "0.23.0"
+                    ]
                 ],
                 "all_results": [
                     [
@@ -133,15 +154,19 @@
                         "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "versions": [
-                    "versions.yml:md5,f96c065a146a6d0667467f30beb8092b"
+                "versions_pixelator": [
+                    [
+                        "PIXELATOR_ANNOTATE",
+                        "pixelator",
+                        "0.23.0"
+                    ]
                 ]
             }
         ],
         "meta": {
             "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-10-31T13:30:22.30561325"
+        "timestamp": "2025-12-11T13:59:23.959912816"
     }
 }

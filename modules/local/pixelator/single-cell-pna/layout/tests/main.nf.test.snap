@@ -1,20 +1,20 @@
 {
-    "Test MPX collapse - - SCSP v1 | Immunology-I": {
+    "Test PNA layout - small test": {
         "content": [
             1,
             [
                 "pixelator",
-                "pixelator/collapse",
-                "pixelator/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.collapsed.parquet",
-                "pixelator/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.meta.json",
-                "pixelator/collapse/sample01_1k_pbmcs_scsp_v1_immunology1.report.json",
+                "pixelator/PNA055_Sample07_filtered_S7.layout.pxl",
+                "pixelator/layout",
+                "pixelator/layout/PNA055_Sample07_filtered_S7.meta.json",
+                "pixelator/layout/PNA055_Sample07_filtered_S7.report.json",
                 "pixelator/logs",
                 "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1",
-                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-collapse.log"
+                "pixelator/logs/sample01_1k_pbmcs_scsp_v1_immunology1/sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-layout.log"
             ],
             [
                 [
-                    "PIXELATOR_COLLAPSE",
+                    "PIXELATOR_PNA_LAYOUT",
                     "pixelator",
                     "0.23.0"
                 ]
@@ -24,9 +24,9 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-11T14:01:06.452863376"
+        "timestamp": "2025-12-11T14:07:14.696827931"
     },
-    "Test MPX collapse - stub": {
+    "Test PNA layout - stub": {
         "content": [
             {
                 "0": [
@@ -37,7 +37,7 @@
                             "panel": "human-sc-immunology-spatial-proteomics-1",
                             "technology": "mpx"
                         },
-                        "sample01_1k_pbmcs_scsp_v1_immunology1.collapsed.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "1": [
@@ -70,17 +70,14 @@
                             "panel": "human-sc-immunology-spatial-proteomics-1",
                             "technology": "mpx"
                         },
-                        "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        [
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
                     ]
                 ],
                 "4": [
-                    [
-                        "PIXELATOR_COLLAPSE",
-                        "pixelator",
-                        "0.23.0"
-                    ]
-                ],
-                "collapsed": [
                     [
                         {
                             "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
@@ -88,7 +85,29 @@
                             "panel": "human-sc-immunology-spatial-proteomics-1",
                             "technology": "mpx"
                         },
-                        "sample01_1k_pbmcs_scsp_v1_immunology1.collapsed.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-layout.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "5": [
+                    [
+                        "PIXELATOR_PNA_LAYOUT",
+                        "pixelator",
+                        "0.23.0"
+                    ]
+                ],
+                "all_results": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        [
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample01_1k_pbmcs_scsp_v1_immunology1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
                     ]
                 ],
                 "log": [
@@ -99,10 +118,10 @@
                             "panel": "human-sc-immunology-spatial-proteomics-1",
                             "technology": "mpx"
                         },
-                        "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.pixelator-layout.log:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "metadata": [
+                "metadata_json": [
                     [
                         {
                             "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
@@ -111,6 +130,17 @@
                             "technology": "mpx"
                         },
                         "sample01_1k_pbmcs_scsp_v1_immunology1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "pixelfile": [
+                    [
+                        {
+                            "id": "sample01_1k_pbmcs_scsp_v1_immunology1",
+                            "design": "D21",
+                            "panel": "human-sc-immunology-spatial-proteomics-1",
+                            "technology": "mpx"
+                        },
+                        "sample01_1k_pbmcs_scsp_v1_immunology1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "report_json": [
@@ -126,7 +156,7 @@
                 ],
                 "versions_pixelator": [
                     [
-                        "PIXELATOR_COLLAPSE",
+                        "PIXELATOR_PNA_LAYOUT",
                         "pixelator",
                         "0.23.0"
                     ]
@@ -137,6 +167,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-11T14:00:36.097828773"
+        "timestamp": "2025-12-11T14:06:55.333469128"
     }
 }
