@@ -4,7 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { EXPERIMENT_SUMMARY    } from '../../../modules/local/experiment_summary/main'
+include { EXPERIMENT_SUMMARY    } from '../../../../modules/local/experiment_summary/main'
 
 /*
 ========================================================================================
