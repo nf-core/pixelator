@@ -15,7 +15,7 @@ Use this parameter to specify its location.
 --input '[path to samplesheet file]'
 ```
 
-We provide example samplesheets for [MXP data](../assets/samplesheet_mpx.csv) and for [PNA data](../assets/samplesheet_pna.csv),
+We provide example samplesheets for [MPX data](../assets/samplesheet_mpx.csv) and for [PNA data](../assets/samplesheet_pna.csv),
 that can be used as a template to create your own samplesheet.
 
 ### Format
@@ -38,9 +38,9 @@ to match those defined in the table below.
 Below is an example of a simple samplesheet with two samples.
 
 ```csv
-sample,design,panel,fastq_1,fastq_2
-sample1,pna-2,proxiome-immuno-155-v2,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
-sample2,pna-2,proxiome-immuno-155-v2,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
+sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+sample1,s1,control,pna-2,proxiome-immuno-155-v2,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample2,s2,treatment,pna-2,proxiome-immuno-155-v2,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
 ```
 
 Columns not defined in the table below are ignored by the pipeline but can be useful
