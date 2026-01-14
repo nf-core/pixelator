@@ -81,7 +81,7 @@
                     "pixelator": "0.23.0"
                 },
                 "Workflow": {
-                    "nf-core/pixelator": "v2.4.0dev"
+                    "nf-core/pixelator": "v2.3.1"
                 }
             }
         ],
@@ -89,7 +89,7 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-15T11:50:36.521603039"
+        "timestamp": "2026-01-14T15:08:13.476744195"
     },
     "Params: default": {
         "content": [
@@ -126,7 +126,7 @@
                     "pixelator": "0.23.0"
                 },
                 "Workflow": {
-                    "nf-core/pixelator": "v2.4.0dev"
+                    "nf-core/pixelator": "v2.3.1"
                 }
             },
             [
@@ -273,6 +273,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-15T11:49:07.102942955"
+        "timestamp": "2026-01-14T15:06:46.245556348"
     }
 }
