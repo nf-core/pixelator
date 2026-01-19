@@ -3,6 +3,8 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## dev - xxxx-xx-xx
+
 ## [[2.3.1](https://github.com/nf-core/pixelator/releases/tag/2.3.1)] - 2025-01-14
 
 - Update usage documentation by @vincent-van-hoef [#176](https://github.com/nf-core/pixelator/pull/176)
