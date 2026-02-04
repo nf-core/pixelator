@@ -321,6 +321,10 @@
             "title": "Options for pixelator analysis command.",
             "type": "object",
             "properties": {
+                "skip_analysis": {
+                    "description": "Skip analysis step",
+                    "type": "boolean"
+                },
                 "save_pna_analysis_pixelfile": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
