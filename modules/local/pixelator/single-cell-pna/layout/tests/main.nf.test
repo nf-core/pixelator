@@ -5,8 +5,8 @@ nextflow_process {
     process "PIXELATOR_PNA_LAYOUT"
     tag "modules"
     tag "pixelator"
-    tag "pixelator/mpx"
-    tag "pixelator/single_cell_mpx_layout"
+    tag "pixelator/pna"
+    tag "pixelator/single_cell_pna_layout"
 
 
     test("Test PNA layout - stub") {
@@ -16,13 +16,13 @@ nextflow_process {
         when {
             params {
                 save_all = true
-                layout_algorithm = "fruchterman_reingold_3d"
+                layout_algorithm = "pmds_3d"
                 skip_layout = false
             }
             process {
                 """
                 input[0] = [
-                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design: 'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    [ id:'PNA055_Sample07_filtered_S7', design: 'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     file(params.pipelines_testdata_base_path + 'testdata/pna/modules/analysis/PNA055_Sample07_filtered_S7.analysis.pxl', checkIfExists: true)
                 ]
                 """
@@ -41,14 +41,14 @@ nextflow_process {
         when {
             params {
                 save_all = true
-                layout_algorithm = "fruchterman_reingold_3d"
+                layout_algorithm = "pmds_3d"
                 skip_layout = false
                 outdir   = "$outputDir"
             }
             process {
                 """
                 input[0] = [
-                    [ id:'sample01_1k_pbmcs_scsp_v1_immunology1', design: 'D21', panel:'human-sc-immunology-spatial-proteomics-1', technology:'mpx' ],
+                    [ id:'PNA055_Sample07_filtered_S7', design: 'pna-2', panel:'proxiome-immuno-155-v2', technology:'pna' ],
                     file(params.pipelines_testdata_base_path + 'testdata/pna/modules/analysis/PNA055_Sample07_filtered_S7.analysis.pxl', checkIfExists: true)
                 ]
                 """

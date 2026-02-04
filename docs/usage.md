@@ -15,7 +15,7 @@ Use this parameter to specify its location.
 --input '[path to samplesheet file]'
 ```
 
-We provide example samplesheets for [MPX data](../assets/samplesheet_mpx.csv) and for [PNA data](../assets/samplesheet_pna.csv),
+We provide an example samplesheets for [PNA data](../assets/samplesheet_pna.csv),
 that can be used as a template to create your own samplesheet.
 
 ### Format
@@ -114,11 +114,8 @@ The `design` column specifies the name of the pixelator assay design configurati
 A list of available designs can be listed by running following command:
 
 ```shell
-pixelator single-cell-mpx --list-designs
 pixelator single-cell-pna --list-designs
 ```
-
-Currently, a single design is available for MPX (`D21`) and one for PNA (`pna-2`).
 
 ### Panels
 
@@ -134,20 +131,8 @@ Every sample should have either `panel` or `panel_file` specified.
 A list of available panels can be listed by running following command:
 
 ```shell
-pixelator single-cell-mpx --list-panels
 pixelator single-cell-pna --list-panels
 ```
-
-Currently, two built-in panels are available for MPX:
-
-- `human-sc-immunology-spatial-proteomics-1`
-- `human-sc-immunology-spatial-proteomics-2`
-
-And three for PNA:
-
-- `proxiome-immuno-155`
-- `proxiome-immuno-156-FMC63`
-- `proxiome-immuno-156-FLAG`
 
 ## Running the pipeline
 

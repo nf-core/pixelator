@@ -23,15 +23,14 @@
 
 ## Introduction
 
-**nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for analysis of data from the
-Molecular Pixelation (MPX) and Proximity Network (PNA) assays. It takes a samplesheet as input and will process your data
+**nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for analysis of data from tthe
+Proximity Network (PNA) assay. It takes a samplesheet as input and will process your data
 using `pixelator` to produce a PXL file containing single-cell protein abundance and protein interactomics data.
 
+TODO! Rework the metro map!
 ![](./docs/images/nf-core-pixelator-metromap.svg)
 
-Depending on the input data the pipeline will run different steps.
-
-For PNA data, the pipeline will run the following steps:
+The pipeline will run the following steps:
 
 1. Do quality control checks of input reads and build amplicons ([`pixelator single-cell-pna amplicon`](https://github.com/PixelgenTechnologies/pixelator))
 2. Create groups of amplicons based on their marker assignments ([`pixelator single-cell-pna demux`](https://github.com/PixelgenTechnologies/pixelator))
@@ -41,18 +40,6 @@ For PNA data, the pipeline will run the following steps:
 6. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
 7. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
 8. Proxiome Experiment Summary generation using [PixelatorES](https://github.com/PixelgenTechnologies/pixelatorES)
-
-For MPX data, the pipeline will run the following steps:
-
-1. Build an amplicons from the input reads ([`pixelator single-cell-mpx amplicon`](https://github.com/PixelgenTechnologies/pixelator))
-2. Read QC and filtering, correctness of the pixel binding sequence sequences ([`pixelator single-cell-mpx preqc | pixelator adapterqc`](https://github.com/PixelgenTechnologies/pixelator))
-3. Assign a marker (barcode) to each read ([`pixelator single-cell-mpx demux`](https://github.com/PixelgenTechnologies/pixelator))
-4. Error correction, duplicate removal, compute read counts ([`pixelator single-cell-mpx collapse`](https://github.com/PixelgenTechnologies/pixelator))
-5. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator single-cell-mpx graph`](https://github.com/PixelgenTechnologies/pixelator))
-6. Call and annotate cells ([`pixelator single-cell-mpx annotate`](https://github.com/PixelgenTechnologies/pixelator))
-7. Analyze the cells for polarization and colocalization ([`pixelator single-cell-mpx analysis`](https://github.com/PixelgenTechnologies/pixelator))
-8. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-mpx layout`](https://github.com/PixelgenTechnologies/pixelator))
-9. Report generation ([`pixelator single-cell-mpx report`](https://github.com/PixelgenTechnologies/pixelator))
 
 > [!WARNING]
 > Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
@@ -129,12 +116,6 @@ You can cite the `nf-core` publication as follows:
 > _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).
 
 You can cite the molecular pixelation technology as follows:
-
-> **Molecular pixelation: spatial proteomics of single cells by sequencing.**
->
-> Filip Karlsson, Tomasz Kallas, Divya Thiagarajan, Max Karlsson, Maud Schweitzer, Jose Fernandez Navarro, Louise Leijonancker, Sylvain Geny, Erik Pettersson, Jan Rhomberg-Kauert, Ludvig Larsson, Hanna van Ooijen, Stefan Petkov, Marcela González-Granillo, Jessica Bunz, Johan Dahlberg, Michele Simonetti, Prajakta Sathe, Petter Brodin, Alvaro Martinez Barrio & Simon Fredriksson
->
-> _Nat Methods._ 2024 May 08. doi: [10.1038/s41592-024-02268-9](https://doi.org/10.1038/s41592-024-02268-9)
 
 > **Single-Cell Protein Interactomes by the Proximity Network Assay.**
 >

@@ -21,9 +21,6 @@ process PIXELATOR_LIST_OPTIONS {
     def args2 = task.ext.args2 ?: ''
 
     """
-    pixelator single-cell-mpx --list-designs ${args} > design_options.txt
-    pixelator single-cell-mpx --list-panels ${args2} > panel_options.txt
-
     pixelator single-cell-pna --list-designs ${args} >> design_options.txt
     pixelator single-cell-pna --list-panels ${args2} >> panel_options.txt
     """
@@ -31,14 +28,10 @@ process PIXELATOR_LIST_OPTIONS {
     stub:
     """
     cat <<-END_DESIGN > design_options.txt
-    D21
     pna-2
     END_DESIGN
 
     cat <<-END_PANELS > panel_options.txt
-    human-sc-immunology-spatial-proteomics-1
-    human-sc-immunology-spatial-proteomics-2
-    human-sc-immunology-spatial-proteomics
     proxiome-immuno-155-v2
     END_PANELS
     """
