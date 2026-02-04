@@ -23,11 +23,10 @@
 
 ## Introduction
 
-**nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for analysis of data from tthe
+**nf-core/pixelator** is a bioinformatics best-practice analysis pipeline for analysis of data from the
 Proximity Network (PNA) assay. It takes a samplesheet as input and will process your data
 using `pixelator` to produce a PXL file containing single-cell protein abundance and protein interactomics data.
 
-TODO! Rework the metro map!
 ![](./docs/images/nf-core-pixelator-metromap.svg)
 
 The pipeline will run the following steps:
@@ -40,6 +39,10 @@ The pipeline will run the following steps:
 6. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
 7. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
 8. Proxiome Experiment Summary generation using [PixelatorES](https://github.com/PixelgenTechnologies/pixelatorES)
+
+> [!NOTE]
+> If you are looking to run the pipeline with Molecular Pixelation (MPX) data. Please refer to the [release 2.3.1](https://nf-co.re/pixelator/2.3.1/),
+> which is the last version to support that data type.
 
 > [!WARNING]
 > Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
