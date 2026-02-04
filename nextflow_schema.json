@@ -361,6 +361,10 @@
             "title": "Options for pixelator single-cell-pna layout command.",
             "type": "object",
             "properties": {
+                "skip_layout": {
+                    "description": "Skip layout step",
+                    "type": "boolean"
+                },
                 "pna_layout_no_node_marker_counts": {
                     "description": "Skip adding marker counts to the layout.",
                     "type": "boolean",
