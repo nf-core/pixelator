@@ -115,7 +115,7 @@ You can cite the `nf-core` publication as follows:
 >
 > _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).
 
-You can cite the molecular pixelation technology as follows:
+You can cite the Proximity Network Technology as follows:
 
 > **Single-Cell Protein Interactomes by the Proximity Network Assay.**
 >

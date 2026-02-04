@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://raw.githubusercontent.com/nf-core/pixelator/master/nextflow_schema.json",
     "title": "nf-core/pixelator pipeline parameters",
-    "description": "Pipeline for analysis of Molecular Pixelation assays",
+    "description": "Pipeline for analysis of Proximity Network Assay data",
     "type": "object",
     "$defs": {
         "input_output_options": {
