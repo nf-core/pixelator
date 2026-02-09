@@ -15,7 +15,7 @@ Use this parameter to specify its location.
 --input '[path to samplesheet file]'
 ```
 
-We provide an example samplesheets for [PNA data](../assets/samplesheet_pna.csv),
+We provide an example samplesheet for [PNA data](../assets/samplesheet_pna.csv),
 that can be used as a template to create your own samplesheet.
 
 ### Format
