@@ -467,8 +467,7 @@ def detect_technology(LinkedHashMap meta) {
     if (meta.design.startsWith('pna')) {
         newMeta = meta + [technology: 'pna']
     }
-    else {
-        newMeta = meta + [technology: 'mpx']
-    }
+    // TODO For now keep this around, in order to introduce
+    // other technology choices later.
     return newMeta
 }

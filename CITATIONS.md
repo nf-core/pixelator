@@ -14,6 +14,8 @@
 
   > Karlsson, F., Kallas, T., Thiagarajan, D. et al. “Molecular pixelation: spatial proteomics of single cells by sequencing.“ Nat Methods 21, 1044–1052 (2024). https://doi.org/10.1038/s41592-024-02268-9
 
+  > Karlsson, F., Simonetti, M.,Galonska, C. et al. "Single-Cell Protein Interactomes by the Proximity Network Assay". _bioRxiv_ 2025.06.19.660329; doi: [10.1101/2025.06.19.660329](https://doi.org/10.1101/2025.06.19.660329)
+
 - [cutadapt](http://dx.doi.org/10.14806/ej.17.1.200)
 
   > Martin, Marcel. “Cutadapt Removes Adapter Sequences from High-Throughput Sequencing Reads.” EMBnet.Journal 17, no. 1 (May 2, 2011): 10–12. https://doi.org/10.14806/ej.17.1.200.

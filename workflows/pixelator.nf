@@ -28,7 +28,6 @@ if (params.input) {
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
-include { MPX            } from '../subworkflows/local/mpx'
 include { PNA            } from '../subworkflows/local/pna'
 
 /*
@@ -112,8 +111,6 @@ workflow PIXELATOR {
     ch_fastq_technology_split = ch_cat_fastq
         .branch {
             meta, data ->
-                mpx: meta.technology == 'mpx'
-                    return [ meta, data ]
                 pna: meta.technology == 'pna'
                     return [ meta, data ]
             }
@@ -121,16 +118,9 @@ workflow PIXELATOR {
     ch_panel_files_technology_split = ch_cat_panel_files
         .branch {
             meta, data ->
-            mpx: meta.technology == 'mpx'
-                return [ meta, data ]
             pna: meta.technology == 'pna'
                 return [ meta, data ]
     }
-
-    MPX(
-        ch_fastq_technology_split.mpx,
-        ch_panel_files_technology_split.mpx
-    )
 
     PNA(
         ch_fastq_technology_split.pna,
