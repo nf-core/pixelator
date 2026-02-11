@@ -113,7 +113,7 @@
                 "pna_demux_mismatches": {
                     "fa_icon": "fas not-equal",
                     "description": "The number of mismatches allowed in marker barcodes.",
-                    "type": "number",
+                    "type": "integer",
                     "default": 1,
                     "minimum": 0,
                     "maximum": 2
@@ -127,7 +127,7 @@
                 },
                 "pna_demux_output_max_chunks": {
                     "fa_icon": "fas fa-arrows-alt-h",
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1,
                     "maximum": 32,
                     "default": 8,
@@ -210,7 +210,7 @@
                     "default": true
                 },
                 "pna_graph_leiden_iterations": {
-                    "type": "number",
+                    "type": "integer",
                     "default": 1,
                     "description": "Number of iterations for the leiden algorithm.",
                     "help": "High values will decrease the variance of the results but increase the runtime"
@@ -237,25 +237,25 @@
                     "description": "Discard edges with a read count below given value. Set to 1 to disable filtering."
                 },
                 "pna_graph_min_component_size_in_refinement": {
-                    "type": "number",
+                    "type": "integer",
                     "default": 1000,
                     "minimum": 1,
                     "description": "The minimum component size to consider for refinement"
                 },
                 "pna_graph_max_refinement_recursion_depth": {
-                    "type": "number",
+                    "type": "integer",
                     "default": 5,
                     "minimum": 1,
                     "maximum": 100,
                     "description": "The maximum recursion depth for the refinement algorithm. Set to 1 to disable refinement."
                 },
                 "pna_graph_initial_stage_max_edges_to_remove": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1,
                     "description": "The maximum number of edges to remove between components during the initial stage (iteration == 0) of multiplet recovery."
                 },
                 "pna_graph_refinement_stage_max_edges_to_remove": {
-                    "type": "number",
+                    "type": "integer",
                     "default": 4,
                     "minimum": 1,
                     "description": "The maximum number of edges to remove between components during the refinement stage (iteration > 0) of multiplet recovery."
@@ -271,13 +271,13 @@
                     "description": "The maximum number of edges to remove between two components relative to the number of nodes in the smaller of the two when during the refinement stage (iteration > 0) of multiplet recovery."
                 },
                 "pna_graph_graph_min_component_size_to_prune": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1,
                     "default": 100,
                     "description": "The minimum number of nodes in an potential new components in order for it to be pruned."
                 },
                 "pna_graph_component_size_min_threshold": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1,
                     "default": 8000,
                     "description": "Components with fewer nodes than this will be filtered from the output data. Set to null to enable automatic size filtering based on the data."
