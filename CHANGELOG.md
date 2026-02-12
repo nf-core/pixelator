@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## dev - xxxx-xx-xx
 
+### Changed
+
+- Set default pna_graph_component_size_min_threshold to 8000 instead of null (i.e. automatic).
+
 ### Removed
 
 - Support for MPX in the pipeline
