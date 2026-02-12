@@ -279,7 +279,8 @@
                 "pna_graph_component_size_min_threshold": {
                     "type": "number",
                     "minimum": 1,
-                    "description": "Components with fewer nodes than this will be filtered from the output data. This is typically not needed. Setting this will disable the automatic size filtering."
+                    "default": 8000,
+                    "description": "Components with fewer nodes than this will be filtered from the output data. Set to null to enable automatic size filtering based on the data."
                 }
             }
         },
