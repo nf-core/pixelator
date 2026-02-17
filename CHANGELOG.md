@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Enhancements & fixes
 
-- Schema file files (e.g. expliclitly use integer types for integers, rather than numbers) by @johandahlberg [#184](https://github.com/nf-core/pixelator/pull/184)
+- Update schema files (e.g. expliclitly use integer types for integers, rather than numbers) by @johandahlberg [#184](https://github.com/nf-core/pixelator/pull/184)
 
 ## [[2.3.1](https://github.com/nf-core/pixelator/releases/tag/2.3.1)] - 2025-01-14
 
