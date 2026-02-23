@@ -52,20 +52,21 @@
                 "save_pna_amplicon_reads": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
-                    "default": false,
                     "description": "Save intermediate amplicon reads generated from the raw input reads.",
                     "help": "By default, generated amplicon FastQ files will not be saved to the results directory. Specify this flag (or set it to `true` in your config file) to copy these files to the results directory when complete."
                 },
                 "pna_amplicon_mismatches": {
                     "type": "number",
-                    "minimum": 0.0,
+                    "minimum": 0,
                     "maximum": 0.5,
-                    "description": "The number of mismatches allowed while anchoring reads using LBS sequences (in percentage of seen LBS length) [default: 0.1; 0.0<=x<=0.5]"
+                    "description": "The number of mismatches allowed while anchoring reads using LBS sequences (in percentage of seen LBS length) [default: 0.1; 0.0<=x<=0.5]",
+                    "default": 0.1
                 },
                 "pna_amplicon_remove_polyg": {
                     "fa_icon": "fas g",
                     "description": "Remove PolyG sequences (length of 10 or more)",
-                    "type": "boolean"
+                    "type": "boolean",
+                    "default": true
                 },
                 "pna_amplicon_quality_cutoff": {
                     "fa_icon": "fas gauge",
@@ -82,7 +83,7 @@
                     "type": "number",
                     "default": 0.8,
                     "minimum": 0.5,
-                    "maximum": 1.0,
+                    "maximum": 1,
                     "description": "The threshold for determining if a UMI sequence is of low complexity and will be removed. [0.5<=x<=1.0]"
                 },
                 "pna_amplicon_lbs_filter": {
@@ -100,8 +101,8 @@
                 "pna_amplicon_lbs_filter_error_rate": {
                     "type": "number",
                     "default": 0.1,
-                    "minimum": 0.0,
-                    "maximum": 1.0,
+                    "minimum": 0,
+                    "maximum": 1,
                     "description": "The allowed error-rate in a semi-global alignment of a UMI sequence with the LBS regions. The error rate is defined as a percentage of UMI length. [0.0<=x<=1.0]"
                 }
             }
@@ -113,7 +114,7 @@
                 "pna_demux_mismatches": {
                     "fa_icon": "fas not-equal",
                     "description": "The number of mismatches allowed in marker barcodes.",
-                    "type": "number",
+                    "type": "integer",
                     "default": 1,
                     "minimum": 0,
                     "maximum": 2
@@ -127,7 +128,7 @@
                 },
                 "pna_demux_output_max_chunks": {
                     "fa_icon": "fas fa-arrows-alt-h",
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1,
                     "maximum": 32,
                     "default": 8,
@@ -145,21 +146,18 @@
                 "save_pna_demux_parquet": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
-                    "default": false,
                     "description": "Save intermediate parquet files containing embeddings of all reads that contain valid antibody barcodes.",
                     "help": "By default, parquet files containing embeddings of reads with valid antibody barcodes will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 },
                 "save_pna_demux_passed_reads": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
-                    "default": false,
                     "description": "Save intermediate FASTQC read files containing all reads that contain valid antibody barcodes.",
                     "help": "By default, FastQ files containing reads with valid antibody barcodes will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 },
                 "save_pna_demux_failed_reads": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
-                    "default": false,
                     "description": "Save intermediate FASTQC read files containing all reads that do not contain valid antibody barcodes.",
                     "help": "By default, FastQ files containing reads without valid antibody barcodes will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 }
@@ -175,7 +173,7 @@
                     "default": "directional",
                     "enum": ["cluster", "directional"],
                     "type": "string",
-                    "help": "**cluster:** Form networks of connected UMIs (based on hamming distance threshold). Each connected component is a read group. In the above example, all the UMIs are contained in a single connected component and thus there is one read group containing all reads, with ACGT as the ‘selected’ UMI.\n\n**directional (default):** Form networks with edges defined based on hamming distance threshold and node A counts >= (2 * node B counts) - 1. Each connected component is a read group, with the node with the highest counts selected as the top node for the component."
+                    "help": "**cluster:** Form networks of connected UMIs (based on hamming distance threshold). Each connected component is a read group. In the above example, all the UMIs are contained in a single connected component and thus there is one read group containing all reads, with ACGT as the `selected` UMI.\n\n**directional (default):** Form networks with edges defined based on hamming distance threshold and node A counts >= (2 * node B counts) - 1. Each connected component is a read group, with the node with the highest counts selected as the top node for the component."
                 },
                 "pna_collapse_mismatches": {
                     "fa_icon": "fas not-equal",
@@ -188,7 +186,6 @@
                 "save_pna_collapsed_reads": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
-                    "default": false,
                     "description": "Save an intermediate parquet file containing collapsed read information.",
                     "help": "By default, intermediate collapsed reads will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 }
@@ -200,7 +197,6 @@
             "properties": {
                 "save_pna_graph_pixelfile": {
                     "type": "boolean",
-                    "default": false,
                     "description": "Save the PXL dataset after the graph stage.",
                     "help": "By default, the PXL file after graph will not be saved to the results directory unless `--skip_analysis` and `--skip_layout` is passed. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 },
@@ -210,21 +206,21 @@
                     "default": true
                 },
                 "pna_graph_leiden_iterations": {
-                    "type": "number",
+                    "type": "integer",
                     "default": 1,
                     "description": "Number of iterations for the leiden algorithm.",
                     "help": "High values will decrease the variance of the results but increase the runtime"
                 },
                 "pna_graph_initial_stage_leiden_resolution": {
-                    "default": 1.0,
-                    "minimum": 0.0,
+                    "default": 1,
+                    "minimum": 0,
                     "type": "number",
                     "description": "The resolution parameter for the leiden algorithm at the initial stage.",
                     "help": "This should typically be set higher than the refinement stage resolution."
                 },
                 "pna_graph_refinement_stage_leiden_resolution": {
                     "default": 0.01,
-                    "minimum": 0.0,
+                    "minimum": 0,
                     "type": "number",
                     "description": "The resolution parameter for the leiden algorithm at the refinement stage.",
                     "help": "This should typically be set lower than the initial stage resolution."
@@ -237,47 +233,47 @@
                     "description": "Discard edges with a read count below given value. Set to 1 to disable filtering."
                 },
                 "pna_graph_min_component_size_in_refinement": {
-                    "type": "number",
+                    "type": "integer",
                     "default": 1000,
                     "minimum": 1,
                     "description": "The minimum component size to consider for refinement"
                 },
                 "pna_graph_max_refinement_recursion_depth": {
-                    "type": "number",
+                    "type": "integer",
                     "default": 5,
                     "minimum": 1,
                     "maximum": 100,
                     "description": "The maximum recursion depth for the refinement algorithm. Set to 1 to disable refinement."
                 },
                 "pna_graph_initial_stage_max_edges_to_remove": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1,
                     "description": "The maximum number of edges to remove between components during the initial stage (iteration == 0) of multiplet recovery."
                 },
                 "pna_graph_refinement_stage_max_edges_to_remove": {
-                    "type": "number",
+                    "type": "integer",
                     "default": 4,
                     "minimum": 1,
                     "description": "The maximum number of edges to remove between components during the refinement stage (iteration > 0) of multiplet recovery."
                 },
                 "pna_graph_initial_stage_max_edges_to_remove_relative": {
                     "type": "number",
-                    "minimum": 0.0,
+                    "minimum": 0,
                     "description": "The maximum number of edges to remove between two components relative to the number of nodes in the smaller of the two when during the initial stage (iteration == 0) of multiplet recovery."
                 },
                 "pna_graph_refinement_stage_max_edges_to_remove_relative": {
                     "type": "number",
-                    "minimum": 0.0,
+                    "minimum": 0,
                     "description": "The maximum number of edges to remove between two components relative to the number of nodes in the smaller of the two when during the refinement stage (iteration > 0) of multiplet recovery."
                 },
                 "pna_graph_graph_min_component_size_to_prune": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1,
                     "default": 100,
                     "description": "The minimum number of nodes in an potential new components in order for it to be pruned."
                 },
                 "pna_graph_component_size_min_threshold": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1,
                     "default": 8000,
                     "description": "Components with fewer nodes than this will be filtered from the output data. Set to null to enable automatic size filtering based on the data."
@@ -295,7 +291,6 @@
                 "save_pna_denoise_pixelfile": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
-                    "default": false,
                     "description": "Save the PXL dataset after the denoise stage.",
                     "help": "By default, the PXL file after denoise will not be saved to the results directory."
                 },
@@ -308,13 +303,13 @@
                     "type": "number",
                     "description": "The p-value threshold for the a marker to be considered significantly over-expressed in the one-core layer of a component",
                     "default": 0.05,
-                    "minimum": 0.0
+                    "minimum": 0
                 },
                 "pna_denoise_inflate_factor": {
                     "type": "number",
                     "description": "The inflate factor for the number of nodes from over-expressed markers to be removed from the one-core layer of a component",
                     "default": 1.5,
-                    "minimum": 1.0
+                    "minimum": 1
                 }
             }
         },
@@ -329,7 +324,6 @@
                 "save_pna_analysis_pixelfile": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
-                    "default": false,
                     "description": "Save the PXL dataset after the analysis stage.",
                     "help": "By default, the PXL dataset after the analysis stage will only be saved be saved when `--skip_layout` is passed. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 },
@@ -340,7 +334,8 @@
                 },
                 "pna_analysis_compute_k_cores": {
                     "description": "Compute k-core summary tables for each component",
-                    "type": "boolean"
+                    "type": "boolean",
+                    "default": true
                 },
                 "pna_analysis_proximity_nbr_of_permutations": {
                     "type": "integer",
@@ -372,8 +367,7 @@
                 },
                 "pna_layout_no_node_marker_counts": {
                     "description": "Skip adding marker counts to the layout.",
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 },
                 "pna_layout_layout_algorithm": {
                     "description": "Select a layout algorithm to use. This can be specified as a comma separated list to compute multiple layouts. Possible values are: pmds, pmds_3d, wpmds, wpmds_3d.",
@@ -419,7 +413,6 @@
                 "save_all": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
-                    "default": false,
                     "description": "Save all intermediate results.",
                     "help": "This option is equivalent of passing all: `--save_* and --save_pna_*` options."
                 },

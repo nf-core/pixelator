@@ -7,45 +7,49 @@
     "items": {
         "type": "object",
         "required": ["sample", "design", "fastq_1"],
+        "additionalProperties": false,
         "properties": {
             "sample": {
                 "type": "string",
                 "pattern": "^\\S+$",
                 "errorMessage": "Sample name must be provided and cannot contain spaces",
+                "description": "Sample name (no spaces).",
                 "meta": ["id"]
             },
             "design": {
                 "type": "string",
-                "meta": ["design"],
-                "errorMessage": "Design must be specified"
+                "pattern": "^\\S+$",
+                "errorMessage": "Design must be specified",
+                "description": "Design identifier (no spaces).",
+                "meta": ["design"]
             },
             "panel": {
-                "errorMessage": "Panel name must be specified",
                 "type": "string",
+                "pattern": "^\\S+$",
+                "description": "Panel identifier (no spaces).",
+                "errorMessage": "panel or panel_file must be specified",
                 "meta": ["panel"]
             },
             "panel_file": {
+                "type": "string",
+                "format": "file-path",
+                "description": "Optional panel file path. Empty string allowed. If set, must end with .csv, .tsv, .yaml, or .yml and contain no spaces.",
                 "errorMessage": "Panel file must either be left empty or cannot contain spaces and must have extension '.csv', '.tsv' or '.yaml'",
-                "anyOf": [
-                    {
-                        "type": "string",
-                        "pattern": "^\\S+.(csv|tsv|ya?ml)$"
-                    },
-                    {
-                        "type": "string",
-                        "maxLength": 0
-                    }
-                ]
+                "pattern": "^$|^\\S+\\.(csv|tsv|ya?ml)$"
             },
             "fastq_1": {
                 "type": "string",
+                "format": "file-path",
                 "pattern": "^\\S+\\.f(ast)?q\\.gz$",
+                "description": "FASTQ(.gz) path for read 1 (no spaces).",
                 "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
             },
             "fastq_2": {
                 "type": "string",
+                "format": "file-path",
                 "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'",
+                "description": "Optional FASTQ(.gz) path for read 2 (no spaces)."
             }
         }
     }
