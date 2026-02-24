@@ -16,6 +16,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Enhancements & fixes
 
 - Update schema files (e.g. expliclitly use integer types for integers, rather than numbers) by @johandahlberg [#184](https://github.com/nf-core/pixelator/pull/184)
+- Add option to select custom containers for the experiment summary by @Aratz [#186](https://github.com/nf-core/pixelator/pull/186)
+
+### Parameters
+
+| Old parameter | New parameter                    |
+| ------------- | -------------------------------- |
+|               | `--experiment_summary_container` |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
 
 ## [[2.3.1](https://github.com/nf-core/pixelator/releases/tag/2.3.1)] - 2025-01-14
 
