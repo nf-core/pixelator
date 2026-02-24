@@ -50,6 +50,26 @@
                 "pattern": "^\\S+\\.f(ast)?q\\.gz$",
                 "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'",
                 "description": "Optional FASTQ(.gz) path for read 2 (no spaces)."
+            },
+            "condition": {
+                "type": "string",
+                "description": "Optional experimental condition for the sample.",
+                "meta": ["condition"]
+            },
+            "reference_condition": {
+                "type": "string",
+                "description": "Optional reference condition for differential analysis.",
+                "meta": ["reference_condition"]
+            },
+            "sample_alias": {
+                "type": "string",
+                "description": "Optional alternative sample name.",
+                "meta": ["sample_alias"]
+            },
+            "alternative_condition": {
+                "type": "string",
+                "description": "Optional alternative condition for the sample.",
+                "meta": ["alternative_condition"]
             }
         }
     }
