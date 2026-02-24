@@ -410,6 +410,11 @@
                     "description": "Override the container image reference to use for all steps using the `pixelator` command.",
                     "help_text": "Use this to force the pipeline to use a different image version in all steps that use the pixelator command.\nThe pipeline is not guaranteed to work when using different pixelator versions."
                 },
+                "experiment_summary_container": {
+                    "type": "string",
+                    "description": "Override the container image to use for the experiment summary step.",
+                    "help_text": "Use this to force the pipeline to use a different image version for the experiment summary step.\nThe pipeline is not guaranteed to work when using different experiment summary versions."
+                },
                 "save_all": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
