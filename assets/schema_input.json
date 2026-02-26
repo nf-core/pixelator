@@ -32,24 +32,41 @@
             },
             "panel_file": {
                 "type": "string",
-                "format": "file-path",
                 "description": "Optional panel file path. Empty string allowed. If set, must end with .csv, .tsv, .yaml, or .yml and contain no spaces.",
                 "errorMessage": "Panel file must either be left empty or cannot contain spaces and must have extension '.csv', '.tsv' or '.yaml'",
                 "pattern": "^$|^\\S+\\.(csv|tsv|ya?ml)$"
             },
             "fastq_1": {
                 "type": "string",
-                "format": "file-path",
                 "pattern": "^\\S+\\.f(ast)?q\\.gz$",
                 "description": "FASTQ(.gz) path for read 1 (no spaces).",
                 "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
             },
             "fastq_2": {
                 "type": "string",
-                "format": "file-path",
                 "pattern": "^\\S+\\.f(ast)?q\\.gz$",
                 "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'",
                 "description": "Optional FASTQ(.gz) path for read 2 (no spaces)."
+            },
+            "condition": {
+                "type": "string",
+                "description": "Optional experimental condition for the sample.",
+                "meta": ["condition"]
+            },
+            "reference_condition": {
+                "type": "string",
+                "description": "Optional reference condition for differential analysis.",
+                "meta": ["reference_condition"]
+            },
+            "sample_alias": {
+                "type": "string",
+                "description": "Optional alternative sample name.",
+                "meta": ["sample_alias"]
+            },
+            "alternative_condition": {
+                "type": "string",
+                "description": "Optional alternative condition for the sample.",
+                "meta": ["alternative_condition"]
             }
         }
     }
