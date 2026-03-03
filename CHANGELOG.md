@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[3.0.0](https://github.com/nf-core/pixelator/releases/tag/3.0.0)] - 2025-02-23
+## [[3.0.0](https://github.com/nf-core/pixelator/releases/tag/3.0.0)] - 2026-02-23
 
 ### Changed
 
@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > Parameter has been **added** if just the new parameter information is present.
 > Parameter has been **removed** if new parameter information isn't present.
 
-## [[2.3.1](https://github.com/nf-core/pixelator/releases/tag/2.3.1)] - 2025-01-14
+## [[2.3.1](https://github.com/nf-core/pixelator/releases/tag/2.3.1)] - 2026-01-14
 
 - Update usage documentation by @vincent-van-hoef [#176](https://github.com/nf-core/pixelator/pull/176)
 - Use PNA data in test profile by @Aratz [#177](https://github.com/nf-core/pixelator/pull/177)
