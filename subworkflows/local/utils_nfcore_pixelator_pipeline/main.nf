@@ -46,7 +46,7 @@ workflow PIPELINE_INITIALISATION {
     // Thrown an error if the pipeline is run with conda or mamba
     // as this is not supported in the pipeline at the moment
     if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1) {
-        exit(1, "ERROR: Conda and Mamba are not supported in the pipeline at the moment. Please use docker or singularity.")
+        error("ERROR: Conda and Mamba are not supported in the pipeline at the moment. Please use docker or singularity.")
     }
 
     //
@@ -355,7 +355,7 @@ def validate_panel(LinkedHashMap meta, HashSet options) {
 
     if (!options.contains(meta.panel)) {
         def options_list_str = " - ${options.join("\n - ")}"
-        exit(1, "Please check input samplesheet -> panel field does not contains a valid key!\n\nInput: ${meta.panel}\nValid options:\n${options_list_str}")
+        error("Please check input samplesheet -> panel field does not contains a valid key!\n\nInput: ${meta.panel}\nValid options:\n${options_list_str}")
     }
 
     return meta
@@ -372,7 +372,7 @@ def validate_design(LinkedHashMap meta, HashSet options) {
 
     if (!options.contains(meta.design)) {
         def options_list_str = " - ${options.join("\n - ")}"
-        exit(1, "Please check input samplesheet -> design field does not contains a valid key!\n\nInput: ${meta.design}\nValid options:\n${options_list_str}")
+        error("Please check input samplesheet -> design field does not contains a valid key!\n\nInput: ${meta.design}\nValid options:\n${options_list_str}")
     }
 
     return meta
@@ -409,7 +409,7 @@ def get_data_basedir(URI samplesheet, String input_basedir) {
 
     def f = file(input_basedir)
     if (!f.exists()) {
-        exit(1, "ERROR: data path passed with --input_basedir does not exist!")
+        error("ERROR: data path passed with --input_basedir does not exist!")
     }
 
     def data_root = null
@@ -437,11 +437,11 @@ def validate_input_samplesheet(URI samplesheetUrl, items) {
     def fq1_abs = resolve_relative_path(fq[0], samplesheetUrl)
 
     if (panel_file_abs && !file(panel_file_abs).exists()) {
-        exit(1, "ERROR: Please check input samplesheet -> panel_file does not exist!\n${panel_file_abs}")
+        error("ERROR: Please check input samplesheet -> panel_file does not exist!\n${panel_file_abs}")
     }
 
     if (!file(fq1_abs).exists()) {
-        exit(1, "ERROR: Please check input samplesheet -> fastq_1 does not exist!\n${fq1_abs}")
+        error("ERROR: Please check input samplesheet -> fastq_1 does not exist!\n${fq1_abs}")
     }
 
     def reads = [fq1_abs]
@@ -450,7 +450,7 @@ def validate_input_samplesheet(URI samplesheetUrl, items) {
         def fq2_abs = resolve_relative_path(fq[1], samplesheetUrl)
 
         if (fq2_abs && !file(fq2_abs).exists()) {
-            exit(1, "ERROR: Please check input samplesheet -> fastq_2 does not exist!\n${fq2_abs}")
+            error("ERROR: Please check input samplesheet -> fastq_2 does not exist!\n${fq2_abs}")
         }
 
         reads += [fq2_abs]
@@ -468,7 +468,7 @@ def detect_technology(LinkedHashMap meta) {
         newMeta = meta + [technology: 'pna']
     }
     else {
-        exit(1, "ERROR: unsupported design: ${meta.design}")
+        error("ERROR: unsupported design: ${meta.design}")
     }
     // TODO For now keep this around, in order to introduce
     // other technology choices later.
