@@ -3,7 +3,83 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[2.3.1](https://github.com/nf-core/pixelator/releases/tag/2.3.1)] - 2025-01-14
+## [[3.0.0](https://github.com/nf-core/pixelator/releases/tag/3.0.0)] - 2026-02-23
+
+### Changed
+
+- Set default pna_graph_component_size_min_threshold to 8000 instead of null (i.e. automatic) by @ptajvar [#183](https://github.com/nf-core/pixelator/pull/183).
+
+### Removed
+
+- Support for MPX in the pipeline by @johandahlberg [#182](https://github.com/nf-core/pixelator/pull/182)
+
+### Enhancements & fixes
+
+- Update schema files (e.g. explicitly use integer types for integers, rather than numbers) by @johandahlberg [#184](https://github.com/nf-core/pixelator/pull/184), [#186](https://github.com/nf-core/pixelator/pull/186)
+- Add option to select custom containers for the experiment summary by @Aratz [#186](https://github.com/nf-core/pixelator/pull/186)
+
+### Parameters
+
+| Old parameter                            | New parameter                    |
+| ---------------------------------------- | -------------------------------- |
+|                                          | `--experiment_summary_container` |
+| `--save_amplicon_reads`                  |                                  |
+| `--trim_front`                           |                                  |
+| `--trim_tail`                            |                                  |
+| `--max_length`                           |                                  |
+| `--min_length`                           |                                  |
+| `--max_n_bases`                          |                                  |
+| `--avg_qual`                             |                                  |
+| `--dedup`                                |                                  |
+| `--remove_polyg`                         |                                  |
+| `--adapterqc_mismatches`                 |                                  |
+| `--save_qc_passed_reads`                 |                                  |
+| `--save_qc_failed_reads`                 |                                  |
+| `--demux_mismatches`                     |                                  |
+| `--demux_min_length`                     |                                  |
+| `--save_demux_processed_reads`           |                                  |
+| `--save_demux_failed_reads`              |                                  |
+| `--markers_ignore`                       |                                  |
+| `--algorithm`                            |                                  |
+| `--max_neighbours`                       |                                  |
+| `--collapse_mismatches`                  |                                  |
+| `--collapse_min_count`                   |                                  |
+| `--save_collapsed_reads`                 |                                  |
+| `--multiplet_recovery`                   |                                  |
+| `--graph_max_refinement_recursion_depth` |                                  |
+| `--graph_max_edges_to_split`             |                                  |
+| `--graph_min_count`                      |                                  |
+| `--save_edgelist`                        |                                  |
+| `--min_size`                             |                                  |
+| `--max_size`                             |                                  |
+| `--dynamic_filter`                       |                                  |
+| `--aggregate_calling`                    |                                  |
+| `--save_raw_component_metrics`           |                                  |
+| `--save_annotate_dataset`                |                                  |
+| `--skip_analysis`                        |                                  |
+| `--compute_polarization`                 |                                  |
+| `--compute_colocalization`               |                                  |
+| `--use_full_bipartite`                   |                                  |
+| `--polarization_transformation`          |                                  |
+| `--polarization_n_permutations`          |                                  |
+| `--polarization_min_marker_count`        |                                  |
+| `--colocalization_transformation`        |                                  |
+| `--colocalization_neighbourhood_size`    |                                  |
+| `--colocalization_n_permutations`        |                                  |
+| `--colocalization_min_region_count`      |                                  |
+| `--colocalization_min_marker_count`      |                                  |
+| `--save_analysis_dataset`                |                                  |
+| `--skip_layout`                          |                                  |
+| `--no_node_marker_counts`                |                                  |
+| `--layout_algorithm`                     |                                  |
+| `--skip_report`                          |                                  |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+## [[2.3.1](https://github.com/nf-core/pixelator/releases/tag/2.3.1)] - 2026-01-14
 
 - Update usage documentation by @vincent-van-hoef [#176](https://github.com/nf-core/pixelator/pull/176)
 - Use PNA data in test profile by @Aratz [#177](https://github.com/nf-core/pixelator/pull/177)
