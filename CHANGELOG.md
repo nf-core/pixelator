@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## dev - xxxx-xx-xx
 
+## [[3.0.1](https://github.com/nf-core/pixelator/releases/tag/3.0.0)] - 2026-03-09
+
+### Enhancements & fixes
+
+- Fix Issue #191 by @Aratz [#192](https://github.com/nf-core/pixelator/pull/183)
+
 ## [[3.0.0](https://github.com/nf-core/pixelator/releases/tag/3.0.0)] - 2026-02-23
 
 ### Changed
