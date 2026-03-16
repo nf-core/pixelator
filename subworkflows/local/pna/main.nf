@@ -105,14 +105,15 @@ workflow PNA {
             newMeta.remove('parts')
 
             // Strip the duplicates meta from each element
-            def parquet = data.collect { it[1] }.flatten()
-            def reports = data.collect { it[2] }.flatten()
+            def parquet = data.collect { _meta, collapsed, _reports -> collapsed }.flatten()
+            def reports = data.collect { _meta, _collapsed, reports -> reports }.flatten()
             [newMeta, parquet, reports]
         }
 
     ch_collapse_combine_split = ch_collapse_collected.branch {
-        single: it[1].size() == 1
-        multi: it[1].size() > 1
+        _meta, parquet, _reports ->
+            single: parquet.size() == 1
+            multi: parquet.size() > 1
     }
 
 
@@ -174,7 +175,7 @@ workflow PNA {
         .groupTuple(size: 2)
 
 
-    ch_input = Channel.fromPath(params.input)
+    ch_input = channel.fromPath(params.input)
 
     PNA_GENERATE_REPORTS(
         ch_input,

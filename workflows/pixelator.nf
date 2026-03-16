@@ -8,11 +8,6 @@ include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
 
-// Inject the samplesheet SHA-1 into the params object
-if (params.input) {
-    params.samplesheet_sha = file(params.input).bytes.digest('sha-1')
-}
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     CONFIG FILES
@@ -66,8 +61,8 @@ workflow PIXELATOR {
     //
     // Split the samplesheet channel in reads and panel_files
     //
-    ch_reads       = ch_samplesheet.map { meta, panel, reads -> [ meta, reads ] }
-    ch_panel_files = ch_samplesheet.map { meta, panel, reads -> [ meta, panel ] }
+    ch_reads       = ch_samplesheet.map { meta, _panel, reads -> [ meta, reads ] }
+    ch_panel_files = ch_samplesheet.map { meta, panel, _reads -> [ meta, panel ] }
 
     ch_fastq_split = ch_reads
         .groupTuple()
@@ -104,9 +99,9 @@ workflow PIXELATOR {
         }
 
     ch_cat_panel_files = ch_cat_fastq
-        .map { meta, _ -> [meta.id, meta] }
+        .map { meta, _fastqs -> [meta.id, meta] }
         .join(ch_checked_panel_files)
-        .map { id, meta, panel_files -> [meta, panel_files] }
+        .map { _id, meta, panel_files -> [meta, panel_files] }
 
     ch_fastq_technology_split = ch_cat_fastq
         .branch {
@@ -154,7 +149,7 @@ workflow PIXELATOR {
             name: 'nf_core_'  +  'pixelator_software_'  + 'mqc_'  + 'versions.yml',
             sort: true,
             newLine: true
-        ).set { ch_collated_versions }
+        )
 
     emit:
     versions       = ch_versions                 // channel: [ path(versions.yml) ]

@@ -45,7 +45,7 @@
             }
         },
         "pna_amplicon_options": {
-            "title": "Amplicon generation options",
+            "title": "Amplicon options",
             "type": "object",
             "fa_icon": "fas fa-circle",
             "properties": {
@@ -108,7 +108,7 @@
             }
         },
         "pna_demux_options": {
-            "title": "Demux options for PNA data",
+            "title": "Demux options",
             "type": "object",
             "properties": {
                 "pna_demux_mismatches": {
@@ -192,7 +192,7 @@
             }
         },
         "pna_graph_options": {
-            "title": "Options for pixelator graph command on PNA data.",
+            "title": "Graph options",
             "type": "object",
             "properties": {
                 "save_pna_graph_pixelfile": {
@@ -281,7 +281,7 @@
             }
         },
         "pna_denoise_options": {
-            "title": "Options for pixelator denoise command.",
+            "title": "Denoise options",
             "type": "object",
             "properties": {
                 "skip_denoise": {
@@ -314,7 +314,7 @@
             }
         },
         "pna_analysis_options": {
-            "title": "Options for pixelator analysis command.",
+            "title": "Analysis options",
             "type": "object",
             "properties": {
                 "skip_analysis": {
@@ -358,7 +358,7 @@
             }
         },
         "pna_layout_options": {
-            "title": "Options for pixelator single-cell-pna layout command.",
+            "title": "Layout options",
             "type": "object",
             "properties": {
                 "skip_layout": {
@@ -391,7 +391,7 @@
             }
         },
         "experiment_summary_options": {
-            "title": "Options for experiment summary.",
+            "title": "Experiment Summary options",
             "type": "object",
             "properties": {
                 "skip_experiment_summary": {

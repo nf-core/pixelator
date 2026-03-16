@@ -32,9 +32,9 @@ workflow PNA_GENERATE_REPORTS {
         .groupTuple()
         .map { id, data ->
             if (data instanceof List) {
-                def newMeta = [:]
-                data.each { newMeta += it }
-                return [id, newMeta]
+                def combined_meta = [:]
+                data.each { meta -> combined_meta += meta }
+                return [id, combined_meta]
             }
             return [id, data]
         }
@@ -86,7 +86,7 @@ workflow PNA_GENERATE_REPORTS {
         EXPERIMENT_SUMMARY ( samplesheet, ch_grouped_data )
         ch_experiment_summary = EXPERIMENT_SUMMARY.out.html
     } else {
-        ch_experiment_summary = ch_grouped_data.map { it -> it[0] }.combine(Channel.of([]))
+        ch_experiment_summary = ch_grouped_data.map { it -> it[0] }.combine(channel.of([]))
     }
 
 

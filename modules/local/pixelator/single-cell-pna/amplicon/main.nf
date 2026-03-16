@@ -25,7 +25,6 @@ process PIXELATOR_PNA_AMPLICON {
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
-    def r = reads
 
     // Make list of old name and new name pairs to use for renaming
     // Use R1/R2 style suffixes for limited backward compatibility with pixelator<0.17
@@ -34,7 +33,7 @@ process PIXELATOR_PNA_AMPLICON {
         : reads.withIndex().collect { entry, index -> [entry, "${prefix}_R${index + 1}${getFileSuffix(entry)}"] })
     // Flatten a list of tuples into a single string joined with spaces
     def rename_to = old_new_pairs.flatten().join(' ')
-    def renamed_reads = old_new_pairs.collect { old_name, new_name -> new_name }.join(' ')
+    def renamed_reads = old_new_pairs.collect { _old_name, new_name -> new_name }.join(' ')
 
 
     """
