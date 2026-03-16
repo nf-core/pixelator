@@ -30,7 +30,7 @@ workflow PIPELINE_INITIALISATION {
     take:
     version           // boolean: Display version and exit
     validate_params   // boolean: Boolean whether to validate parameters against the schema at runtime
-    monochrome_logs   // boolean: Do not use coloured log outputs
+    _monochrome_logs   // boolean: Do not use coloured log outputs
     nextflow_cli_args //   array: List of positional nextflow CLI args
     outdir            //  string: The output directory where the results will be saved
     input             //  string: Path to input samplesheet
@@ -324,7 +324,7 @@ def resolve_relative_path(relative_path, URI samplesheet_path) {
     try {
         uri = new URI(relative_path)
     }
-    catch (URISyntaxException exc) {
+    catch (URISyntaxException _exc) {
         return relative_path
     }
 
@@ -394,7 +394,7 @@ def get_data_basedir(URI samplesheet, String input_basedir) {
     try {
         uri = new URI(input_basedir)
     }
-    catch (URISyntaxException exc) {
+    catch (URISyntaxException _exc) {
         return samplesheet
     }
 
