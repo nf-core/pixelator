@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Enhancements & fixes
 
 - Use nextflow strict syntax by @Aratz [#194](https://github.com/nf-core/pixelator/pull/194)
+- Use `TMPDIR` when defined to store temporary files by @Aratz [#195](https://github.com/nf-core/pixelator/pull/195)
 
 ## [[3.0.1](https://github.com/nf-core/pixelator/releases/tag/3.0.0)] - 2026-03-09
 
