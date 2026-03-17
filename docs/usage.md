@@ -179,7 +179,7 @@ documentation in comments [here](../assets/params-file.yml).
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
 
 > [!NOTE]
-> By default, processes from nf-core/pixelator will the path defined in `TMPDIR` to store temporary file. If this variable is not defined, they will fallback to `/tmp`.
+> By default, processes from nf-core/pixelator will use the path defined in `TMPDIR` to store temporary file. If this variable is not defined, they will fallback to `/tmp`.
 
 ### Updating the pipeline
 
