@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Use nextflow strict syntax by @Aratz [#194](https://github.com/nf-core/pixelator/pull/194)
 - Use `TMPDIR` when defined to store temporary files by @Aratz [#195](https://github.com/nf-core/pixelator/pull/195)
 - Retry experiment summary up to two times after failure by @Aratz [#196](https://github.com/nf-core/pixelator/pull/196)
-- Updated pixelatorES to 0.6.0 in PNA experiment summary step by @Arazt [#197](https://github.com/nf-core/pixelator/pull/197)
+- Updated pixelatorES to 0.6.0 in PNA experiment summary step by @Aratz [#197](https://github.com/nf-core/pixelator/pull/197)
 
 ### Software dependencies
 
