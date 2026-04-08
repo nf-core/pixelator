@@ -79,7 +79,7 @@
             ],
             {
                 "EXPERIMENT_SUMMARY": {
-                    "experiment-summary": "0.6.0"
+                    "experiment-summary": "0.8.6"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
                     "pixelator": "0.23.0"
@@ -124,7 +124,7 @@
             20,
             {
                 "EXPERIMENT_SUMMARY": {
-                    "experiment-summary": "0.6.0"
+                    "experiment-summary": "0.8.6"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
                     "pixelator": "0.23.0"
