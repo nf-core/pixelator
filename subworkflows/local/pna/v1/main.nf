@@ -39,6 +39,8 @@ include { PNA_GENERATE_REPORTS           } from '../pna/generate_reports'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+include { CAT_FASTQ                     } from '../../../modules/nf-core/cat/fastq/main'
+
 /*
 ========================================================================================
     IMPORT CUSTOM MODULES/SUBWORKFLOWS
@@ -48,16 +50,69 @@ include { PNA_GENERATE_REPORTS           } from '../pna/generate_reports'
 //
 
 
-workflow PNA {
+workflow PIXELATOR_PNA_V1 { // TODO rename PNA_v1 and move files
     take:
     fastq       // channel: [ meta, [path(sample_1.fq), path(sample_2.fq)] ]
     panel_files // channel: [ meta, path(panel_file) |  ]
 
     main:
+
+    ch_fastq_split = fastq
+        .groupTuple()
+        .branch {
+            meta, fastq ->
+                single: fastq.size() == 1
+                    return [ meta, fastq.flatten() ]
+                multiple: fastq.size() > 1
+                    return [ meta, fastq.flatten() ]
+        }
+
+    //
+    // MODULE: Concatenate FastQ files from the same sample if required
+    //
+    ch_fastq_split.multiple
+
+    ch_cat_fastq = CAT_FASTQ ( ch_fastq_split.multiple )
+        .reads
+        .mix(ch_fastq_split.single)
+
+    // Check that multi lane samples use the same panel file
+    ch_checked_panel_files = panel_files
+        .map { meta, data -> [ meta.id, data] }
+        .groupTuple()
+        .map { id, data ->
+            if (!data) {
+                return [id, []]
+            }
+            def unique_panels = data.unique()
+            if (unique_panels.size() > 1) {
+                exit 1, "ERROR: Concatenated samples must use the same panel."
+            }
+            return [ id, unique_panels[0] ]
+        }
+
+    ch_cat_panel_files = ch_cat_fastq
+        .map { meta, _fastqs -> [meta.id, meta] }
+        .join(ch_checked_panel_files)
+        .map { _id, meta, panel_files -> [meta, panel_files] }
+
+    ch_fastq_technology_split = ch_cat_fastq
+        .branch {
+            meta, data ->
+                pna: meta.technology == 'pna'
+                    return [ meta, data ]
+            }
+
+    ch_panel_files_technology_split = ch_cat_panel_files
+        .branch {
+            meta, data ->
+            pna: meta.technology == 'pna'
+                return [ meta, data ]
+    }
     //
     // MODULE: Run pixelator single-cell-pna amplicon
     //
-    PIXELATOR_PNA_AMPLICON ( fastq )
+    PIXELATOR_PNA_AMPLICON ( ch_cat_fastq )
     ch_amplicon = PIXELATOR_PNA_AMPLICON.out.amplicon
 
     //
