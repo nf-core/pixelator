@@ -6,8 +6,8 @@ process PIXELATOR_PNA_DENOISE {
     // conda "bioconda::pixelator=0.18.2"
 
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.23.0'
-        : 'quay.io/pixelgen-technologies/pixelator:0.23.0'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.25.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.25.0'}"
 
     input:
     tuple val(meta), path(data)
