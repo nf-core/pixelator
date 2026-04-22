@@ -23,8 +23,8 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pixe
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
-include { PIXELATOR_PNA_V1 } from '../subworkflows/local/pna_v1'
-include { PIXELATOR_PNA_V2 } from '../subworkflows/local/pna_v2'
+include { PIXELATOR_PNA_V1 } from '../subworkflows/local/pna/v1'
+include { PIXELATOR_PNA_V2 } from '../subworkflows/local/pna/v2'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
