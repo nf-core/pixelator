@@ -50,7 +50,7 @@
                     [
                         "PIXELATOR_PNA_AMPLICON",
                         "pixelator",
-                        "0.23.0"
+                        "0.26.0"
                     ]
                 ],
                 "amplicon": [
@@ -101,7 +101,7 @@
                     [
                         "PIXELATOR_PNA_AMPLICON",
                         "pixelator",
-                        "0.23.0"
+                        "0.26.0"
                     ]
                 ]
             }
@@ -128,7 +128,7 @@
                 [
                     "PIXELATOR_PNA_AMPLICON",
                     "pixelator",
-                    "0.23.0"
+                    "0.26.0"
                 ]
             ]
         ],

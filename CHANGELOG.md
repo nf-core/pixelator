@@ -18,6 +18,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | Dependency    | Old version | New version |
 | ------------- | ----------- | ----------- |
 | `pixelatorES` | 0.6.0       | 0.8.6       |
+| `pixelatorES` | 0.23.0      | 0.26.0      |
+
+### Parameters
+
+| Old parameter                            | New parameter                    |
+| ---------------------------------------- | -------------------------------- |
+| `--leiden-iterations`                    |                                  |
+| `--min-component-size-in-refinement`     |                                  |
+| `--min-component-size-to-prune`          |                                  |
+|                                          | `--edge_cycle-verification`      |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
 
 ## [[3.0.1](https://github.com/nf-core/pixelator/releases/tag/3.0.0)] - 2026-03-09
 

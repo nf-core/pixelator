@@ -65,7 +65,7 @@
                     [
                         "PIXELATOR_PNA_GRAPH",
                         "pixelator",
-                        "0.23.0"
+                        "0.26.0"
                     ]
                 ],
                 "all_results": [
@@ -131,7 +131,7 @@
                     [
                         "PIXELATOR_PNA_GRAPH",
                         "pixelator",
-                        "0.23.0"
+                        "0.26.0"
                     ]
                 ]
             }
@@ -158,7 +158,7 @@
                 [
                     "PIXELATOR_PNA_GRAPH",
                     "pixelator",
-                    "0.23.0"
+                    "0.26.0"
                 ]
             ]
         ],
