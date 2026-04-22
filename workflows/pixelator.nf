@@ -23,7 +23,8 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pixe
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
-include { PNA            } from '../subworkflows/local/pna'
+include { PIXELATOR_PNA_V1 } from '../subworkflows/local/pna_v1'
+include { PIXELATOR_PNA_V2 } from '../subworkflows/local/pna_v2'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,8 +40,6 @@ include { PNA            } from '../subworkflows/local/pna'
     IMPORT CUSTOM MODULES/SUBWORKFLOWS
 ========================================================================================
 */
-include { CAT_FASTQ                     } from '../modules/nf-core/cat/fastq/main'
-
 
 /*
 ========================================================================================
@@ -64,63 +63,23 @@ workflow PIXELATOR {
     ch_reads       = ch_samplesheet.map { meta, _panel, reads -> [ meta, reads ] }
     ch_panel_files = ch_samplesheet.map { meta, panel, _reads -> [ meta, panel ] }
 
-    ch_fastq_split = ch_reads
-        .groupTuple()
-        .branch {
-            meta, fastq ->
-                single: fastq.size() == 1
-                    return [ meta, fastq.flatten() ]
-                multiple: fastq.size() > 1
-                    return [ meta, fastq.flatten() ]
-        }
 
-    //
-    // MODULE: Concatenate FastQ files from the same sample if required
-    //
-    ch_fastq_split.multiple
-
-    ch_cat_fastq = CAT_FASTQ ( ch_fastq_split.multiple )
-        .reads
-        .mix(ch_fastq_split.single)
-
-    // Check that multi lane samples use the same panel file
-    ch_checked_panel_files = ch_panel_files
-        .map { meta, data -> [ meta.id, data] }
-        .groupTuple()
-        .map { id, data ->
-            if (!data) {
-                return [id, []]
-            }
-            def unique_panels = data.unique()
-            if (unique_panels.size() > 1) {
-                exit 1, "ERROR: Concatenated samples must use the same panel."
-            }
-            return [ id, unique_panels[0] ]
-        }
-
-    ch_cat_panel_files = ch_cat_fastq
-        .map { meta, _fastqs -> [meta.id, meta] }
-        .join(ch_checked_panel_files)
-        .map { _id, meta, panel_files -> [meta, panel_files] }
-
-    ch_fastq_technology_split = ch_cat_fastq
-        .branch {
-            meta, data ->
-                pna: meta.technology == 'pna'
-                    return [ meta, data ]
-            }
-
-    ch_panel_files_technology_split = ch_cat_panel_files
-        .branch {
-            meta, data ->
-            pna: meta.technology == 'pna'
-                return [ meta, data ]
+    switch (params.technology) {
+        case "pna_v1":
+            PIXELATOR_PNA_V1(
+                ch_reads,
+                ch_panel_files
+            )
+            break
+        case "pna_v2":
+            PIXELATOR_PNA_V2(
+                ch_reads,
+                ch_panel_files
+            )
+            break
+        default:
+            error "Unknown technology: \"${params.technology}\""
     }
-
-    PNA(
-        ch_fastq_technology_split.pna,
-        ch_panel_files_technology_split.pna
-    )
 
     //
     // Collate and save software versions

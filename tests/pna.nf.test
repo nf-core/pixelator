@@ -19,6 +19,7 @@ nextflow_pipeline {
                 pna_graph_component_size_min_threshold = 100
                 skip_experiment_summary                = false
                 save_all                               = true
+                technology                             = "pna_v1"
 
             }
         }
