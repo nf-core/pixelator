@@ -15,7 +15,7 @@
                 [
                     "PIXELATOR_PNA_DEMUX",
                     "pixelator",
-                    "0.23.0"
+                    "0.26.0"
                 ]
             ]
         ],
@@ -101,7 +101,7 @@
                     [
                         "PIXELATOR_PNA_DEMUX",
                         "pixelator",
-                        "0.23.0"
+                        "0.26.0"
                     ]
                 ],
                 "demuxed": [
@@ -177,7 +177,7 @@
                     [
                         "PIXELATOR_PNA_DEMUX",
                         "pixelator",
-                        "0.23.0"
+                        "0.26.0"
                     ]
                 ]
             }
@@ -204,7 +204,7 @@
                 [
                     "PIXELATOR_PNA_DEMUX",
                     "pixelator",
-                    "0.23.0"
+                    "0.26.0"
                 ]
             ]
         ],

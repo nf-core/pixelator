@@ -15,7 +15,7 @@
                 [
                     "PIXELATOR_PNA_COLLAPSE",
                     "pixelator",
-                    "0.23.0"
+                    "0.26.0"
                 ]
             ]
         ],
@@ -80,7 +80,7 @@
                     [
                         "PIXELATOR_PNA_COLLAPSE",
                         "pixelator",
-                        "0.23.0"
+                        "0.26.0"
                     ]
                 ],
                 "collapsed": [
@@ -135,7 +135,7 @@
                     [
                         "PIXELATOR_PNA_COLLAPSE",
                         "pixelator",
-                        "0.23.0"
+                        "0.26.0"
                     ]
                 ]
             }
