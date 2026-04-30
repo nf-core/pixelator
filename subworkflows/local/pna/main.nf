@@ -104,9 +104,9 @@ workflow PNA {
             def newMeta = data[0][0].clone()
             newMeta.remove('parts')
 
-            // Strip the duplicates meta from each element
-            def parquet = data.collect { _meta, collapsed, _reports -> collapsed }.flatten()
-            def reports = data.collect { _meta, _collapsed, reports -> reports }.flatten()
+            // Strip duplicate meta and keep a stable ordering to avoid cache misses on resume.
+            def parquet = data.collect { _meta, collapsed, _reports -> collapsed }.flatten().sort { it.toString() }
+            def reports = data.collect { _meta, _collapsed, reports -> reports }.flatten().sort { it.toString() }
             [newMeta, parquet, reports]
         }
 
