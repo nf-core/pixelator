@@ -42,7 +42,6 @@ nextflow_workflow {
                     workflow.trace.succeeded().size(),
                     // All stable path name, with a relative path
                     stable_name,
-                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_pixelator_software_mqc_versions.yml"),
                 ).match() }
             )
         }

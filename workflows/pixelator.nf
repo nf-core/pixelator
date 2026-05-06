@@ -146,11 +146,10 @@ workflow PIXELATOR {
         .mix(topic_versions_string)
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
-            name: 'nf_core_'  +  'pixelator_software_'  + 'mqc_'  + 'versions.yml',
+            name: 'nf_core_'  +  'pixelator_software_'  + 'versions.yml',
             sort: true,
             newLine: true
         )
-
     emit:
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
 }

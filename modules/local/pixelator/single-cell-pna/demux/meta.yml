@@ -1,0 +1,122 @@
+name: pixelator_pna_demux
+description: Run `pixelator single-cell-pna demux` to split reads and generate demultiplexed outputs.
+keywords:
+  - pixelator
+  - single-cell-pna
+  - demux
+  - parquet
+tools:
+  - pixelator:
+      description: Single-cell sequencing data analysis toolkit from Pixelgen Technologies.
+      homepage: https://pixelgen.com/
+      documentation: https://software.pixelgen.com/pixelator/
+      licence: ["MIT"]
+      identifier: ""
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. [ id:'sample1', design:'pna-2' ]
+    - reads:
+        type: file
+        description: Input FASTQ files.
+        pattern: "*.{fq,fastq,fq.gz,fastq.gz,fq.zst,fastq.zst}"
+        ontologies:
+          - http://edamontology.org/format_2545
+    - panel_file:
+        type: file
+        description: Optional panel definition file.
+        ontologies: []
+    - panel:
+        type: string
+        description: Optional panel name.
+    - design:
+        type: string
+        description: Assay design identifier.
+output:
+  demuxed:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.parquet":
+          type: file
+          description: Demultiplexed parquet output(s).
+          pattern: "*.parquet"
+          ontologies: []
+  passed:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*demux.passed*.{fq,fastq}.zst":
+          type: file
+          description: Reads that passed demultiplexing.
+          pattern: "*demux.passed*.{fq,fastq}.zst"
+          ontologies:
+            - http://edamontology.org/format_2545
+  failed:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*demux.failed.{fq,fastq}.zst":
+          type: file
+          description: Reads that failed demultiplexing.
+          pattern: "*demux.failed.{fq,fastq}.zst"
+          ontologies:
+            - http://edamontology.org/format_2545
+  report_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.report.json":
+          type: file
+          description: Run report in JSON format.
+          pattern: "*.report.json"
+          ontologies: []
+  metadata_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.meta.json":
+          type: file
+          description: Metadata in JSON format.
+          pattern: "*.meta.json"
+          ontologies: []
+  log:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*pixelator-demux.log":
+          type: file
+          description: Pixelator demux command log.
+          pattern: "*pixelator-demux.log"
+          ontologies: []
+  versions_pixelator:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+authors:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
+maintainers:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
