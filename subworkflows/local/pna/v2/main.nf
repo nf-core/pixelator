@@ -31,10 +31,6 @@ include { PIXELATOR_PNA_LAYOUT           } from '../../../../modules/local/pixel
 include { EXPERIMENT_SUMMARY } from '../../../../modules/local/experiment_summary/main.nf'
 include { CAT_FASTQ                     } from '../../../../modules/nf-core/cat/fastq/main.nf'
 
-def pick_file_from_channel(channel) {
-    channel.map { _meta, file -> file }
-}
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT LOCAL SUBWORKFLOWS
@@ -124,16 +120,11 @@ workflow PIXELATOR_PNA_V2 {
         .join(ch_checked_panel_files)
         .map { id, meta, panel_files -> [meta, panel_files] }
 
-    ch_versions = ch_versions.mix(CAT_FASTQ.out.versions.first())
-
-
-
     //
     // MODULE: Run pixelator single-cell-pna amplicon
     //
     PIXELATOR_PNA_AMPLICON ( ch_cat_fastq )
     ch_amplicon = PIXELATOR_PNA_AMPLICON.out.amplicon
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_AMPLICON.out.versions.first())
 
     //
     // MODULE: Run pixelator single-cell demux
@@ -145,7 +136,6 @@ workflow PIXELATOR_PNA_V2 {
 
     PIXELATOR_PNA_DEMUX(ch_demux_input)
     ch_demuxed = PIXELATOR_PNA_DEMUX.out.demuxed
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_DEMUX.out.versions.first())
 
     //
     // MODULE: Run pixelator single-cell collapse
@@ -167,7 +157,6 @@ workflow PIXELATOR_PNA_V2 {
     PIXELATOR_PNA_COLLAPSE(ch_collapse_input)
     ch_collapsed = PIXELATOR_PNA_COLLAPSE.out.collapsed
     ch_collapsed_reports = PIXELATOR_PNA_COLLAPSE.out.report_json
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_COLLAPSE.out.versions.first())
 
     // Collect the partitioned collapse.parquet files in a list per sample
     // use the dynamic size information from `meta.parts` to group the files
@@ -198,8 +187,6 @@ workflow PIXELATOR_PNA_V2 {
         .map { meta, parquet, _reports -> [meta, parquet] }
         .mix(PIXELATOR_PNA_COMBINE_COLLAPSE.out.parquet)
 
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_COMBINE_COLLAPSE.out.versions.first())
-
     //
     // MODULE: Run pixelator single-cell graph
     //
@@ -209,7 +196,6 @@ workflow PIXELATOR_PNA_V2 {
 
     PIXELATOR_PNA_GRAPH(ch_graph_input)
     ch_graph = PIXELATOR_PNA_GRAPH.out.pixelfile
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_GRAPH.out.versions.first())
 
     //
     // MODULE: Run pixelator single-cell sample-calling
@@ -219,8 +205,6 @@ workflow PIXELATOR_PNA_V2 {
 
     PIXELATOR_PNA_SAMPLE_CALLING (ch_sample_calling_input)
     ch_sample_called = PIXELATOR_PNA_SAMPLE_CALLING.out.pixelfile
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_SAMPLE_CALLING.out.versions.first())
-
 
     // Extract the sample names from the pixel file names so that we can
     // merge them in with the panel file names correctly
@@ -242,7 +226,6 @@ workflow PIXELATOR_PNA_V2 {
     //
     PIXELATOR_PNA_DENOISE ( ch_sample_called )
     ch_denoise = PIXELATOR_PNA_DENOISE.out.pixelfile
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_DENOISE.out.versions.first())
 
     //
     // MODULE: Run pixelator single-cell analysis
@@ -250,56 +233,38 @@ workflow PIXELATOR_PNA_V2 {
     ch_analysis_input = params.skip_denoise ? ch_sample_called : ch_denoise
     PIXELATOR_PNA_ANALYSIS ( ch_analysis_input )
     ch_analysis = PIXELATOR_PNA_ANALYSIS.out.pixelfile
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_ANALYSIS.out.versions.first())
 
     //
     // MODULE: Run pixelator single-cell layout
     //
 
     PIXELATOR_PNA_LAYOUT( ch_analysis )
-    ch_versions = ch_versions.mix(PIXELATOR_PNA_LAYOUT.out.versions.first())
 
     // Prepare all data needed by reporting for each pixelator step
     ch_input = channel.fromPath(params.input)
-    ch_all_results_grouped = channel
+    ch_experiment_summary_input = channel
         .topic('all_results_for_reports')
-        .map{ stage, files -> {
-            tuple(stage, files)
-        }}
-        .groupTuple()
-
-    ch_all_results_split_by_stage = ch_all_results_grouped.branch { topic, _files ->
-        amplicon: topic == 'amplicon'
-        demux: topic == 'demux'
-        collapse: topic == 'collapse'
-        graph: topic == 'graph'
-        sample_calling: topic == 'sample_calling'
-        denoise: topic == 'denoise'
-        analysis: topic == 'analysis'
-        post_analysis: topic == 'post_analysis'
-        layout: topic == 'layout'
-    }
-
-    def pick_file_from_channel = { channel ->
-        channel.map { _topic, files -> files.flatten() }
-    }
+        .map { stage, files ->
+            def values = files instanceof List ? files : [files]
+            values.collect { f -> tuple(stage, f) }
+        }
+        .flatMap { it }
+        .collect(flat: false)
+        .map { stageFilePairs ->
+            def meta = [id: 'all']
+            def stages = stageFilePairs.collect { it[0] }
+            def files = stageFilePairs.collect { it[1] }
+            tuple(meta, stages, files)
+        }
 
     if (!params.skip_experiment_summary) {
         EXPERIMENT_SUMMARY(
             ch_input,
-            pick_file_from_channel(ch_all_results_split_by_stage.amplicon),
-            pick_file_from_channel(ch_all_results_split_by_stage.demux),
-            pick_file_from_channel(ch_all_results_split_by_stage.collapse),
-            pick_file_from_channel(ch_all_results_split_by_stage.graph),
-            pick_file_from_channel(ch_all_results_split_by_stage.sample_calling),
-            pick_file_from_channel(ch_all_results_split_by_stage.denoise),
-            pick_file_from_channel(ch_all_results_split_by_stage.analysis),
-            pick_file_from_channel(ch_all_results_split_by_stage.layout),
+            ch_experiment_summary_input,
         )
     }
 
     emit:
-    versions = ch_versions
     graph = ch_graph
     analysis = ch_analysis
 }

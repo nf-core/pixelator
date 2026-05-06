@@ -18,6 +18,7 @@ process PIXELATOR_PNA_LAYOUT {
     tuple val(meta), path("layout/*"),             emit: all_results
 
     tuple val(meta), path("*pixelator-layout.log"), emit: log
+    tuple val('layout'), path("layout/*"),          topic: all_results_for_reports
 
     tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 

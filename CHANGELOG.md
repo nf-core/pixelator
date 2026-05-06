@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Dependency    | Old version | New version |
 | ------------- | ----------- | ----------- |
-| `pixelatorES` | 0.6.0       | 0.8.6       |
+| `pixelatorES` | 0.6.0       | 0.9.0       |
 | `pixelatorES` | 0.23.0      | 0.26.0      |
 
 ### Parameters

@@ -63,12 +63,12 @@ workflow PIXELATOR {
     ch_reads       = ch_samplesheet.map { meta, _panel, reads -> [ meta, reads ] }
     ch_panel_files = ch_samplesheet.map { meta, panel, _reads -> [ meta, panel ] }
 
-    if (params.technology == "pna_v1") {
+    if (params.technology == "proxiome-v1" || params.technology == "nonhashed_samples") {
         PIXELATOR_PNA_V1(
             ch_reads,
             ch_panel_files
         )
-    } else if (params.technology == "pna_v2") {
+    } else if (params.technology == "proxiome-v2" || params.technology == "hashed_samples") {
         PIXELATOR_PNA_V2(
             ch_reads,
             ch_panel_files

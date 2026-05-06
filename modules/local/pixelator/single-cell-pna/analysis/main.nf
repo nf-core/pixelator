@@ -18,6 +18,7 @@ process PIXELATOR_PNA_ANALYSIS {
     tuple val(meta), path("analysis/*.meta.json"),    emit: metadata_json
     tuple val(meta), path("analysis/*"),              emit: all_results
     tuple val(meta), path("*pixelator-analysis.log"), emit: log
+    tuple val('analysis'), path("analysis/*"),        topic: all_results_for_reports
 
     tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 

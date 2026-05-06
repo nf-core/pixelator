@@ -23,33 +23,13 @@ input:
         description: |
           Groovy Map containing sample information
           e.g. [ id:'sample1' ]
-    - amplicon_data:
-        type: file
-        description: Inputs staged under results/amplicon.
+    - result_stages:
+        type: list
+        description: Stage label for each file in `results_data` (same order).
         ontologies: []
-    - demux_data:
+    - results_data:
         type: file
-        description: Inputs staged under results/demux.
-        ontologies: []
-    - collapse_data:
-        type: file
-        description: Inputs staged under results/collapse.
-        ontologies: []
-    - graph_data:
-        type: file
-        description: Inputs staged under results/graph.
-        ontologies: []
-    - denoise_data:
-        type: file
-        description: Inputs staged under results/denoise.
-        ontologies: []
-    - analysis_data:
-        type: file
-        description: Inputs staged under results/analysis.
-        ontologies: []
-    - layout_data:
-        type: file
-        description: Inputs staged under results/layout.
+        description: Result files to organize under stage folders in the report input.
         ontologies: []
 output:
   html:

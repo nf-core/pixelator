@@ -19,6 +19,7 @@ process PIXELATOR_PNA_DEMUX {
     tuple val(meta), path("demux/*.report.json"),                 emit: report_json
     tuple val(meta), path("demux/*.meta.json"),                   emit: metadata_json
     tuple val(meta), path("*pixelator-demux.log"),                emit: log
+    tuple val('demux'), path("demux/*"),                          topic: all_results_for_reports
 
     tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 

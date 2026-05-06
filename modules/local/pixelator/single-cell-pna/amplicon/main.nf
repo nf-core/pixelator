@@ -16,6 +16,7 @@ process PIXELATOR_PNA_AMPLICON {
     tuple val(meta), path("amplicon/*.report.json"),             emit: report_json
     tuple val(meta), path("amplicon/*.meta.json"),               emit: metadata_json
     tuple val(meta), path("*pixelator-amplicon.log"),            emit: log
+    tuple val('amplicon'), path("amplicon/*"),                   topic: all_results_for_reports
 
     tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 
