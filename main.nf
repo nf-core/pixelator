@@ -40,7 +40,6 @@ workflow NFCORE_PIXELATOR {
     //
     PIXELATOR (
         samplesheet,
-        params.outdir,
     )
 }
 /*
