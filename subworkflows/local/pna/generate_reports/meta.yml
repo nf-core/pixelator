@@ -1,0 +1,83 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: pna_generate_reports
+description: Aggregate Pixelator stage outputs and generate an experiment summary report.
+keywords:
+  - pixelator
+  - pna
+  - report
+  - summary
+components:
+  - experiment/summary
+input:
+  - samplesheet:
+      type: file
+      description: |
+        Input channel containing the sample sheet path.
+        Structure: [ path(samplesheet) ]
+      pattern: "*.{csv,tsv,txt}"
+  - panel_files:
+      type: file
+      description: |
+        Input channel containing panel files per sample.
+        Structure: [ val(meta), path(panel_file) ]
+      pattern: "*"
+  - amplicon_data:
+      type: file
+      description: |
+        Input channel with amplicon report and metadata files per sample.
+        Structure: [ val(meta), [ path(file), ... ] ]
+      pattern: "*.{json,meta.json,report.json}"
+  - demux_data:
+      type: file
+      description: |
+        Input channel with demux report and metadata files per sample.
+        Structure: [ val(meta), [ path(file), ... ] ]
+      pattern: "*.{json,meta.json,report.json}"
+  - collapse_data:
+      type: file
+      description: |
+        Input channel with collapse report and metadata files per sample.
+        Structure: [ val(meta), [ path(file), ... ] ]
+      pattern: "*.{json,meta.json,report.json}"
+  - graph_data:
+      type: file
+      description: |
+        Input channel with graph outputs per sample.
+        Structure: [ val(meta), [ path(file), ... ] ]
+      pattern: "*"
+  - denoise_data:
+      type: file
+      description: |
+        Input channel with denoise outputs per sample.
+        Structure: [ val(meta), [ path(file), ... ] ]
+      pattern: "*"
+  - analysis_data:
+      type: file
+      description: |
+        Input channel with analysis outputs per sample.
+        Structure: [ val(meta), [ path(file), ... ] ]
+      pattern: "*"
+  - layout_data:
+      type: file
+      description: |
+        Input channel with layout report and metadata files per sample.
+        Structure: [ val(meta), [ path(file), ... ] ]
+      pattern: "*.{json,meta.json,report.json}"
+  - skip_experiment_summary:
+      type: boolean
+      description: Boolean flag controlling whether experiment summary generation is skipped.
+output:
+  - experiment_summary:
+      type: file
+      description: |
+        Channel containing experiment summary HTML files when enabled, or empty placeholders when skipped.
+        Structure: [ val(meta), path("*.html") ]
+      pattern: "*.html"
+authors:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
+maintainers:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"

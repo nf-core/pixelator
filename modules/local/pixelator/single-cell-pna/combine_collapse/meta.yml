@@ -1,0 +1,96 @@
+name: pixelator_pna_combine_collapse
+description: Run `pixelator single-cell-pna combine-collapse` to merge multiple collapse outputs.
+keywords:
+  - pixelator
+  - single-cell-pna
+  - combine-collapse
+  - parquet
+tools:
+  - pixelator:
+      description: Single-cell sequencing data analysis toolkit from Pixelgen Technologies.
+      homepage: https://pixelgen.com/
+      documentation: https://software.pixelgen.com/pixelator/
+      licence: ["MIT"]
+      identifier: ""
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. [ id:'sample1' ]
+    - parquet_files:
+        type: file
+        description: Parquet files produced by collapse.
+        pattern: "*.parquet"
+        ontologies: []
+    - json_report_files:
+        type: file
+        description: JSON reports associated with collapse parquet files.
+        pattern: "*.report.json"
+        ontologies: []
+output:
+  parquet:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.parquet":
+          type: file
+          description: Combined collapse parquet output.
+          pattern: "*.parquet"
+          ontologies: []
+  report_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.report.json":
+          type: file
+          description: Run report in JSON format.
+          pattern: "*.report.json"
+          ontologies: []
+  metadata_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.meta.json":
+          type: file
+          description: Metadata in JSON format.
+          pattern: "*.meta.json"
+          ontologies: []
+  log:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*pixelator-combine-collapse.log":
+          type: file
+          description: Pixelator combine-collapse command log.
+          pattern: "*pixelator-combine-collapse.log"
+          ontologies: []
+  versions_pixelator:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+authors:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
+maintainers:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"

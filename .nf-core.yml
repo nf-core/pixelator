@@ -9,6 +9,7 @@ lint:
     - assets/nf-core-pixelator_logo_light.png
     - .gitignore
     - .github/PULL_REQUEST_TEMPLATE.md
+    - LICENSE
   multiqc_config: false
 nf_core_version: 4.0.2
 repository_type: pipeline
