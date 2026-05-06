@@ -154,11 +154,9 @@ workflow PIPELINE_INITIALISATION {
         .combine(ch_panel_options)
         .combine(ch_design_options)
         .map { meta, panel_options, design_options ->
-            {
-                meta = validate_panel(meta, panel_options)
-                meta = validate_design(meta, design_options)
-                return meta
-            }
+            meta = validate_panel(meta, panel_options)
+            meta = validate_design(meta, design_options)
+            return meta
         }
         .join(ch_input)
         .map { meta, panel, reads ->

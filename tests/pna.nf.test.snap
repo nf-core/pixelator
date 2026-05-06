@@ -4,7 +4,7 @@
             20,
             [
                 "pipeline_info",
-                "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
+                "pipeline_info/nf_core_pixelator_software_versions.yml",
                 "pipeline_info/samplesheet_pna.csv",
                 "pixelator",
                 "pixelator/PNA055_Sample07_filtered_S7.pxl",
@@ -113,11 +113,11 @@
                 }
             }
         ],
+        "timestamp": "2026-05-06T14:20:09.408046793",
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.2"
-        },
-        "timestamp": "2026-01-19T08:54:43.966539669"
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.0"
+        }
     },
     "Params: all": {
         "content": [
@@ -159,7 +159,7 @@
             },
             [
                 "pipeline_info",
-                "pipeline_info/nf_core_pixelator_software_mqc_versions.yml",
+                "pipeline_info/nf_core_pixelator_software_versions.yml",
                 "pipeline_info/samplesheet_pna.csv",
                 "pixelator",
                 "pixelator/PNA055_Sample07_filtered_S7.layout.pxl",
@@ -249,10 +249,10 @@
                 "pixelator/logs/PNA055_Sample07_unfiltered_S7/PNA055_Sample07_unfiltered_S7.pixelator-layout.log"
             ]
         ],
+        "timestamp": "2026-05-06T14:19:26.290381771",
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.2"
-        },
-        "timestamp": "2026-01-19T08:53:47.664150319"
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.0"
+        }
     }
 }
