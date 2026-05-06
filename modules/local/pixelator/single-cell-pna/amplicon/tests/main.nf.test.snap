@@ -1,0 +1,141 @@
+{
+    "PNA amplicon - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155-v2",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.amplicon.fq.zst:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155-v2",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155-v2",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "3": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155-v2",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.pixelator-amplicon.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "4": [
+                    [
+                        "PIXELATOR_PNA_AMPLICON",
+                        "pixelator",
+                        "0.23.0"
+                    ]
+                ],
+                "amplicon": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155-v2",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.amplicon.fq.zst:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "log": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155-v2",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.pixelator-amplicon.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "metadata_json": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155-v2",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "report_json": [
+                    [
+                        {
+                            "id": "PNA055_Sample07_filtered_S7",
+                            "design": "pna-2",
+                            "panel": "proxiome-immuno-155-v2",
+                            "technology": "pna"
+                        },
+                        "PNA055_Sample07_filtered_S7.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions_pixelator": [
+                    [
+                        "PIXELATOR_PNA_AMPLICON",
+                        "pixelator",
+                        "0.23.0"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
+        },
+        "timestamp": "2025-12-11T13:57:19.517355298"
+    },
+    "PNA amplicon - small test": {
+        "content": [
+            1,
+            [
+                "pixelator",
+                "pixelator/amplicon",
+                "pixelator/amplicon/PNA055_Sample07_filtered_S7.meta.json",
+                "pixelator/amplicon/PNA055_Sample07_filtered_S7.report.json",
+                "pixelator/logs",
+                "pixelator/logs/PNA055_Sample07_filtered_S7",
+                "pixelator/logs/PNA055_Sample07_filtered_S7/PNA055_Sample07_filtered_S7.pixelator-amplicon.log"
+            ],
+            [
+                [
+                    "PIXELATOR_PNA_AMPLICON",
+                    "pixelator",
+                    "0.23.0"
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
+        },
+        "timestamp": "2025-12-11T13:58:10.802280883"
+    }
+}

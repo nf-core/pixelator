@@ -1,0 +1,2 @@
+pixelator/single_cell_pna_demux:
+  - modules/local/pixelator/single-cell-pna/demux/**

@@ -1,0 +1,39 @@
+{
+    "PNA experiment summary - small": {
+        "content": [
+            1,
+            [
+                "pixelator",
+                "pixelator/experiment-summary.html"
+            ],
+            [
+                [
+                    "EXPERIMENT_SUMMARY",
+                    "experiment-summary",
+                    "0.8.6 "
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
+        },
+        "timestamp": "2025-12-11T14:00:23.063912644"
+    },
+    "PNA experiment summary - stub": {
+        "content": [
+            [
+                [
+                    "EXPERIMENT_SUMMARY",
+                    "experiment-summary",
+                    "0.8.6 "
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.2"
+        },
+        "timestamp": "2025-12-11T13:57:21.610883862"
+    }
+}

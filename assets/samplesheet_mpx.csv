@@ -1,0 +1,4 @@
+sample,design,panel,fastq_1,fastq_2
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
+uropod_control_1,D21,human-sc-immunology-spatial-proteomics,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz

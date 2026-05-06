@@ -15,9 +15,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR  } from './workflows/pixelator'
+include { PIXELATOR               } from './workflows/pixelator'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     NAMED WORKFLOWS FOR PIPELINE
@@ -61,6 +62,7 @@ workflow {
         args,
         params.outdir,
         params.input,
+        params.input_basedir,
         params.help,
         params.help_full,
         params.show_hidden
@@ -75,6 +77,7 @@ workflow {
     //
     // SUBWORKFLOW: Run completion tasks
     //
+    // TODO: Pass MultiQC report here once implemented
     PIPELINE_COMPLETION (
         params.email,
         params.email_on_fail,

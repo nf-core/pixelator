@@ -1,0 +1,2 @@
+pixelator/single_cell_pna_amplicon:
+  - modules/local/pixelator/single-cell-pna/amplicon/**
