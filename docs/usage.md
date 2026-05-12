@@ -139,10 +139,12 @@ pixelator single-cell-pna --list-panels
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/pixelator --input ./samplesheet.csv --outdir ./results  -profile docker
+nextflow run nf-core/pixelator --input ./samplesheet.csv --outdir ./results  -profile docker,cells_8k
 ```
 
-This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
+This will launch the pipeline with the `docker` configuration profile, and resource configurations
+for 8000 cells. If you have samples with 1000 cells as input, pick the `cells_1k` profile instead.
+See below for more information about profiles.
 
 Note that the pipeline will create the following files in your working directory:
 
@@ -163,7 +165,7 @@ Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <
 The above pipeline run specified with a params file in yaml format:
 
 ```bash
-nextflow run nf-core/pixelator -profile docker -params-file params.yaml
+nextflow run nf-core/pixelator -profile docker,cells_8k -params-file params.yaml
 ```
 
 with:
@@ -242,6 +244,10 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
   - A generic configuration profile to be used with [Apptainer](https://apptainer.org/)
 - `wave`
   - A generic configuration profile to enable [Wave](https://seqera.io/wave/) containers. Use together with one of the above (requires Nextflow ` 24.03.0-edge` or later).
+- `cells_8k`
+  - A configuration profile for 8000 cells.
+- `cells_1k`
+  - A configuration profile for 1000 cells.
 
 :::warning
 Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
