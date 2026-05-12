@@ -69,7 +69,7 @@ Now, you can run the pipeline using:
 
 ```bash
 nextflow run nf-core/pixelator \
-   -profile <docker/singularity/.../institute> \
+   -profile <docker/singularity/.../institute>,<cells_1k/cells_8k (depending on cell input)> \
    --input samplesheet.csv \
    --outdir <OUTDIR>
 ```
