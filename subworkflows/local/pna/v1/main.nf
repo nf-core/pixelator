@@ -49,7 +49,7 @@ include { CAT_FASTQ                     } from '../../../../modules/nf-core/cat/
 //
 
 
-workflow PIXELATOR_PNA_V1 { // TODO rename PNA_v1 and move files
+workflow PIXELATOR_PNA_V1 {
     take:
     ch_fastq       // channel: [ meta, [path(sample_1.fq), path(sample_2.fq)] ]
     ch_panel_files // channel: [ meta, path(panel_file) |  ]

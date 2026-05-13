@@ -20,8 +20,7 @@ nextflow_process {
                     file(params.pipelines_testdata_base_path + 'samplesheet/pna/samplesheet_proxiome_v2.csv', checkIfExists: true),
                 ]
                 """
-            } // TODO update test files with intermediary files from hashed run
-            // Need hashing panels
+            }
         }
 
         then {
