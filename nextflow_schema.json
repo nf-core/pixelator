@@ -247,7 +247,7 @@
                 },
                 "pna_graph_refinement_stage_max_edges_to_remove": {
                     "type": "integer",
-                    "default": 4,
+                    "default": 10,
                     "minimum": 1,
                     "description": "The maximum number of edges to remove between components during the refinement stage (iteration > 0) of multiplet recovery."
                 },

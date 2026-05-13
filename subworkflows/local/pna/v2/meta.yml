@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
-name: pixelator_pna_v1
-description: Run the Pixelator single-cell PNA proxiome v1 workflow from FASTQ input through graph and analysis outputs.
+name: pixelator_pna_v2
+description: Run the Pixelator single-cell PNA proxiome v2 workflow from FASTQ input through graph and analysis outputs.
 keywords:
   - pixelator
   - pna
@@ -13,6 +13,7 @@ components:
   - pixelator/pna/collapse
   - pixelator/pna/combine/collapse
   - pixelator/pna/graph
+  - pixelator/pna/sample/calling
   - pixelator/pna/denoise
   - pixelator/pna/analysis
   - pixelator/pna/layout
