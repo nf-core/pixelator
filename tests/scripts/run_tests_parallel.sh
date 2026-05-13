@@ -22,10 +22,16 @@ nf-test test --profile test,docker $ARGS \
     &> /tmp/pixelator_subworkflow_tests.txt \
     && echo "Completed tests: subworkflows" &
 
-echo Running tests: PNA pipeline...
+echo Running tests: PNA pipeline V1...
 nf-test test --profile test,docker $ARGS \
-    tests/pna.nf.test \
-    &> /tmp/pixelator_pna_pipeline_tests.txt \
+    tests/proxiome_v1.nf.test \
+    &> /tmp/pixelator_pna_pipeline_v1_tests.txt \
+    && echo "Completed tests: PNA pipeline" &
+
+echo Running tests: PNA pipeline V2...
+nf-test test --profile test,docker $ARGS \
+    tests/proxiome_v2.nf.test \
+    &> /tmp/pixelator_pna_pipeline_v2_tests.txt \
     && echo "Completed tests: PNA pipeline" &
 
 wait
@@ -33,4 +39,5 @@ wait
 cat /tmp/pixelator_es_tests.txt           \
     /tmp/pixelator_pna_modules_tests.txt  \
     /tmp/pixelator_subworkflow_tests.txt  \
-    /tmp/pixelator_pna_pipeline_tests.txt \
+    /tmp/pixelator_pna_pipeline_v1_tests.txt \
+    /tmp/pixelator_pna_pipeline_v2_tests.txt \

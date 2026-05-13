@@ -1,15 +1,15 @@
 nextflow_workflow {
 
-    name "Test Workflow PIXELATOR_PNA_V1"
+    name "Test Workflow PIXELATOR_PNA_V2"
     script "../main.nf"
     config "../nextflow.config"
-    workflow "PIXELATOR_PNA_V1"
+    workflow "PIXELATOR_PNA_V2"
     tag "subworkflows"
     tag "subworkflows_pixelator"
     tag "pixelator"
     tag "pixelator/pna"
 
-    test("Default parameters [design: proxiome-v1, panel: proxiome-v1-immuno-155-v1.1]") {
+    test("Default parameters [design: proxiome-v2, panel: proxiome-v2-immuno-155-v1.0]") {
         when {
 
             params {
@@ -20,12 +20,12 @@ nextflow_workflow {
 
             workflow {
                 """
-                def meta = [ id:'sample1', design:'proxiome-v1', panel:'proxiome-v1-immuno-155-v1.1', technology:'proxiome-v1' ]
+                def meta = [ pool:'pool1', id:'sample1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v1.0', technology:'proxiome-v1' ]
                 input[0] = Channel.of([
                         meta,
                         [
-                            file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/sample1_R1.fastq.gz', checkIfExists: true),
-                            file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/sample1_R2.fastq.gz', checkIfExists: true)
+                            file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
+                            file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
                         ]
                 ])
                 input[1] = Channel.of([meta, []])

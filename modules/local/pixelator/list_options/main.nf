@@ -28,11 +28,13 @@ process PIXELATOR_LIST_OPTIONS {
     stub:
     """
     cat <<-END_DESIGN > design_options.txt
-    pna-2
+    proxiome-v1
+    proxiome-v2
     END_DESIGN
 
     cat <<-END_PANELS > panel_options.txt
-    proxiome-immuno-155-v2
+    proxiome-v1-immuno-155-v1.1
+    proxiome-v2-immuno-155-v1.0
     END_PANELS
     """
 }
