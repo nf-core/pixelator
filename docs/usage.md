@@ -33,7 +33,7 @@ to match those defined in the table below.
 > using for your experiment. Using a mismatched panel file will lead to incorrect antibody
 > assignments and erroneous results.
 >
-> An update list of which panel files correspond to which kit lot versions can be found
+> An updated list of which panel files correspond to which kit lot versions can be found
 > on the [Pixelgen Technologies website](https://www.pixelgen.com/panel-file-for-data-processing/)
 
 Below is an example of a simple samplesheet with two samples.
@@ -47,24 +47,46 @@ sample2,s2,treatment,pna-2,proxiome-immuno-155-v2,sample2_R1_001.fastq.gz,sample
 Columns not defined in the table below are ignored by the pipeline but can be useful
 to add extra information for downstream processing.
 
-| Column                              | Required                | Description                                                                                                                                                                            |
-| ----------------------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`                            | Yes                     | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `sample_alias`                      | Yes (Only for PNA runs) | Custom sample alias. Will be used to identify the sample in reports and visualizations.                                                                                                |
-| `condition`                         | Yes (Only for PNA run)  | Experimental condition for the sample (e.g. control, treatment).                                                                                                                       |
-| `design`                            | Yes                     | The name of the pixelator design configuration.                                                                                                                                        |
-| `panel` <br />or<br /> `panel_file` | Yes                     | Name of the panel to use. <br />or<br /> Path to a CSV file containing a custom panel.                                                                                                 |
-| `fastq_1`                           | Yes                     | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                  |
-| `fastq_2`                           | No                      | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". Parameter only used if you are running paired-end.               |
+| Column                              | Required                  | Description                                                                                                                                                              |
+| ----------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `sample`                            | Yes                       | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample.                                                            |
+| `sample_alias`                      | Yes                       | Custom sample alias. Will be used to identify the sample in reports and visualizations.                                                                                  |
+| `condition`                         | Yes                       | Custom experimental condition for the sample (e.g. control, treatment). Used for reports and visualizations.                                                             |
+| `design`                            | Yes                       | The name of the pixelator design configuration.                                                                                                                          |
+| `panel` <br />or<br /> `panel_file` | Yes                       | Name of the panel to use. <br />or<br /> Path to a CSV file containing a custom panel.                                                                                   |
+| `fastq_1`                           | Yes                       | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                    |
+| `fastq_2`                           | No                        | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". Parameter only used if you are running paired-end. |
+| `pool`                              | Yes (with pooled samples) | Custom pool name.                                                                                                                                                        |
+| `hash_index`                        | Yes (with pooled samples) | Index of the hashing antibody used with this sample.                                                                                                                     |
 
 The `panel` and `panel_file` options are mutually exclusive. If both are specified, the pipeline will throw an error.
 One of them has to be specified.
 
 The pipeline will auto-detect whether a sample is single- or paired-end based on if both `fastq_1` and `fastq_2` or only `fastq_1` is present in the samplesheet.
 
+### Pooling samples
+
+Pooled samples are supported with the Proxiome v2 kit. To process them, include
+the `pool` and `hash_index` columns in the samplesheet and use the
+`proxiome-v2` design. Hash indices have to match the hashing antibody used for each sample.
+
+```csv
+pool,hash_index,sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+pool1,1,sample1,s1,control,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
+pool2,2,sample2,s2,treatment,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
+```
+
 ### Multiple runs of the same sample
 
-The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
+When a sample or pool has been re-sequenced (for example, to increase
+sequencing depth), use the same `sample` or `pool` identifier across runs. The
+pipeline will then concatenate the corresponding FastQ files before downstream
+analysis.
+
+> [!NOTE]
+> When combining multiple runs, sample metadata such as alias, condition, design and panel needs to be repeated on all rows.
+
+Below is an example for the same sample sequenced across 3 lanes:
 
 ```csv title="samplesheet.csv"
 sample,sample_alias,condition,design,panel,fastq_1,fastq_2
