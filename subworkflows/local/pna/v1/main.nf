@@ -24,7 +24,7 @@ include { PIXELATOR_PNA_DENOISE          } from '../../../../modules/local/pixel
 include { PIXELATOR_PNA_ANALYSIS         } from '../../../../modules/local/pixelator/single-cell-pna/analysis/main'
 include { PIXELATOR_PNA_COMBINE_COLLAPSE } from '../../../../modules/local/pixelator/single-cell-pna/combine_collapse/main'
 include { PIXELATOR_PNA_LAYOUT           } from '../../../../modules/local/pixelator/single-cell-pna/layout/main'
-include { EXPERIMENT_SUMMARY             } from '../../../../modules/local/experiment_summary/main.nf'
+include { EXPERIMENT_SUMMARY             } from '../../../../modules/local/experiment_summary/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
