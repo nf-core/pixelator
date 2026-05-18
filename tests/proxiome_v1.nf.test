@@ -11,7 +11,7 @@ nextflow_pipeline {
 
         when {
             params {
-                outdir                                 = "$outputDir"
+                outdir = "$outputDir"
             }
         }
 
@@ -39,7 +39,7 @@ nextflow_pipeline {
 
         when {
             params {
-                outdir                       = "$outputDir"
+                outdir = "$outputDir"
             }
         }
 

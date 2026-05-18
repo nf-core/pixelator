@@ -269,6 +269,36 @@
                 }
             }
         },
+        "pna_sample_calling_options": {
+            "title": "Options for pixelator sample-calling command on PNA data with pooled samples.",
+            "type": "object",
+            "fa_icon": "fas fa-vial",
+            "properties": {
+                "save_pna_sample_calling_pixelfile": {
+                    "type": "boolean",
+                    "description": "Save the PXL dataset after the sample calling stage.",
+                    "help": "By default, the PXL file after sample calling will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
+                },
+                "pna_sample_calling_remove_incompatible": {
+                    "type": "boolean",
+                    "description": "Remove antibodies that are incompatible with their component's called sample.",
+                    "default": true
+                },
+                "pna_sample_calling_save_undetermined": {
+                    "type": "boolean",
+                    "description": "Save components that could not be confidently assigned to any sample.",
+                    "default": false
+                },
+                "pna_sample_calling_confidence_threshold": {
+                    "type": "number",
+                    "description": "Confidence threshold for sample calling.",
+                    "help_text": "Components with a sample confidence below this threshold will be considered undetermined.",
+                    "default": 0.9,
+                    "minimum": 0.0,
+                    "maximum": 1.0
+                }
+            }
+        },
         "pna_denoise_options": {
             "title": "Denoise options",
             "type": "object",
@@ -564,6 +594,9 @@
         },
         {
             "$ref": "#/$defs/pna_graph_options"
+        },
+        {
+            "$ref": "#/$defs/pna_sample_calling_options"
         },
         {
             "$ref": "#/$defs/pna_denoise_options"

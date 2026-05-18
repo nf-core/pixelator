@@ -5,7 +5,8 @@
             [
                 "pixelator",
                 "pixelator/logs",
-                "pixelator/logs/pool1.pixelator-sample-calling.log",
+                "pixelator/logs/pool1",
+                "pixelator/logs/pool1/pool1.pixelator-sample-calling.log",
                 "pixelator/sample_calling",
                 "pixelator/sample_calling/pool1.sample_calling.report.json",
                 "pixelator/sample_calling/pool1_undetermined.meta.json",
@@ -19,7 +20,7 @@
             ],
             null
         ],
-        "timestamp": "2026-05-13T08:17:41.764674925",
+        "timestamp": "2026-05-18T16:07:43.50926016",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -37,10 +38,10 @@
                             "technology": "proxiome-v2"
                         },
                         [
-                            "pool1-S1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S2.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S3.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S4.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "sample1.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample3.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample4.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -52,7 +53,7 @@
                             "panel": "proxiome-v2-immuno-155-v1.0",
                             "technology": "proxiome-v2"
                         },
-                        "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "pool1.sample_calling.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "2": [
@@ -63,7 +64,7 @@
                             "panel": "proxiome-v2-immuno-155-v1.0",
                             "technology": "proxiome-v2"
                         },
-                        "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "pool1.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "3": [
@@ -75,12 +76,12 @@
                             "technology": "proxiome-v2"
                         },
                         [
-                            "pool1-S1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S2.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S3.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S4.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "pool1.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "pool1.sample_calling.report.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample1.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample3.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample4.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -99,12 +100,12 @@
                     [
                         "sample_calling",
                         [
-                            "pool1-S1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S2.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S3.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S4.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "pool1.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "pool1.sample_calling.report.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample1.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample3.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample4.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -120,12 +121,12 @@
                             "technology": "proxiome-v2"
                         },
                         [
-                            "pool1-S1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S2.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S3.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S4.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "pool1.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "pool1.sample_calling.report.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample1.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample3.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample4.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -148,7 +149,7 @@
                             "panel": "proxiome-v2-immuno-155-v1.0",
                             "technology": "proxiome-v2"
                         },
-                        "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "pool1.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "pixelfile": [
@@ -160,10 +161,10 @@
                             "technology": "proxiome-v2"
                         },
                         [
-                            "pool1-S1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S2.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S3.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1-S4.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "sample1.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample3.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample4.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -175,7 +176,7 @@
                             "panel": "proxiome-v2-immuno-155-v1.0",
                             "technology": "proxiome-v2"
                         },
-                        "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "pool1.sample_calling.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "versions": [
@@ -183,7 +184,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-05-13T08:17:28.715660092",
+        "timestamp": "2026-05-18T16:07:27.561906124",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
