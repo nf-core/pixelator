@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Proxiome V2 workflow by @Aratz [#204](https://github.com/nf-core/pixelator/pull/204)
+- Proxiome V2 workflow by @Aratz [#204](https://github.com/nf-core/pixelator/pull/204), [#205](https://github.com/nf-core/pixelator/pull/205)
 
 ### Enhancements & fixes
 
