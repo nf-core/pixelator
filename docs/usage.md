@@ -15,8 +15,9 @@ Use this parameter to specify its location.
 --input '[path to samplesheet file]'
 ```
 
-We provide an example samplesheet for [PNA data](../assets/samplesheet_pna.csv),
-that can be used as a template to create your own samplesheet.
+We provide an example samplesheets for [Proxiome v1 data](../assets/samplesheet_proxiome_v1.csv)
+and [Proxiome v2 data](../assets/samplesheet_proxiome_v2.csv), that can be used as a template to
+create your own samplesheet.
 
 ### Format
 
