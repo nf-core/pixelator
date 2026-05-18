@@ -8,6 +8,23 @@
         "type": "object",
         "required": ["sample", "design", "fastq_1"],
         "additionalProperties": false,
+        "allOf": [
+            {
+                "if": {
+                    "properties": {
+                        "design": {
+                            "const": "proxiome-v1"
+                        }
+                    }
+                },
+                "then": {
+                    "not": {
+                        "required": ["pool"]
+                    },
+                    "errorMessage": "Pooled samples can only be used with the `proxiome-v2` design."
+                }
+            }
+        ],
         "properties": {
             "sample": {
                 "type": "string",
