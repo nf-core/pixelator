@@ -6,8 +6,8 @@ process PIXELATOR_PNA_DENOISE {
     // conda "bioconda::pixelator=0.18.2"
 
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.23.0'
-        : 'quay.io/pixelgen-technologies/pixelator:0.23.0'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.26.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.26.0'}"
 
     input:
     tuple val(meta), path(data)
@@ -18,6 +18,7 @@ process PIXELATOR_PNA_DENOISE {
     tuple val(meta), path("denoise/*.meta.json")       , emit: metadata_json
     tuple val(meta), path("denoise/*")                 , emit: all_results
     tuple val(meta), path("*pixelator-denoise.log")    , emit: log
+    tuple val('denoise'), path("denoise/*")            , topic: all_results_for_reports
 
     tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 

@@ -16,6 +16,16 @@
                 "description": "Sample name (no spaces).",
                 "meta": ["id"]
             },
+            "pool": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "pool ID cannot contain spaces",
+                "meta": ["pool"]
+            },
+            "hash_index": {
+                "type": "integer",
+                "meta": ["hash_index"]
+            },
             "design": {
                 "type": "string",
                 "pattern": "^\\S+$",

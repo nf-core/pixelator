@@ -16,14 +16,15 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR_PNA_AMPLICON         } from '../../../modules/local/pixelator/single-cell-pna/amplicon/main'
-include { PIXELATOR_PNA_DEMUX            } from '../../../modules/local/pixelator/single-cell-pna/demux/main'
-include { PIXELATOR_PNA_COLLAPSE         } from '../../../modules/local/pixelator/single-cell-pna/collapse/main'
-include { PIXELATOR_PNA_GRAPH            } from '../../../modules/local/pixelator/single-cell-pna/graph/main'
-include { PIXELATOR_PNA_DENOISE          } from '../../../modules/local/pixelator/single-cell-pna/denoise/main'
-include { PIXELATOR_PNA_ANALYSIS         } from '../../../modules/local/pixelator/single-cell-pna/analysis/main'
-include { PIXELATOR_PNA_COMBINE_COLLAPSE } from '../../../modules/local/pixelator/single-cell-pna/combine_collapse/main'
-include { PIXELATOR_PNA_LAYOUT           } from '../../../modules/local/pixelator/single-cell-pna/layout/main'
+include { PIXELATOR_PNA_AMPLICON         } from '../../../../modules/local/pixelator/single-cell-pna/amplicon/main'
+include { PIXELATOR_PNA_DEMUX            } from '../../../../modules/local/pixelator/single-cell-pna/demux/main'
+include { PIXELATOR_PNA_COLLAPSE         } from '../../../../modules/local/pixelator/single-cell-pna/collapse/main'
+include { PIXELATOR_PNA_GRAPH            } from '../../../../modules/local/pixelator/single-cell-pna/graph/main'
+include { PIXELATOR_PNA_DENOISE          } from '../../../../modules/local/pixelator/single-cell-pna/denoise/main'
+include { PIXELATOR_PNA_ANALYSIS         } from '../../../../modules/local/pixelator/single-cell-pna/analysis/main'
+include { PIXELATOR_PNA_COMBINE_COLLAPSE } from '../../../../modules/local/pixelator/single-cell-pna/combine_collapse/main'
+include { PIXELATOR_PNA_LAYOUT           } from '../../../../modules/local/pixelator/single-cell-pna/layout/main'
+include { EXPERIMENT_SUMMARY             } from '../../../../modules/local/experiment_summary/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -31,13 +32,13 @@ include { PIXELATOR_PNA_LAYOUT           } from '../../../modules/local/pixelato
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PNA_GENERATE_REPORTS           } from '../pna/generate_reports'
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+
+include { CAT_FASTQ                     } from '../../../../modules/nf-core/cat/fastq/main'
 
 /*
 ========================================================================================
@@ -48,23 +49,63 @@ include { PNA_GENERATE_REPORTS           } from '../pna/generate_reports'
 //
 
 
-workflow PNA {
+workflow PIXELATOR_PNA_V1 {
     take:
-    fastq       // channel: [ meta, [path(sample_1.fq), path(sample_2.fq)] ]
-    panel_files // channel: [ meta, path(panel_file) |  ]
+    ch_fastq       // channel: [ meta, [path(sample_1.fq), path(sample_2.fq)] ]
+    ch_panel_files // channel: [ meta, path(panel_file) |  ]
 
     main:
+
+    ch_fastq_split = ch_fastq
+        .groupTuple()
+        .branch {
+            meta, fastq ->
+                single: fastq.size() == 1
+                    return [ meta, fastq.flatten() ]
+                multiple: fastq.size() > 1
+                    return [ meta, fastq.flatten() ]
+        }
+
+    //
+    // MODULE: Concatenate FastQ files from the same sample if required
+    //
+    ch_fastq_split.multiple
+
+    ch_cat_fastq = CAT_FASTQ ( ch_fastq_split.multiple )
+        .reads
+        .mix(ch_fastq_split.single)
+
+    // Check that multi lane samples use the same panel file
+    ch_checked_panel_files = ch_panel_files
+        .map { meta, data -> [ meta.id, data] }
+        .groupTuple()
+        .map { id, data ->
+            if (!data) {
+                return [id, []]
+            }
+            def unique_panels = data.unique()
+            if (unique_panels.size() > 1) {
+                exit 1, "ERROR: Concatenated samples must use the same panel."
+            }
+            return [ id, unique_panels[0] ]
+        }
+
+    ch_cat_panel_files = ch_cat_fastq
+        .map { meta, _fastqs -> [meta.id, meta] }
+        .join(ch_checked_panel_files)
+        .map { _id, meta, panel_files -> [meta, panel_files] }
+
     //
     // MODULE: Run pixelator single-cell-pna amplicon
     //
-    PIXELATOR_PNA_AMPLICON ( fastq )
+    PIXELATOR_PNA_AMPLICON ( ch_cat_fastq )
     ch_amplicon = PIXELATOR_PNA_AMPLICON.out.amplicon
 
     //
     // MODULE: Run pixelator single-cell demux
     //
     ch_demux_input = ch_amplicon
-        .join(panel_files)
+        .join(ch_panel_files)
         .map { meta, fq, panel_file -> [meta, fq, panel_file, meta.panel, meta.design] }
 
 
@@ -75,7 +116,7 @@ workflow PNA {
     // MODULE: Run pixelator single-cell collapse
     //
     ch_collapse_input = ch_demuxed
-        .join(panel_files)
+        .join(ch_panel_files)
         .map { meta, parquet, panel_file ->
             // Inject the number of parts into the meta data
             // to be able to group the files without waiting later
@@ -126,7 +167,7 @@ workflow PNA {
     // MODULE: Run pixelator single-cell graph
     //
     ch_graph_input = ch_combined_collapsed
-        .join(panel_files)
+        .join(ch_panel_files)
         .map { meta, parquet, panel_file -> [meta, parquet, panel_file, panel_file ? null : meta.panel] }
 
     PIXELATOR_PNA_GRAPH(ch_graph_input)
@@ -152,42 +193,28 @@ workflow PNA {
     PIXELATOR_PNA_LAYOUT(ch_analysis)
 
     // Prepare all data needed by reporting for each pixelator step
-
-    ch_amplicon_data = PIXELATOR_PNA_AMPLICON.out.report_json
-        .concat(PIXELATOR_PNA_AMPLICON.out.metadata_json)
-        .groupTuple(size: 2)
-
-    ch_demux_data = PIXELATOR_PNA_DEMUX.out.report_json
-        .concat(PIXELATOR_PNA_DEMUX.out.metadata_json)
-        .groupTuple(size: 2)
-
-    ch_collapse_data = PIXELATOR_PNA_COMBINE_COLLAPSE.out.report_json
-        .concat(PIXELATOR_PNA_COMBINE_COLLAPSE.out.metadata_json)
-        .groupTuple(size: 2)
-
-    ch_cluster_data = PIXELATOR_PNA_GRAPH.out.all_results
-    ch_denoise_data = PIXELATOR_PNA_DENOISE.out.all_results
-    ch_analysis_data = PIXELATOR_PNA_ANALYSIS.out.all_results
-
-    ch_layout_data = PIXELATOR_PNA_LAYOUT.out.report_json
-        .concat(PIXELATOR_PNA_LAYOUT.out.metadata_json)
-        .groupTuple(size: 2)
-
-
     ch_input = channel.fromPath(params.input)
+    ch_experiment_summary_input = channel
+        .topic('all_results_for_reports')
+        .map { stage, files ->
+            def values = files instanceof List ? files : [files]
+            values.collect { f -> tuple(stage, f) }
+        }
+        .flatMap { it }
+        .collect(flat: false)
+        .map { stageFilePairs ->
+            def meta = [id: 'all']
+            def stages = stageFilePairs.collect { it[0] }
+            def files = stageFilePairs.collect { it[1] }
+            tuple(meta, stages, files)
+        }
 
-    PNA_GENERATE_REPORTS(
-        ch_input,
-        panel_files,
-        ch_amplicon_data,
-        ch_demux_data,
-        ch_collapse_data,
-        ch_cluster_data,
-        ch_denoise_data,
-        ch_analysis_data,
-        ch_layout_data,
-        params.skip_experiment_summary
-    )
+    if (!params.skip_experiment_summary) {
+        EXPERIMENT_SUMMARY(
+            ch_input,
+            ch_experiment_summary_input,
+        )
+    }
 
     emit:
     graph    = ch_graph

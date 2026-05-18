@@ -159,10 +159,6 @@ workflow PIPELINE_INITIALISATION {
             return meta
         }
         .join(ch_input)
-        .map { meta, panel, reads ->
-            def newMeta = detect_technology(meta)
-            return [newMeta, panel, reads]
-        }
 
     emit:
     samplesheet = ch_samplesheet
@@ -457,20 +453,4 @@ def validate_input_samplesheet(URI samplesheetUrl, items) {
     }
 
     return [meta, panel_file_abs, reads]
-}
-
-//
-// Inject a `technology` field into the meta map based on the design
-//
-def detect_technology(LinkedHashMap meta) {
-    def newMeta = [:]
-    if (meta.design.startsWith('pna')) {
-        newMeta = meta + [technology: 'pna']
-    }
-    else {
-        error("ERROR: unsupported design: ${meta.design}")
-    }
-    // TODO For now keep this around, in order to introduce
-    // other technology choices later.
-    return newMeta
 }

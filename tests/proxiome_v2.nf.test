@@ -1,7 +1,8 @@
 nextflow_pipeline {
 
-    name "Test PNA pipeline"
+    name "Test PNA pipeline V2"
     script "../main.nf"
+    config "conf/test_proxiome_v2.config"
 
     tag "pixelator"
     tag "pixelator/pna"
@@ -11,15 +12,7 @@ nextflow_pipeline {
 
         when {
             params {
-                pipelines_testdata_base_path           = "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/"
-                input                                  = "$pipelines_testdata_base_path/samplesheet/pna/samplesheet_pna.csv"
-                input_basedir                          = "$pipelines_testdata_base_path/testdata/pna/"
                 outdir                                 = "$outputDir"
-
-                pna_graph_component_size_min_threshold = 100
-                skip_experiment_summary                = false
-                save_all                               = true
-
             }
         }
 
@@ -47,12 +40,7 @@ nextflow_pipeline {
 
         when {
             params {
-                pipelines_testdata_base_path = "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/"
-                input                        = "$pipelines_testdata_base_path/samplesheet/pna/samplesheet_pna.csv"
-                input_basedir                = "$pipelines_testdata_base_path/testdata/pna/"
                 outdir                       = "$outputDir"
-
-                skip_experiment_summary      = false
             }
         }
 

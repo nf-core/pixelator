@@ -4,8 +4,8 @@ process PIXELATOR_PNA_GRAPH {
     label 'process_long'
 
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.23.0'
-        : 'quay.io/pixelgen-technologies/pixelator:0.23.0'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.26.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.26.0'}"
 
     input:
     tuple val(meta), path(edge_list), path(panel_file), val(panel)
@@ -16,6 +16,7 @@ process PIXELATOR_PNA_GRAPH {
     tuple val(meta), path("graph/*.report.json"),  emit: report_json
     tuple val(meta), path("graph/*.meta.json"),    emit: metadata_json
     tuple val(meta), path("*pixelator-graph.log"), emit: log
+    tuple val('graph'), path("graph/*"),           topic: all_results_for_reports
 
     tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 

@@ -6,8 +6,8 @@ process PIXELATOR_PNA_DEMUX {
     // conda "bioconda::pixelator=0.18.2"
 
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.23.0'
-        : 'quay.io/pixelgen-technologies/pixelator:0.23.0'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.26.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.26.0'}"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel), val(design)
@@ -19,6 +19,7 @@ process PIXELATOR_PNA_DEMUX {
     tuple val(meta), path("demux/*.report.json"),                 emit: report_json
     tuple val(meta), path("demux/*.meta.json"),                   emit: metadata_json
     tuple val(meta), path("*pixelator-demux.log"),                emit: log
+    tuple val('demux'), path("demux/*"),                          topic: all_results_for_reports
 
     tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 

@@ -1,29 +1,23 @@
 nextflow_process {
 
-    name "Test Process PIXELATOR_PNA_LAYOUT"
+    name "Test Process PIXELATOR_PNA_SAMPLE_CALLING"
     script "../main.nf"
-    process "PIXELATOR_PNA_LAYOUT"
+    process "PIXELATOR_PNA_SAMPLE_CALLING"
     tag "modules"
     tag "pixelator"
     tag "pixelator/pna"
-    tag "pixelator/single_cell_pna_layout"
+    tag "pixelator/single_cell_pna_sample_calling"
 
-
-    test("Test PNA layout - stub") {
+    test("PNA sample calling - stub") {
 
         options "-stub"
-
         when {
-            params {
-                save_all = true
-                layout_algorithm = "pmds_3d"
-                skip_layout = false
-            }
             process {
                 """
                 input[0] = [
-                    [ id:'sample1', design: 'proxiome-v2', panel:'proxiome-v2-immuno-155-v1.0', technology:'proxiome-v2' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/analysis/sample1.analysis.pxl', checkIfExists: true)
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v1.0', technology:'proxiome-v2' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/graph/pool1.graph.pxl', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'samplesheet/pna/samplesheet_proxiome_v2.csv', checkIfExists: true),
                 ]
                 """
             }
@@ -37,19 +31,17 @@ nextflow_process {
         }
     }
 
-    test("Test PNA layout - small test") {
+    test("PNA sample calling - small test") {
         when {
             params {
-                save_all = true
-                layout_algorithm = "pmds_3d"
-                skip_layout = false
                 outdir   = "$outputDir"
             }
             process {
                 """
                 input[0] = [
-                    [ id:'sample1', design: 'proxiome-v2', panel:'proxiome-v2-immuno-155-v1.0', technology:'proxiome-v2' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/analysis/sample1.analysis.pxl', checkIfExists: true)
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v1.0', technology:'proxiome-v2' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/graph/pool1.graph.pxl', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'samplesheet/pna/samplesheet_proxiome_v2.csv', checkIfExists: true),
                 ]
                 """
             }
