@@ -150,7 +150,7 @@ per-sample dehashed PXL files are then used as input for the denoising step.
 </details>
 
 > [!NOTE]
-> This step is run only with `--technology proxiome-v2`.
+> This step is run only when `--technology proxiome-v2` is set.
 
 #### Denoising
 
