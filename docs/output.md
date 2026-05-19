@@ -140,7 +140,7 @@ per-sample dehashed PXL files are then used as input for the denoising step.
     - `<sample-id>.dehashed.pxl`: The pixel file containing the data associated with each samples.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: QC metrics for the sample calling step.
-    - `<pool-id>_undetermined.dehashed.pxl`: The pixel file containing data that could not be associated with any sample.
+    - `<pool-id>_undetermined.dehashed.pxl`: The pixel file containing data that could not be associated with any sample. This is only output when `pna_sample_calling_save_undetermined = true`.
     - `<pool-id>_undetermined.meta.json`: Command invocation metadata.
     - `<pool-id>_undetermined.report.json`: QC metrics for the sample calling step.
 
