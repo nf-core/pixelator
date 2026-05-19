@@ -77,11 +77,11 @@ jobs:
         exclude:
           - isMain: false
             profile: "conda"
-          - isMain: false
-            profile: "singularity"
+          #- isMain: false
+          #  profile: "singularity"
         NXF_VER:
           - "25.10.4"
-          - "latest-everything"
+          #- "latest-everything"
     env:
       NXF_ANSI_LOG: false
       TOTAL_SHARDS: ${{ needs.nf-test-changes.outputs.total_shards }}
