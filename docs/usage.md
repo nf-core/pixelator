@@ -85,7 +85,7 @@ pipeline will then concatenate the corresponding FastQ files before downstream
 analysis.
 
 > [!NOTE]
-> When combining multiple runs, sample metadata such as alias, condition, design and panel needs to be repeated on all rows.
+> When combining multiple runs, sample metadata such as pool, hash_index, sample_alias, condition, design and panel needs to be repeated on all rows.
 
 Below is an example for the same sample sequenced across 3 lanes:
 
