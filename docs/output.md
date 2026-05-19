@@ -23,8 +23,7 @@ The PNA pipeline consists of the following steps:
 - [Denoising](#denoising)
 - [Analysis](#analysis)
 - [Layout creation](#compute-layouts-for-visualization)
-- [Per sample report generation](#generate-reports-per-sample)
-- [Per run run report generation](#generate-report-for-all-samples)
+- [Per run report generation](#generate-report-for-all-samples)
 - [Pipeline information](#pipeline-information)
 
 The output of the Proximity Network Assay (PNA) pipeline is organized into several directories, each corresponding to a specific step in the pipeline. Below is an overview of the output structure and the files generated at each step:
