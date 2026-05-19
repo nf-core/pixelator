@@ -23,6 +23,23 @@
                     },
                     "errorMessage": "Pooled samples can only be used with the `proxiome-v2` design."
                 }
+            },
+            {
+                "if": {
+                    "properties": {
+                        "design": {
+                            "const": "proxiome-v2"
+                        },
+                        "panel": {
+                            "const": "proxiome-v2-immuno-155-v1.0"
+                        }
+                    },
+                    "required": ["design", "panel"]
+                },
+                "then": {
+                    "required": ["pool", "hash_index"],
+                    "errorMessage": "The `pool` and `hash_index` columns are required for `proxiome-v2` design with panel `proxiome-v2-immuno-155-v1.0`."
+                }
             }
         ],
         "properties": {
