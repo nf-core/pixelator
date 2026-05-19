@@ -15,8 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Use `TMPDIR` when defined to store temporary files by @Aratz [#195](https://github.com/nf-core/pixelator/pull/195)
 - Retry experiment summary up to two times after failure by @Aratz [#196](https://github.com/nf-core/pixelator/pull/196)
 - Updated pixelatorES to 0.10.1 in PNA experiment summary step by @Aratz [#197](https://github.com/nf-core/pixelator/pull/197), [#204](https://github.com/nf-core/pixelator/pull/204)
-- Add `cells_1k` and `cells_8k` Nextflow profiles with process-specific resource overrides for different input scales by @johandahlberg [#202](https://github.com/nf-core/pixelator/pull/202)
+- Add `cells_1k` and `cells_8k` Nextflow profiles with process-specific resource overrides for different input scales by @johandahlberg [#203](https://github.com/nf-core/pixelator/pull/203)
 - Fix singularity CI tests by @Aratz [#208](https://github.com/nf-core/pixelator/pull/208)
+- Update nf-core template to 4.0.2 by @Aratz [#202](https://github.com/nf-core/pixelator/pull/202)
 
 ### Software dependencies
 
