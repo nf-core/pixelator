@@ -35,10 +35,11 @@ The pipeline will run the following steps:
 2. Create groups of amplicons based on their marker assignments ([`pixelator single-cell-pna demux`](https://github.com/PixelgenTechnologies/pixelator))
 3. Derive original molecules to use as edge list downstream by error correcting, and counting input amplicons ([`pixelator single-cell-pna collapse`](https://github.com/PixelgenTechnologies/pixelator))
 4. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator single-cell-pna graph`](https://github.com/PixelgenTechnologies/pixelator))
-5. Denoise the cell graphs ([`pixelator single-cell-pna denoise`](https://github.com/PixelgenTechnologies/pixelator))
-6. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
-7. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
-8. Proxiome Experiment Summary generation using [PixelatorES](https://github.com/PixelgenTechnologies/pixelatorES)
+5. _(Conditional; only for PNA hashed data)_ Assign components to samples in pooled experiments ([`pixelator single-cell-pna sample-calling`](https://github.com/PixelgenTechnologies/pixelator))
+6. Denoise the cell graphs ([`pixelator single-cell-pna denoise`](https://github.com/PixelgenTechnologies/pixelator))
+7. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
+8. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
+9. Proxiome Experiment Summary generation using [PixelatorES](https://github.com/PixelgenTechnologies/pixelatorES)
 
 > [!NOTE]
 > If you are looking to run the pipeline with Molecular Pixelation (MPX) data. Please refer to the [release 2.3.1](https://nf-co.re/pixelator/2.3.1/),
@@ -54,14 +55,26 @@ The pipeline will run the following steps:
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/get_started/environment_setup/overview) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/get_started/run-your-first-pipeline) with `-profile test` before running the workflow on actual data.
 
-First, prepare a samplesheet with your input data that looks as follows (the exact values you need to input depend on the design and panel you are using - please see [https://nf-co.re/pixelator/usage](https://nf-co.re/pixelator/usage) for more details):
+First, prepare a samplesheet with your input data that looks as follows (the exact values you need to input depend on the design and panel you are using - please see [https://nf-co.re/pixelator/usage](https://nf-co.re/pixelator/usage) for more details).
+For hashed PNA data (Proxiome kit v2), the samplesheet will look as follows:
 
 `samplesheet.csv`:
 
 ```csv
-sample,sample_alias,condition,design,panel,fastq_1,fastq_2
-sample1,s1,control,pna-2,proxiome-immuno-155-v2,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+pool,hash_index,sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+pool1,1,sample1,s1,control,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
+pool1,2,sample2,s2,case,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
+pool2,1,sample3,s3,control,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool2_R1_001.fastq.gz,pool2_R2_001.fastq.gz
 ```
+
+> [!NOTE]
+> For an example with non-hashed PNA data (Proxiome kit v1), see [Proxiome v1 samplesheet](../assets/samplesheet_proxiome_v1.csv)
+
+> [!WARNING]
+> Panel and design names have been completely renamed in pixelator 0.26
+> (nf-core/pixelator 4.0 and above). Refer to the pixelator
+> [changelog](https://github.com/PixelgenTechnologies/pixelator/releases/tag/v0.26.0)
+> for more details.
 
 Each row represents a sample and gives the design, a panel file and the input fastq files.
 

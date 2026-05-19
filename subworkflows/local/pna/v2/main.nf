@@ -27,8 +27,8 @@ include { PIXELATOR_PNA_COMBINE_COLLAPSE } from '../../../../modules/local/pixel
 include { PIXELATOR_PNA_LAYOUT           } from '../../../../modules/local/pixelator/single-cell-pna/layout'
 
 
-include { EXPERIMENT_SUMMARY } from '../../../../modules/local/experiment_summary/main.nf'
-include { CAT_FASTQ                     } from '../../../../modules/nf-core/cat/fastq/main.nf'
+include { EXPERIMENT_SUMMARY } from '../../../../modules/local/experiment_summary/main'
+include { CAT_FASTQ                     } from '../../../../modules/nf-core/cat/fastq/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -56,12 +56,12 @@ process PIXELATOR_PNA_SAMPLE_CALLING {
 
     """
     mkdir sample_calling
-    touch sample_calling/${prefix}.report.json
-    touch sample_calling/${prefix}.meta.json
-    touch sample_calling/${prefix}-S1.pxl
-    touch sample_calling/${prefix}-S2.pxl
-    touch sample_calling/${prefix}-S3.pxl
-    touch sample_calling/${prefix}-S4.pxl
+    touch sample_calling/${prefix}.sample_calling.report.json
+    touch sample_calling/${prefix}.sample_calling.meta.json
+    touch sample_calling/sample1.dehashed.pxl
+    touch sample_calling/sample2.dehashed.pxl
+    touch sample_calling/sample3.dehashed.pxl
+    touch sample_calling/sample4.dehashed.pxl
     touch ${prefix}.pixelator-sample-calling.log
 
     cat <<-END_VERSIONS > versions.yml

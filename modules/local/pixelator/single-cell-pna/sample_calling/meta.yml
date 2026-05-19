@@ -1,0 +1,104 @@
+name: pixelator_pna_sample_calling
+description: Run `pixelator single-cell-pna sample-calling` to split data into sample-level pixel files.
+keywords:
+  - pixelator
+  - single-cell-pna
+  - sample-calling
+  - pxl
+tools:
+  - pixelator:
+      description: Single-cell sequencing data analysis toolkit from Pixelgen Technologies.
+      homepage: https://pixelgen.com/
+      documentation: https://software.pixelgen.com/pixelator/
+      licence: ["MIT"]
+      identifier: ""
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. [ id:'sample1' ]
+    - data:
+        type: file
+        description: Input file for the sample-calling subcommand.
+        ontologies: []
+    - samplesheet:
+        type: file
+        description: Samplesheet used to split results into sample-level outputs.
+        pattern: "*.{csv,tsv,txt}"
+        ontologies: []
+output:
+  pixelfile:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "sample_calling/*.pxl":
+          type: file
+          description: Sample-level Pixelator PXL output file(s).
+          pattern: "sample_calling/*.pxl"
+          ontologies: []
+  report_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "sample_calling/*.report.json":
+          type: file
+          description: Run report in JSON format.
+          pattern: "sample_calling/*.report.json"
+          ontologies: []
+  metadata_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "sample_calling/*.meta.json":
+          type: file
+          description: Metadata in JSON format.
+          pattern: "sample_calling/*.meta.json"
+          ontologies: []
+  all_results:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "sample_calling/*":
+          type: directory
+          description: All files generated in the sample-calling output directory.
+          pattern: "sample_calling/*"
+          ontologies: []
+  log:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*pixelator-sample-calling.log":
+          type: file
+          description: Pixelator sample-calling command log.
+          pattern: "*pixelator-sample-calling.log"
+          ontologies: []
+  versions_pixelator:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+authors:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
+maintainers:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
