@@ -49,6 +49,8 @@ to add extra information for downstream processing.
 
 | Column                              | Required                  | Description                                                                                                                                                              |
 | ----------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pool`                              | Yes (with pooled samples) | Custom pool name.                                                                                                                                                        |
+| `hash_index`                        | Yes (with pooled samples) | Index of the hashing antibody used with this sample.                                                                                                                     |
 | `sample`                            | Yes                       | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample.                                                            |
 | `sample_alias`                      | Yes                       | Custom sample alias. Will be used to identify the sample in reports and visualizations.                                                                                  |
 | `condition`                         | Yes                       | Custom experimental condition for the sample (e.g. control, treatment). Used for reports and visualizations.                                                             |
@@ -56,8 +58,6 @@ to add extra information for downstream processing.
 | `panel` <br />or<br /> `panel_file` | Yes                       | Name of the panel to use. <br />or<br /> Path to a CSV file containing a custom panel.                                                                                   |
 | `fastq_1`                           | Yes                       | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                    |
 | `fastq_2`                           | No                        | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". Parameter only used if you are running paired-end. |
-| `pool`                              | Yes (with pooled samples) | Custom pool name.                                                                                                                                                        |
-| `hash_index`                        | Yes (with pooled samples) | Index of the hashing antibody used with this sample.                                                                                                                     |
 
 The `panel` and `panel_file` options are mutually exclusive. If both are specified, the pipeline will throw an error.
 One of them has to be specified.
