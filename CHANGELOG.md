@@ -3,11 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## dev - xxxx-xx-xx
+## [[4.0.0](https://github.com/nf-core/pixelator/releases/tag/4.0.0)] - 2026-05-19
 
 ### Added
 
-- Proxiome V2 workflow by @Aratz [#204](https://github.com/nf-core/pixelator/pull/204), [#205](https://github.com/nf-core/pixelator/pull/205)
+- Add Proxiome V2 workflow support, enabling sample pooling and processing of up to 8,000 cells per run by @Aratz [#204](https://github.com/nf-core/pixelator/pull/204), [#205](https://github.com/nf-core/pixelator/pull/205)
 
 ### Enhancements & fixes
 
@@ -22,7 +22,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | Dependency    | Old version | New version |
 | ------------- | ----------- | ----------- |
 | `pixelatorES` | 0.6.0       | 0.10.1      |
-| `pixelatorES` | 0.23.0      | 0.26.0      |
+| `pixelator`   | 0.23.0      | 0.26.0      |
+
+> [!WARNING]
+> Panel and design names have been completely renamed in pixelator 0.26
+> (nf-core/pixelator 4.0 and above). Refer to the pixelator
+> [changelog](https://github.com/PixelgenTechnologies/pixelator/releases/tag/v0.26.0)
+> for more details.
 
 ### Parameters
 
@@ -38,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > Parameter has been **added** if just the new parameter information is present.
 > Parameter has been **removed** if new parameter information isn't present.
 
-## [[3.0.1](https://github.com/nf-core/pixelator/releases/tag/3.0.0)] - 2026-03-09
+## [[3.0.1](https://github.com/nf-core/pixelator/releases/tag/3.0.1)] - 2026-03-09
 
 ### Enhancements & fixes
 
