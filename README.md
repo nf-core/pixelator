@@ -45,9 +45,6 @@ The pipeline will run the following steps:
 > If you are looking to run the pipeline with Molecular Pixelation (MPX) data. Please refer to the [release 2.3.1](https://nf-co.re/pixelator/2.3.1/),
 > which is the last version to support that data type.
 
-> [!NOTE]
-> TODO panel and design update 4.0
-
 > [!WARNING]
 > Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
 > This causes issues in some dependencies. As a workaround, you can revert to the old behavior by setting the environment variable
@@ -72,6 +69,12 @@ pool2,1,sample3,s3,control,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool2_R1_001.
 
 > [!NOTE]
 > For an example with non-hashed PNA data (Proxiome kit v1), see [Proxiome v1 samplesheet](../assets/samplesheet_proxiome_v1.csv)
+
+> [!WARNING]
+> Panel and design names have been completely renamed in pixelator 0.26
+> (nf-core/pixelator 4.0 and above). Refer to the pixelator
+> [changelog](https://github.com/PixelgenTechnologies/pixelator/releases/tag/v0.26.0)
+> for more details.
 
 Each row represents a sample and gives the design, a panel file and the input fastq files.
 
