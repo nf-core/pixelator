@@ -167,11 +167,11 @@
                     "pixelator": "0.26.0"
                 },
                 "Workflow": {
-                    "nf-core/pixelator": "v3.1.0dev"
+                    "nf-core/pixelator": "v4.0.0"
                 }
             }
         ],
-        "timestamp": "2026-05-18T11:00:46.039585674",
+        "timestamp": "2026-05-19T11:50:37.765871571",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -215,7 +215,7 @@
                     "pixelator": "0.26.0"
                 },
                 "Workflow": {
-                    "nf-core/pixelator": "v3.1.0dev"
+                    "nf-core/pixelator": "v4.0.0"
                 }
             },
             [
@@ -357,7 +357,7 @@
                 "pixelator/sample_calling/sample4.report.json"
             ]
         ],
-        "timestamp": "2026-05-18T10:46:41.797306659",
+        "timestamp": "2026-05-19T11:49:07.544804495",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
