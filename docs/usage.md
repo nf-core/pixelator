@@ -69,6 +69,7 @@ The pipeline will auto-detect whether a sample is single- or paired-end based on
 Pooled samples are supported with the Proxiome v2 kit. To process them, include
 the `pool` and `hash_index` columns in the samplesheet and use the
 `proxiome-v2` design. Hash indices have to match the hashing antibody used for each sample.
+Typically there are 8 hashed samples per pool (numbering 1 to 8).
 
 ```csv
 pool,hash_index,sample,sample_alias,condition,design,panel,fastq_1,fastq_2
