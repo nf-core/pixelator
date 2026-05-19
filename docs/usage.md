@@ -96,6 +96,16 @@ uropod_control_1,s1,control,pna-2,proxiome-immuno-155-v2,uropod_control_S1_L002_
 uropod_control_1,s1,control,pna-2,proxiome-immuno-155-v2,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
 ```
 
+The same approach applies when pooled hashed samples are sequenced again:
+
+```csv title="samplesheet.csv"
+pool,hash_index,sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+pool1,1,sample1,s1,control,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_run1_R1_001.fastq.gz,pool1_run1_R2_001.fastq.gz
+pool1,1,sample1,s1,control,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_run2_R1_001.fastq.gz,pool1_run2_R2_001.fastq.gz
+pool1,2,sample2,s2,treatment,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_run1_R1_001.fastq.gz,pool1_run1_R2_001.fastq.gz
+pool1,2,sample2,s2,treatment,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_run2_R1_001.fastq.gz,pool1_run2_R2_001.fastq.gz
+```
+
 ### Relative paths
 
 Using relative paths in a samplesheet is supported.
