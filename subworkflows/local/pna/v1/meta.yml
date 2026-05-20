@@ -8,14 +8,14 @@ keywords:
   - fastq
 components:
   - cat/fastq
-  - pixelator/pna/amplicon
-  - pixelator/pna/demux
-  - pixelator/pna/collapse
-  - pixelator/pna/combine/collapse
-  - pixelator/pna/graph
-  - pixelator/pna/denoise
-  - pixelator/pna/analysis
-  - pixelator/pna/layout
+  - pixelator/amplicon
+  - pixelator/demux
+  - pixelator/collapse
+  - pixelator/combine/collapse
+  - pixelator/graph
+  - pixelator/denoise
+  - pixelator/analysis
+  - pixelator/layout
   - experiment/summary
   - pna_generate_reports
 input:

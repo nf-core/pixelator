@@ -12,7 +12,7 @@ nf-test test --profile test,docker $ARGS \
 
 echo Running tests: PNA modules...
 nf-test test --profile test,docker $ARGS \
-    modules/local/pixelator/single-cell-pna/ \
+    modules/local/pixelator/ \
     &> /tmp/pixelator_pna_modules_tests.txt \
     && echo "Completed tests: PNA modules" &
 

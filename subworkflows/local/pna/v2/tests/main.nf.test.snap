@@ -115,7 +115,7 @@
                 "pixelator/sample_calling/sample2.report.json"
             ]
         ],
-        "timestamp": "2026-05-13T14:43:57.33706874",
+        "timestamp": "2026-05-20T14:26:17.705500605",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

@@ -1,0 +1,2 @@
+pixelator/demux:
+  - modules/local/pixelator/demux/**
