@@ -132,6 +132,9 @@
                 "pixelator/sample_calling/sample3.dehashed.pxl",
                 "pixelator/sample_calling/sample4.dehashed.pxl"
             ],
+            [
+                
+            ],
             {
                 "CAT_FASTQ": {
                     "cat": 9.5
@@ -139,31 +142,31 @@
                 "EXPERIMENT_SUMMARY": {
                     "experiment-summary": "0.10.1"
                 },
+                "PIXELATOR_AMPLICON": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_ANALYSIS": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_COLLAPSE": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_COMBINE_COLLAPSE": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_DEMUX": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_DENOISE": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_GRAPH": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_LAYOUT": {
+                    "pixelator": "0.26.0"
+                },
                 "PIXELATOR_LIST_OPTIONS": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_AMPLICON": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_ANALYSIS": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_COLLAPSE": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_COMBINE_COLLAPSE": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_DEMUX": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_DENOISE": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_GRAPH": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_LAYOUT": {
                     "pixelator": "0.26.0"
                 },
                 "Workflow": {
@@ -171,7 +174,7 @@
                 }
             }
         ],
-        "timestamp": "2026-05-19T11:50:37.765871571",
+        "timestamp": "2026-05-20T14:40:47.828972504",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -187,31 +190,31 @@
                 "EXPERIMENT_SUMMARY": {
                     "experiment-summary": "0.10.1"
                 },
+                "PIXELATOR_AMPLICON": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_ANALYSIS": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_COLLAPSE": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_COMBINE_COLLAPSE": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_DEMUX": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_DENOISE": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_GRAPH": {
+                    "pixelator": "0.26.0"
+                },
+                "PIXELATOR_LAYOUT": {
+                    "pixelator": "0.26.0"
+                },
                 "PIXELATOR_LIST_OPTIONS": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_AMPLICON": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_ANALYSIS": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_COLLAPSE": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_COMBINE_COLLAPSE": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_DEMUX": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_DENOISE": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_GRAPH": {
-                    "pixelator": "0.26.0"
-                },
-                "PIXELATOR_PNA_LAYOUT": {
                     "pixelator": "0.26.0"
                 },
                 "Workflow": {
@@ -355,9 +358,12 @@
                 "pixelator/sample_calling/sample4.dehashed.pxl",
                 "pixelator/sample_calling/sample4.meta.json",
                 "pixelator/sample_calling/sample4.report.json"
+            ],
+            [
+                
             ]
         ],
-        "timestamp": "2026-05-19T11:49:07.544804495",
+        "timestamp": "2026-05-20T14:39:49.603104266",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
