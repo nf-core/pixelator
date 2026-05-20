@@ -176,3 +176,12 @@ nf-core pipelines bump-version --nextflow . <min_nf_version>
 #### Images and figures guidelines
 
 If you update images or graphics, follow the nf-core [style guidelines](https://nf-co.re/docs/community/brand/workflow-schematics).
+
+## Pipeline specific contribution guidelines
+
+nf-core/pixelator is built on top of mainly
+[pixelator](https://github.com/PixelgenTechnologies/pixelator) and
+[pixelatorES](https://github.com/PixelgenTechnologies/pixelatorES), two
+products developed by Pixelgen Technologies. As open source projects, these
+also welcome contributions from everyone. Please refer to the documentation of
+these projects for more information.
