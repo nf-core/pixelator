@@ -34,12 +34,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Parameters
 
-| Old parameter                        | New parameter               |
-| ------------------------------------ | --------------------------- |
-| `--leiden-iterations`                |                             |
-| `--min-component-size-in-refinement` |                             |
-| `--min-component-size-to-prune`      |                             |
-|                                      | `--edge_cycle-verification` |
+| Old parameter                        | New parameter                             |
+| ------------------------------------ | ----------------------------------------- |
+| `--leiden-iterations`                |                                           |
+| `--min-component-size-in-refinement` |                                           |
+| `--min-component-size-to-prune`      |                                           |
+|                                      | `--edge_cycle-verification`               |
+|                                      | `save_pna_sample_calling_pixelfile`       |
+|                                      | `pna_sample_calling_save_undetermined`    |
+|                                      | `pna_sample_calling_remove_incompatible`  |
+|                                      | `pna_sample_calling_confidence_threshold` |
 
 > [!NOTE]
 > Parameter has been **updated** if both old and new parameter information is present.
