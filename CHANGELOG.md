@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | `--leiden-iterations`                |                                           |
 | `--min-component-size-in-refinement` |                                           |
 | `--min-component-size-to-prune`      |                                           |
+|                                      | `--technology`                            |
 |                                      | `--edge_cycle-verification`               |
 |                                      | `save_pna_sample_calling_pixelfile`       |
 |                                      | `pna_sample_calling_save_undetermined`    |
