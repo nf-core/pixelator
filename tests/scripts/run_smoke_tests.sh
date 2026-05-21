@@ -4,4 +4,4 @@
 
 ARGS=$@
 
-nf-test test --profile test,docker $ARGS --tag="smoke_test"
+nf-test test --profile=+docker $ARGS --tag="smoke_test"
