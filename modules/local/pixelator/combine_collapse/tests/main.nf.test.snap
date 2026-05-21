@@ -3,6 +3,7 @@
         "content": [
             1,
             [
+                "pipeline_info",
                 "pixelator",
                 "pixelator/collapse",
                 "pixelator/collapse/pool1.collapse.parquet",
@@ -19,7 +20,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-20T14:29:29.978160031",
+        "timestamp": "2026-05-21T11:59:42.965992059",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

@@ -3,6 +3,7 @@
         "content": [
             1,
             [
+                "pipeline_info",
                 "pixelator",
                 "pixelator/denoise",
                 "pixelator/denoise/sample1.meta.json",
@@ -19,7 +20,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-20T14:30:51.886838398",
+        "timestamp": "2026-05-21T12:01:36.760255316",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

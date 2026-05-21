@@ -156,6 +156,7 @@
         "content": [
             1,
             [
+                "pipeline_info",
                 "pixelator",
                 "pixelator/graph",
                 "pixelator/graph/pool1.graph.pxl",
@@ -173,7 +174,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-20T14:31:17.955182089",
+        "timestamp": "2026-05-21T12:02:11.997776808",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

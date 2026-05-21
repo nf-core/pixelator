@@ -2,17 +2,25 @@ nextflow_pipeline {
 
     name "Test PNA pipeline V2"
     script "../main.nf"
-    config "conf/test_proxiome_v2.config"
 
     tag "pixelator"
     tag "pixelator/pna"
     tag "smoke_test"
 
+    def test_config = new ConfigSlurper().parse(new File("tests/nextflow.config").toURI().toURL())
+    def pipelines_testdata_base_path = test_config.params.pipelines_testdata_base_path as String
+
     test("Params: all") {
 
         when {
             params {
-                outdir = "$outputDir"
+                input                                  = pipelines_testdata_base_path + '/samplesheet/pna/samplesheet_proxiome_v2.csv'
+                input_basedir                          = pipelines_testdata_base_path + "/testdata/pna/"
+                outdir                                 = "$outputDir"
+                pna_graph_component_size_min_threshold = 100
+                skip_experiment_summary                = false
+                save_all                               = true
+                technology                             = "proxiome-v2"
             }
         }
 
@@ -44,7 +52,13 @@ nextflow_pipeline {
 
         when {
             params {
-                outdir = "$outputDir"
+                input                                  = pipelines_testdata_base_path + '/samplesheet/pna/samplesheet_proxiome_v2.csv'
+                input_basedir                          = pipelines_testdata_base_path + "/testdata/pna/"
+                outdir                                 = "$outputDir"
+                pna_graph_component_size_min_threshold = 100
+                skip_experiment_summary                = false
+                save_all                               = true
+                technology                             = "proxiome-v2"
             }
         }
 

@@ -126,6 +126,7 @@
         "content": [
             1,
             [
+                "pipeline_info",
                 "pixelator",
                 "pixelator/amplicon",
                 "pixelator/amplicon/pool1.amplicon.fq.zst",
@@ -143,7 +144,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-20T14:27:49.821596738",
+        "timestamp": "2026-05-21T11:56:54.148117208",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

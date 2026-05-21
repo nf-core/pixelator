@@ -3,6 +3,7 @@
         "content": [
             1,
             [
+                "pipeline_info",
                 "pixelator",
                 "pixelator/layout",
                 "pixelator/layout/sample1.meta.json",
@@ -20,7 +21,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-20T14:31:41.190244206",
+        "timestamp": "2026-05-21T12:02:56.888630957",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

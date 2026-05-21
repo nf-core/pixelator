@@ -3,6 +3,7 @@
         "content": [
             1,
             [
+                "pipeline_info",
                 "pixelator",
                 "pixelator/logs",
                 "pixelator/logs/pool1",
@@ -20,7 +21,7 @@
             ],
             null
         ],
-        "timestamp": "2026-05-18T16:07:43.50926016",
+        "timestamp": "2026-05-21T12:03:20.674454727",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

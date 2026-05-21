@@ -3,6 +3,7 @@
         "content": [
             1,
             [
+                "pipeline_info",
                 "pixelator",
                 "pixelator/demux",
                 "pixelator/demux/pool1.demux.failed.fq.zst",
@@ -23,7 +24,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-20T14:30:04.325516148",
+        "timestamp": "2026-05-21T12:00:37.132304324",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -209,6 +210,7 @@
         "content": [
             1,
             [
+                "pipeline_info",
                 "pixelator",
                 "pixelator/demux",
                 "pixelator/demux/pool1.demux.failed.fq.zst",
@@ -243,7 +245,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-20T14:30:29.692789975",
+        "timestamp": "2026-05-21T12:01:07.6787683",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

@@ -3,6 +3,7 @@
         "content": [
             1,
             [
+                "pipeline_info",
                 "pixelator",
                 "pixelator/collapse",
                 "pixelator/collapse/pool1.collapse.m1.part_000.meta.json",
@@ -20,7 +21,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-20T14:28:49.824808507",
+        "timestamp": "2026-05-21T11:58:24.85769919",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -161,6 +162,7 @@
         "content": [
             1,
             [
+                "pipeline_info",
                 "pixelator",
                 "pixelator/collapse",
                 "pixelator/collapse/pool1.collapse.m1.part_000.meta.json",
@@ -175,7 +177,7 @@
             ],
             null
         ],
-        "timestamp": "2026-05-13T13:53:27.172850517",
+        "timestamp": "2026-05-21T11:58:56.273822152",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
