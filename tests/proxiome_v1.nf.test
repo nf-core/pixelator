@@ -51,7 +51,13 @@ nextflow_pipeline {
 
         when {
             params {
-                outdir = "$outputDir"
+                input                                  = pipelines_testdata_base_path + '/samplesheet/pna/samplesheet_proxiome_v1.csv'
+                input_basedir                          = pipelines_testdata_base_path + "/testdata/pna/"
+                outdir                                 = "$outputDir"
+                pna_graph_component_size_min_threshold = 100
+                skip_experiment_summary                = false
+                save_all                               = true
+                technology                             = "proxiome-v1"
             }
         }
 
