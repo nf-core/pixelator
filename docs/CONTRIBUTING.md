@@ -101,6 +101,14 @@ GitHub Actions runs the pipeline on this data to ensure it runs through and exit
 If there are any failures then the automated tests fail.
 These tests are run with the latest available version of Nextflow and the minimum required version specified in the pipeline code.
 
+#### Test data
+
+By default, test data is downloaded from
+https://github.com/nf-core/test-datasets/tree/pixelator. If one desires to use
+local data instead, this can be overriden either with the
+`pipelines_testdata_base_path` parameter or with the `NFT_TESTDATA_BASE_PATH`
+environment variable.
+
 ### Patch release
 
 > [!WARNING]
