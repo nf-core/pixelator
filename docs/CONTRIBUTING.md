@@ -77,6 +77,16 @@ Update the snapshots with the following command:
 nf-test test --tag test --profile +docker --verbose --update-snapshots
 ```
 
+Some tests can take quite long to run. To solve this we provide two utility scripts:
+
+- `run_smoke_tests.sh`: this runs all tests tagged with `smoke_test`. This is a good way to quickly
+  make sure nothing is broken after making some changes.
+- `run_tests_parallel.sh`: this runs all the tests in parallel using on 5 different threads.
+  This is useful to update all the snapshots at once before making a PR.
+
+Both scripts take the same parameters `nf-test` does, e.g. run
+`bash tests/scripts/run_tests_parallel.sh --update-snapshots` to update all snapshots.
+
 When you create a pull request with changes, GitHub Actions will run automatic tests.
 Pull requests are typically reviewed when these tests are passing.
 
