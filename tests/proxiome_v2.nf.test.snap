@@ -133,7 +133,26 @@
                 "pixelator/sample_calling/sample4.dehashed.pxl"
             ],
             [
-                
+                "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "pool2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample3.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample4.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "pool2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample3.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample4.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "pool2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample3.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "sample4.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "pool1.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "pool2.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
             ],
             {
                 "CAT_FASTQ": {
@@ -174,7 +193,7 @@
                 }
             }
         ],
-        "timestamp": "2026-05-21T11:48:37.212684532",
+        "timestamp": "2026-05-22T14:44:24.873076953",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -360,10 +379,33 @@
                 "pixelator/sample_calling/sample4.report.json"
             ],
             [
-                
+                "pool1.meta.json:md5,41c228a0f862dd47e6b4b66b001cc44b",
+                "pool2.meta.json:md5,41c228a0f862dd47e6b4b66b001cc44b",
+                "sample1.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
+                "sample2.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
+                "sample3.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
+                "sample4.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
+                "pool1.meta.json:md5,84596e67700975fd7518a0fdeedf3168",
+                "pool2.meta.json:md5,84596e67700975fd7518a0fdeedf3168",
+                "sample1.meta.json:md5,d0728a1efc25964039497c7bc22cdc35",
+                "sample2.meta.json:md5,d0728a1efc25964039497c7bc22cdc35",
+                "sample3.meta.json:md5,d0728a1efc25964039497c7bc22cdc35",
+                "sample4.meta.json:md5,d0728a1efc25964039497c7bc22cdc35",
+                "pool1.meta.json:md5,481df097c7b214be07def5d68f04e79d",
+                "pool2.meta.json:md5,481df097c7b214be07def5d68f04e79d",
+                "sample1.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
+                "sample2.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
+                "sample3.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
+                "sample4.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
+                "pool1_undetermined.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7",
+                "pool2_undetermined.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7",
+                "sample1.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7",
+                "sample2.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7",
+                "sample3.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7",
+                "sample4.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7"
             ]
         ],
-        "timestamp": "2026-05-21T11:47:38.637710599",
+        "timestamp": "2026-05-22T14:43:17.238109494",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
