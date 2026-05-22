@@ -8,9 +8,6 @@ nextflow_pipeline {
     tag "pixelator/pna"
     tag "smoke_test"
 
-    def test_config = new ConfigSlurper().parse(new File("tests/nextflow.config").toURI().toURL())
-    def pipelines_testdata_base_path = test_config.params.pipelines_testdata_base_path as String
-
     test("Params: all") {
 
         when {
