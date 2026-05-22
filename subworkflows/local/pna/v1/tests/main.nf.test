@@ -3,24 +3,20 @@ nextflow_workflow {
     name "Test Workflow PIXELATOR_PNA_V1"
     script "../main.nf"
     workflow "PIXELATOR_PNA_V1"
+    profile "test_proxiome_v1"
 
     tag "subworkflows"
     tag "subworkflows_pixelator"
     tag "pixelator"
     tag "pixelator/pna"
 
-    def test_config = new ConfigSlurper().parse(new File("tests/nextflow.config").toURI().toURL())
-    def pipelines_testdata_base_path = test_config.params.pipelines_testdata_base_path as String
-
     test("Default parameters [design: proxiome-v1, panel: proxiome-v1-immuno-155-v1.1]") {
         when {
 
             params {
-                pna_graph_component_size_min_threshold = 100
                 skip_experiment_summary = true
                 outdir = "$outputDir"
                 pna_demux_output_chunk_reads = "30K"
-                input = pipelines_testdata_base_path + '/samplesheet/pna/samplesheet_proxiome_v2.csv'
             }
 
             workflow {
