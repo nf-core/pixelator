@@ -2,8 +2,9 @@ nextflow_workflow {
 
     name "Test Workflow PIXELATOR_PNA_V1"
     script "../main.nf"
-    config "../nextflow.config"
     workflow "PIXELATOR_PNA_V1"
+    profile "test_proxiome_v1"
+
     tag "subworkflows"
     tag "subworkflows_pixelator"
     tag "pixelator"
@@ -13,9 +14,9 @@ nextflow_workflow {
         when {
 
             params {
-                pna_graph_component_size_min_threshold = 100
                 skip_experiment_summary = true
                 outdir = "$outputDir"
+                pna_demux_output_chunk_reads = "30K"
             }
 
             workflow {

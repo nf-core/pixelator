@@ -83,6 +83,7 @@ Now, you can run the pipeline using:
 ```bash
 nextflow run nf-core/pixelator \
    -profile <docker/singularity/.../institute>,<cells_1k/cells_8k (depending on cell input)> \
+   --technology <proxiome_v1/proxiome_v2 (depending on the kit version used)>
    --input samplesheet.csv \
    --outdir <OUTDIR>
 ```

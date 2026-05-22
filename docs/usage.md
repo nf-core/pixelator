@@ -15,7 +15,7 @@ Use this parameter to specify its location.
 --input '[path to samplesheet file]'
 ```
 
-We provide an example samplesheets for [Proxiome v1 data](../assets/samplesheet_proxiome_v1.csv)
+We provide example samplesheets for [Proxiome v1 data](../assets/samplesheet_proxiome_v1.csv)
 and [Proxiome v2 data](../assets/samplesheet_proxiome_v2.csv), that can be used as a template to
 create your own samplesheet.
 
@@ -125,7 +125,7 @@ You can use following samplesheet:
 
 ```csv title="samplesheet.csv"
 sample,sample_alias,condition,design,panel,panel_file,fastq_1,fastq_2
-sample1,s1,control,pna-2,proxiome-immuno-155-v2,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
+sample1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
 ```
 
 Using the `--input_basedir` option you can specify a different location that will be used to resolve relative paths.
@@ -138,7 +138,7 @@ For example, using the same samplesheet as above, but with the samplesheet on th
   - sample1_R2.fq.gz
 
 ```shell
-nextflow run nf-core/pixelator --input samplesheet.csv --input_basedir s3://my-company-data/experiment-1/
+nextflow run nf-core/pixelator --input samplesheet.csv --input_basedir s3://my-company-data/experiment-1/ --output ./resulst --technology proxiome-v1
 ```
 
 ### Design
@@ -173,7 +173,7 @@ pixelator single-cell-pna --list-panels
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/pixelator --input ./samplesheet.csv --outdir ./results  -profile docker,cells_8k
+nextflow run nf-core/pixelator --input ./samplesheet.csv --outdir ./results  -profile docker,cells_8k --technology proxiome-v2
 ```
 
 This will launch the pipeline with the `docker` configuration profile, and resource configurations

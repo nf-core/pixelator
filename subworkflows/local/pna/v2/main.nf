@@ -16,15 +16,15 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR_PNA_AMPLICON         } from '../../../../modules/local/pixelator/single-cell-pna/amplicon'
-include { PIXELATOR_PNA_DEMUX            } from '../../../../modules/local/pixelator/single-cell-pna/demux'
-include { PIXELATOR_PNA_COLLAPSE         } from '../../../../modules/local/pixelator/single-cell-pna/collapse'
-include { PIXELATOR_PNA_GRAPH            } from '../../../../modules/local/pixelator/single-cell-pna/graph'
-include { PIXELATOR_PNA_SAMPLE_CALLING   } from '../../../../modules/local/pixelator/single-cell-pna/sample_calling'
-include { PIXELATOR_PNA_DENOISE          } from '../../../../modules/local/pixelator/single-cell-pna/denoise'
-include { PIXELATOR_PNA_ANALYSIS         } from '../../../../modules/local/pixelator/single-cell-pna/analysis'
-include { PIXELATOR_PNA_COMBINE_COLLAPSE } from '../../../../modules/local/pixelator/single-cell-pna/combine_collapse'
-include { PIXELATOR_PNA_LAYOUT           } from '../../../../modules/local/pixelator/single-cell-pna/layout'
+include { PIXELATOR_AMPLICON         } from '../../../../modules/local/pixelator/amplicon'
+include { PIXELATOR_DEMUX            } from '../../../../modules/local/pixelator/demux'
+include { PIXELATOR_COLLAPSE         } from '../../../../modules/local/pixelator/collapse'
+include { PIXELATOR_GRAPH            } from '../../../../modules/local/pixelator/graph'
+include { PIXELATOR_SAMPLE_CALLING   } from '../../../../modules/local/pixelator/sample_calling'
+include { PIXELATOR_DENOISE          } from '../../../../modules/local/pixelator/denoise'
+include { PIXELATOR_ANALYSIS         } from '../../../../modules/local/pixelator/analysis'
+include { PIXELATOR_COMBINE_COLLAPSE } from '../../../../modules/local/pixelator/combine_collapse'
+include { PIXELATOR_LAYOUT           } from '../../../../modules/local/pixelator/layout'
 
 
 include { EXPERIMENT_SUMMARY } from '../../../../modules/local/experiment_summary/main'
@@ -122,8 +122,8 @@ workflow PIXELATOR_PNA_V2 {
     //
     // MODULE: Run pixelator single-cell-pna amplicon
     //
-    PIXELATOR_PNA_AMPLICON ( ch_cat_fastq )
-    ch_amplicon = PIXELATOR_PNA_AMPLICON.out.amplicon
+    PIXELATOR_AMPLICON ( ch_cat_fastq )
+    ch_amplicon = PIXELATOR_AMPLICON.out.amplicon
 
     //
     // MODULE: Run pixelator single-cell demux
@@ -133,8 +133,8 @@ workflow PIXELATOR_PNA_V2 {
         .map { meta, fq, panel_file -> [meta, fq, panel_file, meta.panel, meta.design] }
 
 
-    PIXELATOR_PNA_DEMUX(ch_demux_input)
-    ch_demuxed = PIXELATOR_PNA_DEMUX.out.demuxed
+    PIXELATOR_DEMUX(ch_demux_input)
+    ch_demuxed = PIXELATOR_DEMUX.out.demuxed
 
     //
     // MODULE: Run pixelator single-cell collapse
@@ -153,9 +153,9 @@ workflow PIXELATOR_PNA_V2 {
         .flatMap()
 
 
-    PIXELATOR_PNA_COLLAPSE(ch_collapse_input)
-    ch_collapsed = PIXELATOR_PNA_COLLAPSE.out.collapsed
-    ch_collapsed_reports = PIXELATOR_PNA_COLLAPSE.out.report_json
+    PIXELATOR_COLLAPSE(ch_collapse_input)
+    ch_collapsed = PIXELATOR_COLLAPSE.out.collapsed
+    ch_collapsed_reports = PIXELATOR_COLLAPSE.out.report_json
 
     // Collect the partitioned collapse.parquet files in a list per sample
     // use the dynamic size information from `meta.parts` to group the files
@@ -180,11 +180,11 @@ workflow PIXELATOR_PNA_V2 {
     }
 
 
-    PIXELATOR_PNA_COMBINE_COLLAPSE(ch_collapse_combine_split.multi)
+    PIXELATOR_COMBINE_COLLAPSE(ch_collapse_combine_split.multi)
 
     ch_combined_collapsed = ch_collapse_combine_split.single
         .map { meta, parquet, _reports -> [meta, parquet] }
-        .mix(PIXELATOR_PNA_COMBINE_COLLAPSE.out.parquet)
+        .mix(PIXELATOR_COMBINE_COLLAPSE.out.parquet)
 
     //
     // MODULE: Run pixelator single-cell graph
@@ -193,8 +193,8 @@ workflow PIXELATOR_PNA_V2 {
         .join(ch_panel_files_grouped_by_pool)
         .map { meta, parquet, panel_file -> [meta, parquet, panel_file, panel_file ? null : meta.panel] }
 
-    PIXELATOR_PNA_GRAPH(ch_graph_input)
-    ch_graph = PIXELATOR_PNA_GRAPH.out.pixelfile
+    PIXELATOR_GRAPH(ch_graph_input)
+    ch_graph = PIXELATOR_GRAPH.out.pixelfile
 
     //
     // MODULE: Run pixelator single-cell sample-calling
@@ -202,8 +202,8 @@ workflow PIXELATOR_PNA_V2 {
     ch_sample_calling_input = ch_graph
         .map { meta, parquet -> [meta, parquet, file(params.input)] }
 
-    PIXELATOR_PNA_SAMPLE_CALLING (ch_sample_calling_input)
-    ch_sample_called = PIXELATOR_PNA_SAMPLE_CALLING.out.pixelfile
+    PIXELATOR_SAMPLE_CALLING (ch_sample_calling_input)
+    ch_sample_called = PIXELATOR_SAMPLE_CALLING.out.pixelfile
 
     // Extract the sample names from the pixel file names so that we can
     // merge them in with the panel file names correctly
@@ -223,21 +223,21 @@ workflow PIXELATOR_PNA_V2 {
     //
     // MODULE: Run pixelator single-cell denoise
     //
-    PIXELATOR_PNA_DENOISE ( ch_sample_called )
-    ch_denoise = PIXELATOR_PNA_DENOISE.out.pixelfile
+    PIXELATOR_DENOISE ( ch_sample_called )
+    ch_denoise = PIXELATOR_DENOISE.out.pixelfile
 
     //
     // MODULE: Run pixelator single-cell analysis
     //
     ch_analysis_input = params.skip_denoise ? ch_sample_called : ch_denoise
-    PIXELATOR_PNA_ANALYSIS ( ch_analysis_input )
-    ch_analysis = PIXELATOR_PNA_ANALYSIS.out.pixelfile
+    PIXELATOR_ANALYSIS ( ch_analysis_input )
+    ch_analysis = PIXELATOR_ANALYSIS.out.pixelfile
 
     //
     // MODULE: Run pixelator single-cell layout
     //
 
-    PIXELATOR_PNA_LAYOUT( ch_analysis )
+    PIXELATOR_LAYOUT( ch_analysis )
 
     // Prepare all data needed by reporting for each pixelator step
     ch_input = channel.fromPath(params.input)
