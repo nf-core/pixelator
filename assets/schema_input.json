@@ -8,6 +8,40 @@
         "type": "object",
         "required": ["sample", "design", "fastq_1"],
         "additionalProperties": false,
+        "allOf": [
+            {
+                "if": {
+                    "properties": {
+                        "design": {
+                            "const": "proxiome-v1"
+                        }
+                    }
+                },
+                "then": {
+                    "not": {
+                        "required": ["pool"]
+                    },
+                    "errorMessage": "Pooled samples can only be used with the `proxiome-v2` design."
+                }
+            },
+            {
+                "if": {
+                    "properties": {
+                        "design": {
+                            "const": "proxiome-v2"
+                        },
+                        "panel": {
+                            "const": "proxiome-v2-immuno-155-v1.0"
+                        }
+                    },
+                    "required": ["design", "panel"]
+                },
+                "then": {
+                    "required": ["pool", "hash_index"],
+                    "errorMessage": "The `pool` and `hash_index` columns are required for `proxiome-v2` design with panel `proxiome-v2-immuno-155-v1.0`."
+                }
+            }
+        ],
         "properties": {
             "sample": {
                 "type": "string",
@@ -15,6 +49,16 @@
                 "errorMessage": "Sample name must be provided and cannot contain spaces",
                 "description": "Sample name (no spaces).",
                 "meta": ["id"]
+            },
+            "pool": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "pool ID cannot contain spaces",
+                "meta": ["pool"]
+            },
+            "hash_index": {
+                "type": "integer",
+                "meta": ["hash_index"]
             },
             "design": {
                 "type": "string",

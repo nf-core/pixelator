@@ -12,8 +12,8 @@
 [![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.10015112-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.10015112)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
-[![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.04.0-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
-[![nf-core template version](https://img.shields.io/badge/nf--core_template-3.5.2-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/3.5.2)
+[![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.10.4-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
+[![nf-core template version](https://img.shields.io/badge/nf--core_template-4.0.2-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/4.0.2)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
@@ -35,10 +35,11 @@ The pipeline will run the following steps:
 2. Create groups of amplicons based on their marker assignments ([`pixelator single-cell-pna demux`](https://github.com/PixelgenTechnologies/pixelator))
 3. Derive original molecules to use as edge list downstream by error correcting, and counting input amplicons ([`pixelator single-cell-pna collapse`](https://github.com/PixelgenTechnologies/pixelator))
 4. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator single-cell-pna graph`](https://github.com/PixelgenTechnologies/pixelator))
-5. Denoise the cell graphs ([`pixelator single-cell-pna denoise`](https://github.com/PixelgenTechnologies/pixelator))
-6. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
-7. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
-8. Proxiome Experiment Summary generation using [PixelatorES](https://github.com/PixelgenTechnologies/pixelatorES)
+5. _(Conditional; only for PNA hashed data)_ Assign components to samples in pooled experiments ([`pixelator single-cell-pna sample-calling`](https://github.com/PixelgenTechnologies/pixelator))
+6. Denoise the cell graphs ([`pixelator single-cell-pna denoise`](https://github.com/PixelgenTechnologies/pixelator))
+7. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
+8. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
+9. Proxiome Experiment Summary generation using [PixelatorES](https://github.com/PixelgenTechnologies/pixelatorES)
 
 > [!NOTE]
 > If you are looking to run the pipeline with Molecular Pixelation (MPX) data. Please refer to the [release 2.3.1](https://nf-co.re/pixelator/2.3.1/),
@@ -52,16 +53,28 @@ The pipeline will run the following steps:
 ## Usage
 
 > [!NOTE]
-> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
+> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/get_started/environment_setup/overview) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/get_started/run-your-first-pipeline) with `-profile test` before running the workflow on actual data.
 
-First, prepare a samplesheet with your input data that looks as follows (the exact values you need to input depend on the design and panel you are using - please see [https://nf-co.re/pixelator/usage](https://nf-co.re/pixelator/usage) for more details):
+First, prepare a samplesheet with your input data that looks as follows (the exact values you need to input depend on the design and panel you are using - please see [https://nf-co.re/pixelator/usage](https://nf-co.re/pixelator/usage) for more details).
+For hashed PNA data (Proxiome kit v2), the samplesheet will look as follows:
 
 `samplesheet.csv`:
 
 ```csv
-sample,sample_alias,condition,design,panel,fastq_1,fastq_2
-sample1,s1,control,pna-2,proxiome-immuno-155-v2,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+pool,hash_index,sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+pool1,1,sample1,s1,control,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
+pool1,2,sample2,s2,case,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
+pool2,1,sample3,s3,control,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool2_R1_001.fastq.gz,pool2_R2_001.fastq.gz
 ```
+
+> [!NOTE]
+> For an example with non-hashed PNA data (Proxiome kit v1), see [Proxiome v1 samplesheet](../assets/samplesheet_proxiome_v1.csv)
+
+> [!WARNING]
+> Panel and design names have been completely renamed in pixelator 0.26
+> (nf-core/pixelator 4.0 and above). Refer to the pixelator
+> [changelog](https://github.com/PixelgenTechnologies/pixelator/releases/tag/v0.26.0)
+> for more details.
 
 Each row represents a sample and gives the design, a panel file and the input fastq files.
 
@@ -69,7 +82,8 @@ Now, you can run the pipeline using:
 
 ```bash
 nextflow run nf-core/pixelator \
-   -profile <docker/singularity/.../institute> \
+   -profile <docker/singularity/.../institute>,<cells_1k/cells_8k (depending on cell input)> \
+   --technology <proxiome_v1/proxiome_v2 (depending on the kit version used)>
    --input samplesheet.csv \
    --outdir <OUTDIR>
 ```
@@ -80,7 +94,7 @@ nextflow run nf-core/pixelator \
 > We hope to add support for conda environments in the future.
 
 > [!WARNING]
-> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/running/run-pipelines#using-parameter-files).
 
 For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/pixelator/usage) and the [parameter documentation](https://nf-co.re/pixelator/parameters).
 
@@ -100,7 +114,7 @@ nf-core/pixelator was originally written for [Pixelgen Technologies AB](https://
 
 ## Contributions and Support
 
-If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
+If you would like to contribute to this pipeline, please see the [contributing guidelines](docs/CONTRIBUTING.md).
 
 For further information or help, don't hesitate to get in touch on the [Slack `#pixelator` channel](https://nfcore.slack.com/channels/pixelator) (you can join with [this invite](https://nf-co.re/join/slack)).
 

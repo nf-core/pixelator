@@ -10,7 +10,7 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "outdir"],
+            "required": ["input", "outdir", "technology"],
             "properties": {
                 "input": {
                     "type": "string",
@@ -45,9 +45,9 @@
             }
         },
         "pna_amplicon_options": {
-            "title": "Amplicon generation options",
+            "title": "Amplicon options",
             "type": "object",
-            "fa_icon": "fas fa-circle",
+            "fa_icon": "fas fa-dna",
             "properties": {
                 "save_pna_amplicon_reads": {
                     "fa_icon": "fas fa-save",
@@ -57,30 +57,33 @@
                 },
                 "pna_amplicon_mismatches": {
                     "type": "number",
+                    "fa_icon": "fas fa-not-equal",
                     "minimum": 0,
                     "maximum": 0.5,
                     "description": "The number of mismatches allowed while anchoring reads using LBS sequences (in percentage of seen LBS length) [default: 0.1; 0.0<=x<=0.5]",
                     "default": 0.1
                 },
                 "pna_amplicon_remove_polyg": {
-                    "fa_icon": "fas g",
                     "description": "Remove PolyG sequences (length of 10 or more)",
+                    "fa_icon": "fas fa-cut",
                     "type": "boolean",
                     "default": true
                 },
                 "pna_amplicon_quality_cutoff": {
-                    "fa_icon": "fas gauge",
                     "description": "Minimum average quality a read must have. Pass 0 to disable quality filtering.",
+                    "fa_icon": "fas fa-sliders-h",
                     "type": "integer",
                     "default": 20
                 },
                 "pna_amplicon_low_complexity_filter": {
                     "type": "boolean",
+                    "fa_icon": "fas fa-filter",
                     "default": true,
                     "description": "Enable filtering of amplicons with low complexity UMI sequences."
                 },
                 "pna_amplicon_low_complexity_threshold": {
                     "type": "number",
+                    "fa_icon": "fas fa-percentage",
                     "default": 0.8,
                     "minimum": 0.5,
                     "maximum": 1,
@@ -88,11 +91,13 @@
                 },
                 "pna_amplicon_lbs_filter": {
                     "type": "boolean",
+                    "fa_icon": "fas fa-filter",
                     "default": true,
                     "description": "Enable filtering of amplicons with UMI sequences that show similarity to the LBS sequence."
                 },
                 "pna_amplicon_lbs_filter_min_overlap": {
                     "type": "integer",
+                    "fa_icon": "fas fa-arrows-alt-h",
                     "default": 8,
                     "minimum": 4,
                     "maximum": 28,
@@ -100,6 +105,7 @@
                 },
                 "pna_amplicon_lbs_filter_error_rate": {
                     "type": "number",
+                    "fa_icon": "fas fa-percentage",
                     "default": 0.1,
                     "minimum": 0,
                     "maximum": 1,
@@ -108,11 +114,12 @@
             }
         },
         "pna_demux_options": {
-            "title": "Demux options for PNA data",
+            "title": "Demux options",
             "type": "object",
+            "fa_icon": "fas fa-random",
             "properties": {
                 "pna_demux_mismatches": {
-                    "fa_icon": "fas not-equal",
+                    "fa_icon": "fas fa-not-equal",
                     "description": "The number of mismatches allowed in marker barcodes.",
                     "type": "integer",
                     "default": 1,
@@ -166,9 +173,10 @@
         "pna_collapse_options": {
             "title": "Collapse options",
             "type": "object",
+            "fa_icon": "fas fa-compress-alt",
             "properties": {
                 "pna_collapse_algorithm": {
-                    "fa_icon": "fas code-fork",
+                    "fa_icon": "fas fa-project-diagram",
                     "description": "The algorithm to use for collapsing.",
                     "default": "directional",
                     "enum": ["cluster", "directional"],
@@ -176,7 +184,7 @@
                     "help": "**cluster:** Form networks of connected UMIs (based on hamming distance threshold). Each connected component is a read group. In the above example, all the UMIs are contained in a single connected component and thus there is one read group containing all reads, with ACGT as the `selected` UMI.\n\n**directional (default):** Form networks with edges defined based on hamming distance threshold and node A counts >= (2 * node B counts) - 1. Each connected component is a read group, with the node with the highest counts selected as the top node for the component."
                 },
                 "pna_collapse_mismatches": {
-                    "fa_icon": "fas not-equal",
+                    "fa_icon": "fas fa-not-equal",
                     "description": "The number of mismatches allowed when collapsing (adjacency)",
                     "type": "integer",
                     "default": 2,
@@ -192,27 +200,25 @@
             }
         },
         "pna_graph_options": {
-            "title": "Options for pixelator graph command on PNA data.",
+            "title": "Graph options",
             "type": "object",
+            "fa_icon": "fas fa-project-diagram",
             "properties": {
                 "save_pna_graph_pixelfile": {
                     "type": "boolean",
+                    "fa_icon": "fas fa-save",
                     "description": "Save the PXL dataset after the graph stage.",
                     "help": "By default, the PXL file after graph will not be saved to the results directory unless `--skip_analysis` and `--skip_layout` is passed. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 },
                 "pna_graph_multiplet_recovery": {
                     "description": "Activate the multiplet recovery using leiden community detection",
+                    "fa_icon": "fas fa-project-diagram",
                     "type": "boolean",
                     "default": true
                 },
-                "pna_graph_leiden_iterations": {
-                    "type": "integer",
-                    "default": 1,
-                    "description": "Number of iterations for the leiden algorithm.",
-                    "help": "High values will decrease the variance of the results but increase the runtime"
-                },
                 "pna_graph_initial_stage_leiden_resolution": {
-                    "default": 1,
+                    "default": 1.0,
+                    "fa_icon": "fas fa-sliders-h",
                     "minimum": 0,
                     "type": "number",
                     "description": "The resolution parameter for the leiden algorithm at the initial stage.",
@@ -220,72 +226,111 @@
                 },
                 "pna_graph_refinement_stage_leiden_resolution": {
                     "default": 0.01,
+                    "fa_icon": "fas fa-sliders-h",
                     "minimum": 0,
                     "type": "number",
                     "description": "The resolution parameter for the leiden algorithm at the refinement stage.",
                     "help": "This should typically be set lower than the initial stage resolution."
                 },
+                "pna_graph_edge_cycle_verification": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-check-circle",
+                    "default": true,
+                    "description": "Activate edge cycle verification to remove edges from well connected regions that are not part of cycles in the graph.",
+                    "help": "This option can help improve the quality of the graph by removing potentially false edges."
+                },
                 "pna_graph_min_count": {
-                    "default": 1,
+                    "default": 1.0,
+                    "fa_icon": "fas fa-hashtag",
                     "maximum": 50,
                     "minimum": 0,
                     "type": "number",
                     "description": "Discard edges with a read count below given value. Set to 1 to disable filtering."
                 },
-                "pna_graph_min_component_size_in_refinement": {
-                    "type": "integer",
-                    "default": 1000,
-                    "minimum": 1,
-                    "description": "The minimum component size to consider for refinement"
-                },
                 "pna_graph_max_refinement_recursion_depth": {
                     "type": "integer",
-                    "default": 5,
+                    "fa_icon": "fas fa-sitemap",
+                    "default": 3,
                     "minimum": 1,
                     "maximum": 100,
                     "description": "The maximum recursion depth for the refinement algorithm. Set to 1 to disable refinement."
                 },
                 "pna_graph_initial_stage_max_edges_to_remove": {
                     "type": "integer",
+                    "fa_icon": "fas fa-trash",
+                    "default": 10,
                     "minimum": 1,
                     "description": "The maximum number of edges to remove between components during the initial stage (iteration == 0) of multiplet recovery."
                 },
                 "pna_graph_refinement_stage_max_edges_to_remove": {
                     "type": "integer",
-                    "default": 4,
+                    "fa_icon": "fas fa-trash",
+                    "default": 10,
                     "minimum": 1,
                     "description": "The maximum number of edges to remove between components during the refinement stage (iteration > 0) of multiplet recovery."
                 },
                 "pna_graph_initial_stage_max_edges_to_remove_relative": {
                     "type": "number",
+                    "fa_icon": "fas fa-trash",
                     "minimum": 0,
                     "description": "The maximum number of edges to remove between two components relative to the number of nodes in the smaller of the two when during the initial stage (iteration == 0) of multiplet recovery."
                 },
                 "pna_graph_refinement_stage_max_edges_to_remove_relative": {
                     "type": "number",
+                    "fa_icon": "fas fa-trash",
                     "minimum": 0,
                     "description": "The maximum number of edges to remove between two components relative to the number of nodes in the smaller of the two when during the refinement stage (iteration > 0) of multiplet recovery."
                 },
-                "pna_graph_graph_min_component_size_to_prune": {
-                    "type": "integer",
-                    "minimum": 1,
-                    "default": 100,
-                    "description": "The minimum number of nodes in an potential new components in order for it to be pruned."
-                },
                 "pna_graph_component_size_min_threshold": {
                     "type": "integer",
+                    "fa_icon": "fas fa-expand-alt",
                     "minimum": 1,
                     "default": 8000,
                     "description": "Components with fewer nodes than this will be filtered from the output data. Set to null to enable automatic size filtering based on the data."
                 }
             }
         },
-        "pna_denoise_options": {
-            "title": "Options for pixelator denoise command.",
+        "pna_sample_calling_options": {
+            "title": "Sample calling options",
             "type": "object",
+            "fa_icon": "fas fa-vial",
+            "properties": {
+                "save_pna_sample_calling_pixelfile": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-save",
+                    "description": "Save the PXL dataset after the sample calling stage.",
+                    "help": "By default, the PXL file after sample calling will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
+                },
+                "pna_sample_calling_save_undetermined": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-save",
+                    "description": "Save components that could not be confidently assigned to any sample to a separate pxl file."
+                },
+                "pna_sample_calling_remove_incompatible": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-trash",
+                    "description": "Remove antibodies that are incompatible with their component's called sample.",
+                    "default": true
+                },
+                "pna_sample_calling_confidence_threshold": {
+                    "type": "number",
+                    "fa_icon": "fas fa-percentage",
+                    "description": "Confidence threshold for sample calling.",
+                    "help_text": "Components with a sample confidence below this threshold will be considered undetermined.",
+                    "default": 0.9,
+                    "minimum": 0.0,
+                    "maximum": 1.0
+                }
+            }
+        },
+        "pna_denoise_options": {
+            "title": "Denoise options",
+            "type": "object",
+            "fa_icon": "fas fa-microscope",
             "properties": {
                 "skip_denoise": {
                     "description": "Skip denoise step",
+                    "fa_icon": "fas fa-forward",
                     "type": "boolean"
                 },
                 "save_pna_denoise_pixelfile": {
@@ -296,17 +341,20 @@
                 },
                 "pna_denoise_run_one_core_graph_denoising": {
                     "description": "Activate the one-core graph denoising algorithm",
+                    "fa_icon": "fas fa-microscope",
                     "type": "boolean",
                     "default": true
                 },
                 "pna_denoise_pval_threshold": {
                     "type": "number",
+                    "fa_icon": "fas fa-flask",
                     "description": "The p-value threshold for the a marker to be considered significantly over-expressed in the one-core layer of a component",
                     "default": 0.05,
                     "minimum": 0
                 },
                 "pna_denoise_inflate_factor": {
                     "type": "number",
+                    "fa_icon": "fas fa-expand-arrows-alt",
                     "description": "The inflate factor for the number of nodes from over-expressed markers to be removed from the one-core layer of a component",
                     "default": 1.5,
                     "minimum": 1
@@ -314,11 +362,13 @@
             }
         },
         "pna_analysis_options": {
-            "title": "Options for pixelator analysis command.",
+            "title": "Analysis options",
             "type": "object",
+            "fa_icon": "fas fa-chart-line",
             "properties": {
                 "skip_analysis": {
                     "description": "Skip analysis step",
+                    "fa_icon": "fas fa-forward",
                     "type": "boolean"
                 },
                 "save_pna_analysis_pixelfile": {
@@ -329,27 +379,32 @@
                 },
                 "pna_analysis_compute_proximity": {
                     "description": "Compute proximity scores",
+                    "fa_icon": "fas fa-ruler-combined",
                     "type": "boolean",
                     "default": true
                 },
                 "pna_analysis_compute_k_cores": {
                     "description": "Compute k-core summary tables for each component",
+                    "fa_icon": "fas fa-network-wired",
                     "type": "boolean",
                     "default": true
                 },
                 "pna_analysis_proximity_nbr_of_permutations": {
                     "type": "integer",
+                    "fa_icon": "fas fa-random",
                     "description": "Number of permutations to use when computing the expected proximity scores",
                     "default": 100,
                     "minimum": 50
                 },
                 "pna_analysis_compute_svd_var_explained": {
                     "description": "Compute the variance explained by the SVD components",
+                    "fa_icon": "fas fa-chart-pie",
                     "type": "boolean",
                     "default": true
                 },
                 "pna_analysis_svd_nbr_of_pivots": {
                     "type": "integer",
+                    "fa_icon": "fas fa-compass",
                     "description": "Number of pivots to use for the SVD decomposition",
                     "default": 50,
                     "minimum": 10,
@@ -358,31 +413,37 @@
             }
         },
         "pna_layout_options": {
-            "title": "Options for pixelator single-cell-pna layout command.",
+            "title": "Layout options",
             "type": "object",
+            "fa_icon": "fas fa-draw-polygon",
             "properties": {
                 "skip_layout": {
                     "description": "Skip layout step",
+                    "fa_icon": "fas fa-forward",
                     "type": "boolean"
                 },
                 "pna_layout_no_node_marker_counts": {
                     "description": "Skip adding marker counts to the layout.",
+                    "fa_icon": "fas fa-ban",
                     "type": "boolean"
                 },
                 "pna_layout_layout_algorithm": {
                     "description": "Select a layout algorithm to use. This can be specified as a comma separated list to compute multiple layouts. Possible values are: pmds, pmds_3d, wpmds, wpmds_3d.",
+                    "fa_icon": "fas fa-project-diagram",
                     "type": "string",
                     "enum": ["pmds_3d", "wpmds_3d"],
                     "default": "wpmds_3d"
                 },
                 "pna_layout_pmds_pivots": {
                     "type": "integer",
+                    "fa_icon": "fas fa-compass",
                     "description": "Number of pivots to use for the PMDS layout algorithm. Default: 50. More gives better results, but increases computation time.",
                     "default": 50,
                     "minimum": 50
                 },
                 "pna_layout_wpmds_k": {
                     "type": "integer",
+                    "fa_icon": "fas fa-ruler",
                     "description": "The window size used when computing probability weights for the wpmds layout method. Only used when layout algorithm is set to wpmds.",
                     "default": 5,
                     "minimum": 1,
@@ -391,11 +452,13 @@
             }
         },
         "experiment_summary_options": {
-            "title": "Options for experiment summary.",
+            "title": "Experiment Summary options",
             "type": "object",
+            "fa_icon": "fas fa-clipboard-list",
             "properties": {
                 "skip_experiment_summary": {
                     "description": "Skip experiment summary generation",
+                    "fa_icon": "fas fa-forward",
                     "type": "boolean"
                 }
             }
@@ -403,15 +466,18 @@
         "global_config_options": {
             "title": "Global options",
             "type": "object",
+            "fa_icon": "fas fa-cogs",
             "description": "Global configuration options specific to nf-core/pixelator.",
             "properties": {
                 "pixelator_container": {
                     "type": "string",
+                    "fa_icon": "fas fa-box",
                     "description": "Override the container image reference to use for all steps using the `pixelator` command.",
                     "help_text": "Use this to force the pipeline to use a different image version in all steps that use the pixelator command.\nThe pipeline is not guaranteed to work when using different pixelator versions."
                 },
                 "experiment_summary_container": {
                     "type": "string",
+                    "fa_icon": "fas fa-box",
                     "description": "Override the container image to use for the experiment summary step.",
                     "help_text": "Use this to force the pipeline to use a different image version for the experiment summary step.\nThe pipeline is not guaranteed to work when using different experiment summary versions."
                 },
@@ -426,6 +492,12 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Save all JSON report and metadata files generated by pixelator."
+                },
+                "technology": {
+                    "type": "string",
+                    "fa_icon": "fas fa-microchip",
+                    "description": "The technology used to process the samples",
+                    "enum": ["proxiome-v1", "proxiome-v2", "hashed_samples", "nonhashed_samples"]
                 }
             }
         },
@@ -519,13 +591,6 @@
                     "fa_icon": "fas fa-palette",
                     "hidden": true
                 },
-                "hook_url": {
-                    "type": "string",
-                    "description": "Incoming hook URL for messaging service",
-                    "fa_icon": "fas fa-people-group",
-                    "help_text": "Incoming hook URL for messaging service. Currently, MS Teams and Slack are supported.",
-                    "hidden": true
-                },
                 "validate_params": {
                     "type": "boolean",
                     "description": "Boolean whether to validate parameters against the schema at runtime",
@@ -540,9 +605,14 @@
                     "default": "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/",
                     "hidden": true
                 },
+                "modules_testdata_base_path": {
+                    "type": "string",
+                    "description": "Base path / URL for data used in the modules",
+                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/",
+                    "hidden": true
+                },
                 "trace_report_suffix": {
                     "type": "string",
-                    "fa_icon": "far calendar",
                     "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
                     "hidden": true
                 },
@@ -576,6 +646,9 @@
         },
         {
             "$ref": "#/$defs/pna_graph_options"
+        },
+        {
+            "$ref": "#/$defs/pna_sample_calling_options"
         },
         {
             "$ref": "#/$defs/pna_denoise_options"

@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: pixelator_pna_v2
+description: Run the Pixelator single-cell PNA proxiome v2 workflow from FASTQ input through graph and analysis outputs.
+keywords:
+  - pixelator
+  - pna
+  - single-cell
+  - fastq
+components:
+  - cat/fastq
+  - pixelator/amplicon
+  - pixelator/demux
+  - pixelator/collapse
+  - pixelator/combine/collapse
+  - pixelator/graph
+  - pixelator/sample/calling
+  - pixelator/denoise
+  - pixelator/analysis
+  - pixelator/layout
+  - experiment/summary
+  - pna_generate_reports
+input:
+  - fastq:
+      type: file
+      description: |
+        Input channel containing sample metadata and one or more FASTQ files.
+        Structure: [ val(meta), path(reads) ]
+      pattern: "*.{fq,fastq,fq.gz,fastq.gz,fq.zst,fastq.zst}"
+  - panel_files:
+      type: file
+      description: |
+        Input channel containing sample metadata and optional panel definition files.
+        Structure: [ val(meta), path(panel_file) ]
+      pattern: "*"
+output:
+  - graph:
+      type: file
+      description: |
+        Channel containing graph-stage pixel files.
+        Structure: [ val(meta), path("*.pxl") ]
+      pattern: "*.pxl"
+  - analysis:
+      type: file
+      description: |
+        Channel containing analysis-stage pixel files.
+        Structure: [ val(meta), path("*.pxl") ]
+      pattern: "*.pxl"
+authors:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
+maintainers:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"

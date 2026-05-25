@@ -3,7 +3,55 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[3.0.1](https://github.com/nf-core/pixelator/releases/tag/3.0.0)] - 2026-03-09
+## [[4.0.0](https://github.com/nf-core/pixelator/releases/tag/4.0.0)] - 2026-05-19
+
+### Added
+
+- Add Proxiome V2 workflow support, enabling sample pooling and processing of up to 8,000 cells per run by @Aratz [#204](https://github.com/nf-core/pixelator/pull/204), [#205](https://github.com/nf-core/pixelator/pull/205)
+
+### Enhancements & fixes
+
+- Use nextflow strict syntax by @Aratz [#194](https://github.com/nf-core/pixelator/pull/194)
+- Use `TMPDIR` when defined to store temporary files by @Aratz [#195](https://github.com/nf-core/pixelator/pull/195)
+- Retry experiment summary up to two times after failure by @Aratz [#196](https://github.com/nf-core/pixelator/pull/196)
+- Updated pixelatorES to 0.10.1 in PNA experiment summary step by @Aratz [#197](https://github.com/nf-core/pixelator/pull/197), [#204](https://github.com/nf-core/pixelator/pull/204)
+- Add `cells_1k` and `cells_8k` Nextflow profiles with process-specific resource overrides for different input scales by @johandahlberg [#203](https://github.com/nf-core/pixelator/pull/203)
+- Fix singularity CI tests by @Aratz [#208](https://github.com/nf-core/pixelator/pull/208)
+- Update nf-core template to 4.0.2 by @Aratz [#202](https://github.com/nf-core/pixelator/pull/202)
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelatorES` | 0.6.0       | 0.10.1      |
+| `pixelator`   | 0.23.0      | 0.26.0      |
+
+> [!WARNING]
+> Panel and design names have been completely renamed in pixelator 0.26
+> (nf-core/pixelator 4.0 and above). Refer to the pixelator
+> [changelog](https://github.com/PixelgenTechnologies/pixelator/releases/tag/v0.26.0)
+> for more details.
+
+### Parameters
+
+| Old parameter                        | New parameter                             |
+| ------------------------------------ | ----------------------------------------- |
+| `--leiden-iterations`                |                                           |
+| `--min-component-size-in-refinement` |                                           |
+| `--min-component-size-to-prune`      |                                           |
+|                                      | `--technology`                            |
+|                                      | `--edge_cycle-verification`               |
+|                                      | `save_pna_sample_calling_pixelfile`       |
+|                                      | `pna_sample_calling_save_undetermined`    |
+|                                      | `pna_sample_calling_remove_incompatible`  |
+|                                      | `pna_sample_calling_confidence_threshold` |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+## [[3.0.1](https://github.com/nf-core/pixelator/releases/tag/3.0.1)] - 2026-03-09
 
 ### Enhancements & fixes
 

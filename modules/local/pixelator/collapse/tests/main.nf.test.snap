@@ -1,0 +1,186 @@
+{
+    "PNA collapse - small test - single file": {
+        "content": [
+            1,
+            [
+                "pipeline_info",
+                "pixelator",
+                "pixelator/collapse",
+                "pixelator/collapse/pool1.collapse.m1.part_000.meta.json",
+                "pixelator/collapse/pool1.collapse.m1.part_000.parquet",
+                "pixelator/collapse/pool1.collapse.m1.part_000.report.json",
+                "pixelator/logs",
+                "pixelator/logs/pool1",
+                "pixelator/logs/pool1/pool1.pixelator-collapse.log"
+            ],
+            [
+                [
+                    "PIXELATOR_COLLAPSE",
+                    "pixelator",
+                    "0.26.0"
+                ]
+            ]
+        ],
+        "timestamp": "2026-05-21T11:58:24.85769919",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.0"
+        }
+    },
+    "PNA collapse - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "technology": "proxiome-v2"
+                        },
+                        [
+                            "pool1.demux.m1.part_000.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "technology": "proxiome-v2"
+                        },
+                        [
+                            "pool1.demux.m1.part_000.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "technology": "proxiome-v2"
+                        },
+                        "pool1.demux.m1.part_000.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "3": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "technology": "proxiome-v2"
+                        },
+                        "pool1.demux.m1.part_000.pixelator-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "4": [
+                    [
+                        "collapse",
+                        [
+                            "pool1.demux.m1.part_000.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "pool1.demux.m1.part_000.parquet:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "pool1.demux.m1.part_000.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "5": [
+                    [
+                        "PIXELATOR_COLLAPSE",
+                        "pixelator",
+                        "0.26.0"
+                    ]
+                ],
+                "collapsed": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "technology": "proxiome-v2"
+                        },
+                        [
+                            "pool1.demux.m1.part_000.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "log": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "technology": "proxiome-v2"
+                        },
+                        "pool1.demux.m1.part_000.pixelator-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "metadata_json": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "technology": "proxiome-v2"
+                        },
+                        "pool1.demux.m1.part_000.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "report_json": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "technology": "proxiome-v2"
+                        },
+                        [
+                            "pool1.demux.m1.part_000.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "versions_pixelator": [
+                    [
+                        "PIXELATOR_COLLAPSE",
+                        "pixelator",
+                        "0.26.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-05-20T14:28:34.287934812",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.0"
+        }
+    },
+    "PNA collapse - small test - multiple files": {
+        "content": [
+            1,
+            [
+                "pipeline_info",
+                "pixelator",
+                "pixelator/collapse",
+                "pixelator/collapse/pool1.collapse.m1.part_000.meta.json",
+                "pixelator/collapse/pool1.collapse.m1.part_000.parquet",
+                "pixelator/collapse/pool1.collapse.m1.part_000.report.json",
+                "pixelator/collapse/pool1.collapse.m2.part_000.meta.json",
+                "pixelator/collapse/pool1.collapse.m2.part_000.parquet",
+                "pixelator/collapse/pool1.collapse.m2.part_000.report.json",
+                "pixelator/logs",
+                "pixelator/logs/pool1",
+                "pixelator/logs/pool1/pool1.pixelator-collapse.log"
+            ],
+            null
+        ],
+        "timestamp": "2026-05-21T11:58:56.273822152",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.0"
+        }
+    }
+}
