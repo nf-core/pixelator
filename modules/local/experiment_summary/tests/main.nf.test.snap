@@ -11,14 +11,14 @@
                 [
                     "EXPERIMENT_SUMMARY",
                     "experiment-summary",
-                    "0.10.1 "
+                    "0.10.4 "
                 ]
             ]
         ],
-        "timestamp": "2026-05-21T11:58:35.886952064",
+        "timestamp": "2026-05-27T13:29:18.163301309",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     },
     "PNA experiment summary - stub": {
@@ -27,14 +27,14 @@
                 [
                     "EXPERIMENT_SUMMARY",
                     "experiment-summary",
-                    "0.10.1 "
+                    "0.10.4 "
                 ]
             ]
         ],
-        "timestamp": "2026-05-13T13:50:43.046443239",
+        "timestamp": "2026-05-27T13:28:01.67719335",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     }
 }
