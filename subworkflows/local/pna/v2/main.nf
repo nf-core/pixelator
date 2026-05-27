@@ -197,10 +197,16 @@ workflow PIXELATOR_PNA_V2 {
     ch_graph = PIXELATOR_GRAPH.out.pixelfile
 
     //
+    // MODULE: Run pixelator single-cell denoise
+    //
+    PIXELATOR_DENOISE ( ch_graph )
+    ch_denoise = PIXELATOR_DENOISE.out.pixelfile
+
+    //
     // MODULE: Run pixelator single-cell sample-calling
     //
-    ch_sample_calling_input = ch_graph
-        .map { meta, parquet -> [meta, parquet, file(params.input)] }
+    ch_sample_calling_input = (params.skip_denoise ? ch_graph : ch_denoise)
+        .map { meta, pixel_file -> [meta, pixel_file, file(params.input)] }
 
     PIXELATOR_SAMPLE_CALLING (ch_sample_calling_input)
     ch_sample_called = PIXELATOR_SAMPLE_CALLING.out.pixelfile
@@ -221,16 +227,9 @@ workflow PIXELATOR_PNA_V2 {
         }
 
     //
-    // MODULE: Run pixelator single-cell denoise
-    //
-    PIXELATOR_DENOISE ( ch_sample_called )
-    ch_denoise = PIXELATOR_DENOISE.out.pixelfile
-
-    //
     // MODULE: Run pixelator single-cell analysis
     //
-    ch_analysis_input = params.skip_denoise ? ch_sample_called : ch_denoise
-    PIXELATOR_ANALYSIS ( ch_analysis_input )
+    PIXELATOR_ANALYSIS ( ch_sample_called )
     ch_analysis = PIXELATOR_ANALYSIS.out.pixelfile
 
     //
