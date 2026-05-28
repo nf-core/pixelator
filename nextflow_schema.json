@@ -360,24 +360,28 @@
                 },
                 "pna_denoise_run_ace_denoising": {
                     "type": "boolean",
+                    "fa_icon": "fas fa-microscope",
                     "description": "Remove nodes in the peripheral-like partition using adaptive core expansion (ACE).",
                     "default": true
                 },
                 "pna_denoise_ace_k": {
                     "type": "integer",
                     "description": "Neighborhood radius in graph steps for ACE denoising.",
+                    "fa_icon": "far fa-circle",
                     "default": 3,
                     "minimum": 1,
                     "maximum": 6
                 },
                 "pna_denoise_run_pls_denoising": {
                     "type": "boolean",
+                    "fa_icon": "fas fa-microscope",
                     "description": "Run PLS-on-coreness denoising and retain the largest connected component after filtering.",
                     "default": true
                 },
                 "pna_denoise_pls_score_threshold": {
                     "type": "number",
                     "description": "All retained PLS score columns must exceed this value.",
+                    "fa_icon": "fas fa-less-than-equal",
                     "default": -3.0
                 }
             }
