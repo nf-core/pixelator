@@ -342,8 +342,7 @@
                 "pna_denoise_run_one_core_graph_denoising": {
                     "description": "Activate the one-core graph denoising algorithm",
                     "fa_icon": "fas fa-microscope",
-                    "type": "boolean",
-                    "default": true
+                    "type": "boolean"
                 },
                 "pna_denoise_pval_threshold": {
                     "type": "number",
