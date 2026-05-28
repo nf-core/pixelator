@@ -1,7 +1,7 @@
 {
     "Default parameters [design: proxiome-v2, panel: proxiome-v2-immuno-155-v1.0]": {
         "content": [
-            23,
+            22,
             [
                 "pipeline_info",
                 "pixelator",
@@ -74,12 +74,9 @@
                 "pixelator/demux/pool1.meta.json",
                 "pixelator/demux/pool1.report.json",
                 "pixelator/denoise",
-                "pixelator/denoise/sample1.denoised_graph.pxl",
-                "pixelator/denoise/sample1.meta.json",
-                "pixelator/denoise/sample1.report.json",
-                "pixelator/denoise/sample2.denoised_graph.pxl",
-                "pixelator/denoise/sample2.meta.json",
-                "pixelator/denoise/sample2.report.json",
+                "pixelator/denoise/pool1.denoised_graph.pxl",
+                "pixelator/denoise/pool1.meta.json",
+                "pixelator/denoise/pool1.report.json",
                 "pixelator/graph",
                 "pixelator/graph/pool1.graph.pxl",
                 "pixelator/graph/pool1.meta.json",
@@ -96,13 +93,12 @@
                 "pixelator/logs/pool1.pixelator-collapse.log",
                 "pixelator/logs/pool1.pixelator-combine-collapse.log",
                 "pixelator/logs/pool1.pixelator-demux.log",
+                "pixelator/logs/pool1.pixelator-denoise.log",
                 "pixelator/logs/pool1.pixelator-graph.log",
                 "pixelator/logs/pool1.pixelator-sample-calling.log",
                 "pixelator/logs/sample1.pixelator-analysis.log",
-                "pixelator/logs/sample1.pixelator-denoise.log",
                 "pixelator/logs/sample1.pixelator-layout.log",
                 "pixelator/logs/sample2.pixelator-analysis.log",
-                "pixelator/logs/sample2.pixelator-denoise.log",
                 "pixelator/logs/sample2.pixelator-layout.log",
                 "pixelator/sample_calling",
                 "pixelator/sample_calling/pool1.sample_calling.report.json",
@@ -116,10 +112,10 @@
                 "pixelator/sample_calling/sample2.report.json"
             ]
         ],
-        "timestamp": "2026-05-21T13:22:23.285610507",
+        "timestamp": "2026-05-28T09:17:02.79034337",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.2"
         }
     }
 }

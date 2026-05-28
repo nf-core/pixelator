@@ -20,14 +20,14 @@
                 [
                     "PIXELATOR_DEMUX",
                     "pixelator",
-                    "0.26.0"
+                    "0.27.1"
                 ]
             ]
         ],
-        "timestamp": "2026-05-21T12:00:37.132304324",
+        "timestamp": "2026-05-27T13:32:21.146201688",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     },
     "PNA demux - stub": {
@@ -119,7 +119,7 @@
                     [
                         "PIXELATOR_DEMUX",
                         "pixelator",
-                        "0.26.0"
+                        "0.27.1"
                     ]
                 ],
                 "demuxed": [
@@ -195,15 +195,15 @@
                     [
                         "PIXELATOR_DEMUX",
                         "pixelator",
-                        "0.26.0"
+                        "0.27.1"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-05-20T14:29:38.959759778",
+        "timestamp": "2026-05-27T13:31:57.837888392",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     },
     "PNA demux - multiple chunks": {
@@ -241,14 +241,14 @@
                 [
                     "PIXELATOR_DEMUX",
                     "pixelator",
-                    "0.26.0"
+                    "0.27.1"
                 ]
             ]
         ],
-        "timestamp": "2026-05-21T12:01:07.6787683",
+        "timestamp": "2026-05-27T13:32:50.971603605",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     }
 }

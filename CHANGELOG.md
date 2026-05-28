@@ -5,6 +5,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[4.1.0dev](https://github.com/nf-core/pixelator/releases/tag/4.0.0)] - YYYY-MM-DD
 
+### Enhancements & fixes
+
+- Update pixelator container to 0.27.1 by @johandahlberg
+- Denoise graph before sample calling step by @Aratz
+- Add ACE and PLS denoising by @Aratz
+
+### Changed
+
+- K1 denoising is turned off by default by @Aratz
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.26.0      | 0.27.1      |
+| `pixelatorES` | 0.10.1      | 0.10.4      |
+
+### Parameters
+
+| Old parameter | New parameter                       |
+| ------------- | ----------------------------------- |
+|               | `--pna_denoise_run_ace_denoising`   |
+|               | `--pna_denoise_ace_k`               |
+|               | `--pna_denoise_run_pls_denoising`   |
+|               | `--pna_denoise_pls_score_threshold` |
+
 ## [[4.0.0](https://github.com/nf-core/pixelator/releases/tag/4.0.0)] - 2026-05-19
 
 ### Added

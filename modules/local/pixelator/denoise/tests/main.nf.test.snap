@@ -16,14 +16,14 @@
                 [
                     "PIXELATOR_DENOISE",
                     "pixelator",
-                    "0.26.0"
+                    "0.27.1"
                 ]
             ]
         ],
-        "timestamp": "2026-05-21T12:01:36.760255316",
+        "timestamp": "2026-05-27T13:33:14.143824133",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     },
     "PNA denoise - stub": {
@@ -102,7 +102,7 @@
                     [
                         "PIXELATOR_DENOISE",
                         "pixelator",
-                        "0.26.0"
+                        "0.27.1"
                     ]
                 ],
                 "all_results": [
@@ -168,15 +168,15 @@
                     [
                         "PIXELATOR_DENOISE",
                         "pixelator",
-                        "0.26.0"
+                        "0.27.1"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-05-20T14:30:37.793498942",
+        "timestamp": "2026-05-27T13:32:59.37670166",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     }
 }

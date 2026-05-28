@@ -5,8 +5,8 @@ process PIXELATOR_SAMPLE_CALLING {
     // TODO: Add conda
     // conda "bioconda::pixelator=0.18.2"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.26.0'
-        : 'quay.io/pixelgen-technologies/pixelator:0.26.0'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.27.1'
+        : 'quay.io/pixelgen-technologies/pixelator:0.27.1'}"
 
     input:
     tuple val(meta), path(data), path(samplesheet)
