@@ -105,7 +105,7 @@ of the graph (i.e. the putative cells) and assign a unique ID to each component.
 
 From this step and onwards, the output file are in PXL format. This is a custom format used by pixelator to make PNA data easier
 to work with. Internally it used duckdb to store the data. For more information on the PXL format, please refer to
-the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/pxl-format/).
+the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/pxl-file/).
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -248,7 +248,7 @@ The output from this step will be placed in the output folder root.
 
 </details>
 
-[Nextflow](https://www.nextflow.io/docs/latest/tracing.html) provides excellent functionality for generating various reports relevant to the running and execution of the pipeline. This will allow you to troubleshoot errors with the running of the pipeline, and also provide you with other information such as launch commands, run times and resource usage.
+[Nextflow](https://docs.seqera.io/platform-cloud/reports/overview) provides excellent functionality for generating various reports relevant to the running and execution of the pipeline. This will allow you to troubleshoot errors with the running of the pipeline, and also provide you with other information such as launch commands, run times and resource usage.
 
 ### Output directory structure
 
