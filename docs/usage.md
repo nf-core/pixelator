@@ -25,6 +25,16 @@ work                # Directory containing the nextflow working files
 # Other nextflow hidden files, eg. history of pipeline runs and old logs.
 ```
 
+## Parameters
+
+nf-core/pixelator can take a wide range of parameters, three of which are mandatory:
+
+- `--input`: the path to your samplesheet
+- `--outdir`: the directory where the `.pxl` files and the experiment summary will be saved.
+- `--technology`: the workflow to use to process your data (`proxiome_v1` or `proxiome_v2`), depending on the kit that was used to process the samples.
+
+Detailed documentation about each parameter can be found at [https://nf-co.re/pixelator/parameters/](https://nf-co.re/pixelator/parameters/).
+
 If you wish to repeatedly use the same parameters for multiple runs, rather than specifying each flag in the command, you can specify these in a params file.
 
 Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
@@ -50,8 +60,6 @@ You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-c
 
 > [!NOTE]
 > By default, processes from nf-core/pixelator will use the path defined in `TMPDIR` to store temporary file. If this variable is not defined, they will fallback to `/tmp`.
-
-## Parameters
 
 ## Samplesheet input
 
