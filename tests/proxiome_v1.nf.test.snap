@@ -293,18 +293,18 @@
                 "sample_2.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
                 "sample_1.meta.json:md5,6ca7d2d473fee8a3ab667835f4057916",
                 "sample_2.meta.json:md5,e0b756a91edb80e878baa6862b2c3c6d",
-                "sample_1.meta.json:md5,5e542df27b59b17f126cb8f0062de9ba",
-                "sample_2.meta.json:md5,5e542df27b59b17f126cb8f0062de9ba",
+                "sample_1.meta.json:md5,eb91c047c438beb4c746cf2acba39ab5",
+                "sample_2.meta.json:md5,eb91c047c438beb4c746cf2acba39ab5",
                 "sample_1.meta.json:md5,9499ef2af613d6fa5cba5c91a443c726",
                 "sample_2.meta.json:md5,d73dc0fcfaaac01957e4611c89ef3dec",
                 "sample_1.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
                 "sample_2.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3"
             ]
         ],
-        "timestamp": "2026-05-27T13:32:55.295627871",
+        "timestamp": "2026-05-28T09:15:28.890062884",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.04.2"
         }
     }
 }
