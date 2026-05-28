@@ -4,7 +4,54 @@
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
+## Quick start
 
+The typical command for running the pipeline is as follows:
+
+```bash
+nextflow run nf-core/pixelator --input ./samplesheet.csv --outdir ./results  -profile docker,cells_8k --technology proxiome-v2
+```
+
+This will launch the pipeline with the `docker` configuration profile, and resource configurations
+for 8000 cells. If you have samples with 1000 cells as input, pick the `cells_1k` profile instead.
+See below for more information about profiles.
+
+Note that the pipeline will create the following files in your working directory:
+
+```bash
+work                # Directory containing the nextflow working files
+<OUTDIR>            # Finished results in specified location (defined with --outdir)
+.nextflow_log       # Log file from Nextflow
+# Other nextflow hidden files, eg. history of pipeline runs and old logs.
+```
+
+If you wish to repeatedly use the same parameters for multiple runs, rather than specifying each flag in the command, you can specify these in a params file.
+
+Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
+
+> [!WARNING]
+> Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/running/run-pipelines#configuring-pipelines), other infrastructural tweaks (such as output directories), or module arguments (args).
+
+The above pipeline run specified with a params file in yaml format:
+
+```bash
+nextflow run nf-core/pixelator -profile docker,cells_8k -params-file params.yaml
+```
+
+with:
+
+```yaml title="params.yaml"
+input: './samplesheet.csv'
+outdir: './results/'
+<...>
+```
+
+You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
+
+> [!NOTE]
+> By default, processes from nf-core/pixelator will use the path defined in `TMPDIR` to store temporary file. If this variable is not defined, they will fallback to `/tmp`.
+
+## Parameters
 
 ## Samplesheet input
 
@@ -162,53 +209,6 @@ A list of available panels can be listed by running following command:
 ```shell
 pixelator single-cell-pna --list-panels
 ```
-
-## Running the pipeline
-
-The typical command for running the pipeline is as follows:
-
-```bash
-nextflow run nf-core/pixelator --input ./samplesheet.csv --outdir ./results  -profile docker,cells_8k --technology proxiome-v2
-```
-
-This will launch the pipeline with the `docker` configuration profile, and resource configurations
-for 8000 cells. If you have samples with 1000 cells as input, pick the `cells_1k` profile instead.
-See below for more information about profiles.
-
-Note that the pipeline will create the following files in your working directory:
-
-```bash
-work                # Directory containing the nextflow working files
-<OUTDIR>            # Finished results in specified location (defined with --outdir)
-.nextflow_log       # Log file from Nextflow
-# Other nextflow hidden files, eg. history of pipeline runs and old logs.
-```
-
-If you wish to repeatedly use the same parameters for multiple runs, rather than specifying each flag in the command, you can specify these in a params file.
-
-Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
-
-> [!WARNING]
-> Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/running/run-pipelines#configuring-pipelines), other infrastructural tweaks (such as output directories), or module arguments (args).
-
-The above pipeline run specified with a params file in yaml format:
-
-```bash
-nextflow run nf-core/pixelator -profile docker,cells_8k -params-file params.yaml
-```
-
-with:
-
-```yaml title="params.yaml"
-input: './samplesheet.csv'
-outdir: './results/'
-<...>
-```
-
-You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
-
-> [!NOTE]
-> By default, processes from nf-core/pixelator will use the path defined in `TMPDIR` to store temporary file. If this variable is not defined, they will fallback to `/tmp`.
 
 ### Updating the pipeline
 
