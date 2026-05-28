@@ -17,14 +17,14 @@
                 [
                     "PIXELATOR_COLLAPSE",
                     "pixelator",
-                    "0.26.0"
+                    "0.27.1"
                 ]
             ]
         ],
-        "timestamp": "2026-05-21T11:58:24.85769919",
+        "timestamp": "2026-05-27T13:30:52.660008481",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     },
     "PNA collapse - stub": {
@@ -92,7 +92,7 @@
                     [
                         "PIXELATOR_COLLAPSE",
                         "pixelator",
-                        "0.26.0"
+                        "0.27.1"
                     ]
                 ],
                 "collapsed": [
@@ -147,15 +147,15 @@
                     [
                         "PIXELATOR_COLLAPSE",
                         "pixelator",
-                        "0.26.0"
+                        "0.27.1"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-05-20T14:28:34.287934812",
+        "timestamp": "2026-05-27T13:30:33.432803293",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     },
     "PNA collapse - small test - multiple files": {

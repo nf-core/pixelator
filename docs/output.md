@@ -23,8 +23,7 @@ The PNA pipeline consists of the following steps:
 - [Denoising](#denoising)
 - [Analysis](#analysis)
 - [Layout creation](#compute-layouts-for-visualization)
-- [Per sample report generation](#generate-reports-per-sample)
-- [Per run run report generation](#generate-report-for-all-samples)
+- [Per run report generation](#generate-report-for-all-samples)
 - [Pipeline information](#pipeline-information)
 
 The output of the Proximity Network Assay (PNA) pipeline is organized into several directories, each corresponding to a specific step in the pipeline. Below is an overview of the output structure and the files generated at each step:
@@ -122,36 +121,6 @@ the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/px
 
 </details>
 
-#### Sample Calling
-
-This step uses the `pixelator single-cell-pna sample-calling` command. It takes
-the graph PXL file and the sample sheet as input and assigns each component to
-the most likely sample in pooled experiments.
-
-Components with assignment confidence below the selected threshold are marked
-as undetermined and can be saved to a separate output file. The resulting
-per-sample dehashed PXL files are then used as input for the denoising step.
-
-<details markdown="1">
-<summary>Output files</summary>
-
-- `pixelator`
-  - `sample_calling`
-    - `<sample-id>.dehashed.pxl`: The pixel file containing the data associated with each samples.
-    - `<sample-id>.meta.json`: Command invocation metadata.
-    - `<sample-id>.report.json`: QC metrics for the sample calling step.
-    - `<pool-id>_undetermined.dehashed.pxl`: The pixel file containing data that could not be associated with any sample. This is only output when `pna_sample_calling_save_undetermined = true`.
-    - `<pool-id>_undetermined.meta.json`: Command invocation metadata.
-    - `<pool-id>_undetermined.report.json`: QC metrics for the sample calling step.
-
-  - `logs`
-    - `<pool-id>.pixelator-sample-calling.log`: pixelator log output.
-
-</details>
-
-> [!NOTE]
-> This step is run only when `--technology proxiome-v2` is set.
-
 #### Denoising
 
 This step uses the `pixelator single-cell-pna denoise` command. It will try to find differences between
@@ -175,6 +144,36 @@ The denoised graph will be saved as a new PXL file.
     - `<sample-id>.pixelator-denoise.log`: pixelator log output.
 
 </details>
+
+#### Sample Calling
+
+This step uses the `pixelator single-cell-pna sample-calling` command. It takes
+the graph PXL file and the sample sheet as input and assigns each component to
+the most likely sample in pooled experiments.
+
+Components with assignment confidence below the selected threshold are marked
+as undetermined and can be saved to a separate output file. The resulting
+per-sample dehashed PXL files are then used as input for the analysis step.
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `pixelator`
+  - `sample_calling`
+    - `<sample-id>.dehashed.pxl`: The pixel file containing the data associated with each samples.
+    - `<sample-id>.meta.json`: Command invocation metadata.
+    - `<sample-id>.report.json`: QC metrics for the sample calling step.
+    - `<pool-id>_undetermined.dehashed.pxl`: The pixel file containing data that could not be associated with any sample. This is only output when `pna_sample_calling_save_undetermined = true`.
+    - `<pool-id>_undetermined.meta.json`: Command invocation metadata.
+    - `<pool-id>_undetermined.report.json`: QC metrics for the sample calling step.
+
+  - `logs`
+    - `<pool-id>.pixelator-sample-calling.log`: pixelator log output.
+
+</details>
+
+> [!NOTE]
+> This step is run only when `--technology proxiome-v2` is set.
 
 #### Analysis
 

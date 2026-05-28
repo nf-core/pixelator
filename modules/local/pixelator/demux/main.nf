@@ -6,8 +6,8 @@ process PIXELATOR_DEMUX {
     // conda "bioconda::pixelator=0.18.2"
 
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.26.0'
-        : 'quay.io/pixelgen-technologies/pixelator:0.26.0'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.27.1'
+        : 'quay.io/pixelgen-technologies/pixelator:0.27.1'}"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel), val(design)

@@ -3,6 +3,34 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[4.1.0](https://github.com/nf-core/pixelator/releases/tag/4.1.0)] - 2026-05-28
+
+### Enhancements & fixes
+
+- Update pixelator container to 0.27.1 by @johandahlberg [#212](https://github.com/nf-core/pixelator/pull/212)
+- Denoise graph before sample calling step by @Aratz [#212](https://github.com/nf-core/pixelator/pull/212)
+- Add ACE and PLS denoising by @Aratz [#212](https://github.com/nf-core/pixelator/pull/212)
+
+### Changed
+
+- K1 denoising is turned off by default by @Aratz [#212](https://github.com/nf-core/pixelator/pull/212)
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.26.0      | 0.27.1      |
+| `pixelatorES` | 0.10.1      | 0.10.4      |
+
+### Parameters
+
+| Old parameter | New parameter                       |
+| ------------- | ----------------------------------- |
+|               | `--pna_denoise_run_ace_denoising`   |
+|               | `--pna_denoise_ace_k`               |
+|               | `--pna_denoise_run_pls_denoising`   |
+|               | `--pna_denoise_pls_score_threshold` |
+
 ## [[4.0.0](https://github.com/nf-core/pixelator/releases/tag/4.0.0)] - 2026-05-19
 
 ### Added

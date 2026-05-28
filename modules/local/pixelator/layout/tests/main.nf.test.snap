@@ -17,14 +17,14 @@
                 [
                     "PIXELATOR_LAYOUT",
                     "pixelator",
-                    "0.26.0"
+                    "0.27.1"
                 ]
             ]
         ],
-        "timestamp": "2026-05-21T12:02:56.888630957",
+        "timestamp": "2026-05-27T13:34:08.047886362",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     },
     "Test PNA layout - stub": {
@@ -103,7 +103,7 @@
                     [
                         "PIXELATOR_LAYOUT",
                         "pixelator",
-                        "0.26.0"
+                        "0.27.1"
                     ]
                 ],
                 "all_results": [
@@ -169,15 +169,15 @@
                     [
                         "PIXELATOR_LAYOUT",
                         "pixelator",
-                        "0.26.0"
+                        "0.27.1"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-05-20T14:31:26.577414445",
+        "timestamp": "2026-05-27T13:33:55.966654918",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     }
 }

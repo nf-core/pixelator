@@ -60,7 +60,7 @@
                     [
                         "PIXELATOR_AMPLICON",
                         "pixelator",
-                        "0.26.0"
+                        "0.27.1"
                     ]
                 ],
                 "amplicon": [
@@ -111,15 +111,15 @@
                     [
                         "PIXELATOR_AMPLICON",
                         "pixelator",
-                        "0.26.0"
+                        "0.27.1"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-05-20T14:27:25.664498136",
+        "timestamp": "2026-05-27T13:29:11.737111296",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     },
     "PNA amplicon - small test": {
@@ -140,14 +140,14 @@
                 [
                     "PIXELATOR_AMPLICON",
                     "pixelator",
-                    "0.26.0"
+                    "0.27.1"
                 ]
             ]
         ],
-        "timestamp": "2026-05-21T11:56:54.148117208",
+        "timestamp": "2026-05-27T13:29:36.579458417",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "25.10.5"
         }
     }
 }
