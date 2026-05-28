@@ -15,8 +15,8 @@ Use this parameter to specify its location.
 --input '[path to samplesheet file]'
 ```
 
-We provide example samplesheets for [Proxiome v1 data](../assets/samplesheet_proxiome_v1.csv)
-and [Proxiome v2 data](../assets/samplesheet_proxiome_v2.csv), that can be used as a template to
+We provide example samplesheets for [Proxiome v1 data](../assets/example_samplesheet_proxiome_v1.csv)
+and [Proxiome v2 data](../assets/example_samplesheet_proxiome_v2.csv), that can be used as a template to
 create your own samplesheet.
 
 ### Format
@@ -210,8 +210,6 @@ outdir: './results/'
 <...>
 ```
 
-You can find an extensive example of a `params.yaml` file with all options and
-documentation in comments [here](../assets/params-file.yml).
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
 
 > [!NOTE]
