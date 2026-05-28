@@ -40,8 +40,8 @@ Below is an example of a simple samplesheet with two samples.
 
 ```csv
 sample,sample_alias,condition,design,panel,fastq_1,fastq_2
-sample1,s1,control,pna-2,proxiome-immuno-155-v2,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
-sample2,s2,treatment,pna-2,proxiome-immuno-155-v2,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
+sample1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample2,s2,treatment,proxiome-v1,proxiome-v1-immuno-155-v1.1,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
 ```
 
 Columns not defined in the table below are ignored by the pipeline but can be useful
@@ -91,9 +91,9 @@ Below is an example for the same sample sequenced across 3 lanes:
 
 ```csv title="samplesheet.csv"
 sample,sample_alias,condition,design,panel,fastq_1,fastq_2
-uropod_control_1,s1,control,pna-2,proxiome-immuno-155-v2,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
-uropod_control_1,s1,control,pna-2,proxiome-immuno-155-v2,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
-uropod_control_1,s1,control,pna-2,proxiome-immuno-155-v2,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
+uropod_control_1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
+uropod_control_1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
+uropod_control_1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
 ```
 
 The same approach applies when pooled hashed samples are sequenced again:
