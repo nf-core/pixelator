@@ -24,28 +24,7 @@ create your own samplesheet.
 The samplesheet is a CSV or TSV formatted file with a few required and some optional columns.
 You can export to CSV from spreadsheet programs such as Microsoft Excel, Google Sheets and LibreOffice Calc.
 
-Following table provides an overview of all possible columns in the samplesheet.
-The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 5 columns
-to match those defined in the table below.
-
-> [!WARNING]
-> It is important that you select a panel file that matches the kit lot version you are
-> using for your experiment. Using a mismatched panel file will lead to incorrect antibody
-> assignments and erroneous results.
->
-> An updated list of which panel files correspond to which kit lot versions can be found
-> on the [Pixelgen Technologies website](https://www.pixelgen.com/panel-file-for-data-processing/)
-
-Below is an example of a simple samplesheet with two samples.
-
-```csv
-sample,sample_alias,condition,design,panel,fastq_1,fastq_2
-sample1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
-sample2,s2,treatment,proxiome-v1,proxiome-v1-immuno-155-v1.1,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
-```
-
-Columns not defined in the table below are ignored by the pipeline but can be useful
-to add extra information for downstream processing.
+The following table provides an overview of all possible columns in the samplesheet.
 
 | Column                              | Required                  | Description                                                                                                                                                              |
 | ----------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -63,6 +42,22 @@ The `panel` and `panel_file` options are mutually exclusive. If both are specifi
 One of them has to be specified.
 
 The pipeline will auto-detect whether a sample is single- or paired-end based on if both `fastq_1` and `fastq_2` or only `fastq_1` is present in the samplesheet.
+
+> [!WARNING]
+> It is important that you select a panel file that matches the kit lot version you are
+> using for your experiment. Using a mismatched panel file will lead to incorrect antibody
+> assignments and erroneous results.
+>
+> An updated list of which panel files correspond to which kit lot versions can be found
+> on the [Pixelgen Technologies website](https://www.pixelgen.com/panel-file-for-data-processing/)
+
+Below is an example of a simple samplesheet with two samples.
+
+```csv
+sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+sample1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample2,s2,treatment,proxiome-v1,proxiome-v1-immuno-155-v1.1,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
+```
 
 ### Pooling samples
 
