@@ -4,7 +4,66 @@
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
-## Introduction
+## Quick start
+
+The typical command for running the pipeline is as follows:
+
+```bash
+nextflow run nf-core/pixelator \
+    -profile docker,cells_8k \
+    --input ./samplesheet.csv \
+    --outdir ./results \
+    --technology proxiome-v2
+```
+
+This will launch the pipeline with the `docker` configuration profile, and resource configurations
+for 8000 cells. If you have samples with 1000 cells as input, pick the `cells_1k` profile instead.
+See below for more information about profiles.
+
+Note that the pipeline will create the following files in your working directory:
+
+```bash
+work                # Directory containing the nextflow working files
+<OUTDIR>            # Finished results in specified location (defined with --outdir)
+.nextflow_log       # Log file from Nextflow
+# Other nextflow hidden files, eg. history of pipeline runs and old logs.
+```
+
+## Parameters
+
+nf-core/pixelator can take a wide range of parameters, three of which are mandatory:
+
+- `--input`: the path to your samplesheet
+- `--outdir`: the directory where the `.pxl` files and the experiment summary will be saved.
+- `--technology`: the workflow to use to process your data (`proxiome_v1` or `proxiome_v2`), depending on the kit that was used to process the samples.
+
+Detailed documentation about each parameter can be found at [https://nf-co.re/pixelator/parameters/](https://nf-co.re/pixelator/parameters/).
+
+If you wish to repeatedly use the same parameters for multiple runs, rather than specifying each flag in the command, you can specify these in a params file.
+
+Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
+
+> [!WARNING]
+> Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/running/run-pipelines#configuring-pipelines), other infrastructural tweaks (such as output directories), or module arguments (args).
+
+The above pipeline run specified with a params file in yaml format:
+
+```bash
+nextflow run nf-core/pixelator -profile docker,cells_8k -params-file params.yaml
+```
+
+with:
+
+```yaml title="params.yaml"
+input: './samplesheet.csv'
+outdir: './results/'
+<...>
+```
+
+You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
+
+> [!NOTE]
+> By default, processes from nf-core/pixelator will use the path defined in `TMPDIR` to store temporary file. If this variable is not defined, they will fallback to `/tmp`.
 
 ## Samplesheet input
 
@@ -15,8 +74,8 @@ Use this parameter to specify its location.
 --input '[path to samplesheet file]'
 ```
 
-We provide example samplesheets for [Proxiome v1 data](../assets/samplesheet_proxiome_v1.csv)
-and [Proxiome v2 data](../assets/samplesheet_proxiome_v2.csv), that can be used as a template to
+We provide example samplesheets for [Proxiome v1 data](../assets/example_samplesheet_proxiome_v1.csv)
+and [Proxiome v2 data](../assets/example_samplesheet_proxiome_v2.csv), that can be used as a template to
 create your own samplesheet.
 
 ### Format
@@ -24,28 +83,7 @@ create your own samplesheet.
 The samplesheet is a CSV or TSV formatted file with a few required and some optional columns.
 You can export to CSV from spreadsheet programs such as Microsoft Excel, Google Sheets and LibreOffice Calc.
 
-Following table provides an overview of all possible columns in the samplesheet.
-The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 5 columns
-to match those defined in the table below.
-
-> [!WARNING]
-> It is important that you select a panel file that matches the kit lot version you are
-> using for your experiment. Using a mismatched panel file will lead to incorrect antibody
-> assignments and erroneous results.
->
-> An updated list of which panel files correspond to which kit lot versions can be found
-> on the [Pixelgen Technologies website](https://www.pixelgen.com/panel-file-for-data-processing/)
-
-Below is an example of a simple samplesheet with two samples.
-
-```csv
-sample,sample_alias,condition,design,panel,fastq_1,fastq_2
-sample1,s1,control,pna-2,proxiome-immuno-155-v2,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
-sample2,s2,treatment,pna-2,proxiome-immuno-155-v2,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
-```
-
-Columns not defined in the table below are ignored by the pipeline but can be useful
-to add extra information for downstream processing.
+The following table provides an overview of all possible columns in the samplesheet.
 
 | Column                              | Required                  | Description                                                                                                                                                              |
 | ----------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -63,6 +101,22 @@ The `panel` and `panel_file` options are mutually exclusive. If both are specifi
 One of them has to be specified.
 
 The pipeline will auto-detect whether a sample is single- or paired-end based on if both `fastq_1` and `fastq_2` or only `fastq_1` is present in the samplesheet.
+
+> [!WARNING]
+> It is important that you select a panel file that matches the kit lot version you are
+> using for your experiment. Using a mismatched panel file will lead to incorrect antibody
+> assignments and erroneous results.
+>
+> An updated list of which panel files correspond to which kit lot versions can be found
+> on the [Pixelgen Technologies website](https://www.pixelgen.com/panel-file-for-data-processing/)
+
+Below is an example of a simple samplesheet with two samples.
+
+```csv
+sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+sample1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample2,s2,treatment,proxiome-v1,proxiome-v1-immuno-155-v1.1,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
+```
 
 ### Pooling samples
 
@@ -91,9 +145,9 @@ Below is an example for the same sample sequenced across 3 lanes:
 
 ```csv title="samplesheet.csv"
 sample,sample_alias,condition,design,panel,fastq_1,fastq_2
-uropod_control_1,s1,control,pna-2,proxiome-immuno-155-v2,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
-uropod_control_1,s1,control,pna-2,proxiome-immuno-155-v2,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
-uropod_control_1,s1,control,pna-2,proxiome-immuno-155-v2,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
+uropod_control_1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
+uropod_control_1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
+uropod_control_1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
 ```
 
 The same approach applies when pooled hashed samples are sequenced again:
@@ -168,54 +222,9 @@ A list of available panels can be listed by running following command:
 pixelator single-cell-pna --list-panels
 ```
 
-## Running the pipeline
-
-The typical command for running the pipeline is as follows:
-
-```bash
-nextflow run nf-core/pixelator --input ./samplesheet.csv --outdir ./results  -profile docker,cells_8k --technology proxiome-v2
-```
-
-This will launch the pipeline with the `docker` configuration profile, and resource configurations
-for 8000 cells. If you have samples with 1000 cells as input, pick the `cells_1k` profile instead.
-See below for more information about profiles.
-
-Note that the pipeline will create the following files in your working directory:
-
-```bash
-work                # Directory containing the nextflow working files
-<OUTDIR>            # Finished results in specified location (defined with --outdir)
-.nextflow_log       # Log file from Nextflow
-# Other nextflow hidden files, eg. history of pipeline runs and old logs.
-```
-
-If you wish to repeatedly use the same parameters for multiple runs, rather than specifying each flag in the command, you can specify these in a params file.
-
-Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
-
-> [!WARNING]
-> Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/running/run-pipelines#configuring-pipelines), other infrastructural tweaks (such as output directories), or module arguments (args).
-
-The above pipeline run specified with a params file in yaml format:
-
-```bash
-nextflow run nf-core/pixelator -profile docker,cells_8k -params-file params.yaml
-```
-
-with:
-
-```yaml title="params.yaml"
-input: './samplesheet.csv'
-outdir: './results/'
-<...>
-```
-
-You can find an extensive example of a `params.yaml` file with all options and
-documentation in comments [here](../assets/params-file.yml).
-You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
-
-> [!NOTE]
-> By default, processes from nf-core/pixelator will use the path defined in `TMPDIR` to store temporary file. If this variable is not defined, they will fallback to `/tmp`.
+Alternatively, these panel files can be downloaded from the [`pixelator`
+repository](https://github.com/PixelgenTechnologies/pixelator/tree/main/src/pixelator/pna/resources/panels).
+These files can then serve as a base for further customizations.
 
 ### Updating the pipeline
 

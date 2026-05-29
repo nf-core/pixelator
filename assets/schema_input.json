@@ -6,7 +6,7 @@
     "type": "array",
     "items": {
         "type": "object",
-        "required": ["sample", "design", "fastq_1"],
+        "required": ["sample", "sample_alias", "condition", "design", "fastq_1"],
         "additionalProperties": false,
         "allOf": [
             {
@@ -43,13 +43,6 @@
             }
         ],
         "properties": {
-            "sample": {
-                "type": "string",
-                "pattern": "^\\S+$",
-                "errorMessage": "Sample name must be provided and cannot contain spaces",
-                "description": "Sample name (no spaces).",
-                "meta": ["id"]
-            },
             "pool": {
                 "type": "string",
                 "pattern": "^\\S+$",
@@ -59,6 +52,23 @@
             "hash_index": {
                 "type": "integer",
                 "meta": ["hash_index"]
+            },
+            "sample": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "Sample name must be provided and cannot contain spaces",
+                "description": "Sample name (no spaces).",
+                "meta": ["id"]
+            },
+            "sample_alias": {
+                "type": "string",
+                "description": "Alternative sample name.",
+                "meta": ["sample_alias"]
+            },
+            "condition": {
+                "type": "string",
+                "description": "Experimental condition for the sample.",
+                "meta": ["condition"]
             },
             "design": {
                 "type": "string",
@@ -91,26 +101,6 @@
                 "pattern": "^\\S+\\.f(ast)?q\\.gz$",
                 "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'",
                 "description": "Optional FASTQ(.gz) path for read 2 (no spaces)."
-            },
-            "condition": {
-                "type": "string",
-                "description": "Optional experimental condition for the sample.",
-                "meta": ["condition"]
-            },
-            "reference_condition": {
-                "type": "string",
-                "description": "Optional reference condition for differential analysis.",
-                "meta": ["reference_condition"]
-            },
-            "sample_alias": {
-                "type": "string",
-                "description": "Optional alternative sample name.",
-                "meta": ["sample_alias"]
-            },
-            "alternative_condition": {
-                "type": "string",
-                "description": "Optional alternative condition for the sample.",
-                "meta": ["alternative_condition"]
             }
         }
     }
