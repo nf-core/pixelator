@@ -31,14 +31,14 @@
                             "const": "proxiome-v2"
                         },
                         "panel": {
-                            "const": "proxiome-v2-immuno-155-v1.0"
+                            "pattern": "^proxiome-v2-"
                         }
                     },
                     "required": ["design", "panel"]
                 },
                 "then": {
                     "required": ["pool", "hash_index"],
-                    "errorMessage": "The `pool` and `hash_index` columns are required for `proxiome-v2` design with panel `proxiome-v2-immuno-155-v1.0`."
+                    "errorMessage": "The `pool` and `hash_index` columns are required for `proxiome-v2` design with a `proxiome-v2` panel."
                 }
             }
         ],

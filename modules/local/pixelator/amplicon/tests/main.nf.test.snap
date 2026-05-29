@@ -7,7 +7,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.amplicon.fq.zst:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -18,7 +18,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -29,7 +29,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -40,7 +40,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.pixelator-amplicon.log:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -60,7 +60,7 @@
                     [
                         "PIXELATOR_AMPLICON",
                         "pixelator",
-                        "0.27.1"
+                        "0.27.2"
                     ]
                 ],
                 "amplicon": [
@@ -68,7 +68,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.amplicon.fq.zst:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -79,7 +79,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.pixelator-amplicon.log:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -90,7 +90,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -101,7 +101,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -111,15 +111,15 @@
                     [
                         "PIXELATOR_AMPLICON",
                         "pixelator",
-                        "0.27.1"
+                        "0.27.2"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-05-27T13:29:11.737111296",
+        "timestamp": "2026-05-29T14:05:38.535137938",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.04.2"
         }
     },
     "PNA amplicon - small test": {
@@ -140,7 +140,7 @@
                 [
                     "PIXELATOR_AMPLICON",
                     "pixelator",
-                    "0.27.1"
+                    "0.27.2"
                 ]
             ]
         ],
