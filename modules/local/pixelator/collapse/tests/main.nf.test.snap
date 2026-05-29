@@ -17,7 +17,7 @@
                 [
                     "PIXELATOR_COLLAPSE",
                     "pixelator",
-                    "0.27.1"
+                    "0.27.2"
                 ]
             ]
         ],
@@ -35,7 +35,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         [
@@ -48,7 +48,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         [
@@ -61,7 +61,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.demux.m1.part_000.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -72,7 +72,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.demux.m1.part_000.pixelator-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -92,7 +92,7 @@
                     [
                         "PIXELATOR_COLLAPSE",
                         "pixelator",
-                        "0.27.1"
+                        "0.27.2"
                     ]
                 ],
                 "collapsed": [
@@ -100,7 +100,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         [
@@ -113,7 +113,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.demux.m1.part_000.pixelator-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -124,7 +124,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "pool1.demux.m1.part_000.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -135,7 +135,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         [
@@ -147,15 +147,15 @@
                     [
                         "PIXELATOR_COLLAPSE",
                         "pixelator",
-                        "0.27.1"
+                        "0.27.2"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-05-27T13:30:33.432803293",
+        "timestamp": "2026-05-29T14:07:42.503855734",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.04.2"
         }
     },
     "PNA collapse - small test - multiple files": {

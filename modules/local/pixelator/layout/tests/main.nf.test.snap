@@ -17,7 +17,7 @@
                 [
                     "PIXELATOR_LAYOUT",
                     "pixelator",
-                    "0.27.1"
+                    "0.27.2"
                 ]
             ]
         ],
@@ -35,7 +35,7 @@
                         {
                             "id": "sample1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "sample1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -46,7 +46,7 @@
                         {
                             "id": "sample1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "sample1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -57,7 +57,7 @@
                         {
                             "id": "sample1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "sample1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -68,7 +68,7 @@
                         {
                             "id": "sample1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         [
@@ -83,7 +83,7 @@
                         {
                             "id": "sample1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "sample1.pixelator-layout.log:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -103,7 +103,7 @@
                     [
                         "PIXELATOR_LAYOUT",
                         "pixelator",
-                        "0.27.1"
+                        "0.27.2"
                     ]
                 ],
                 "all_results": [
@@ -111,7 +111,7 @@
                         {
                             "id": "sample1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         [
@@ -126,7 +126,7 @@
                         {
                             "id": "sample1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "sample1.pixelator-layout.log:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -137,7 +137,7 @@
                         {
                             "id": "sample1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "sample1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -148,7 +148,7 @@
                         {
                             "id": "sample1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "sample1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -159,7 +159,7 @@
                         {
                             "id": "sample1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v1.0",
+                            "panel": "proxiome-v2-immuno-155-v2.0",
                             "technology": "proxiome-v2"
                         },
                         "sample1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -169,15 +169,15 @@
                     [
                         "PIXELATOR_LAYOUT",
                         "pixelator",
-                        "0.27.1"
+                        "0.27.2"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-05-27T13:33:55.966654918",
+        "timestamp": "2026-05-29T14:13:11.19895797",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.04.2"
         }
     }
 }
