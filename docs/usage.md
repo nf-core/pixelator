@@ -9,7 +9,11 @@
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/pixelator --input ./samplesheet.csv --outdir ./results  -profile docker,cells_8k --technology proxiome-v2
+nextflow run nf-core/pixelator \
+    -profile docker,cells_8k \
+    --input ./samplesheet.csv \
+    --outdir ./results \
+    --technology proxiome-v2
 ```
 
 This will launch the pipeline with the `docker` configuration profile, and resource configurations
