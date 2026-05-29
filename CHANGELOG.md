@@ -3,6 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[4.1.1](https://github.com/nf-core/pixelator/releases/tag/4.1.1)] - 2026-05-29
+
+### Enhancements & fixes
+
+- Improve documentation by @Aratz [#216](https://github.com/nf-core/pixelator/pull/216)
+- Update pixelator by @Aratz [#217](https://github.com/nf-core/pixelator/pull/217)
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.27.1      | 0.27.2      |
+
 ## [[4.1.0](https://github.com/nf-core/pixelator/releases/tag/4.1.0)] - 2026-05-28
 
 ### Enhancements & fixes

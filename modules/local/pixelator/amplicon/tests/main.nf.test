@@ -15,7 +15,7 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v1.0', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
                         file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
@@ -41,7 +41,7 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v1.0', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
                     [
                         file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
                         file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)

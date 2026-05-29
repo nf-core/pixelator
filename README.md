@@ -62,13 +62,13 @@ For hashed PNA data (Proxiome kit v2), the samplesheet will look as follows:
 
 ```csv
 pool,hash_index,sample,sample_alias,condition,design,panel,fastq_1,fastq_2
-pool1,1,sample1,s1,control,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
-pool1,2,sample2,s2,case,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
-pool2,1,sample3,s3,control,proxiome-v2,proxiome-v2-immuno-155-v1.0,pool2_R1_001.fastq.gz,pool2_R2_001.fastq.gz
+pool1,1,sample1,s1,control,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
+pool1,2,sample2,s2,case,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
+pool2,1,sample3,s3,control,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool2_R1_001.fastq.gz,pool2_R2_001.fastq.gz
 ```
 
 > [!NOTE]
-> For an example with non-hashed PNA data (Proxiome kit v1), see [Proxiome v1 samplesheet](../assets/samplesheet_proxiome_v1.csv)
+> For an example with non-hashed PNA data (Proxiome kit v1), see [Proxiome v1 samplesheet](../assets/example_samplesheet_proxiome_v1.csv)
 
 > [!WARNING]
 > Panel and design names have been completely renamed in pixelator 0.26

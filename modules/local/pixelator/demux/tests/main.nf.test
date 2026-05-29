@@ -18,10 +18,10 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v1.0', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
                     file(params.pipelines_testdata_base_path + 'testdata/pna/modules/amplicon/pool1.amplicon.fq.zst', checkIfExists: true),
                     [],
-                    'proxiome-v2-immuno-155-v1.0',
+                    'proxiome-v2-immuno-155-v2.0',
                     'proxiome-v2'
                 ]
                 """
@@ -44,10 +44,10 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v1.0', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
                     file(params.pipelines_testdata_base_path + 'testdata/pna/modules/amplicon/pool1.amplicon.fq.zst', checkIfExists: true),
                     [],
-                    'proxiome-v2-immuno-155-v1.0',
+                    'proxiome-v2-immuno-155-v2.0',
                     'proxiome-v2'
                 ]
                 """
@@ -79,10 +79,10 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v1.0', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
                     file(params.pipelines_testdata_base_path + 'testdata/pna/modules/amplicon/pool1.amplicon.fq.zst', checkIfExists: true),
                     [],
-                    'proxiome-v2-immuno-155-v1.0',
+                    'proxiome-v2-immuno-155-v2.0',
                     'proxiome-v2'
                 ]
                 """
