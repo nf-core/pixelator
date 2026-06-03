@@ -5,6 +5,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[4.2.0dev](https://github.com/nf-core/pixelator/releases/tag/4.2.0)] - 2026-MM-DD
 
+### Enhancements & fixes
+
+- Update pixelator container to 0.28.0
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.27.2      | 0.28.0      |
+
 ## [[4.1.1](https://github.com/nf-core/pixelator/releases/tag/4.1.1)] - 2026-05-29
 
 ### Enhancements & fixes
