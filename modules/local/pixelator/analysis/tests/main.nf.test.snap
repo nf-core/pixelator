@@ -17,7 +17,7 @@
                 [
                     "PIXELATOR_ANALYSIS",
                     "pixelator",
-                    "0.27.2"
+                    "0.28.0"
                 ]
             ]
         ],
@@ -103,7 +103,7 @@
                     [
                         "PIXELATOR_ANALYSIS",
                         "pixelator",
-                        "0.27.2"
+                        "0.28.0"
                     ]
                 ],
                 "all_results": [
@@ -169,7 +169,7 @@
                     [
                         "PIXELATOR_ANALYSIS",
                         "pixelator",
-                        "0.27.2"
+                        "0.28.0"
                     ]
                 ]
             }

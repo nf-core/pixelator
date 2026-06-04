@@ -7,8 +7,8 @@ process PIXELATOR_COLLAPSE {
     // TODO: Add conda
     // conda "bioconda::pixelator=0.18.2"
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.27.2'
-        : 'quay.io/pixelgen-technologies/pixelator:0.27.2'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.28.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.28.0'}"
 
     input:
     tuple val(meta), path(reads), path(panel_file), val(panel), val(design)
