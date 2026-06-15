@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[4.2.0dev](https://github.com/nf-core/pixelator/releases/tag/4.1.2dev)] - 2026-MM-DD
 
+- Change pna_graph_refinement_stage_leiden_resolution and pna_graph_refinement_stage_max_edges_to_remove default values
+  to 0.5, and 20 respectively based on latest evaluations.
+
 ## [[4.1.2](https://github.com/nf-core/pixelator/releases/tag/4.1.2)] - 2026-06-04
 
 ### Enhancements & fixes
