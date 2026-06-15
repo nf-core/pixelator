@@ -225,7 +225,7 @@
                     "help": "This should typically be set higher than the refinement stage resolution."
                 },
                 "pna_graph_refinement_stage_leiden_resolution": {
-                    "default": 0.01,
+                    "default": 0.5,
                     "fa_icon": "fas fa-sliders-h",
                     "minimum": 0,
                     "type": "number",
@@ -265,7 +265,7 @@
                 "pna_graph_refinement_stage_max_edges_to_remove": {
                     "type": "integer",
                     "fa_icon": "fas fa-trash",
-                    "default": 10,
+                    "default": 20,
                     "minimum": 1,
                     "description": "The maximum number of edges to remove between components during the refinement stage (iteration > 0) of multiplet recovery."
                 },
