@@ -17,7 +17,7 @@ nextflow_workflow {
                 skip_experiment_summary = true
                 outdir = "$outputDir"
                 pna_demux_output_chunk_reads = "30K"
-                pna_graph_component_size_min_threshold = 10
+                pna_graph_component_size_min_threshold = 2
             }
 
             workflow {
