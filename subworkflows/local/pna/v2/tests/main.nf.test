@@ -17,11 +17,12 @@ nextflow_workflow {
                 skip_experiment_summary = true
                 outdir = "$outputDir"
                 pna_demux_output_chunk_reads = "30K"
+                pna_graph_component_size_min_threshold = 10
             }
 
             workflow {
                 """
-                def meta = [ pool:'pool1', id:'sample1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v1' ]
+                def meta = [ pool:'pool1', id:'sample1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ]
                 input[0] = Channel.of([
                         meta,
                         [
