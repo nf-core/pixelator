@@ -19,7 +19,7 @@ nextflow_process {
                 """
                 input[0] = [ file(params.pipelines_testdata_base_path + 'samplesheet/pna/samplesheet_proxiome_v2.csv', checkIfExists: true) ]
                 input[1] = [
-                    [id:'all', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
+                    [id:'all', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
                     [
                         'amplicon', 'amplicon',
                     ],

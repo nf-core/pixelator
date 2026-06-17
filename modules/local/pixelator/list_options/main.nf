@@ -34,6 +34,7 @@ process PIXELATOR_LIST_OPTIONS {
 
     cat <<-END_PANELS > panel_options.txt
     proxiome-v1-immuno-155-v1.1
+    proxiome-v2-immuno-155-prerelease
     proxiome-v2-immuno-155-v2.0
     END_PANELS
     """
