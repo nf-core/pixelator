@@ -24,9 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Parameters
 
-| Old parameter                               | New parameter                               |
-| ------------------------------------------- | ------------------------------------------- |
-| `pna_sample_calling_confidence_threshold`   | `pna_sample_calling_enrichment_threshold`   |
+| Old parameter                             | New parameter                             |
+| ----------------------------------------- | ----------------------------------------- |
+| `pna_sample_calling_confidence_threshold` | `pna_sample_calling_enrichment_threshold` |
 
 ## [[4.1.2](https://github.com/nf-core/pixelator/releases/tag/4.1.2)] - 2026-06-04
 
