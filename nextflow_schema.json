@@ -312,14 +312,13 @@
                     "description": "Remove antibodies that are incompatible with their component's called sample.",
                     "default": true
                 },
-                "pna_sample_calling_confidence_threshold": {
+                "pna_sample_calling_enrichment_threshold": {
                     "type": "number",
                     "fa_icon": "fas fa-percentage",
-                    "description": "Confidence threshold for sample calling.",
-                    "help_text": "Components with a sample confidence below this threshold will be considered undetermined.",
-                    "default": 0.9,
-                    "minimum": 0.0,
-                    "maximum": 1.0
+                    "description": "Enrichment threshold for sample calling.",
+                    "help_text": "Components with a sample enrichment below this threshold will be considered undetermined.",
+                    "default": 10.0,
+                    "minimum": 1.0
                 }
             }
         },
