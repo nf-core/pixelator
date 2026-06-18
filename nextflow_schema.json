@@ -628,7 +628,7 @@
                     "type": "string",
                     "fa_icon": "far fa-check-circle",
                     "description": "Base URL or local path to location of pipeline test dataset files",
-                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/pixelator/",
+                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/046ef65a5f894d7d998b81cdf9dca6c23e6a6bbb/",
                     "hidden": true
                 },
                 "modules_testdata_base_path": {
