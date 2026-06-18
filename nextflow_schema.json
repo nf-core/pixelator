@@ -627,7 +627,7 @@
                     "type": "string",
                     "fa_icon": "far fa-check-circle",
                     "description": "Base URL or local path to location of pipeline test dataset files",
-                    "default": "https://raw.githubusercontent.com/elhb/nf-core-test-datasets/update-to-pixelator-0.29.0/",
+                    "default": "https://raw.githubusercontent.com/elhb/nf-core-test-datasets/8c61c1f4d643b8be161f919ff8382a12bfc11073/",
                     "hidden": true
                 },
                 "modules_testdata_base_path": {
