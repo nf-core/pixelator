@@ -13,7 +13,7 @@ nextflow_process {
 
         when {
             params {
-                pna_graph_component_size_min_threshold = 100
+                pna_graph_component_size_min_threshold = 25
             }
 
             process {
@@ -39,7 +39,7 @@ nextflow_process {
     test("PNA graph - small test") {
         when {
             params {
-                pna_graph_component_size_min_threshold = 100
+                pna_graph_component_size_min_threshold = 25
                 outdir   = "$outputDir"
             }
 
