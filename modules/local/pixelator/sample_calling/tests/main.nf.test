@@ -16,8 +16,8 @@ nextflow_process {
                 """
                 input[0] = [
                     [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/graph/pool1.graph.pxl', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'samplesheet/pna/samplesheet_proxiome_v2.csv', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/graph/pool1.graph.pxl', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'new-test-data/samplesheet/pna/samplesheet_proxiome_v2.csv', checkIfExists: true),
                 ]
                 """
             }
@@ -40,8 +40,8 @@ nextflow_process {
                 """
                 input[0] = [
                     [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/graph/pool1.graph.pxl', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'samplesheet/pna/samplesheet_proxiome_v2.csv', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/graph/pool1.graph.pxl', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'new-test-data/samplesheet/pna/samplesheet_proxiome_v2.csv', checkIfExists: true),
                 ]
                 """
             }
