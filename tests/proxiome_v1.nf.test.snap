@@ -295,16 +295,16 @@
                 "sample_2.meta.json:md5,e0b756a91edb80e878baa6862b2c3c6d",
                 "sample_1.meta.json:md5,eb91c047c438beb4c746cf2acba39ab5",
                 "sample_2.meta.json:md5,eb91c047c438beb4c746cf2acba39ab5",
-                "sample_1.meta.json:md5,9499ef2af613d6fa5cba5c91a443c726",
-                "sample_2.meta.json:md5,d73dc0fcfaaac01957e4611c89ef3dec",
+                "sample_1.meta.json:md5,cdede47a0ae5b110c5b30598313f2645",
+                "sample_2.meta.json:md5,b77ef4e36914f958b87c11aa61f4c05f",
                 "sample_1.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
                 "sample_2.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3"
             ]
         ],
-        "timestamp": "2026-06-17T09:37:29.80236891",
+        "timestamp": "2026-06-22T15:49:11.767104778",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.04.2"
         }
     }
 }

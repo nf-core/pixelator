@@ -12,10 +12,6 @@ nextflow_process {
         options "-stub"
 
         when {
-            params {
-                pna_graph_component_size_min_threshold = 100
-            }
-
             process {
                 """
                 input[0] = [
@@ -39,7 +35,9 @@ nextflow_process {
     test("PNA graph - small test") {
         when {
             params {
-                pna_graph_component_size_min_threshold = 100
+                // Synthetic data was generated to pass with the test with lower than default resolution
+                pna_graph_refinement_stage_leiden_resolution = 0.01
+                pna_graph_component_size_min_threshold       = 100
                 outdir   = "$outputDir"
             }
 

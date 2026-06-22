@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Rename `pna_sample_calling_confidence_threshold` to `pna_sample_calling_enrichment_threshold` to match pixelator 0.29.0
 - Change default layout algorithm from `wpmds_3d` to `coarsened_pmds_3d`
+- Change `pna_graph_refinement_stage_leiden_resolution` and `pna_graph_refinement_stage_max_edges_to_remove` default values
+  to 0.5, and 20 respectively based on latest evaluations.
 
 ### Enhancements & fixes
 
