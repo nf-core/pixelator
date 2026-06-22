@@ -15,14 +15,14 @@ nextflow_process {
         when {
             params {
                 save_all = true
-                layout_algorithm = "pmds_3d"
+                pna_layout_layout_algorithm = "coarsened_pmds_3d"
                 skip_layout = false
             }
             process {
                 """
                 input[0] = [
-                    [ id:'sample1', design: 'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/analysis/sample1.analysis.pxl', checkIfExists: true)
+                    [ id:'sample1', design: 'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/analysis/sample1.analysis.pxl', checkIfExists: true)
                 ]
                 """
             }
@@ -40,15 +40,15 @@ nextflow_process {
         when {
             params {
                 save_all = true
-                layout_algorithm = "pmds_3d"
+                pna_layout_layout_algorithm = "coarsened_pmds_3d"
                 skip_layout = false
                 outdir   = "$outputDir"
             }
             process {
                 """
                 input[0] = [
-                    [ id:'sample1', design: 'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/analysis/sample1.analysis.pxl', checkIfExists: true)
+                    [ id:'sample1', design: 'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/analysis/sample1.analysis.pxl', checkIfExists: true)
                 ]
                 """
             }

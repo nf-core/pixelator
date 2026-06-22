@@ -5,8 +5,8 @@ process PIXELATOR_LIST_OPTIONS {
     // TODO: Add conda back
     // conda "${moduleDir}/environment.yml"
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.28.0'
-        : 'quay.io/pixelgen-technologies/pixelator:0.28.0'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.29.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.29.0'}"
 
     output:
     path "design_options.txt", emit: designs
@@ -34,6 +34,7 @@ process PIXELATOR_LIST_OPTIONS {
 
     cat <<-END_PANELS > panel_options.txt
     proxiome-v1-immuno-155-v1.1
+    proxiome-v2-immuno-155-prerelease
     proxiome-v2-immuno-155-v2.0
     END_PANELS
     """

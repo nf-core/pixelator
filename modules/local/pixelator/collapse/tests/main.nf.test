@@ -15,12 +15,12 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
                     [
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/pool1.demux.m1.part_000.parquet', checkIfExists: true)
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool1.demux.m1.part_000.parquet', checkIfExists: true)
                     ],
                     [],                         // panel_file
-                    'proxiome-v2-immuno-155-v2.0',   // panel
+                    'proxiome-v2-immuno-155-prerelease',   // panel
                     'proxiome-v2'                     // design
                 ]
                 """
@@ -43,12 +43,12 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
                     [
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/pool1.demux.m1.part_000.parquet', checkIfExists: true)
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool1.demux.m1.part_000.parquet', checkIfExists: true)
                     ],
                     [],                     // panel_file
-                    'proxiome-v2-immuno-155-v2.0',   // panel
+                    'proxiome-v2-immuno-155-prerelease',   // panel
                     'proxiome-v2'                 // design
                 ]
                 """
@@ -78,13 +78,13 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
                     [
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/pool1.demux.m1.part_000.parquet', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/demux/pool1.demux.m2.part_000.parquet', checkIfExists: true)
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool1.demux.m1.part_000.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool1.demux.m2.part_000.parquet', checkIfExists: true)
                     ],
                     [],                      // panel_file
-                    'proxiome-v2-immuno-155-v2.0',   // panel
+                    'proxiome-v2-immuno-155-prerelease',   // panel
                     'proxiome-v2'                  // design
                 ]
                 """

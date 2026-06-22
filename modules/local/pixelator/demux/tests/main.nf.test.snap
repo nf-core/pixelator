@@ -20,11 +20,11 @@
                 [
                     "PIXELATOR_DEMUX",
                     "pixelator",
-                    "0.28.0"
+                    "0.29.0"
                 ]
             ]
         ],
-        "timestamp": "2026-05-27T13:32:21.146201688",
+        "timestamp": "2026-06-17T09:05:36.203013433",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.10.5"
@@ -38,7 +38,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         [
@@ -52,7 +52,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         "pool1.demux.passed.fq.zst:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -63,7 +63,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         "pool1.demux.failed.fq.zst:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -74,7 +74,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -85,7 +85,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -96,7 +96,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         "pool1.pixelator-demux.log:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -119,7 +119,7 @@
                     [
                         "PIXELATOR_DEMUX",
                         "pixelator",
-                        "0.28.0"
+                        "0.29.0"
                     ]
                 ],
                 "demuxed": [
@@ -127,7 +127,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         [
@@ -141,7 +141,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         "pool1.demux.failed.fq.zst:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -152,7 +152,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         "pool1.pixelator-demux.log:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -163,7 +163,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -174,7 +174,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         "pool1.demux.passed.fq.zst:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -185,7 +185,7 @@
                         {
                             "id": "pool1",
                             "design": "proxiome-v2",
-                            "panel": "proxiome-v2-immuno-155-v2.0",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
                             "technology": "proxiome-v2"
                         },
                         "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -195,15 +195,15 @@
                     [
                         "PIXELATOR_DEMUX",
                         "pixelator",
-                        "0.28.0"
+                        "0.29.0"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-05-29T14:09:56.763402497",
+        "timestamp": "2026-06-17T09:05:07.592385053",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.2"
+            "nextflow": "25.10.5"
         }
     },
     "PNA demux - multiple chunks": {
@@ -241,11 +241,11 @@
                 [
                     "PIXELATOR_DEMUX",
                     "pixelator",
-                    "0.28.0"
+                    "0.29.0"
                 ]
             ]
         ],
-        "timestamp": "2026-05-27T13:32:50.971603605",
+        "timestamp": "2026-06-17T09:06:07.713814523",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.10.5"

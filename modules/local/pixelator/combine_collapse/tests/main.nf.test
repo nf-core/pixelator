@@ -17,14 +17,14 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
                     [
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/pool1.collapse.m1.part_000.parquet', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/pool1.collapse.m2.part_000.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool1.collapse.m1.part_000.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool1.collapse.m2.part_000.parquet', checkIfExists: true),
                     ],
                     [
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/pool1.collapse.m1.part_000.report.json', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/pool1.collapse.m2.part_000.report.json', checkIfExists: true)
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool1.collapse.m1.part_000.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool1.collapse.m2.part_000.report.json', checkIfExists: true)
                     ]
                 ]
                 """
@@ -48,14 +48,14 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
                     [
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/pool1.collapse.m1.part_000.parquet', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/pool1.collapse.m2.part_000.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool1.collapse.m1.part_000.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool1.collapse.m2.part_000.parquet', checkIfExists: true),
                     ],
                     [
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/pool1.collapse.m1.part_000.report.json', checkIfExists: true),
-                        file(params.pipelines_testdata_base_path + 'testdata/pna/modules/collapse/pool1.collapse.m2.part_000.report.json', checkIfExists: true)
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool1.collapse.m1.part_000.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool1.collapse.m2.part_000.report.json', checkIfExists: true)
                     ]
                 ]
                 """

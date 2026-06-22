@@ -312,14 +312,13 @@
                     "description": "Remove antibodies that are incompatible with their component's called sample.",
                     "default": true
                 },
-                "pna_sample_calling_confidence_threshold": {
+                "pna_sample_calling_enrichment_threshold": {
                     "type": "number",
                     "fa_icon": "fas fa-percentage",
-                    "description": "Confidence threshold for sample calling.",
-                    "help_text": "Components with a sample confidence below this threshold will be considered undetermined.",
-                    "default": 0.9,
-                    "minimum": 0.0,
-                    "maximum": 1.0
+                    "description": "Enrichment threshold for sample calling.",
+                    "help_text": "Components with a sample enrichment below this threshold will be considered undetermined.",
+                    "default": 10.0,
+                    "minimum": 1.0
                 }
             }
         },
@@ -453,11 +452,11 @@
                     "type": "boolean"
                 },
                 "pna_layout_layout_algorithm": {
-                    "description": "Select a layout algorithm to use. This can be specified as a comma separated list to compute multiple layouts. Possible values are: pmds, pmds_3d, wpmds, wpmds_3d.",
+                    "description": "Select a layout algorithm to use. This can be specified as a comma separated list to compute multiple layouts. Possible values are: pmds, pmds_3d, wpmds, wpmds_3d, coarsened_pmds_3d.",
                     "fa_icon": "fas fa-project-diagram",
                     "type": "string",
-                    "enum": ["pmds_3d", "wpmds_3d"],
-                    "default": "wpmds_3d"
+                    "enum": ["pmds_3d", "wpmds_3d", "coarsened_pmds_3d"],
+                    "default": "coarsened_pmds_3d"
                 },
                 "pna_layout_pmds_pivots": {
                     "type": "integer",
@@ -627,8 +626,8 @@
                 "pipelines_testdata_base_path": {
                     "type": "string",
                     "fa_icon": "far fa-check-circle",
-                    "description": "Base URL or local path to location of pipeline test dataset files",
-                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/046ef65a5f894d7d998b81cdf9dca6c23e6a6bbb/",
+                    "description": "Base URL or local path to location of pipeline test dataset files.",
+                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/e8950f260973a6778e2ff24988e12fd4474d60e1/",
                     "hidden": true
                 },
                 "modules_testdata_base_path": {

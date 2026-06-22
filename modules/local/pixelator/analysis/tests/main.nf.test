@@ -15,8 +15,8 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'sample1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/sample_calling/sample1.dehashed.pxl', checkIfExists: true),
+                    [ id:'sample1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample1.dehashed.pxl', checkIfExists: true),
                 ]
                 """
             }
@@ -38,8 +38,8 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'sample1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-v2.0', technology:'proxiome-v2' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/pna/modules/sample_calling/sample1.dehashed.pxl', checkIfExists: true),
+                    [ id:'sample1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample1.dehashed.pxl', checkIfExists: true),
                 ]
                 """
             }
