@@ -117,38 +117,38 @@
                     "experiment-summary": "0.11.2"
                 },
                 "PIXELATOR_AMPLICON": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_ANALYSIS": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_COLLAPSE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_COMBINE_COLLAPSE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_DEMUX": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_DENOISE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_GRAPH": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_LAYOUT": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "Workflow": {
                     "nf-core/pixelator": "v4.2.0dev"
                 }
             }
         ],
-        "timestamp": "2026-06-04T09:44:04.570834112",
+        "timestamp": "2026-06-17T09:05:52.731272619",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.10.5"
@@ -165,31 +165,31 @@
                     "experiment-summary": "0.11.2"
                 },
                 "PIXELATOR_AMPLICON": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_ANALYSIS": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_COLLAPSE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_COMBINE_COLLAPSE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_DEMUX": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_DENOISE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_GRAPH": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_LAYOUT": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "Workflow": {
                     "nf-core/pixelator": "v4.2.0dev"
@@ -301,7 +301,7 @@
                 "sample_2.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3"
             ]
         ],
-        "timestamp": "2026-06-04T09:43:14.967606772",
+        "timestamp": "2026-06-17T09:37:29.80236891",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.10.5"

@@ -5,8 +5,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[4.2.0dev](https://github.com/nf-core/pixelator/releases/tag/4.1.2dev)] - 2026-MM-DD
 
-- Change pna_graph_refinement_stage_leiden_resolution and pna_graph_refinement_stage_max_edges_to_remove default values
+### Changed
+
+- Rename `pna_sample_calling_confidence_threshold` to `pna_sample_calling_enrichment_threshold` to match pixelator 0.29.0
+- Change default layout algorithm from `wpmds_3d` to `coarsened_pmds_3d`
+- Change `pna_graph_refinement_stage_leiden_resolution` and `pna_graph_refinement_stage_max_edges_to_remove` default values
   to 0.5, and 20 respectively based on latest evaluations.
+
+### Enhancements & fixes
+
+- Update pixelator container to 0.29.0
+- Update pixelatorES to 0.11.2
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.28.0      | 0.29.0      |
+| `pixelatorES` | 0.10.4      | 0.11.2      |
+
+### Parameters
+
+| Old parameter                             | New parameter                             |
+| ----------------------------------------- | ----------------------------------------- |
+| `pna_sample_calling_confidence_threshold` | `pna_sample_calling_enrichment_threshold` |
 
 ## [[4.1.2](https://github.com/nf-core/pixelator/releases/tag/4.1.2)] - 2026-06-04
 
