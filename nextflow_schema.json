@@ -299,7 +299,8 @@
                     "type": "boolean",
                     "fa_icon": "fas fa-save",
                     "description": "Save the PXL dataset after the sample calling stage.",
-                    "help": "By default, the PXL file after sample calling will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
+                    "help": "Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete.",
+                    "default": true
                 },
                 "pna_sample_calling_save_undetermined": {
                     "type": "boolean",
