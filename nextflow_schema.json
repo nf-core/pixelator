@@ -304,7 +304,8 @@
                 "pna_sample_calling_save_undetermined": {
                     "type": "boolean",
                     "fa_icon": "fas fa-save",
-                    "description": "Save components that could not be confidently assigned to any sample to a separate pxl file."
+                    "description": "Save components that could not be confidently assigned to any sample to a separate pxl file.",
+                    "default": true
                 },
                 "pna_sample_calling_remove_incompatible": {
                     "type": "boolean",

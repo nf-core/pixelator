@@ -8,6 +8,7 @@
                 "pixelator/logs",
                 "pixelator/logs/pool1",
                 "pixelator/logs/pool1/pool1.pixelator-sample-calling.log",
+                "pixelator/pool1_undetermined.dehashed.pxl",
                 "pixelator/sample_calling",
                 "pixelator/sample_calling/pool1.sample_calling.report.json",
                 "pixelator/sample_calling/pool1_undetermined.meta.json",
@@ -21,10 +22,10 @@
             ],
             null
         ],
-        "timestamp": "2026-05-21T12:03:20.674454727",
+        "timestamp": "2026-06-29T09:17:18.563289255",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.2"
         }
     },
     "PNA sample calling - stub": {
