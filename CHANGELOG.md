@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change default layout algorithm from `wpmds_3d` to `coarsened_pmds_3d`. By @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
 - Change `pna_graph_refinement_stage_leiden_resolution` and `pna_graph_refinement_stage_max_edges_to_remove` default values
   to 0.5, and 20 respectively based on latest evaluations. By @ptajvar [#226](https://github.com/nf-core/pixelator/pull/226)
+- Expose `pna_graph_component_size_max_threshold`. By @Aratz [#233](https://github.com/nf-core/pixelator/pull/233)
 
 ### Enhancements & fixes
 
@@ -30,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | Old parameter                             | New parameter                             |
 | ----------------------------------------- | ----------------------------------------- |
 | `pna_sample_calling_confidence_threshold` | `pna_sample_calling_enrichment_threshold` |
+|                                           | `pna_graph_component_size_max_threshold`  |
 
 > [!NOTE]
 > Parameter has been **updated** if both old and new parameter information is present.
