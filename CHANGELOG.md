@@ -14,8 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Enhancements & fixes
 
-- Update pixelator container to 0.29.0 @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
-- Update pixelatorES to 0.11.2 @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
+- Update pixelator container to 0.29.0. By @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
+- Update pixelatorES to 0.11.2. By @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
+- Condense ES script. By @Aratz [#232](https://github.com/nf-core/pixelator/pull/232)
 
 ### Software dependencies
 
