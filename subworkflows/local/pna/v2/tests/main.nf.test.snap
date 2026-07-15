@@ -102,7 +102,6 @@
                 "pixelator/logs/sample2.pixelator-layout.log",
                 "pixelator/sample_calling",
                 "pixelator/sample_calling/pool1.sample_calling.report.json",
-                "pixelator/sample_calling/pool1_undetermined.dehashed.pxl",
                 "pixelator/sample_calling/pool1_undetermined.meta.json",
                 "pixelator/sample_calling/pool1_undetermined.report.json",
                 "pixelator/sample_calling/sample1.dehashed.pxl",
@@ -113,10 +112,10 @@
                 "pixelator/sample_calling/sample2.report.json"
             ]
         ],
-        "timestamp": "2026-07-09T08:45:07.930401145",
+        "timestamp": "2026-06-17T09:32:39.539686784",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.2"
+            "nextflow": "25.10.5"
         }
     }
 }

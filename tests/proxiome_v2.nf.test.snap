@@ -340,8 +340,6 @@
                 "pixelator/logs/sample4",
                 "pixelator/logs/sample4/sample4.pixelator-analysis.log",
                 "pixelator/logs/sample4/sample4.pixelator-layout.log",
-                "pixelator/pool1_undetermined.dehashed.pxl",
-                "pixelator/pool2_undetermined.dehashed.pxl",
                 "pixelator/sample1.layout.pxl",
                 "pixelator/sample2.layout.pxl",
                 "pixelator/sample3.layout.pxl",
@@ -383,15 +381,15 @@
                 "sample2.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
                 "sample3.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
                 "sample4.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
-                "pool1_undetermined.meta.json:md5,e366705e816a3c141bca142599c9b90c",
-                "pool2_undetermined.meta.json:md5,e366705e816a3c141bca142599c9b90c",
-                "sample1.meta.json:md5,e366705e816a3c141bca142599c9b90c",
-                "sample2.meta.json:md5,e366705e816a3c141bca142599c9b90c",
-                "sample3.meta.json:md5,e366705e816a3c141bca142599c9b90c",
-                "sample4.meta.json:md5,e366705e816a3c141bca142599c9b90c"
+                "pool1_undetermined.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
+                "pool2_undetermined.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
+                "sample1.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
+                "sample2.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
+                "sample3.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
+                "sample4.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa"
             ]
         ],
-        "timestamp": "2026-06-22T16:41:38.382370133",
+        "timestamp": "2026-06-22T15:23:00.769318806",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
