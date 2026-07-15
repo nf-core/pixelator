@@ -22,24 +22,17 @@ process EXPERIMENT_SUMMARY {
     assert results_data instanceof List : "Expected results_data to be a List, got ${results_data?.getClass()?.simpleName ?: 'null'}"
     assert results_data.size() == result_stages.size(): "Mismatch between result files (${results_data.size()}) and stage labels (${result_stages.size()})"
 
-    def stageArray = result_stages.collect { "\"${it}\"" }.join(' ')
+    def stageCopies = [result_stages, results_data].transpose().collect { stage, file ->
+        """
+        mkdir -p "results/${stage}"
+        ln -s "../../${file}" "results/${stage}/"
+        """
+    }.join('\n')
     """
     # Copy the full quarto dir from the read-only image into the workdir
     cp -r /workspace/inst/quarto/ ./quarto/
     mkdir -p results
-
-    # Stage each result file into results/<stage>/. Files are staged into
-    # results_raw/1, results_raw/2, ... in the same order as the stage names.
-    stages=(${stageArray})
-    for i in "\${!stages[@]}"; do
-        idx=\$((i + 1))
-        dest="results/\${stages[\$i]}"
-        mkdir -p "\$dest"
-        for f in "results_raw/\${idx}"/*; do
-            ln -s "../../\$f" "\$dest/"
-        done
-    done
-
+    ${stageCopies}
     quarto render ./quarto/pixelatorES.qmd \\
         -P sample_sheet="\$PWD/${samplesheet_path}" \\
         -P data_folder="\$PWD/results/" \\
