@@ -3,6 +3,41 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[5.0.0](https://github.com/nf-core/pixelator/releases/tag/5.0.0)] - 2026-07-13
+
+### Changed
+
+- **(breaking change)** Rename `pna_sample_calling_confidence_threshold` to `pna_sample_calling_enrichment_threshold` to match pixelator 0.29.0. By @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
+- Change default layout algorithm from `wpmds_3d` to `coarsened_pmds_3d`. By @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
+- Change `pna_graph_refinement_stage_leiden_resolution` and `pna_graph_refinement_stage_max_edges_to_remove` default values
+  to 0.5, and 20 respectively based on latest evaluations. By @ptajvar [#226](https://github.com/nf-core/pixelator/pull/226)
+- Expose `pna_graph_component_size_max_threshold`. By @Aratz [#233](https://github.com/nf-core/pixelator/pull/233)
+
+### Enhancements & fixes
+
+- Update pixelator container to 0.29.0. By @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
+- Update pixelatorES to 0.11.2. By @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
+- Condense ES script. By @Aratz [#232](https://github.com/nf-core/pixelator/pull/232)
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.28.0      | 0.29.0      |
+| `pixelatorES` | 0.10.4      | 0.11.2      |
+
+### Parameters
+
+| Old parameter                             | New parameter                             |
+| ----------------------------------------- | ----------------------------------------- |
+| `pna_sample_calling_confidence_threshold` | `pna_sample_calling_enrichment_threshold` |
+|                                           | `pna_graph_component_size_max_threshold`  |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
 ## [[4.1.2](https://github.com/nf-core/pixelator/releases/tag/4.1.2)] - 2026-06-04
 
 ### Enhancements & fixes

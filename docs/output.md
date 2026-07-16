@@ -151,9 +151,10 @@ This step uses the `pixelator single-cell-pna sample-calling` command. It takes
 the graph PXL file and the sample sheet as input and assigns each component to
 the most likely sample in pooled experiments.
 
-Components with assignment confidence below the selected threshold are marked
-as undetermined and can be saved to a separate output file. The resulting
-per-sample dehashed PXL files are then used as input for the analysis step.
+Components with sample enrichment below `pna_sample_calling_enrichment_threshold`
+(default 10.0) are marked as undetermined and can be saved to a separate output
+file. The resulting per-sample dehashed PXL files are then used as input for
+the analysis step.
 
 <details markdown="1">
 <summary>Output files</summary>

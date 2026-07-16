@@ -151,41 +151,41 @@
                     "cat": 9.5
                 },
                 "EXPERIMENT_SUMMARY": {
-                    "experiment-summary": "0.10.4"
+                    "experiment-summary": "0.11.2"
                 },
                 "PIXELATOR_AMPLICON": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_ANALYSIS": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_COLLAPSE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_COMBINE_COLLAPSE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_DEMUX": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_DENOISE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_GRAPH": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_LAYOUT": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "Workflow": {
-                    "nf-core/pixelator": "v4.1.2"
+                    "nf-core/pixelator": "v5.0.0"
                 }
             }
         ],
-        "timestamp": "2026-06-04T08:06:34.673086328",
+        "timestamp": "2026-06-17T09:05:47.167686428",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.10.5"
@@ -199,37 +199,37 @@
                     "cat": 9.5
                 },
                 "EXPERIMENT_SUMMARY": {
-                    "experiment-summary": "0.10.4"
+                    "experiment-summary": "0.11.2"
                 },
                 "PIXELATOR_AMPLICON": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_ANALYSIS": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_COLLAPSE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_COMBINE_COLLAPSE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_DEMUX": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_DENOISE": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_GRAPH": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_LAYOUT": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
-                    "pixelator": "0.28.0"
+                    "pixelator": "0.29.0"
                 },
                 "Workflow": {
-                    "nf-core/pixelator": "v4.1.2"
+                    "nf-core/pixelator": "v5.0.0"
                 }
             },
             [
@@ -371,28 +371,28 @@
                 "sample2.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
                 "sample3.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
                 "sample4.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
-                "pool1.meta.json:md5,bd2cd0b99effc41abbed806d3978d0cb",
-                "pool2.meta.json:md5,bd2cd0b99effc41abbed806d3978d0cb",
+                "pool1.meta.json:md5,236a76417f95f0c289a226753df41340",
+                "pool2.meta.json:md5,236a76417f95f0c289a226753df41340",
                 "pool1.meta.json:md5,eb91c047c438beb4c746cf2acba39ab5",
                 "pool2.meta.json:md5,eb91c047c438beb4c746cf2acba39ab5",
-                "pool1.meta.json:md5,0047bd705d96abde146ae6692a6a8d9b",
-                "pool2.meta.json:md5,0047bd705d96abde146ae6692a6a8d9b",
+                "pool1.meta.json:md5,d5e990e3a27ab9934bceeca516f1dbe5",
+                "pool2.meta.json:md5,d5e990e3a27ab9934bceeca516f1dbe5",
                 "sample1.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
                 "sample2.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
                 "sample3.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
                 "sample4.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
-                "pool1_undetermined.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7",
-                "pool2_undetermined.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7",
-                "sample1.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7",
-                "sample2.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7",
-                "sample3.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7",
-                "sample4.meta.json:md5,f59cd8963a4760d34bd2b41e740242b7"
+                "pool1_undetermined.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
+                "pool2_undetermined.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
+                "sample1.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
+                "sample2.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
+                "sample3.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
+                "sample4.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa"
             ]
         ],
-        "timestamp": "2026-06-04T08:05:44.413474873",
+        "timestamp": "2026-07-15T11:34:17.70475283",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.04.2"
         }
     }
 }

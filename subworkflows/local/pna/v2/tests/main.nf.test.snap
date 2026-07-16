@@ -1,5 +1,5 @@
 {
-    "Default parameters [design: proxiome-v2, panel: proxiome-v2-immuno-155-v2.0]": {
+    "Default parameters [design: proxiome-v2, panel: proxiome-v2-immuno-155-prerelease]": {
         "content": [
             22,
             [
@@ -112,10 +112,10 @@
                 "pixelator/sample_calling/sample2.report.json"
             ]
         ],
-        "timestamp": "2026-05-29T14:13:13.181930826",
+        "timestamp": "2026-06-17T09:32:39.539686784",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.2"
+            "nextflow": "25.10.5"
         }
     }
 }

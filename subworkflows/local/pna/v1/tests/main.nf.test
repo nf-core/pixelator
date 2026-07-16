@@ -25,8 +25,8 @@ nextflow_workflow {
                 input[0] = Channel.of([
                         meta,
                         [
-                            file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/sample1_R1.fastq.gz', checkIfExists: true),
-                            file(params.pipelines_testdata_base_path + 'testdata/pna/fastq/sample1_R2.fastq.gz', checkIfExists: true)
+                            file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/sample1_R1.fastq.gz', checkIfExists: true),
+                            file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/sample1_R2.fastq.gz', checkIfExists: true)
                         ]
                 ])
                 input[1] = Channel.of([meta, []])
