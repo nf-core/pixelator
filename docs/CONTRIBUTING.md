@@ -197,9 +197,17 @@ If you update images or graphics, follow the nf-core [style guidelines](https://
 
 ## Pipeline specific contribution guidelines
 
+### Main dependencies
+
 nf-core/pixelator is built on top of mainly
 [pixelator](https://github.com/PixelgenTechnologies/pixelator) and
 [pixelatorES](https://github.com/PixelgenTechnologies/pixelatorES), two
 products developed by Pixelgen Technologies. As open source projects, these
 also welcome contributions from everyone. Please refer to the documentation of
 these projects for more information.
+
+### Release process
+
+The release process is being partially automated. When a PR is merged to
+master, the GitHub release is created automatically from the body of the PR and
+the version defined in `nextflow.config`.
