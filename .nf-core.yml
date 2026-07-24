@@ -4,11 +4,14 @@ lint:
     - conf/igenomes.config
     - conf/igenomes_ignored.config
     - tests/default.nf.test
+    - .github/workflows/linting_comment.yml
   files_unchanged:
     - assets/nf-core-pixelator_logo_light.png
     - .gitignore
     - .github/PULL_REQUEST_TEMPLATE.md
     - LICENSE
+    - .github/workflows/branch.yml
+    - .github/workflows/linting.yml
   multiqc_config: false
 nf_core_version: 4.0.2
 repository_type: pipeline
