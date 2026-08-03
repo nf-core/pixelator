@@ -4,63 +4,21 @@
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
-## Introduction
-
-<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
-
-## Samplesheet input
-
-You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.
-
-```bash
---input '[path to samplesheet file]'
-```
-
-### Multiple runs of the same sample
-
-The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
-
-```csv title="samplesheet.csv"
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L003_R1_001.fastq.gz,AEG588A1_S1_L003_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
-```
-
-### Full samplesheet
-
-The pipeline will auto-detect whether a sample is single- or paired-end using the information provided in the samplesheet. The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 3 columns to match those defined in the table below.
-
-A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where `TREATMENT_REP3` has been sequenced twice.
-
-```csv title="samplesheet.csv"
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP2,AEG588A2_S2_L002_R1_001.fastq.gz,AEG588A2_S2_L002_R2_001.fastq.gz
-CONTROL_REP3,AEG588A3_S3_L002_R1_001.fastq.gz,AEG588A3_S3_L002_R2_001.fastq.gz
-TREATMENT_REP1,AEG588A4_S4_L003_R1_001.fastq.gz,
-TREATMENT_REP2,AEG588A5_S5_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
-```
-
-| Column    | Description                                                                                                                                                                            |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`  | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `fastq_1` | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-| `fastq_2` | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-
-An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
-
-## Running the pipeline
+## Quick start
 
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/pixelator --input ./samplesheet.csv --outdir ./results  -profile docker
+nextflow run nf-core/pixelator \
+    -profile docker,cells_8k \
+    --input ./samplesheet.csv \
+    --outdir ./results \
+    --technology proxiome-v2
 ```
 
-This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
+This will launch the pipeline with the `docker` configuration profile, and resource configurations
+for 8000 cells. If you have samples with 1000 cells as input, pick the `cells_1k` profile instead.
+See below for more information about profiles.
 
 Note that the pipeline will create the following files in your working directory:
 
@@ -70,6 +28,16 @@ work                # Directory containing the nextflow working files
 .nextflow_log       # Log file from Nextflow
 # Other nextflow hidden files, eg. history of pipeline runs and old logs.
 ```
+
+## Parameters
+
+nf-core/pixelator can take a wide range of parameters, three of which are mandatory:
+
+- `--input`: the path to your samplesheet
+- `--outdir`: the directory where the `.pxl` files and the experiment summary will be saved.
+- `--technology`: the workflow to use to process your data (`proxiome_v1` or `proxiome_v2`), depending on the kit that was used to process the samples.
+
+Detailed documentation about each parameter can be found at [https://nf-co.re/pixelator/parameters/](https://nf-co.re/pixelator/parameters/).
 
 If you wish to repeatedly use the same parameters for multiple runs, rather than specifying each flag in the command, you can specify these in a params file.
 
@@ -81,7 +49,7 @@ Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <
 The above pipeline run specified with a params file in yaml format:
 
 ```bash
-nextflow run nf-core/pixelator -profile docker -params-file params.yaml
+nextflow run nf-core/pixelator -profile docker,cells_8k -params-file params.yaml
 ```
 
 with:
@@ -93,6 +61,170 @@ outdir: './results/'
 ```
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
+
+> [!NOTE]
+> By default, processes from nf-core/pixelator will use the path defined in `TMPDIR` to store temporary file. If this variable is not defined, they will fallback to `/tmp`.
+
+## Samplesheet input
+
+You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline.
+Use this parameter to specify its location.
+
+```bash
+--input '[path to samplesheet file]'
+```
+
+We provide example samplesheets for [Proxiome v1 data](../assets/example_samplesheet_proxiome_v1.csv)
+and [Proxiome v2 data](../assets/example_samplesheet_proxiome_v2.csv), that can be used as a template to
+create your own samplesheet.
+
+### Format
+
+The samplesheet is a CSV or TSV formatted file with a few required and some optional columns.
+You can export to CSV from spreadsheet programs such as Microsoft Excel, Google Sheets and LibreOffice Calc.
+
+The following table provides an overview of all possible columns in the samplesheet.
+
+| Column                              | Required                  | Description                                                                                                                                                              |
+| ----------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pool`                              | Yes (with pooled samples) | Custom pool name.                                                                                                                                                        |
+| `hash_index`                        | Yes (with pooled samples) | Index of the hashing antibody used with this sample.                                                                                                                     |
+| `sample`                            | Yes                       | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample.                                                            |
+| `sample_alias`                      | Yes                       | Custom sample alias. Will be used to identify the sample in reports and visualizations.                                                                                  |
+| `condition`                         | Yes                       | Custom experimental condition for the sample (e.g. control, treatment). Used for reports and visualizations.                                                             |
+| `design`                            | Yes                       | The name of the pixelator design configuration.                                                                                                                          |
+| `panel` <br />or<br /> `panel_file` | Yes                       | Name of the panel to use. <br />or<br /> Path to a CSV file containing a custom panel.                                                                                   |
+| `fastq_1`                           | Yes                       | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                    |
+| `fastq_2`                           | No                        | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". Parameter only used if you are running paired-end. |
+
+The `panel` and `panel_file` options are mutually exclusive. If both are specified, the pipeline will throw an error.
+One of them has to be specified.
+
+The pipeline will auto-detect whether a sample is single- or paired-end based on if both `fastq_1` and `fastq_2` or only `fastq_1` is present in the samplesheet.
+
+> [!WARNING]
+> It is important that you select a panel file that matches the kit lot version you are
+> using for your experiment. Using a mismatched panel file will lead to incorrect antibody
+> assignments and erroneous results.
+>
+> An updated list of which panel files correspond to which kit lot versions can be found
+> on the [Pixelgen Technologies website](https://www.pixelgen.com/panel-file-for-data-processing/)
+
+Below is an example of a simple samplesheet with two samples.
+
+```csv
+sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+sample1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,sample1_R1_001.fastq.gz,sample1_R2_001.fastq.gz
+sample2,s2,treatment,proxiome-v1,proxiome-v1-immuno-155-v1.1,sample2_R1_001.fastq.gz,sample2_R2_001.fastq.gz
+```
+
+### Pooling samples
+
+Pooled samples are supported with the Proxiome v2 kit. To process them, include
+the `pool` and `hash_index` columns in the samplesheet and use the
+`proxiome-v2` design. Hash indices have to match the hashing antibody used for each sample.
+Typically there are 8 hashed samples per pool (numbering 1 to 8).
+
+```csv
+pool,hash_index,sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+pool1,1,sample1,s1,control,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
+pool2,2,sample2,s2,treatment,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
+```
+
+### Multiple runs of the same sample
+
+When a sample or pool has been re-sequenced (for example, to increase
+sequencing depth), use the same `sample` or `pool` identifier across runs. The
+pipeline will then concatenate the corresponding FastQ files before downstream
+analysis.
+
+> [!NOTE]
+> When combining multiple runs, sample metadata such as pool, hash_index, sample_alias, condition, design and panel needs to be repeated on all rows.
+
+Below is an example for the same sample sequenced across 3 lanes:
+
+```csv title="samplesheet.csv"
+sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+uropod_control_1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,uropod_control_S1_L001_R1_001.fastq.gz,uropod_control_S1_L001_R2_001.fastq.gz
+uropod_control_1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,uropod_control_S1_L002_R1_001.fastq.gz,uropod_control_S1_L002_R2_001.fastq.gz
+uropod_control_1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,uropod_control_S1_L003_R1_001.fastq.gz,uropod_control_S1_L003_R2_001.fastq.gz
+```
+
+The same approach applies when pooled hashed samples are sequenced again:
+
+```csv title="samplesheet.csv"
+pool,hash_index,sample,sample_alias,condition,design,panel,fastq_1,fastq_2
+pool1,1,sample1,s1,control,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool1_run1_R1_001.fastq.gz,pool1_run1_R2_001.fastq.gz
+pool1,1,sample1,s1,control,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool1_run2_R1_001.fastq.gz,pool1_run2_R2_001.fastq.gz
+pool1,2,sample2,s2,treatment,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool1_run1_R1_001.fastq.gz,pool1_run1_R2_001.fastq.gz
+pool1,2,sample2,s2,treatment,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool1_run2_R1_001.fastq.gz,pool1_run2_R2_001.fastq.gz
+```
+
+### Relative paths
+
+Using relative paths in a samplesheet is supported.
+This make it easier to relocate data since you do not have to edit the paths to files in the samplesheet.
+
+The default behavior is to resolve relative paths based on the directory the samplesheet file is located in.
+
+Given following directory structure:
+
+- data
+  - samplesheet.csv
+  - fastq
+    - sample1_R1.fq.gz
+    - sample1_R2.fq.gz
+
+You can use following samplesheet:
+
+```csv title="samplesheet.csv"
+sample,sample_alias,condition,design,panel,panel_file,fastq_1,fastq_2
+sample1,s1,control,proxiome-v1,proxiome-v1-immuno-155-v1.1,,fastq/sample1_R1.fq.gz,fastq/sample1_R2.fq.gz
+```
+
+Using the `--input_basedir` option you can specify a different location that will be used to resolve relative paths.
+This location can be a local or a remote path.
+
+For example, using the same samplesheet as above, but with the samplesheet on the local machine and the input data located on an AWS S3 bucket:
+
+- s3://my-company-data/experiment-1/fastq
+  - sample1_R1.fq.gz
+  - sample1_R2.fq.gz
+
+```shell
+nextflow run nf-core/pixelator --input samplesheet.csv --input_basedir s3://my-company-data/experiment-1/ --output ./resulst --technology proxiome-v1
+```
+
+### Design
+
+The `design` column specifies the name of the pixelator assay design configuration to use.
+
+A list of available designs can be listed by running following command:
+
+```shell
+pixelator single-cell-pna --list-designs
+```
+
+### Panels
+
+The panel file contains all information used to link antibodies barcodes to their respective targets.
+Panel files can be specified in two ways:
+
+- Using a predefined panel name to use the default build in panels.
+- Passing a csv file with a customized panel.
+
+Predefined panels can be passed in the `panel` field. Custom panels can be passed in the `panel_file` field.
+Every sample should have either `panel` or `panel_file` specified.
+
+A list of available panels can be listed by running following command:
+
+```shell
+pixelator single-cell-pna --list-panels
+```
+
+Alternatively, these panel files can be downloaded from the [`pixelator`
+repository](https://github.com/PixelgenTechnologies/pixelator/tree/main/src/pixelator/pna/resources/panels).
+These files can then serve as a base for further customizations.
 
 ### Updating the pipeline
 
@@ -126,8 +258,10 @@ Use this parameter to choose a configuration profile. Profiles can give configur
 
 Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Apptainer, Conda) - see below.
 
-> [!IMPORTANT]
-> We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+> [!WARNING]
+> This version of the pipeline does not support conda environments, due to issues with upstream dependencies.
+> This means you cannot use the `conda` and `mamba` profiles. Please use `docker` or `singularity` instead.
+> We hope to add support for conda environments in the future.
 
 The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to check if your system is supported, please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 
@@ -153,8 +287,16 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
   - A generic configuration profile to be used with [Apptainer](https://apptainer.org/)
 - `wave`
   - A generic configuration profile to enable [Wave](https://seqera.io/wave/) containers. Use together with one of the above (requires Nextflow ` 24.03.0-edge` or later).
-- `conda`
-  - A generic configuration profile to be used with [Conda](https://conda.io/docs/). Please only use Conda as a last resort i.e. when it's not possible to run the pipeline with Docker, Singularity, Podman, Shifter, Charliecloud, or Apptainer.
+- `cells_8k`
+  - A configuration profile for 8000 cells.
+- `cells_1k`
+  - A configuration profile for 1000 cells.
+
+:::warning
+Since Nextflow 23.07.0-edge, Nextflow no longer mounts the host's home directory when using Apptainer or Singularity.
+This causes issues in some dependencies. As a workaround, you can revert to the old behavior by setting the environment variable
+`NXF_APPTAINER_HOME_MOUNT` or `NXF_SINGULARITY_HOME_MOUNT` to `true` in the machine from which you launch the pipeline.
+:::
 
 ### `-resume`
 

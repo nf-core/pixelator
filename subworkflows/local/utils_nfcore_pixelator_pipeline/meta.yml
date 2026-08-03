@@ -1,0 +1,76 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: pipeline_initialisation
+description: Provide nf-core/pixelator-specific pipeline utility subworkflows for initialization and completion hooks.
+keywords:
+  - nf-core
+  - pixelator
+  - pipeline
+  - utilities
+components:
+  - utils_nfschema_plugin
+  - utils_nfcore_pipeline
+  - utils_nextflow_pipeline
+  - pixelator/list/options
+  - completionemail
+  - completionsummary
+input:
+  - version:
+      type: boolean
+      description: Boolean flag to print version information and exit.
+  - validate_params:
+      type: boolean
+      description: Boolean flag to validate runtime parameters against schema.
+  - monochrome_logs:
+      type: boolean
+      description: Boolean flag to disable ANSI colors in logging output.
+  - nextflow_cli_args:
+      type: list
+      description: Positional Nextflow CLI arguments.
+  - outdir:
+      type: string
+      description: Output directory where results are written.
+  - input:
+      type: string
+      description: Path to the input samplesheet.
+  - input_basedir:
+      type: string
+      description: Optional base path used for resolving relative input paths.
+  - help:
+      type: boolean
+      description: Boolean flag to display help and exit.
+  - help_full:
+      type: boolean
+      description: Boolean flag to display extended help and exit.
+  - show_hidden:
+      type: boolean
+      description: Boolean flag to include hidden parameters in help.
+  - email:
+      type: string
+      description: Email address for completion notifications.
+  - email_on_fail:
+      type: string
+      description: Email address for notifications on workflow failure.
+  - plaintext_email:
+      type: boolean
+      description: Boolean flag to send plain-text completion emails.
+output:
+  - samplesheet:
+      type: file
+      description: |
+        Channel containing validated samplesheet entries and resolved input paths.
+        Structure: [ val(meta), path(panel_file), path(reads) ]
+      pattern: "*"
+  - versions:
+      type: file
+      description: |
+        Channel intended to collect version information generated in initialization.
+        Structure: [ path(versions.yml) ]
+      pattern: "versions.yml"
+authors:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
+maintainers:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"

@@ -3,25 +3,79 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    RUN MAIN WORKFLOW
+    CONFIG FILES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow PIXELATOR {
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    IMPORT LOCAL MODULES/SUBWORKFLOWS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 
+//
+// SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
+//
+include { PIXELATOR_PNA_V1 } from '../subworkflows/local/pna/v1'
+include { PIXELATOR_PNA_V2 } from '../subworkflows/local/pna/v2'
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    IMPORT NF-CORE MODULES/SUBWORKFLOWS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+//
+// MODULE: Installed directly from nf-core/modules
+//
+/*
+========================================================================================
+    IMPORT CUSTOM MODULES/SUBWORKFLOWS
+========================================================================================
+*/
+
+/*
+========================================================================================
+    RUN MAIN WORKFLOW
+========================================================================================
+*/
+
+workflow PIXELATOR {
     take:
-    ch_samplesheet // channel: samplesheet read in from --input
-    outdir
+    ch_samplesheet            // channel: [ meta, path(panel_file | []), path(sample_1.fq), path(sample_2.fq) ]
 
     main:
 
-    def ch_versions = channel.empty()
+    file(params.input).copyTo("${params.outdir}/pipeline_info")
+
+    ch_versions = channel.empty()
+
+    //
+    // Split the samplesheet channel in reads and panel_files
+    //
+    ch_reads       = ch_samplesheet.map { meta, _panel, reads -> [ meta, reads ] }
+    ch_panel_files = ch_samplesheet.map { meta, panel, _reads -> [ meta, panel ] }
+
+    if (params.technology == "proxiome-v1" || params.technology == "nonhashed_samples") {
+        PIXELATOR_PNA_V1(
+            ch_reads,
+            ch_panel_files
+        )
+    } else if (params.technology == "proxiome-v2" || params.technology == "hashed_samples") {
+        PIXELATOR_PNA_V2(
+            ch_reads,
+            ch_panel_files
+        )
+    } else {
+        error "Unknown technology: \"${params.technology}\""
+    }
 
     //
     // Collate and save software versions
@@ -43,10 +97,10 @@ workflow PIXELATOR {
             "${process}:\n${tool_versions.join('\n')}"
         }
 
-    def ch_collated_versions = softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
+    softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
         .mix(topic_versions_string)
         .collectFile(
-            storeDir: "${outdir}/pipeline_info",
+            storeDir: "${params.outdir}/pipeline_info",
             name: 'nf_core_'  +  'pixelator_software_'  + 'versions.yml',
             sort: true,
             newLine: true

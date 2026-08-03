@@ -77,6 +77,16 @@ Update the snapshots with the following command:
 nf-test test --tag test --profile +docker --verbose --update-snapshots
 ```
 
+Some tests can take quite long to run. To solve this we provide two utility scripts:
+
+- `run_smoke_tests.sh`: this runs all tests tagged with `smoke_test`. This is a good way to quickly
+  make sure nothing is broken after making some changes.
+- `run_tests_parallel.sh`: this runs all the tests in parallel using on 5 different threads.
+  This is useful to update all the snapshots at once before making a PR.
+
+Both scripts take the same parameters `nf-test` does, e.g. run
+`bash tests/scripts/run_tests_parallel.sh --update-snapshots` to update all snapshots.
+
 When you create a pull request with changes, GitHub Actions will run automatic tests.
 Pull requests are typically reviewed when these tests are passing.
 
@@ -100,6 +110,14 @@ Each nf-core pipeline should be set up with a minimal set of test data.
 GitHub Actions runs the pipeline on this data to ensure it runs through and exits successfully.
 If there are any failures then the automated tests fail.
 These tests are run with the latest available version of Nextflow and the minimum required version specified in the pipeline code.
+
+#### Test data
+
+By default, test data is downloaded from
+https://github.com/nf-core/test-datasets/tree/pixelator. If one desires to use
+local data instead, this can be overriden either with the
+`pipelines_testdata_base_path` parameter or with the `NFT_TESTDATA_BASE_PATH`
+environment variable.
 
 ### Patch release
 
@@ -179,4 +197,17 @@ If you update images or graphics, follow the nf-core [style guidelines](https://
 
 ## Pipeline specific contribution guidelines
 
-<!-- TODO nf-core: Add any pipeline specific contribution guidelines here, such as coding styles, procedures, checklists etc. -->
+### Main dependencies
+
+nf-core/pixelator is built on top of mainly
+[pixelator](https://github.com/PixelgenTechnologies/pixelator) and
+[pixelatorES](https://github.com/PixelgenTechnologies/pixelatorES), two
+products developed by Pixelgen Technologies. As open source projects, these
+also welcome contributions from everyone. Please refer to the documentation of
+these projects for more information.
+
+### Release process
+
+The release process is being partially automated. When a PR is merged to
+master, the GitHub release is created automatically from the body of the PR and
+the version defined in `nextflow.config`.

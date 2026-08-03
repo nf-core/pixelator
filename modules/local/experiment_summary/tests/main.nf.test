@@ -1,0 +1,150 @@
+nextflow_process {
+
+    name "Test Process EXPERIMENT_SUMMARY"
+    script "../main.nf"
+    process "EXPERIMENT_SUMMARY"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/pna"
+    tag "pixelator/experiment_summary"
+
+
+
+    test("PNA experiment summary - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [ file(params.pipelines_testdata_base_path + 'new-test-data/samplesheet/pna/samplesheet_proxiome_v2.csv', checkIfExists: true) ]
+                input[1] = [
+                    [id:'all', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
+                    [
+                        'amplicon', 'amplicon',
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/amplicon/pool1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/amplicon/pool1.report.json', checkIfExists: true),
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                {
+                    with(process.out.html) {
+                        assert path(get(0).get(1)).endsWith("experiment-summary.html")
+                        assert path(get(0).get(1)).exists()
+                    }
+                },
+                { assert snapshot(process.out.versions_experiment_summary).match() },
+            )
+        }
+    }
+
+    test("PNA experiment summary - small") {
+        when {
+            params {
+                outdir   = "$outputDir"
+            }
+            process {
+                """
+                input[0] = [ file(params.pipelines_testdata_base_path + 'new-test-data/samplesheet/pna/samplesheet_proxiome_v2.csv', checkIfExists: true) ]
+                input[1] = [
+                    [id:'all', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
+                    [
+                        'amplicon', 'amplicon', 'amplicon', 'amplicon',
+                        'demux', 'demux', 'demux', 'demux',
+                        'collapse', 'collapse', 'collapse', 'collapse',
+                        'graph', 'graph', 'graph', 'graph', 'graph', 'graph',
+                        'denoise', 'denoise', 'denoise', 'denoise',
+                        'analysis', 'analysis', 'analysis', 'analysis', 'analysis', 'analysis', 'analysis', 'analysis',
+                        'layout', 'layout', 'layout', 'layout', 'layout', 'layout', 'layout', 'layout', 'layout', 'layout', 'layout', 'layout',
+                        'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling', 'sample_calling',
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/amplicon/pool1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/amplicon/pool1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/amplicon/pool2.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/amplicon/pool2.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool2.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool2.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool2.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/collapse/pool2.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/graph/pool1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/graph/pool1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/graph/pool2.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/graph/pool2.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/graph/pool1.graph.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/graph/pool2.graph.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/denoise/pool1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/denoise/pool1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/denoise/pool2.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/denoise/pool2.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/analysis/sample1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/analysis/sample1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/analysis/sample2.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/analysis/sample2.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/analysis/sample3.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/analysis/sample3.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/analysis/sample4.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/analysis/sample4.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample1.layout.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample2.layout.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample2.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample2.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample3.layout.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample3.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample3.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample4.layout.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample4.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/layout/sample4.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/pool1.sample_calling.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/pool1_undetermined.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/pool1_undetermined.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/pool2.sample_calling.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/pool2_undetermined.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/pool2_undetermined.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample1.dehashed.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample1.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample1.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample2.dehashed.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample2.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample2.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample3.dehashed.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample3.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample3.report.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample4.dehashed.pxl', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample4.meta.json', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample4.report.json', checkIfExists: true),
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions_experiment_summary,
+                ).match() }
+            )
+        }
+    }
+}

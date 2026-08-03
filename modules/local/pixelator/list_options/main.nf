@@ -1,0 +1,41 @@
+process PIXELATOR_LIST_OPTIONS {
+    label 'process_single'
+
+
+    // TODO: Add conda back
+    // conda "${moduleDir}/environment.yml"
+    container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'quay.io/pixelgen-technologies/pixelator:0.29.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.29.0'}"
+
+    output:
+    path "design_options.txt", emit: designs
+    path "panel_options.txt",  emit: panels
+    tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
+
+    when:
+    task.ext.when == null || task.ext.when
+
+    script:
+    def args = task.ext.args ?: ''
+    def args2 = task.ext.args2 ?: ''
+
+    """
+    pixelator single-cell-pna --list-designs ${args} >> design_options.txt
+    pixelator single-cell-pna --list-panels ${args2} >> panel_options.txt
+    """
+
+    stub:
+    """
+    cat <<-END_DESIGN > design_options.txt
+    proxiome-v1
+    proxiome-v2
+    END_DESIGN
+
+    cat <<-END_PANELS > panel_options.txt
+    proxiome-v1-immuno-155-v1.1
+    proxiome-v2-immuno-155-prerelease
+    proxiome-v2-immuno-155-v2.0
+    END_PANELS
+    """
+}

@@ -3,14 +3,579 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v5.1.0dev - [date]
+## [[5.1.0dev]($tag_url)] - $date
 
-Initial release of nf-core/pixelator, created with the [nf-core](https://nf-co.re/) template.
+### Enhancements & fixed
 
-### `Added`
+- Automate release creation. By @Aratz [#235](https://github.com/nf-core/pixelator/pull/235)
 
-### `Fixed`
+## [[5.0.0](https://github.com/nf-core/pixelator/releases/tag/5.0.0)] - 2026-07-13
 
-### `Dependencies`
+### Changed
 
-### `Deprecated`
+- **(breaking change)** Rename `pna_sample_calling_confidence_threshold` to `pna_sample_calling_enrichment_threshold` to match pixelator 0.29.0. By @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
+- Change default layout algorithm from `wpmds_3d` to `coarsened_pmds_3d`. By @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
+- Change `pna_graph_refinement_stage_leiden_resolution` and `pna_graph_refinement_stage_max_edges_to_remove` default values
+  to 0.5, and 20 respectively based on latest evaluations. By @ptajvar [#226](https://github.com/nf-core/pixelator/pull/226)
+- Expose `pna_graph_component_size_max_threshold`. By @Aratz [#233](https://github.com/nf-core/pixelator/pull/233)
+
+### Enhancements & fixes
+
+- Update pixelator container to 0.29.0. By @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
+- Update pixelatorES to 0.11.2. By @elhb [#227](https://github.com/nf-core/pixelator/pull/227)
+- Condense ES script. By @Aratz [#232](https://github.com/nf-core/pixelator/pull/232)
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.28.0      | 0.29.0      |
+| `pixelatorES` | 0.10.4      | 0.11.2      |
+
+### Parameters
+
+| Old parameter                             | New parameter                             |
+| ----------------------------------------- | ----------------------------------------- |
+| `pna_sample_calling_confidence_threshold` | `pna_sample_calling_enrichment_threshold` |
+|                                           | `pna_graph_component_size_max_threshold`  |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+## [[4.1.2](https://github.com/nf-core/pixelator/releases/tag/4.1.2)] - 2026-06-04
+
+### Enhancements & fixes
+
+- Update pixelator container to 0.28.0. This fixes a major performance regression
+  in the graph step, which caused very high memory usage. By @johandahlberg [#221](https://github.com/nf-core/pixelator/pull/221)
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.27.2      | 0.28.0      |
+
+## [[4.1.1](https://github.com/nf-core/pixelator/releases/tag/4.1.1)] - 2026-05-29
+
+### Enhancements & fixes
+
+- Improve documentation by @Aratz [#216](https://github.com/nf-core/pixelator/pull/216)
+- Update pixelator by @Aratz [#217](https://github.com/nf-core/pixelator/pull/217)
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.27.1      | 0.27.2      |
+
+## [[4.1.0](https://github.com/nf-core/pixelator/releases/tag/4.1.0)] - 2026-05-28
+
+### Enhancements & fixes
+
+- Update pixelator container to 0.27.1 by @johandahlberg [#212](https://github.com/nf-core/pixelator/pull/212)
+- Denoise graph before sample calling step by @Aratz [#212](https://github.com/nf-core/pixelator/pull/212)
+- Add ACE and PLS denoising by @Aratz [#212](https://github.com/nf-core/pixelator/pull/212)
+
+### Changed
+
+- K1 denoising is turned off by default by @Aratz [#212](https://github.com/nf-core/pixelator/pull/212)
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.26.0      | 0.27.1      |
+| `pixelatorES` | 0.10.1      | 0.10.4      |
+
+### Parameters
+
+| Old parameter | New parameter                       |
+| ------------- | ----------------------------------- |
+|               | `--pna_denoise_run_ace_denoising`   |
+|               | `--pna_denoise_ace_k`               |
+|               | `--pna_denoise_run_pls_denoising`   |
+|               | `--pna_denoise_pls_score_threshold` |
+
+## [[4.0.0](https://github.com/nf-core/pixelator/releases/tag/4.0.0)] - 2026-05-19
+
+### Added
+
+- Add Proxiome V2 workflow support, enabling sample pooling and processing of up to 8,000 cells per run by @Aratz [#204](https://github.com/nf-core/pixelator/pull/204), [#205](https://github.com/nf-core/pixelator/pull/205)
+
+### Enhancements & fixes
+
+- Use nextflow strict syntax by @Aratz [#194](https://github.com/nf-core/pixelator/pull/194)
+- Use `TMPDIR` when defined to store temporary files by @Aratz [#195](https://github.com/nf-core/pixelator/pull/195)
+- Retry experiment summary up to two times after failure by @Aratz [#196](https://github.com/nf-core/pixelator/pull/196)
+- Updated pixelatorES to 0.10.1 in PNA experiment summary step by @Aratz [#197](https://github.com/nf-core/pixelator/pull/197), [#204](https://github.com/nf-core/pixelator/pull/204)
+- Add `cells_1k` and `cells_8k` Nextflow profiles with process-specific resource overrides for different input scales by @johandahlberg [#203](https://github.com/nf-core/pixelator/pull/203)
+- Fix singularity CI tests by @Aratz [#208](https://github.com/nf-core/pixelator/pull/208)
+- Update nf-core template to 4.0.2 by @Aratz [#202](https://github.com/nf-core/pixelator/pull/202)
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelatorES` | 0.6.0       | 0.10.1      |
+| `pixelator`   | 0.23.0      | 0.26.0      |
+
+> [!WARNING]
+> Panel and design names have been completely renamed in pixelator 0.26
+> (nf-core/pixelator 4.0 and above). Refer to the pixelator
+> [changelog](https://github.com/PixelgenTechnologies/pixelator/releases/tag/v0.26.0)
+> for more details.
+
+### Parameters
+
+| Old parameter                        | New parameter                             |
+| ------------------------------------ | ----------------------------------------- |
+| `--leiden-iterations`                |                                           |
+| `--min-component-size-in-refinement` |                                           |
+| `--min-component-size-to-prune`      |                                           |
+|                                      | `--technology`                            |
+|                                      | `--edge_cycle-verification`               |
+|                                      | `save_pna_sample_calling_pixelfile`       |
+|                                      | `pna_sample_calling_save_undetermined`    |
+|                                      | `pna_sample_calling_remove_incompatible`  |
+|                                      | `pna_sample_calling_confidence_threshold` |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+## [[3.0.1](https://github.com/nf-core/pixelator/releases/tag/3.0.1)] - 2026-03-09
+
+### Enhancements & fixes
+
+- Fix Issue #191 by @Aratz [#192](https://github.com/nf-core/pixelator/pull/183)
+
+## [[3.0.0](https://github.com/nf-core/pixelator/releases/tag/3.0.0)] - 2026-02-23
+
+### Changed
+
+- Set default pna_graph_component_size_min_threshold to 8000 instead of null (i.e. automatic) by @ptajvar [#183](https://github.com/nf-core/pixelator/pull/183).
+
+### Removed
+
+- Support for MPX in the pipeline by @johandahlberg [#182](https://github.com/nf-core/pixelator/pull/182)
+
+### Enhancements & fixes
+
+- Update schema files (e.g. explicitly use integer types for integers, rather than numbers) by @johandahlberg [#184](https://github.com/nf-core/pixelator/pull/184), [#186](https://github.com/nf-core/pixelator/pull/186)
+- Add option to select custom containers for the experiment summary by @Aratz [#186](https://github.com/nf-core/pixelator/pull/186)
+
+### Parameters
+
+| Old parameter                            | New parameter                    |
+| ---------------------------------------- | -------------------------------- |
+|                                          | `--experiment_summary_container` |
+| `--save_amplicon_reads`                  |                                  |
+| `--trim_front`                           |                                  |
+| `--trim_tail`                            |                                  |
+| `--max_length`                           |                                  |
+| `--min_length`                           |                                  |
+| `--max_n_bases`                          |                                  |
+| `--avg_qual`                             |                                  |
+| `--dedup`                                |                                  |
+| `--remove_polyg`                         |                                  |
+| `--adapterqc_mismatches`                 |                                  |
+| `--save_qc_passed_reads`                 |                                  |
+| `--save_qc_failed_reads`                 |                                  |
+| `--demux_mismatches`                     |                                  |
+| `--demux_min_length`                     |                                  |
+| `--save_demux_processed_reads`           |                                  |
+| `--save_demux_failed_reads`              |                                  |
+| `--markers_ignore`                       |                                  |
+| `--algorithm`                            |                                  |
+| `--max_neighbours`                       |                                  |
+| `--collapse_mismatches`                  |                                  |
+| `--collapse_min_count`                   |                                  |
+| `--save_collapsed_reads`                 |                                  |
+| `--multiplet_recovery`                   |                                  |
+| `--graph_max_refinement_recursion_depth` |                                  |
+| `--graph_max_edges_to_split`             |                                  |
+| `--graph_min_count`                      |                                  |
+| `--save_edgelist`                        |                                  |
+| `--min_size`                             |                                  |
+| `--max_size`                             |                                  |
+| `--dynamic_filter`                       |                                  |
+| `--aggregate_calling`                    |                                  |
+| `--save_raw_component_metrics`           |                                  |
+| `--save_annotate_dataset`                |                                  |
+| `--skip_analysis`                        |                                  |
+| `--compute_polarization`                 |                                  |
+| `--compute_colocalization`               |                                  |
+| `--use_full_bipartite`                   |                                  |
+| `--polarization_transformation`          |                                  |
+| `--polarization_n_permutations`          |                                  |
+| `--polarization_min_marker_count`        |                                  |
+| `--colocalization_transformation`        |                                  |
+| `--colocalization_neighbourhood_size`    |                                  |
+| `--colocalization_n_permutations`        |                                  |
+| `--colocalization_min_region_count`      |                                  |
+| `--colocalization_min_marker_count`      |                                  |
+| `--save_analysis_dataset`                |                                  |
+| `--skip_layout`                          |                                  |
+| `--no_node_marker_counts`                |                                  |
+| `--layout_algorithm`                     |                                  |
+| `--skip_report`                          |                                  |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+## [[2.3.1](https://github.com/nf-core/pixelator/releases/tag/2.3.1)] - 2026-01-14
+
+- Update usage documentation by @vincent-van-hoef [#176](https://github.com/nf-core/pixelator/pull/176)
+- Use PNA data in test profile by @Aratz [#177](https://github.com/nf-core/pixelator/pull/177)
+
+## [[2.3.0](https://github.com/nf-core/pixelator/releases/tag/2.3.0)] - 2025-12-11
+
+From this release onwards, there will not be a default panel selected, i.e. as a user you
+must specify an exact version of the panel you want to use in your samplesheet, e.g. `proxiome-immuno-155-v2`.
+The version to use will depend on which kit lot of the Proxiome Immuno kit you are using.
+See the [Pixelgen Technologies website](https://www.pixelgen.com/panel-file-for-data-processing/) for
+an updated list of which panel version to use with which kit lot.
+
+### Removed
+
+- Removed QC Report step from PNA pipeline (functionality is covered by the more extensive Experiment Summary step)
+  by @johandahlberg [#167](https://github.com/nf-core/pixelator/pull/166)
+
+### Enhancements & fixes
+
+- Improve test suite by @Aratz [#163](https://github.com/nf-core/pixelator/pull/163)
+- Publish samplesheet to output directory by @Aratz [#164](https://github.com/nf-core/pixelator/pull/164)
+- Updated pixelatorES to 0.6.0 in PNA experiment summary step by @johandahlberg [#168](https://github.com/nf-core/pixelator/pull/168)
+- Updated pixelator to 0.23.0 in associated steps by @johandahlberg [#168](https://github.com/nf-core/pixelator/pull/168)
+- Give the `collapse` step more shared memory in the container to avoid out-of-memory errors by @stefanppetkov [#169](https://github.com/nf-core/pixelator/pull/169)
+- Update nf-core template to 3.5.1 by @Aratz [#165](https://github.com/nf-core/pixelator/pull/165)
+
+### Parameters
+
+| Old parameter | New parameter                             |
+| ------------- | ----------------------------------------- |
+|               | `--pna_amplicon_low_complexity_filter`    |
+|               | `--pna_amplicon_low_complexity_threshold` |
+|               | `--pna_amplicon_lbs_filter`               |
+|               | `--pna_amplicon_lbs_filter_min_overlap`   |
+|               | `--pna_amplicon_lbs_filter_error_rate`    |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.22.1      | 0.23.0      |
+| `pixelatorES` | 0.4.3       | 0.6.0       |
+
+## [[2.2.0](https://github.com/nf-core/pixelator/releases/tag/2.2.0)] - 2025-11-02
+
+This new minor version of nf-core/pixelator introduces new panel files with clearer names. These new
+panels are now the default. To use the old version of the panels, append `-v1` to the panel name in
+the samplesheet, e.g. `proxiome-immuno-155-v1`.
+
+### Enhancements & fixes
+
+- Update panel files with new names for marker ids by @Aratz [#152](https://github.com/nf-core/pixelator/pull/152)
+- New panel file with FLAG add-on by @Aratz [#152](https://github.com/nf-core/pixelator/pull/152)
+- Template update for nf-core/tools v3.4.1 by @Aratz in [#151](https://github.com/nf-core/pixelator/pull/151)
+- `--input` now accepts relative paths by @Aratz [#153](https://github.com/nf-core/pixelator/pull/153)
+- Pass down memory limits in PNA demux and combine-collapse by @fbdtemme [#154](https://github.com/nf-core/pixelator/pull/154)
+- Fix custom panel usage by @Aratz [#156](https://github.com/nf-core/pixelator/pull/156)
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.21.4      | 0.22.1      |
+
+> [!NOTE]
+> Dependency has been **updated** if both old and new parameter information is present.
+> Dependency has been **added** if just the new parameter information is present.
+> Dependency has been **removed** if new parameter information isn't present.
+
+## [[2.1.0](https://github.com/nf-core/pixelator/releases/tag/2.1.0)] - 2025-09-17
+
+### Enhancements & fixes
+
+- Move to using quay.io as the container source, to avoid issues with users needing to login to access the
+  Github Container Registry by @johandahlberg in [#140](https://github.com/nf-core/pixelator/pull/140)
+- Add a denoise step to the PNA workflow, that cleans data between the graph and analysis steps
+  by @johandahlberg in [#140](https://github.com/nf-core/pixelator/pull/140)
+- Fix the PNA report not being generated by @fbdtemme in [#142](https://github.com/nf-core/pixelator/pull/142)
+- Template update for nf-core/tools v3.3.2 by @fbdtemme in [#143](https://github.com/nf-core/pixelator/pull/143)
+- Add the `experiment_summary` step which generates the Proximity Experiment Summary report by @johandahlberg in [#144](https://github.com/nf-core/pixelator/pull/144)
+- Switch PIXELATOR_PNA_LAYOUT process label to process_high to allocate less memory by @ptajvar in [#147](https://github.com/nf-core/pixelator/pull/147)
+- Simplify PNA_GENERATE_REPORTS subworkflow by @fbdtemme in [#150](https://github.com/nf-core/pixelator/pull/50)
+
+### Parameters
+
+| Old parameter | New parameter                                |
+| ------------- | -------------------------------------------- |
+|               | `--skip_denoise`                             |
+|               | `--save_pna_denoise_pixelfile`               |
+|               | `--pna_denoise_run_one_core_graph_denoising` |
+|               | `--pna_denoise_pval_threshold`               |
+|               | `--pna_denoise_inflate_factor`               |
+|               | `--pna_denoise_inflate_factor`               |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.20.1      | 0.21.4      |
+| `pixelatorES` |             | 0.4.3       |
+
+> [!NOTE]
+> Dependency has been **updated** if both old and new parameter information is present.
+> Dependency has been **added** if just the new parameter information is present.
+> Dependency has been **removed** if new parameter information isn't present.
+
+## [[2.0.0](https://github.com/nf-core/pixelator/releases/tag/2.0.0)] - 2024-05-27
+
+This release is a major update of the nf-core/pixelator pipeline. It brings in support for the
+Proximity Network Analysis (PNA) workflow in addition to the Molecular Pixelation (MPX) workflow.
+Any run of the pipeline will now run the appropriate workflow depending on which design is specified in the input samplesheet.
+
+### Enhancements & fixes
+
+- [[PR #131](https://github.com/nf-core/pixelator/pull/131)] - Update to pixelator 0.20.1, and add PNA workflows
+- [[PR #132](https://github.com/nf-core/pixelator/pull/132)] - Template update for nf-core/tools v3.2.1
+- [[PR #133](https://github.com/nf-core/pixelator/pull/133)] - Documentation updates
+
+### Parameters
+
+| Old parameter | New parameter                                               |
+| ------------- | ----------------------------------------------------------- |
+|               | `--save_pna_demux_parquet`                                  |
+|               | `--save_pna_demux_passed_reads`                             |
+|               | `--save_pna_demux_failed_reads`                             |
+|               | `--save_pna_collapsed_reads`                                |
+|               | `--save_pna_graph_pixelfile`                                |
+|               | `--save_pna_analysis_pixelfile`                             |
+|               | `--save_json`                                               |
+|               | `--pna_amplicon_mismatches`                                 |
+|               | `--pna_amplicon_remove_polyg`                               |
+|               | `--pna_amplicon_quality_cutoff`                             |
+|               | `--pna_demux_mismatches`                                    |
+|               | `--pna_demux_output_chunk_reads`                            |
+|               | `--pna_demux_output_max_chunks`                             |
+|               | `--pna_demux_strategy`                                      |
+|               | `--pna_collapse_mismatches`                                 |
+|               | `--pna_collapse_algorithm`                                  |
+|               | `--pna_graph_multiplet_recovery`                            |
+|               | `--pna_graph_leiden_iterations`                             |
+|               | `--pna_graph_initial_stage_leiden_resolution`               |
+|               | `--pna_graph_refinement_stage_leiden_resolution`            |
+|               | `--pna_graph_min_count`                                     |
+|               | `--pna_graph_min_component_size_in_refinement`              |
+|               | `--pna_graph_max_refinement_recursion_depth`                |
+|               | `--pna_graph_initial_stage_max_edges_to_remove`             |
+|               | `--pna_graph_refinement_stage_max_edges_to_remove`          |
+|               | `--pna_graph_initial_stage_max_edges_to_remove_relative`    |
+|               | `--pna_graph_refinement_stage_max_edges_to_remove_relative` |
+|               | `--pna_graph_graph_min_component_size_to_prune`             |
+|               | `--pna_graph_component_size_min_threshold`                  |
+|               | `--pna_analysis_compute_proximity`                          |
+|               | `--pna_analysis_proximity_nbr_of_permutations`              |
+|               | `--pna_analysis_compute_k_cores`                            |
+|               | `--pna_analysis_compute_svd_var_explained`                  |
+|               | `--pna_analysis_svd_nbr_of_pivots`                          |
+|               | `--pna_layout_no_node_marker_counts`                        |
+|               | `--pna_layout_layout_algorithm`                             |
+|               | `--pna_layout_pmds_pivots`                                  |
+|               | `--pna_layout_wpmds_k`                                      |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.19.0      | 0.20.1      |
+
+> [!NOTE]
+> Dependency has been **updated** if both old and new parameter information is present.
+> Dependency has been **added** if just the new parameter information is present.
+> Dependency has been **removed** if new parameter information isn't present.
+
+## [[1.4.0](https://github.com/nf-core/pixelator/releases/tag/1.4.0)] - 2024-01-22
+
+### Enhancements & fixes
+
+- [[PR #111](https://github.com/nf-core/pixelator/pull/111)] - Template update for nf-core/tools v3.0.2
+- [[PR #112](https://github.com/nf-core/pixelator/pull/112)] - Add graph refinement options for pixelator 0.19
+- [[PR #113](https://github.com/nf-core/pixelator/pull/113)] - Fix validation issues after nf-core/tools v3.0.2 update
+- [[PR #114](https://github.com/nf-core/pixelator/pull/114)] - Remove `--save_recovered_components` options for graph outputs
+- [[PR #115](https://github.com/nf-core/pixelator/pull/115)] - Update containers for pixelator 0.19
+- [[PR #116](https://github.com/nf-core/pixelator/pull/116)] - Bump version to 1.4
+- [[PR #117](https://github.com/nf-core/pixelator/pull/117)] - Template update for nf-core/tools v3.1.0
+- [[PR #118](https://github.com/nf-core/pixelator/pull/118)] - Update metromap, bump conda versions
+- [[PR #120](https://github.com/nf-core/pixelator/pull/120)] - Add process_long to AMPLICON and COLLAPSE steps
+- [[PR #122](https://github.com/nf-core/pixelator/pull/122)] - Template update for nf-core/tools v3.1.1
+- [[PR #124](https://github.com/nf-core/pixelator/pull/124)] - Add manifest.contributors metadata to nextflow.config
+- [[PR #125](https://github.com/nf-core/pixelator/pull/125)] - Use environment.yml files for all conda process directives
+- [[PR #123](https://github.com/nf-core/pixelator/pull/123)] - Add nf-test tests for local modules and subworkflows
+
+### Parameters
+
+| Old parameter                        | New parameter                            |
+| ------------------------------------ | ---------------------------------------- |
+|                                      | `--help_full`                            |
+|                                      | `--show_hidden`                          |
+| `--validationFailUnrecognisedParams` |                                          |
+| `--validationLenientMode`            |                                          |
+| `--validationSchemaIgnoreParams`     |                                          |
+| `--validationShowHiddenParams`       |                                          |
+| `--leiden_iterations`                | `--graph_max_refinement_recursion_depth` |
+|                                      | `--graph_max_edges_to_split`             |
+|                                      | `--graph_max_edges_to_split`             |
+| `--save_recovered_components`        |                                          |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.18.2      | 0.19.0      |
+
+> [!NOTE]
+> Dependency has been **updated** if both old and new parameter information is present.
+> Dependency has been **added** if just the new parameter information is present.
+> Dependency has been **removed** if new parameter information isn't present.
+
+## [[1.3.1](https://github.com/nf-core/pixelator/releases/tag/1.3.1)] - 2024-07-31
+
+### Enhancements & fixes
+
+- [[PR #107](https://github.com/nf-core/pixelator/pull/107)] - Fix conda version tag to use pixelator 0.18.2
+
+## [[1.3.0](https://github.com/nf-core/pixelator/releases/tag/1.3.0)] - 2024-07-17
+
+### Enhancements & fixes
+
+- [[PR #97](https://github.com/nf-core/pixelator/pull/97)] - Update citations
+- [[PR #96](https://github.com/nf-core/pixelator/pull/96)] - Make all ext.args assignments closures
+- [[PR #98](https://github.com/nf-core/pixelator/pull/98)] - Update metromap to include layout step
+- [[PR #99](https://github.com/nf-core/pixelator/pull/99)] - Update README to include layout step
+- [[PR #100](https://github.com/nf-core/pixelator/pull/100)] - Use R1/R2 suffixes in amplicon input fastq file renaming
+- [[PR #101](https://github.com/nf-core/pixelator/pull/101)] - Fix validation issue when using panel_file instead of panel
+- [[PR #102](https://github.com/nf-core/pixelator/pull/101)] - Restructure output directory
+- [[PR #103](https://github.com/nf-core/pixelator/pull/103)] - Make rate-diff the default transformation method when computing colocalization
+- [[PR #104](https://github.com/nf-core/pixelator/pull/104)] - Update to pixelator 0.18.1
+- [[PR #106](https://github.com/nf-core/pixelator/pull/106)] - Update to pixelator 0.18.2
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.17.1      | 0.18.2      |
+
+> [!NOTE]
+> Dependency has been **updated** if both old and new version information is present.
+> Dependency has been **added** if just the new version information is present.
+> Dependency has been **removed** if new version information isn't present.
+
+## [[1.2.0](https://github.com/nf-core/pixelator/releases/tag/1.2.0)] - 2024-05-28
+
+### Enhancements & fixes
+
+- [[PR #89](https://github.com/nf-core/pixelator/pull/89)] - Template update for nf-core/tools v2.14.1
+- [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - Update pixelator to 0.17.1
+- [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - Add `pixelator single-cell layout` command
+- [[PR #90](https://github.com/nf-core/pixelator/pull/90)] - The `graph` and `annotate` steps are now using `process_high` as their resource tags
+- [[PR #91](https://github.com/nf-core/pixelator/pull/91)] - Set `process_high` to use 64GB of RAM and `process_high_memory` to use 128GB of RAM
+- [[PR #92](https://github.com/nf-core/pixelator/pull/92)] - Minor touch-ups to the documentation
+- [[PR #93](https://github.com/nf-core/pixelator/pull/93)] - Merge RENAME_READS functionality into PIXELATOR_AMPLICON
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.16.2      | 0.17.1      |
+
+> **NB:** Dependency has been **updated** if both old and new version information is present.
+>
+> **NB:** Dependency has been **added** if just the new version information is present.
+>
+> **NB:** Dependency has been **removed** if new version information isn't present.
+
+## [[1.1.0](https://github.com/nf-core/pixelator/releases/tag/1.1.0)] - 2024-03-29
+
+### Enhancements & fixes
+
+- [[PR #83](https://github.com/nf-core/pixelator/pull/83)] - Template update for nf-core/tools v2.13
+- [[PR #84](https://github.com/nf-core/pixelator/pull/84)] - Update pixelator to 0.16.2, collapse`and`graph` step now return parquet files
+- [[PR #85](https://github.com/nf-core/pixelator/pull/85)] - Remove a workaround for container issues, silence some warnings, update default resources
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.15.2      | 0.16.2      |
+
+> **NB:** Dependency has been **updated** if both old and new version information is present.
+>
+> **NB:** Dependency has been **added** if just the new version information is present.
+>
+> **NB:** Dependency has been **removed** if new version information isn't present.
+
+## [[1.0.3](https://github.com/nf-core/pixelator/releases/tag/1.0.3)] - 2024-01-19
+
+### Enhancements & fixes
+
+- [[PR #74](https://github.com/nf-core/pixelator/pull/74)] - Template update for nf-core/tools v2.11
+- [[e196431](https://github.com/nf-core/pixelator/commit/e196431842b039cbf5c299c7a3e568f6a3e30e33)] - Workaround a tool issue by removing `docker.runOptions` user and group flags
+- [[PR #76](https://github.com/nf-core/pixelator/pull/76)] - Use `adapterqc` output as main output of PIXELATOR_QC
+- [[PR #77](https://github.com/nf-core/pixelator/pull/77)] - Fix some style issues in nextflow_schema.json
+
+## [[1.0.2](https://github.com/nf-core/pixelator/releases/tag/1.0.2)] - 2023-11-20
+
+### Enhancements & fixes
+
+- [[PR #70](https://github.com/nf-core/pixelator/pull/70)] - Fix loading of absolute paths and urls in input samplesheet
+
+## [[1.0.1](https://github.com/nf-core/pixelator/releases/tag/1.0.1)] - 2023-10-27
+
+### Enhancements & fixes
+
+- [[PR #66](https://github.com/nf-core/pixelator/pull/66)] - Add a warning and workaround for singularity & apptainer
+- Cleanup some linting warnings
+- Update docker image in RENAME_READS to match the singularity container
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.15.0      | 0.15.2      |
+
+> **NB:** Dependency has been **updated** if both old and new version information is present.
+>
+> **NB:** Dependency has been **added** if just the new version information is present.
+>
+> **NB:** Dependency has been **removed** if new version information isn't present.
+
+## [[1.0.0](https://github.com/nf-core/pixelator/releases/tag/1.0.0)] - 2023-10-17
+
+Initial release of nf-core/pixelator.

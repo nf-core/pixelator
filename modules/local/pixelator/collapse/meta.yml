@@ -1,0 +1,102 @@
+name: pixelator_collapse
+description: Run `pixelator single-cell-pna collapse` to collapse reads into molecule-level parquet outputs.
+keywords:
+  - pixelator
+  - single-cell-pna
+  - collapse
+  - parquet
+tools:
+  - pixelator:
+      description: Single-cell sequencing data analysis toolkit from Pixelgen Technologies.
+      homepage: https://pixelgen.com/
+      documentation: https://software.pixelgen.com/pixelator/
+      licence: ["MIT"]
+      identifier: ""
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. [ id:'sample1', design:'pna-2' ]
+    - reads:
+        type: file
+        description: Input FASTQ files.
+        pattern: "*.{fq,fastq,fq.gz,fastq.gz,fq.zst,fastq.zst}"
+        ontologies:
+          - http://edamontology.org/format_2545
+    - panel_file:
+        type: file
+        description: Optional panel definition file.
+        ontologies: []
+    - panel:
+        type: string
+        description: Optional panel name.
+    - design:
+        type: string
+        description: Assay design identifier.
+output:
+  collapsed:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.parquet":
+          type: file
+          description: Collapsed molecule-level parquet output(s).
+          pattern: "*.parquet"
+          ontologies: []
+  report_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.report.json":
+          type: file
+          description: Run report in JSON format.
+          pattern: "*.report.json"
+          ontologies: []
+  metadata_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.meta.json":
+          type: file
+          description: Metadata in JSON format.
+          pattern: "*.meta.json"
+          ontologies: []
+  log:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*pixelator-collapse.log":
+          type: file
+          description: Pixelator collapse command log.
+          pattern: "*pixelator-collapse.log"
+          ontologies: []
+  versions_pixelator:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+authors:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
+maintainers:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
