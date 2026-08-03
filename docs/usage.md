@@ -310,6 +310,27 @@ Specify the path to a specific config file (this is a core Nextflow command). Se
 
 ## Custom configuration
 
+### DuckDB temporary storage
+
+When Pixelator runs memory-constrained DuckDB work (for example `denoise` or component filtering), it can spill
+temporary data to disk. For container profiles, nf-core/pixelator sets
+`PIXELATOR_DUCKDB_TEMP_DIR` to `${TMPDIR:-/tmp}` so spill files land on local disk rather than next to the
+`.pxl` file (which may live on networked storage such as S3/Fusion).
+
+That default works on most systems. Override it when it does not — for example if `/tmp` or `TMPDIR` is too
+small, is on a networked or otherwise unsuitable filesystem, or is not writable inside the container.
+You can also set `PIXELATOR_DUCKDB_MAX_TEMP_DIR_SIZE` to cap how much disk DuckDB may use for spill files
+(unset means no limit). Values use DuckDB size syntax (for example `"10GB"`).
+
+Set either variable in a Nextflow config passed with `-c`:
+
+```groovy
+env {
+    PIXELATOR_DUCKDB_TEMP_DIR = '/path/to/local/tmp'
+    PIXELATOR_DUCKDB_MAX_TEMP_DIR_SIZE = '10GB'
+}
+```
+
 ### Resource requests
 
 Whilst the default requirements set within the pipeline will hopefully work for most people and with most input data, you may find that you want to customise the compute resources that the pipeline requests. Each step in the pipeline has a default set of requirements for number of CPUs, memory and time. For most of the pipeline steps, if the job exits with any of the error codes specified [here](https://github.com/nf-core/rnaseq/blob/4c27ef5610c87db00c3c5a3eed10b1d161abf575/conf/base.config#L18) it will automatically be resubmitted with higher resources request (2 x original, then 3 x original). If it still fails after the third attempt then the pipeline execution is stopped.
