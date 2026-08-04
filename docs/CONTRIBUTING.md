@@ -211,3 +211,6 @@ these projects for more information.
 The release process is being partially automated. When a PR is merged to
 master, the GitHub release is created automatically from the body of the PR and
 the version defined in `nextflow.config`.
+
+After the release has been successfully created, a new PR is automatically created
+to carry out the post-release changes on the `dev` branch.
