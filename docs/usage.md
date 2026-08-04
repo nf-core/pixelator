@@ -314,7 +314,7 @@ Specify the path to a specific config file (this is a core Nextflow command). Se
 
 When Pixelator runs memory-constrained DuckDB work (for example `denoise` or component filtering), it can spill
 temporary data to disk. For container profiles, nf-core/pixelator sets
-`PIXELATOR_DUCKDB_TEMP_DIR` to  `TMPDIR` if it is set, otherwise to `/tmp`, so spill files land on local disk rather than next to the
+`PIXELATOR_DUCKDB_TEMP_DIR` to `TMPDIR` if it is set, otherwise to `/tmp`, so spill files land on local disk rather than next to the
 `.pxl` file (which may live on networked storage such as S3/Fusion).
 
 That default works on most systems. Override it when it does not — for example if `/tmp` or `TMPDIR` is too
