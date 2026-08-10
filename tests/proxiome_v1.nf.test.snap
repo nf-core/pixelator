@@ -114,7 +114,7 @@
                     "cat": 9.5
                 },
                 "EXPERIMENT_SUMMARY": {
-                    "experiment-summary": "0.11.2"
+                    "experiment-summary": "0.12.0"
                 },
                 "PIXELATOR_AMPLICON": {
                     "pixelator": "0.30.0"
@@ -148,10 +148,10 @@
                 }
             }
         ],
-        "timestamp": "2026-06-17T09:05:52.731272619",
+        "timestamp": "2026-08-10T16:31:48.4154274",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.04.2"
         }
     },
     "Params: all": {
@@ -162,7 +162,7 @@
                     "cat": 9.5
                 },
                 "EXPERIMENT_SUMMARY": {
-                    "experiment-summary": "0.11.2"
+                    "experiment-summary": "0.12.0"
                 },
                 "PIXELATOR_AMPLICON": {
                     "pixelator": "0.30.0"
@@ -287,21 +287,21 @@
                 "pixelator/sample_2.layout.pxl"
             ],
             [
-                "sample_1.meta.json:md5,5e252f7062a4b444c53b1bfeb07ba9db",
-                "sample_2.meta.json:md5,5e252f7062a4b444c53b1bfeb07ba9db",
-                "sample_1.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
-                "sample_2.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
-                "sample_1.meta.json:md5,6ca7d2d473fee8a3ab667835f4057916",
-                "sample_2.meta.json:md5,e0b756a91edb80e878baa6862b2c3c6d",
-                "sample_1.meta.json:md5,eb91c047c438beb4c746cf2acba39ab5",
-                "sample_2.meta.json:md5,eb91c047c438beb4c746cf2acba39ab5",
-                "sample_1.meta.json:md5,1bab90d8bd4e8c054d11f1c51c94c9b1",
-                "sample_2.meta.json:md5,4d11b62a832866d52a2a0461ceebfcb5",
-                "sample_1.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
-                "sample_2.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3"
+                "sample_1.meta.json:md5,b8db928e6a8006d933a94aff407b573e",
+                "sample_2.meta.json:md5,54dde5d71ee08c0daae413b15d711f16",
+                "sample_1.meta.json:md5,c8c7f450162b3310f53db4a3c062be2c",
+                "sample_2.meta.json:md5,24dd8b2ea99188a56c5b4bdc3a922b2d",
+                "sample_1.meta.json:md5,11f2d756ab546caf45d40be795e336c7",
+                "sample_2.meta.json:md5,1920b10cd814e6992bf0f6a7550c93f6",
+                "sample_1.meta.json:md5,930f77c36d7daffe6100c3e4389f4f2a",
+                "sample_2.meta.json:md5,07ef8e20312652a5546ebe5fa443f701",
+                "sample_1.meta.json:md5,b9f5a56485fbcc7cdd615912674df2ed",
+                "sample_2.meta.json:md5,496f59200ff8351a0e151410b2340418",
+                "sample_1.meta.json:md5,f037aa98e457d6a824de1fea2895db04",
+                "sample_2.meta.json:md5,cd42c7eb97f6cf62a9de2262e26f4cb3"
             ]
         ],
-        "timestamp": "2026-07-15T11:34:04.157604261",
+        "timestamp": "2026-08-10T16:30:33.064217313",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"

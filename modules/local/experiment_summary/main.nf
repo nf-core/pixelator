@@ -4,8 +4,8 @@ process EXPERIMENT_SUMMARY {
     label "error_retry"
 
     container "${params.experiment_summary_container?: workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelatores:0.11.2'
-        : 'quay.io/pixelgen-technologies/pixelatores:0.11.2'}"
+        ? 'quay.io/pixelgen-technologies/pixelatores:0.12.0'
+        : 'quay.io/pixelgen-technologies/pixelatores:0.12.0'}"
 
     input:
     path samplesheet_path
