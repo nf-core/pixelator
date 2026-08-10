@@ -60,7 +60,7 @@
                     [
                         "PIXELATOR_AMPLICON",
                         "pixelator",
-                        "0.29.0"
+                        "0.30.0"
                     ]
                 ],
                 "amplicon": [
@@ -111,7 +111,7 @@
                     [
                         "PIXELATOR_AMPLICON",
                         "pixelator",
-                        "0.29.0"
+                        "0.30.0"
                     ]
                 ]
             }
@@ -140,7 +140,7 @@
                 [
                     "PIXELATOR_AMPLICON",
                     "pixelator",
-                    "0.29.0"
+                    "0.30.0"
                 ]
             ]
         ],
