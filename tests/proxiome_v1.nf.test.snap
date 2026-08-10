@@ -287,21 +287,21 @@
                 "pixelator/sample_2.layout.pxl"
             ],
             [
-                "sample_1.meta.json:md5,b8db928e6a8006d933a94aff407b573e",
-                "sample_2.meta.json:md5,54dde5d71ee08c0daae413b15d711f16",
-                "sample_1.meta.json:md5,c8c7f450162b3310f53db4a3c062be2c",
-                "sample_2.meta.json:md5,24dd8b2ea99188a56c5b4bdc3a922b2d",
-                "sample_1.meta.json:md5,11f2d756ab546caf45d40be795e336c7",
-                "sample_2.meta.json:md5,1920b10cd814e6992bf0f6a7550c93f6",
-                "sample_1.meta.json:md5,930f77c36d7daffe6100c3e4389f4f2a",
-                "sample_2.meta.json:md5,07ef8e20312652a5546ebe5fa443f701",
-                "sample_1.meta.json:md5,b9f5a56485fbcc7cdd615912674df2ed",
-                "sample_2.meta.json:md5,496f59200ff8351a0e151410b2340418",
-                "sample_1.meta.json:md5,f037aa98e457d6a824de1fea2895db04",
-                "sample_2.meta.json:md5,cd42c7eb97f6cf62a9de2262e26f4cb3"
+                "sample_1.meta.json:md5,adf094082ad53ce2153356a7a157d7b6",
+                "sample_2.meta.json:md5,5a1105e9336a8d43fd12d006ccbdf531",
+                "sample_1.meta.json:md5,23bb50571c666529140cc2ecd3f323b3",
+                "sample_2.meta.json:md5,58ab316760d7920a4448c02b087ed7ab",
+                "sample_1.meta.json:md5,99b7d6f8266a9022358b8d51756e2f49",
+                "sample_2.meta.json:md5,0f4c9f8bd4ff3196d3e68f42c573df09",
+                "sample_1.meta.json:md5,66a996f8dd0334e272d0c4e4284748f1",
+                "sample_2.meta.json:md5,e74400bd636c072845c33e3d966ff74d",
+                "sample_1.meta.json:md5,e6851e0a42e552bbc5595dde2016ca50",
+                "sample_2.meta.json:md5,4c2d59b7c0a2d8657664fbd7acdd5e62",
+                "sample_1.meta.json:md5,7620ab6f01b9cc7ba20765277a993a72",
+                "sample_2.meta.json:md5,a40e4784cfbddb2b97409935d5f4a6e7"
             ]
         ],
-        "timestamp": "2026-08-10T16:30:33.064217313",
+        "timestamp": "2026-08-10T17:01:53.432998154",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"

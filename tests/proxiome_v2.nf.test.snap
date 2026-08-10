@@ -180,12 +180,15 @@
                 "PIXELATOR_LIST_OPTIONS": {
                     "pixelator": "0.30.0"
                 },
+                "PIXELATOR_SAMPLE_CALLING": {
+                    "pixelator": "0.30.0"
+                },
                 "Workflow": {
                     "nf-core/pixelator": "v5.1.0dev"
                 }
             }
         ],
-        "timestamp": "2026-08-10T16:31:58.738965766",
+        "timestamp": "2026-08-10T17:07:01.283729267",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
@@ -226,6 +229,9 @@
                     "pixelator": "0.30.0"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
+                    "pixelator": "0.30.0"
+                },
+                "PIXELATOR_SAMPLE_CALLING": {
                     "pixelator": "0.30.0"
                 },
                 "Workflow": {
@@ -365,31 +371,31 @@
                 "pixelator/sample_calling/sample4.report.json"
             ],
             [
-                "pool1.meta.json:md5,782ff97cffa315a962ee5484c9217cb2",
-                "pool2.meta.json:md5,c471aa79f1e4966be1adee69ffcf2c4c",
-                "sample1.meta.json:md5,9d5791febb4ec16be8e5f5de8ef32673",
-                "sample2.meta.json:md5,c465d51e25efa99d429b1830becb2f32",
-                "sample3.meta.json:md5,32ccae35c78e999679645cb13a9f56cf",
-                "sample4.meta.json:md5,e030e5c972098c25eaf09fc8b91b115d",
-                "pool1.meta.json:md5,e2900b55558a06b6f6e0fb71d01e8685",
-                "pool2.meta.json:md5,f1e60e205f73208a8e599e9fd6685aca",
-                "pool1.meta.json:md5,b700331b29d6b2601f5a0d2c0d6915b7",
-                "pool2.meta.json:md5,f0d92354b701386ea28a2e393f946ea8",
-                "pool1.meta.json:md5,fd1389c96dabea4c035353d2b3231611",
-                "pool2.meta.json:md5,ea7d4b949596ad5f0e7ad17179f422e3",
-                "sample1.meta.json:md5,a3b32d2ff7d215fea737be60133a9df6",
-                "sample2.meta.json:md5,c5870f2e4089820eef3b1d9caec9f1d7",
-                "sample3.meta.json:md5,682d6895505a7f6454b64ff78f9a27a1",
-                "sample4.meta.json:md5,f28a1e48d4746047674c5c2094d04bef",
-                "pool1_undetermined.meta.json:md5,cba0d60b5d09cf448851db12b71a5a25",
-                "pool2_undetermined.meta.json:md5,0a51c385145a97be77b020f9c511012c",
-                "sample1.meta.json:md5,cba0d60b5d09cf448851db12b71a5a25",
-                "sample2.meta.json:md5,cba0d60b5d09cf448851db12b71a5a25",
-                "sample3.meta.json:md5,0a51c385145a97be77b020f9c511012c",
-                "sample4.meta.json:md5,0a51c385145a97be77b020f9c511012c"
+                "pool1.meta.json:md5,bfe82dd32aca9c0d7a9b3d519c900c82",
+                "pool2.meta.json:md5,d93642fbeda995f94dd9b3cc7c4410cd",
+                "sample1.meta.json:md5,b4abcb77ffb81b3cc110a62450bf408d",
+                "sample2.meta.json:md5,eab080e50a22bfc4e8019ae7e7722af4",
+                "sample3.meta.json:md5,e24898dbd7b171fa9586e63b0043fe9e",
+                "sample4.meta.json:md5,c13cad963e5abb23aff16448c7fb1d52",
+                "pool1.meta.json:md5,40ef97611a55c22ecec6c4c12fc10a08",
+                "pool2.meta.json:md5,69faa2867a9adbe9d31cf1df952ad400",
+                "pool1.meta.json:md5,56f23ec41ca892054cc7b482844d3667",
+                "pool2.meta.json:md5,7a42dca36c56d8a6a7a8c1cabd373e28",
+                "pool1.meta.json:md5,f18197085b264092e6d274c9316a67d0",
+                "pool2.meta.json:md5,7cba4d74d788ffe1c6e6242fce9fe96c",
+                "sample1.meta.json:md5,7d863a36994614a1a35732678fe56698",
+                "sample2.meta.json:md5,dafc8ba5b2c276d5ca250fd3c9b44041",
+                "sample3.meta.json:md5,da9d16d70214bb30b46e54ebc6fd0ee3",
+                "sample4.meta.json:md5,090d139c08a2c247b3be3bc5cbf23d95",
+                "pool1_undetermined.meta.json:md5,77562e6d9d85d5627e6bd6f718119065",
+                "pool2_undetermined.meta.json:md5,2a3aee088c0b065f76d4362480f28a1b",
+                "sample1.meta.json:md5,77562e6d9d85d5627e6bd6f718119065",
+                "sample2.meta.json:md5,77562e6d9d85d5627e6bd6f718119065",
+                "sample3.meta.json:md5,2a3aee088c0b065f76d4362480f28a1b",
+                "sample4.meta.json:md5,2a3aee088c0b065f76d4362480f28a1b"
             ]
         ],
-        "timestamp": "2026-08-10T16:30:36.8504529",
+        "timestamp": "2026-08-10T17:06:11.900974005",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
