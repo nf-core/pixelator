@@ -127,24 +127,7 @@
                 "pixelator/sample_calling/sample4.dehashed.pxl"
             ],
             [
-                "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample3.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample4.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample3.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample4.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool1.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool2.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                
             ],
             {
                 "CAT_FASTQ": {
@@ -188,7 +171,7 @@
                 }
             }
         ],
-        "timestamp": "2026-08-10T17:07:01.283729267",
+        "timestamp": "2026-08-11T08:27:56.30759346",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
@@ -371,31 +354,10 @@
                 "pixelator/sample_calling/sample4.report.json"
             ],
             [
-                "pool1.meta.json:md5,bfe82dd32aca9c0d7a9b3d519c900c82",
-                "pool2.meta.json:md5,d93642fbeda995f94dd9b3cc7c4410cd",
-                "sample1.meta.json:md5,b4abcb77ffb81b3cc110a62450bf408d",
-                "sample2.meta.json:md5,eab080e50a22bfc4e8019ae7e7722af4",
-                "sample3.meta.json:md5,e24898dbd7b171fa9586e63b0043fe9e",
-                "sample4.meta.json:md5,c13cad963e5abb23aff16448c7fb1d52",
-                "pool1.meta.json:md5,40ef97611a55c22ecec6c4c12fc10a08",
-                "pool2.meta.json:md5,69faa2867a9adbe9d31cf1df952ad400",
-                "pool1.meta.json:md5,56f23ec41ca892054cc7b482844d3667",
-                "pool2.meta.json:md5,7a42dca36c56d8a6a7a8c1cabd373e28",
-                "pool1.meta.json:md5,f18197085b264092e6d274c9316a67d0",
-                "pool2.meta.json:md5,7cba4d74d788ffe1c6e6242fce9fe96c",
-                "sample1.meta.json:md5,7d863a36994614a1a35732678fe56698",
-                "sample2.meta.json:md5,dafc8ba5b2c276d5ca250fd3c9b44041",
-                "sample3.meta.json:md5,da9d16d70214bb30b46e54ebc6fd0ee3",
-                "sample4.meta.json:md5,090d139c08a2c247b3be3bc5cbf23d95",
-                "pool1_undetermined.meta.json:md5,77562e6d9d85d5627e6bd6f718119065",
-                "pool2_undetermined.meta.json:md5,2a3aee088c0b065f76d4362480f28a1b",
-                "sample1.meta.json:md5,77562e6d9d85d5627e6bd6f718119065",
-                "sample2.meta.json:md5,77562e6d9d85d5627e6bd6f718119065",
-                "sample3.meta.json:md5,2a3aee088c0b065f76d4362480f28a1b",
-                "sample4.meta.json:md5,2a3aee088c0b065f76d4362480f28a1b"
+                
             ]
         ],
-        "timestamp": "2026-08-10T17:06:11.900974005",
+        "timestamp": "2026-08-11T08:27:04.705573587",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"

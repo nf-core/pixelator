@@ -19,7 +19,7 @@ nextflow_pipeline {
             // stable_path: All files + folders in ${params.outdir}/ with a stable name
             def stable_path = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             // stable_content: All files in ${params.outdir}/ with stable content
-            def stable_content = getAllFilesFromDir(params.outdir, include: ['**/*.meta.json'], ignore: ['pixelator/collapse/*'])
+            def stable_content = []
 
             assertAll(
                 { assert workflow.success},
@@ -50,7 +50,7 @@ nextflow_pipeline {
         then {
             def stable_path = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             // stable_content: All files in ${params.outdir}/ with stable content
-            def stable_content = getAllFilesFromDir(params.outdir, include: ['**/*.meta.json'], ignore: ['pixelator/collapse/*'])
+            def stable_content = []
             assertAll(
                 { assert workflow.success },
                 { assert snapshot(

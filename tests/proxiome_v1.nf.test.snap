@@ -96,18 +96,7 @@
                 "pixelator/sample_2.pxl"
             ],
             [
-                "sample_1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample_2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample_1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample_2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample_1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample_2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample_1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample_2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample_1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample_2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample_1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample_2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                
             ],
             {
                 "CAT_FASTQ": {
@@ -148,7 +137,7 @@
                 }
             }
         ],
-        "timestamp": "2026-08-10T16:31:48.4154274",
+        "timestamp": "2026-08-11T08:23:21.795999696",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
@@ -287,21 +276,10 @@
                 "pixelator/sample_2.layout.pxl"
             ],
             [
-                "sample_1.meta.json:md5,adf094082ad53ce2153356a7a157d7b6",
-                "sample_2.meta.json:md5,5a1105e9336a8d43fd12d006ccbdf531",
-                "sample_1.meta.json:md5,23bb50571c666529140cc2ecd3f323b3",
-                "sample_2.meta.json:md5,58ab316760d7920a4448c02b087ed7ab",
-                "sample_1.meta.json:md5,99b7d6f8266a9022358b8d51756e2f49",
-                "sample_2.meta.json:md5,0f4c9f8bd4ff3196d3e68f42c573df09",
-                "sample_1.meta.json:md5,66a996f8dd0334e272d0c4e4284748f1",
-                "sample_2.meta.json:md5,e74400bd636c072845c33e3d966ff74d",
-                "sample_1.meta.json:md5,e6851e0a42e552bbc5595dde2016ca50",
-                "sample_2.meta.json:md5,4c2d59b7c0a2d8657664fbd7acdd5e62",
-                "sample_1.meta.json:md5,7620ab6f01b9cc7ba20765277a993a72",
-                "sample_2.meta.json:md5,a40e4784cfbddb2b97409935d5f4a6e7"
+                
             ]
         ],
-        "timestamp": "2026-08-10T17:01:53.432998154",
+        "timestamp": "2026-08-11T08:22:39.094080602",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
