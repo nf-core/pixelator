@@ -5,8 +5,8 @@ process PIXELATOR_SAMPLE_CALLING {
     // TODO: Add conda
     // conda "bioconda::pixelator=0.18.2"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.29.0'
-        : 'quay.io/pixelgen-technologies/pixelator:0.29.0'}"
+        ? 'quay.io/pixelgen-technologies/pixelator:0.30.0'
+        : 'quay.io/pixelgen-technologies/pixelator:0.30.0'}"
 
     input:
     tuple val(meta), path(data), path(samplesheet)
@@ -20,7 +20,7 @@ process PIXELATOR_SAMPLE_CALLING {
     tuple val(meta), path("*pixelator-sample-calling.log"), emit: log
     tuple val('sample_calling'), path("sample_calling/*"),  topic: all_results_for_reports
 
-    path "versions.yml", emit: versions
+    tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -41,11 +41,6 @@ process PIXELATOR_SAMPLE_CALLING {
         --output . \
         ${args} \
         ${data}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 
     // The stub here generates multiple output pxl files to mimic real run
@@ -63,10 +58,5 @@ process PIXELATOR_SAMPLE_CALLING {
     touch sample_calling/sample3.dehashed.pxl
     touch sample_calling/sample4.dehashed.pxl
     touch ${prefix}.pixelator-sample-calling.log
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        pixelator: \$(echo \$(pixelator --version 2>/dev/null) | sed 's/pixelator, version //g' )
-    END_VERSIONS
     """
 }

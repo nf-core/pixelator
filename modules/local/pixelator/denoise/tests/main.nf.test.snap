@@ -16,7 +16,7 @@
                 [
                     "PIXELATOR_DENOISE",
                     "pixelator",
-                    "0.29.0"
+                    "0.30.0"
                 ]
             ]
         ],
@@ -102,7 +102,7 @@
                     [
                         "PIXELATOR_DENOISE",
                         "pixelator",
-                        "0.29.0"
+                        "0.30.0"
                     ]
                 ],
                 "all_results": [
@@ -168,7 +168,7 @@
                     [
                         "PIXELATOR_DENOISE",
                         "pixelator",
-                        "0.29.0"
+                        "0.30.0"
                     ]
                 ]
             }

@@ -3,6 +3,7 @@ nextflow_process {
     name "Test Process EXPERIMENT_SUMMARY"
     script "../main.nf"
     process "EXPERIMENT_SUMMARY"
+    profile "test_proxiome_v2"
     tag "modules"
     tag "pixelator"
     tag "pixelator/pna"
