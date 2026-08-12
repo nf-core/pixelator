@@ -5,11 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[5.1.0dev]($tag_url)] - $date
 
-### Enhancements & fixed
+### Patches
 
 - Automate release creation. By @Aratz [#235](https://github.com/nf-core/pixelator/pull/235)
 - Document how to configure DuckDB temporary storage environment variables. By @johandahlberg [#238](https://github.com/nf-core/pixelator/pull/238/)
 - Automate post-release backsync to `dev`. By @Aratz [#239](https://github.com/nf-core/pixelator/pull/239)
+- Configure container override for sample calling step. By @Aratz [#241](https://github.com/nf-core/pixelator/pull/241)
 
 ### Software dependencies
 
