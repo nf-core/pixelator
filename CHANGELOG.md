@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configure container override for sample calling step. By @Aratz [#241](https://github.com/nf-core/pixelator/pull/241)
 - Increase `pna_graph_component_size_max_threshold` default value to 1M. By @Aratz [#243](https://github.com/nf-core/pixelator/pull/243)
 
+### Enhancements & fixes
+
+- Pass the collated software versions to the experiment summary report.
+
 ### Software dependencies
 
 | Dependency    | Old version | New version |

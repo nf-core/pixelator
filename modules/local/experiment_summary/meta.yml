@@ -31,6 +31,11 @@ input:
         type: file
         description: Result files to organize under stage folders in the report input.
         ontologies: []
+  - - versions_yml:
+        type: file
+        description: Collated software versions, copied into the report data folder.
+        pattern: "*.{yml,yaml}"
+        ontologies: []
 output:
   html:
     - - meta:
@@ -42,17 +47,6 @@ output:
           pattern: "*experiment-summary.html"
           ontologies: []
   versions_experiment_summary:
-    - - ${task.process}:
-          type: string
-          description: The process the versions were collected from.
-      - experiment-summary:
-          type: string
-          description: The tool name.
-      - Rscript -e 'cat(as.character(packageVersion("pixelatorES")), "\n")':
-          type: eval
-          description: The expression used to obtain the tool version.
-topics:
-  versions:
     - - ${task.process}:
           type: string
           description: The process the versions were collected from.

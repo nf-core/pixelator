@@ -13,6 +13,7 @@ include { paramsSummaryMap          } from 'plugin/nf-schema'
 include { samplesheetToList         } from 'plugin/nf-schema'
 include { completionEmail           } from '../../nf-core/utils_nfcore_pipeline'
 include { completionSummary         } from '../../nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML    } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NFCORE_PIPELINE     } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipeline'
 
@@ -237,6 +238,33 @@ def getGenomeAttribute(attribute) {
         }
     }
     return null
+}
+
+//
+// Collate the `versions` topic into a channel of YAML fragments
+//
+// Any process consuming the result must not emit to the `versions` topic itself,
+// as the topic only closes once all of its publishers have finished.
+//
+def softwareVersionsYaml() {
+    def topic_versions = channel.topic("versions")
+        .distinct()
+        .branch { entry ->
+            versions_file: entry instanceof Path
+            versions_tuple: true
+        }
+
+    def topic_versions_string = topic_versions.versions_tuple
+        .map { process, tool, version ->
+            [ process[process.lastIndexOf(':')+1..-1], "  ${tool}: ${version}" ]
+        }
+        .groupTuple(by:0)
+        .map { process, tool_versions ->
+            tool_versions.unique().sort()
+            "${process}:\n${tool_versions.join('\n')}"
+        }
+
+    return softwareVersionsToYAML(topic_versions.versions_file).mix(topic_versions_string)
 }
 
 //

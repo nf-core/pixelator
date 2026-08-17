@@ -133,9 +133,6 @@
                 "CAT_FASTQ": {
                     "cat": 9.5
                 },
-                "EXPERIMENT_SUMMARY": {
-                    "experiment-summary": "0.12.0"
-                },
                 "PIXELATOR_AMPLICON": {
                     "pixelator": "0.30.0"
                 },
@@ -171,7 +168,7 @@
                 }
             }
         ],
-        "timestamp": "2026-08-11T08:27:56.30759346",
+        "timestamp": "2026-08-17T11:14:37.297215197",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
@@ -183,9 +180,6 @@
             {
                 "CAT_FASTQ": {
                     "cat": 9.5
-                },
-                "EXPERIMENT_SUMMARY": {
-                    "experiment-summary": "0.12.0"
                 },
                 "PIXELATOR_AMPLICON": {
                     "pixelator": "0.30.0"
@@ -357,7 +351,7 @@
                 
             ]
         ],
-        "timestamp": "2026-08-11T08:27:04.705573587",
+        "timestamp": "2026-08-17T11:13:43.166533768",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
