@@ -3,15 +3,27 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[5.1.0dev]($tag_url)] - $date
+## [[5.0.1](https://github.com/nf-core/pixelator/releases/tag/5.0.1)] - 2026-08-17
 
 ### Patches
 
-- Automate release creation. By @Aratz [#235](https://github.com/nf-core/pixelator/pull/235)
-- Document how to configure DuckDB temporary storage environment variables. By @johandahlberg [#238](https://github.com/nf-core/pixelator/pull/238/)
-- Automate post-release backsync to `dev`. By @Aratz [#239](https://github.com/nf-core/pixelator/pull/239)
-- Configure container override for sample calling step. By @Aratz [#241](https://github.com/nf-core/pixelator/pull/241)
+#### Changed
+
 - Increase `pna_graph_component_size_max_threshold` default value to 1M. By @Aratz [#243](https://github.com/nf-core/pixelator/pull/243)
+
+#### Documentation
+
+- Document how to configure DuckDB temporary storage environment variables. By @johandahlberg [#238](https://github.com/nf-core/pixelator/pull/238/)
+
+#### Bug fixes
+
+- Configure container override for sample calling step. By @Aratz [#241](https://github.com/nf-core/pixelator/pull/241)
+
+#### Infrastructure
+
+- Update nf-core template to 4.0.3 by @Aratz [#236](https://github.com/nf-core/pixelator/pull/236)
+- Automate release creation. By @Aratz [#235](https://github.com/nf-core/pixelator/pull/235)
+- Automate post-release backsync to `dev`. By @Aratz [#239](https://github.com/nf-core/pixelator/pull/239)
 
 ### Software dependencies
 
