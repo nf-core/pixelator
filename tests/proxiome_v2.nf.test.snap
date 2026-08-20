@@ -127,68 +127,54 @@
                 "pixelator/sample_calling/sample4.dehashed.pxl"
             ],
             [
-                "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample3.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample4.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample2.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample3.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "sample4.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool1.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "pool2.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                
             ],
             {
                 "CAT_FASTQ": {
                     "cat": 9.5
                 },
                 "EXPERIMENT_SUMMARY": {
-                    "experiment-summary": "0.11.2"
+                    "experiment-summary": "0.12.0"
                 },
                 "PIXELATOR_AMPLICON": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_ANALYSIS": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_COLLAPSE": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_COMBINE_COLLAPSE": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_DEMUX": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_DENOISE": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_GRAPH": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_LAYOUT": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
+                },
+                "PIXELATOR_SAMPLE_CALLING": {
+                    "pixelator": "0.30.0"
                 },
                 "Workflow": {
-                    "nf-core/pixelator": "v5.0.0"
+                    "nf-core/pixelator": "v5.0.1"
                 }
             }
         ],
-        "timestamp": "2026-06-17T09:05:47.167686428",
+        "timestamp": "2026-08-11T08:27:56.30759346",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.04.2"
         }
     },
     "Params: all": {
@@ -199,37 +185,40 @@
                     "cat": 9.5
                 },
                 "EXPERIMENT_SUMMARY": {
-                    "experiment-summary": "0.11.2"
+                    "experiment-summary": "0.12.0"
                 },
                 "PIXELATOR_AMPLICON": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_ANALYSIS": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_COLLAPSE": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_COMBINE_COLLAPSE": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_DEMUX": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_DENOISE": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_GRAPH": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_LAYOUT": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
-                    "pixelator": "0.29.0"
+                    "pixelator": "0.30.0"
+                },
+                "PIXELATOR_SAMPLE_CALLING": {
+                    "pixelator": "0.30.0"
                 },
                 "Workflow": {
-                    "nf-core/pixelator": "v5.0.0"
+                    "nf-core/pixelator": "v5.0.1"
                 }
             },
             [
@@ -365,31 +354,10 @@
                 "pixelator/sample_calling/sample4.report.json"
             ],
             [
-                "pool1.meta.json:md5,41c228a0f862dd47e6b4b66b001cc44b",
-                "pool2.meta.json:md5,41c228a0f862dd47e6b4b66b001cc44b",
-                "sample1.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
-                "sample2.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
-                "sample3.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
-                "sample4.meta.json:md5,2a6eaa66228775591525f74416f0b87f",
-                "pool1.meta.json:md5,236a76417f95f0c289a226753df41340",
-                "pool2.meta.json:md5,236a76417f95f0c289a226753df41340",
-                "pool1.meta.json:md5,eb91c047c438beb4c746cf2acba39ab5",
-                "pool2.meta.json:md5,eb91c047c438beb4c746cf2acba39ab5",
-                "pool1.meta.json:md5,d5e990e3a27ab9934bceeca516f1dbe5",
-                "pool2.meta.json:md5,d5e990e3a27ab9934bceeca516f1dbe5",
-                "sample1.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
-                "sample2.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
-                "sample3.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
-                "sample4.meta.json:md5,82fcbb6ae5e3156c70978973c862f5f3",
-                "pool1_undetermined.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
-                "pool2_undetermined.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
-                "sample1.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
-                "sample2.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
-                "sample3.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa",
-                "sample4.meta.json:md5,1c94e4736d2cf4a7f1960e85872f21fa"
+                
             ]
         ],
-        "timestamp": "2026-07-15T11:34:17.70475283",
+        "timestamp": "2026-08-11T08:27:04.705573587",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"

@@ -13,7 +13,7 @@ lint:
     - .github/workflows/branch.yml
     - .github/workflows/linting.yml
   multiqc_config: false
-nf_core_version: 4.0.2
+nf_core_version: 4.0.3
 repository_type: pipeline
 template:
   author: Pixelgen Technologies AB
@@ -27,4 +27,4 @@ template:
     - fastqc
     - multiqc
     - igenomes
-  version: 5.0.0
+  version: 5.0.1

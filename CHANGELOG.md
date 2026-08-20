@@ -3,6 +3,36 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[5.0.1](https://github.com/nf-core/pixelator/releases/tag/5.0.1)] - 2026-08-17
+
+### Patches
+
+#### Changed
+
+- Increase `pna_graph_component_size_max_threshold` default value to 1M. By @Aratz [#243](https://github.com/nf-core/pixelator/pull/243)
+
+#### Documentation
+
+- Document how to configure DuckDB temporary storage environment variables. By @johandahlberg [#238](https://github.com/nf-core/pixelator/pull/238/)
+
+#### Bug fixes
+
+- Configure container override for sample calling step. By @Aratz [#241](https://github.com/nf-core/pixelator/pull/241)
+
+#### Infrastructure
+
+- Update nf-core template to 4.0.3 by @Aratz [#236](https://github.com/nf-core/pixelator/pull/236)
+- Automate release creation. By @Aratz [#235](https://github.com/nf-core/pixelator/pull/235)
+- Automate post-release backsync to `dev`. By @Aratz [#239](https://github.com/nf-core/pixelator/pull/239)
+- Bump `setup-apptainer` back to latest version. By @Aratz [#245](https://github.com/nf-core/pixelator/pull/245)
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.29.0      | 0.30.0      |
+| `pixelatorES` | 0.11.2      | 0.12.0      |
+
 ## [[5.0.0](https://github.com/nf-core/pixelator/releases/tag/5.0.0)] - 2026-07-13
 
 ### Changed
