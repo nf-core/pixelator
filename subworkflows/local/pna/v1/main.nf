@@ -24,7 +24,8 @@ include { PIXELATOR_DENOISE          } from '../../../../modules/local/pixelator
 include { PIXELATOR_ANALYSIS         } from '../../../../modules/local/pixelator/analysis/main'
 include { PIXELATOR_COMBINE_COLLAPSE } from '../../../../modules/local/pixelator/combine_collapse/main'
 include { PIXELATOR_LAYOUT           } from '../../../../modules/local/pixelator/layout/main'
-include { EXPERIMENT_SUMMARY             } from '../../../../modules/local/experiment_summary/main'
+include { EXPERIMENT_SUMMARY         } from '../../../../modules/local/experiment_summary/main'
+include { collateVersionsFromTopic   } from '../../utils_nfcore_pixelator_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -193,26 +194,31 @@ workflow PIXELATOR_PNA_V1 {
     PIXELATOR_LAYOUT(ch_analysis)
 
     // Prepare all data needed by reporting for each pixelator step
-    ch_input = channel.fromPath(params.input)
-    ch_experiment_summary_input = channel
-        .topic('all_results_for_reports')
-        .map { stage, files ->
-            def values = files instanceof List ? files : [files]
-            values.collect { f -> tuple(stage, f) }
-        }
-        .flatMap { it }
-        .collect(flat: false)
-        .map { stageFilePairs ->
-            def meta = [id: 'all']
-            def stages = stageFilePairs.collect { it[0] }
-            def files = stageFilePairs.collect { it[1] }
-            tuple(meta, stages, files)
-        }
-
     if (!params.skip_experiment_summary) {
+        ch_input = channel.fromPath(params.input)
+        ch_experiment_summary_input = channel
+            .topic('all_results_for_reports')
+            .map { stage, files ->
+                def values = files instanceof List ? files : [files]
+                values.collect { f -> tuple(stage, f) }
+            }
+            .flatMap { it }
+            .collect(flat: false)
+            .map { stageFilePairs ->
+                def meta = [id: 'all']
+                def stages = stageFilePairs.collect { it[0] }
+                def files = stageFilePairs.collect { it[1] }
+                tuple(meta, stages, files)
+            }
+
+        ch_versions_yml = collateVersionsFromTopic()
+            .collectFile(name: 'software_versions.yml', sort: true, newLine: true)
+            .first()
+
         EXPERIMENT_SUMMARY(
             ch_input,
             ch_experiment_summary_input,
+            ch_versions_yml,
         )
     }
 
