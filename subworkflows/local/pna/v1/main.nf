@@ -24,8 +24,8 @@ include { PIXELATOR_DENOISE          } from '../../../../modules/local/pixelator
 include { PIXELATOR_ANALYSIS         } from '../../../../modules/local/pixelator/analysis/main'
 include { PIXELATOR_COMBINE_COLLAPSE } from '../../../../modules/local/pixelator/combine_collapse/main'
 include { PIXELATOR_LAYOUT           } from '../../../../modules/local/pixelator/layout/main'
-include { EXPERIMENT_SUMMARY             } from '../../../../modules/local/experiment_summary/main'
-include { softwareVersionsYaml       } from '../../utils_nfcore_pixelator_pipeline'
+include { EXPERIMENT_SUMMARY         } from '../../../../modules/local/experiment_summary/main'
+include { collateVersionsFromTopic   } from '../../utils_nfcore_pixelator_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -211,7 +211,7 @@ workflow PIXELATOR_PNA_V1 {
                 tuple(meta, stages, files)
             }
 
-        ch_versions_yml = softwareVersionsYaml()
+        ch_versions_yml = collateVersionsFromTopic()
             .collectFile(name: 'software_versions.yml', sort: true, newLine: true)
             .first()
 

@@ -13,6 +13,7 @@ components:
   - pixelator/list/options
   - completionemail
   - completionsummary
+  - softwareversionstoyaml
 input:
   - version:
       type: boolean

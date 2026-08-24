@@ -4,9 +4,9 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { paramsSummaryMap       } from 'plugin/nf-schema'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
-include { softwareVersionsYaml   } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
+include { paramsSummaryMap         } from 'plugin/nf-schema'
+include { methodsDescriptionText   } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
+include { collateVersionsFromTopic } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -80,7 +80,7 @@ workflow PIXELATOR {
     //
     // Collate and save software versions
     //
-    softwareVersionsYaml()
+    collateVersionsFromTopic()
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
             name: 'nf_core_'  +  'pixelator_software_'  + 'versions.yml',

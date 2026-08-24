@@ -27,9 +27,9 @@ include { PIXELATOR_COMBINE_COLLAPSE } from '../../../../modules/local/pixelator
 include { PIXELATOR_LAYOUT           } from '../../../../modules/local/pixelator/layout'
 
 
-include { EXPERIMENT_SUMMARY } from '../../../../modules/local/experiment_summary/main'
-include { CAT_FASTQ                     } from '../../../../modules/nf-core/cat/fastq/main'
-include { softwareVersionsYaml } from '../../utils_nfcore_pixelator_pipeline'
+include { EXPERIMENT_SUMMARY         } from '../../../../modules/local/experiment_summary/main'
+include { CAT_FASTQ                  } from '../../../../modules/nf-core/cat/fastq/main'
+include { collateVersionsFromTopic   } from '../../utils_nfcore_pixelator_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -58,9 +58,6 @@ workflow PIXELATOR_PNA_V2 {
     ch_panel_files         // channel: [ meta, path(panel_file) |  ]
 
     main:
-    ch_versions = Channel.empty()
-
-
     ch_fastq_grouped_by_pool = ch_fastq
         .map { meta, fq -> tuple(meta.pool, [meta, fq]) }
         .groupTuple()
@@ -257,7 +254,7 @@ workflow PIXELATOR_PNA_V2 {
                 tuple(meta, stages, files)
             }
 
-        ch_versions_yml = softwareVersionsYaml()
+        ch_versions_yml = collateVersionsFromTopic()
             .collectFile(name: 'software_versions.yml', sort: true, newLine: true)
             .first()
 

@@ -108,11 +108,6 @@ workflow PIPELINE_INITIALISATION {
     )
 
     //
-    // Create channel from input file provided through params.input
-    //
-    ch_versions = channel.empty()
-
-    //
     // Resolve relative paths and validate fastq files existence
     //
     def samplesheet_uri = file(input).toUri()
@@ -246,7 +241,7 @@ def getGenomeAttribute(attribute) {
 // Any process consuming the result must not emit to the `versions` topic itself,
 // as the topic only closes once all of its publishers have finished.
 //
-def softwareVersionsYaml() {
+def collateVersionsFromTopic() {
     def topic_versions = channel.topic("versions")
         .distinct()
         .branch { entry ->
