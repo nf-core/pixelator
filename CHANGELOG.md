@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Enhancements & fixes
 
-- Pass the collated software versions to the experiment summary report.
+- Pass the collated software versions to the experiment summary report. By @Aratz [#248](https://github.com/nf-core/pixelator/pull/248)
 
 ## [[5.0.1](https://github.com/nf-core/pixelator/releases/tag/5.0.1)] - 2026-08-17
 
