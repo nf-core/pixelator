@@ -262,6 +262,35 @@ def collateVersionsFromTopic() {
     return softwareVersionsToYAML(topic_versions.versions_file).mix(topic_versions_string)
 }
 
+// Collect report inputs from the topic. Keep every JSON file, but only PXL files
+// from the last pipeline stage that published one. Skipped steps never emit, so
+// no skip-flag branching is needed. Filtering happens before EXPERIMENT_SUMMARY
+// stages the files, so intermediate PXL copies are not downloaded.
+def collectReportInputsFromTopic() {
+    // Later stages first. The first stage that appears in the topic is the last that ran.
+    def pxl_stage_preference = ['layout', 'analysis', 'sample_calling', 'denoise', 'graph']
+
+    return channel
+        .topic('all_results_for_reports')
+        .map { stage, files ->
+            def values = files instanceof List ? files : [files]
+            values.collect { f -> tuple(stage, f) }
+        }
+        .flatMap { it }
+        .collect(flat: false)
+        .map { stageFilePairs ->
+            def last_pxl_stage = pxl_stage_preference.find { stage ->
+                stageFilePairs.any { pair ->
+                    pair[0] == stage && pair[1].name.endsWith('.pxl')
+                }
+            }
+            def filtered = stageFilePairs.findAll { pair ->
+                !pair[1].name.endsWith('.pxl') || pair[0] == last_pxl_stage
+            }
+            tuple([id: 'all'], filtered.collect { it[0] }, filtered.collect { it[1] })
+        }
+}
+
 //
 // Generate methods description for MultiQC
 //

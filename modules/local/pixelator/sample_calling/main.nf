@@ -18,7 +18,7 @@ process PIXELATOR_SAMPLE_CALLING {
     tuple val(meta), path("sample_calling/*"),             emit: all_results
 
     tuple val(meta), path("*pixelator-sample-calling.log"), emit: log
-    tuple val('sample_calling'), path("sample_calling/*.{meta,report}.json"), topic: all_results_for_reports
+    tuple val('sample_calling'), path("sample_calling/*.{meta.json,report.json,pxl}"), topic: all_results_for_reports
 
     tuple val("${task.process}"), val('pixelator'), eval("pixelator --version 2>/dev/null | sed 's/pixelator, version //g'"), emit: versions_pixelator, topic: versions
 

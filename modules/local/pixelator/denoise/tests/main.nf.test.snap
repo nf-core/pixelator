@@ -93,6 +93,7 @@
                         "denoise",
                         [
                             "sample1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "sample1.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
                             "sample1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
