@@ -78,7 +78,6 @@
                         "collapse",
                         [
                             "pool1.collapse.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1.collapse.parquet:md5,d41d8cd98f00b204e9800998ecf8427e",
                             "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]

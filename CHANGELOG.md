@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Enhancements & fixes
 
 - Pass the collated software versions to the experiment summary report. By @Aratz [#248](https://github.com/nf-core/pixelator/pull/248)
+- Restrict the `all_results_for_reports` topic to `*.report.json` and `*.meta.json` so experiment summary does not stage large intermediate files. By @Aratz [#250](https://github.com/nf-core/pixelator/pull/250)
 
 ## [[5.0.1](https://github.com/nf-core/pixelator/releases/tag/5.0.1)] - 2026-08-17
 
