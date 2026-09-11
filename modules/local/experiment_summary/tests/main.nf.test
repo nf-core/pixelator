@@ -29,6 +29,13 @@ nextflow_process {
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/amplicon/pool1.report.json', checkIfExists: true),
                     ]
                 ]
+                input[2] = channel.of(
+                    'PIXELATOR_AMPLICON:',
+                    '  pixelator: 0.30.0',
+                    'Workflow:',
+                    '    nf-core/pixelator: 5.1.0dev',
+                    '    Nextflow: 25.10.4',
+                ).collectFile(name: 'software_versions.yml', newLine: true)
                 """
             }
         }
@@ -130,6 +137,13 @@ nextflow_process {
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/sample_calling/sample4.report.json', checkIfExists: true),
                     ]
                 ]
+                input[2] = channel.of(
+                    'PIXELATOR_AMPLICON:',
+                    '  pixelator: 0.30.0',
+                    'Workflow:',
+                    '    nf-core/pixelator: 5.1.0dev',
+                    '    Nextflow: 25.10.4',
+                ).collectFile(name: 'software_versions.yml', newLine: true)
                 """
             }
         }

@@ -83,7 +83,6 @@
                         "collapse",
                         [
                             "pool1.demux.m1.part_000.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1.demux.m1.part_000.parquet:md5,d41d8cd98f00b204e9800998ecf8427e",
                             "pool1.demux.m1.part_000.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]

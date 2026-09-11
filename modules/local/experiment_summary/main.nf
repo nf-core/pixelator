@@ -10,10 +10,15 @@ process EXPERIMENT_SUMMARY {
     input:
     path samplesheet_path
     tuple val(meta), val(result_stages), path(results_data, arity: "1..*", stageAs: "results_raw/?/*")
+    path versions_yml, stageAs: 'software_versions.yml'
 
     output:
     tuple val(meta), path("*experiment-summary.html")  , emit: html
-    tuple val("${task.process}"), val('experiment-summary'), eval("Rscript -e 'cat(as.character(packageVersion(\"pixelatorES\")), \"\\n\")'"), emit: versions_experiment_summary, topic: versions
+    // This process must not push its version to the `versions` topic. It consumes a file
+    // collated from that topic, and a topic only closes once all of its publishers have
+    // finished, so publishing to it would hang the pipeline forever.
+    // This mimics how MultiQC handles version reporting.
+    tuple val("${task.process}"), val('experiment-summary'), eval("Rscript -e 'cat(as.character(packageVersion(\"pixelatorES\")), \"\\n\")'"), emit: versions_experiment_summary
 
     script:
     def args = task.ext.args ?: ''
@@ -27,6 +32,8 @@ process EXPERIMENT_SUMMARY {
     # Copy the full quarto dir from the read-only image into the workdir
     cp -r /workspace/inst/quarto/ ./quarto/
     mkdir -p results
+
+    cp software_versions.yml results/software_versions.yml
 
     # Stage each result file into results/<stage>/. Files are staged into
     # results_raw/1, results_raw/2, ... in the same order as the stage names.

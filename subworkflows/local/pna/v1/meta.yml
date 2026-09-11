@@ -17,7 +17,7 @@ components:
   - pixelator/analysis
   - pixelator/layout
   - experiment/summary
-  - pna_generate_reports
+  - collateversionsfromtopic
 input:
   - fastq:
       type: file

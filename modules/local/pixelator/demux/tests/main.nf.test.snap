@@ -106,10 +106,6 @@
                     [
                         "demux",
                         [
-                            "pool1.demux.failed.fq.zst:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1.demux.m1.part_000.parquet:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1.demux.m2.part_000.parquet:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "pool1.demux.passed.fq.zst:md5,d41d8cd98f00b204e9800998ecf8427e",
                             "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
                             "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]

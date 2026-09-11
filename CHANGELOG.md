@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[5.0.2](https://github.com/nf-core/pixelator/releases/tag/5.0.2)] - 2026-09-11
+
+### Patches
+
+#### Enhancements & fixes
+
+- Pass the collated software versions to the experiment summary report. By @Aratz [#248](https://github.com/nf-core/pixelator/pull/248)
+- Restrict the `all_results_for_reports` topic to `*.report.json`, `*.meta.json`, and `*.pxl`, and stage only the last-step PXL files into experiment summary. By @Aratz [#250](https://github.com/nf-core/pixelator/pull/250)
+
 ## [[5.0.1](https://github.com/nf-core/pixelator/releases/tag/5.0.1)] - 2026-08-17
 
 ### Patches

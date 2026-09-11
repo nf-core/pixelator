@@ -13,6 +13,7 @@ include { paramsSummaryMap          } from 'plugin/nf-schema'
 include { samplesheetToList         } from 'plugin/nf-schema'
 include { completionEmail           } from '../../nf-core/utils_nfcore_pipeline'
 include { completionSummary         } from '../../nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML    } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NFCORE_PIPELINE     } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipeline'
 
@@ -105,11 +106,6 @@ workflow PIPELINE_INITIALISATION {
     UTILS_NFCORE_PIPELINE(
         nextflow_cli_args
     )
-
-    //
-    // Create channel from input file provided through params.input
-    //
-    ch_versions = channel.empty()
 
     //
     // Resolve relative paths and validate fastq files existence
@@ -237,6 +233,62 @@ def getGenomeAttribute(attribute) {
         }
     }
     return null
+}
+
+//
+// Collate the `versions` topic into a channel of YAML fragments
+//
+// Any process consuming the result must not emit to the `versions` topic itself,
+// as the topic only closes once all of its publishers have finished.
+//
+def collateVersionsFromTopic() {
+    def topic_versions = channel.topic("versions")
+        .distinct()
+        .branch { entry ->
+            versions_file: entry instanceof Path
+            versions_tuple: true
+        }
+
+    def topic_versions_string = topic_versions.versions_tuple
+        .map { process, tool, version ->
+            [ process[process.lastIndexOf(':')+1..-1], "  ${tool}: ${version}" ]
+        }
+        .groupTuple(by:0)
+        .map { process, tool_versions ->
+            tool_versions.unique().sort()
+            "${process}:\n${tool_versions.join('\n')}"
+        }
+
+    return softwareVersionsToYAML(topic_versions.versions_file).mix(topic_versions_string)
+}
+
+// Collect report inputs from the topic. Keep every JSON file, but only PXL files
+// from the last pipeline stage that published one. Skipped steps never emit, so
+// no skip-flag branching is needed. Filtering happens before EXPERIMENT_SUMMARY
+// stages the files, so intermediate PXL copies are not downloaded.
+def collectReportInputsFromTopic() {
+    // Later stages first. The first stage that appears in the topic is the last that ran.
+    def pxl_stage_preference = ['layout', 'analysis', 'sample_calling', 'denoise', 'graph']
+
+    return channel
+        .topic('all_results_for_reports')
+        .map { stage, files ->
+            def values = files instanceof List ? files : [files]
+            values.collect { f -> tuple(stage, f) }
+        }
+        .flatMap { it }
+        .collect(flat: false)
+        .map { stageFilePairs ->
+            def last_pxl_stage = pxl_stage_preference.find { stage ->
+                stageFilePairs.any { pair ->
+                    pair[0] == stage && pair[1].name.endsWith('.pxl')
+                }
+            }
+            def filtered = stageFilePairs.findAll { pair ->
+                !pair[1].name.endsWith('.pxl') || pair[0] == last_pxl_stage
+            }
+            tuple([id: 'all'], filtered.collect { it[0] }, filtered.collect { it[1] })
+        }
 }
 
 //
