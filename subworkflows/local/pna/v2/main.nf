@@ -58,12 +58,17 @@ workflow PIXELATOR_PNA_V2 {
     ch_panel_files         // channel: [ meta, path(panel_file) |  ]
 
     main:
+    // Pool-level steps collapse samples together; sample calling splits them
+    // apart again, so keep the original per-sample metadata to restore later.
+    ch_sample_metas = ch_fastq
+        .map { meta, _fq -> [meta.id, meta] }
+        .unique()
+
     ch_fastq_grouped_by_pool = ch_fastq
         .map { meta, fq -> tuple(meta.pool, [meta, fq]) }
         .groupTuple()
         .map { _pool, list ->
-            def meta = list[0][0].clone()
-            meta.id = meta.pool
+            def meta = pool_meta(list[0][0])
             def fq = (list as List).collect { item -> item[1] }
             [meta, fq.unique()]
          }
@@ -90,8 +95,7 @@ workflow PIXELATOR_PNA_V2 {
         .map { meta, panel_file_path -> tuple(meta.pool, [meta, panel_file_path]) }
         .groupTuple()
         .map { _pool, list ->
-            def meta = list[0][0].clone()
-            meta.id = meta.pool
+            def meta = pool_meta(list[0][0])
             def panel_file = list[0][1]
             [meta, panel_file]
          }
@@ -207,21 +211,24 @@ workflow PIXELATOR_PNA_V2 {
         .map { meta, pixel_file -> [meta, pixel_file, file(params.input)] }
 
     PIXELATOR_SAMPLE_CALLING (ch_sample_calling_input)
-    ch_sample_called = PIXELATOR_SAMPLE_CALLING.out.pixelfile
 
-    // Extract the sample names from the pixel file names so that we can
-    // merge them in with the panel file names correctly
+    // Extract the sample names from the pixel file names so that the original
+    // per-sample metadata can be joined back in.
     // Also filter out the undetermined samples here
-    ch_sample_called = ch_sample_called
+    ch_sample_called = PIXELATOR_SAMPLE_CALLING.out.pixelfile
         .flatMap { meta, pxl_files ->
             def files = pxl_files instanceof List ? pxl_files : [pxl_files]
-            files.findAll { file -> !file.getName().contains('undetermined') }
-                 .collect {
-                    file ->
-                        def new_meta = meta.clone()
-                        new_meta.id = file.getName().replace('.dehashed.pxl', '')
-                        [new_meta, file]
+            def undetermined = "${meta.id}_undetermined.dehashed.pxl".toString()
+            files.findAll { pxl -> pxl.name != undetermined }
+                 .collect { pxl -> [pxl.name.replace('.dehashed.pxl', ''), pxl] }
+        }
+        .join(ch_sample_metas, remainder: true)
+        .filter { _sample_id, pxl, _meta -> pxl != null }
+        .map { sample_id, pxl, meta ->
+            if (!meta) {
+                error("ERROR: sample calling produced \"${pxl.name}\" but \"${sample_id}\" is not in the samplesheet.")
             }
+            [meta, pxl]
         }
 
     //
@@ -255,4 +262,12 @@ workflow PIXELATOR_PNA_V2 {
     emit:
     graph = ch_graph
     analysis = ch_analysis
+}
+
+// Drop samplesheet fields that describe a single sample; they are meaningless
+// once samples are grouped into a pool.
+def pool_meta(LinkedHashMap meta) {
+    def grouped = meta.findAll { key, _value -> !(key in ['sample_alias', 'condition', 'hash_index']) }
+    grouped.id = meta.pool
+    return grouped
 }

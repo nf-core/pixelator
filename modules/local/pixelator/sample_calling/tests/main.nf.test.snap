@@ -46,9 +46,7 @@
                         },
                         [
                             "sample1.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample3.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample4.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -86,9 +84,7 @@
                             "pool1.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
                             "pool1.sample_calling.report.json:md5,d41d8cd98f00b204e9800998ecf8427e",
                             "sample1.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample3.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample4.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -110,9 +106,7 @@
                             "pool1.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
                             "pool1.sample_calling.report.json:md5,d41d8cd98f00b204e9800998ecf8427e",
                             "sample1.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample3.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample4.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -135,9 +129,7 @@
                             "pool1.sample_calling.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
                             "pool1.sample_calling.report.json:md5,d41d8cd98f00b204e9800998ecf8427e",
                             "sample1.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample3.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample4.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -173,9 +165,7 @@
                         },
                         [
                             "sample1.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample3.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "sample4.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "sample2.dehashed.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -199,10 +189,10 @@
                 ]
             }
         ],
-        "timestamp": "2026-08-10T16:47:39.497252565",
+        "timestamp": "2026-09-14T15:14:55.093272788",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.2"
+            "nextflow": "26.04.6"
         }
     }
 }

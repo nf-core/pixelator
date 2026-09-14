@@ -1,7 +1,7 @@
 {
     "Params: default - stub": {
         "content": [
-            35,
+            27,
             [
                 "pipeline_info",
                 "pipeline_info/nf_core_pixelator_software_versions.yml",
@@ -168,10 +168,10 @@
                 }
             }
         ],
-        "timestamp": "2026-08-17T11:14:37.297215197",
+        "timestamp": "2026-09-14T15:22:37.459202663",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.2"
+            "nextflow": "26.04.6"
         }
     },
     "Params: all": {
