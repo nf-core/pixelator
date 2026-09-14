@@ -504,7 +504,7 @@ def validate_input_samplesheet(URI samplesheetUrl, items) {
         reads += [fq2_abs]
     }
 
-    if (meta.pool == meta.id) {
+    if (meta.pool && meta.pool == meta.id) {
         error("ERROR: Please check input samplesheet -> `pool` must be different from `sample`: ${meta.id}")
     }
 
