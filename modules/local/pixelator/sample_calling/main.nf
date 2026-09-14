@@ -43,9 +43,8 @@ process PIXELATOR_SAMPLE_CALLING {
         ${data}
     """
 
-    // The stub here generates multiple output pxl files to mimic real run
-    // in reality these should match up with what has been configured in the
-    // samplesheet
+    // The stub generates one pxl file per sample assigned to this pool in the
+    // samplesheet, matching what a real run produces.
     stub:
     prefix = task.ext.prefix ?: "${meta.id}"
 
@@ -53,10 +52,29 @@ process PIXELATOR_SAMPLE_CALLING {
     mkdir sample_calling
     touch sample_calling/${prefix}.sample_calling.report.json
     touch sample_calling/${prefix}.sample_calling.meta.json
-    touch sample_calling/sample1.dehashed.pxl
-    touch sample_calling/sample2.dehashed.pxl
-    touch sample_calling/sample3.dehashed.pxl
-    touch sample_calling/sample4.dehashed.pxl
+
+    # List the samples assigned to this pool. The samplesheet column order is not
+    # fixed, so locate the columns by name in the header row. A sample can also
+    # span several rows when it was sequenced on multiple lanes, hence the seen[].
+    awk -F, -v wanted_pool="${prefix}" '
+        NR == 1 {
+            for (i = 1; i <= NF; i++) {
+                if (\$i == "pool")   { pool_col = i }
+                if (\$i == "sample") { sample_col = i }
+            }
+            next
+        }
+        \$pool_col == wanted_pool {
+            sample = \$sample_col
+            if (!(sample in seen)) {
+                seen[sample] = 1
+                print sample
+            }
+        }
+    ' ${samplesheet} | while read -r sample; do
+        touch "sample_calling/\${sample}.dehashed.pxl"
+    done
+
     touch ${prefix}.pixelator-sample-calling.log
     """
 }
