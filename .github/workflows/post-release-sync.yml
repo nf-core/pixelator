@@ -1,0 +1,98 @@
+name: post-release-sync
+# After a release is published, open a PR that merges master back into dev and
+# bumps the pipeline to the next minor dev version (x.y.z -> x.(y+1).0dev).
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      released_version:
+        description: "Released version to sync back (e.g. 5.1.0). Defaults to the version on master."
+        required: false
+
+concurrency:
+  group: post-release-sync
+  cancel-in-progress: false
+
+jobs:
+  back-sync:
+    if: github.repository == 'nf-core/pixelator'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check out dev
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: dev
+          fetch-depth: 0
+          token: ${{ secrets.NF_CORE_BOT_AUTH_TOKEN }}
+
+      - name: Compute versions
+        id: v
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+          INPUT: ${{ github.event.inputs.released_version }}
+        run: |
+          RELEASED="${TAG:-$INPUT}"
+          if [[ -z "$RELEASED" ]]; then
+            RELEASED="$(grep -oP "^\s*version\s*=\s*'\K[0-9][^']*" nextflow.config)"
+          fi
+          RELEASED="${RELEASED#v}"
+          IFS=. read -r MAJ MIN _ <<< "$RELEASED"
+          echo "released=$RELEASED" >> "$GITHUB_OUTPUT"
+          echo "next=${MAJ}.$((MIN + 1)).0dev" >> "$GITHUB_OUTPUT"
+
+      - name: Configure git and create branch
+        run: |
+          git config user.email "core@nf-co.re"
+          git config user.name "nf-core-bot"
+          git switch -c "post-release_${{ steps.v.outputs.released }}"
+          git fetch origin master
+          git merge --no-edit origin/master
+
+      - name: Install Nextflow
+        uses: nf-core/setup-nextflow@b4ec1bc7c16a94435159de94a05253542fddf6ef # v3
+
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: "3.14"
+          architecture: "x64"
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+
+      - name: Read .nf-core.yml
+        uses: pietrobolcato/action-read-yaml@9f13718d61111b69f30ab4ac683e67a56d254e1d # 1.1.0
+        id: read_yml
+        with:
+          config: ${{ github.workspace }}/.nf-core.yml
+
+      - name: Install nf-core tools
+        run: uv tool install nf-core==${{ steps.read_yml.outputs['nf_core_version'] }}
+
+      - name: Bump version
+        run: nf-core pipelines bump-version "${{ steps.v.outputs.next }}"
+
+      - name: Update test snapshots
+        run: |
+          sed -i -E 's#("nf-core/pixelator": ")v[^"]*#\1v${{ steps.v.outputs.next }}#' tests/*.nf.test.snap
+
+      - name: Add CHANGELOG section
+        run: |
+          HEADER="## [[${{ steps.v.outputs.next }}](\$tag_url)] - \$date"
+          awk -v h="$HEADER" '!ins && /^## \[/ {print h; print ""; ins=1} {print}' CHANGELOG.md > CHANGELOG.tmp
+          mv CHANGELOG.tmp CHANGELOG.md
+
+      - name: Commit, push and open PR
+        env:
+          GH_TOKEN: ${{ secrets.NF_CORE_BOT_AUTH_TOKEN }}
+        run: |
+          BR="post-release_${{ steps.v.outputs.released }}"
+          git add -A
+          git commit -m "[automated] Post-release sync: bump to ${{ steps.v.outputs.next }}"
+          git push origin "$BR"
+          gh pr create --base dev --head "$BR" \
+            --title "Post-release sync: bump to ${{ steps.v.outputs.next }}" \
+            --body "Automated back-sync of master into dev after release ${{ steps.v.outputs.released }}, bumping the development version to ${{ steps.v.outputs.next }}."

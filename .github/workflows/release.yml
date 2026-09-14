@@ -1,0 +1,68 @@
+name: release
+# Create a git tag + published GitHub release automatically after a PR is merged into master/main.
+# Release notes are taken from the merged PR body, which for release PRs is a manual copy of the
+# latest CHANGELOG.md entry. The tag/version is read from the nextflow.config manifest.
+on:
+  pull_request:
+    types: [closed]
+    branches: [main, master]
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: >
+      github.repository == 'nf-core/pixelator' &&
+      (github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out merged code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+          fetch-depth: 0
+
+      - name: Read version from nextflow.config
+        id: version
+        run: echo "version=$(grep -oP "^\s*version\s*=\s*'\K[0-9][^']*" nextflow.config)" >> "$GITHUB_OUTPUT"
+
+      - name: Decide whether to release
+        id: guard
+        run: |
+          V="${{ steps.version.outputs.version }}"
+          if [[ -z "$V" || "$V" == *dev ]] || git rev-parse "refs/tags/$V" >/dev/null 2>&1; then
+            echo "Skipping release (empty/dev version, or tag '$V' already exists)."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Will release version '$V'."
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Assemble release notes from PR body
+        if: steps.guard.outputs.release == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.NF_CORE_BOT_AUTH_TOKEN }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          SHA: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+        run: |
+          if [[ -n "$PR_BODY" ]]; then
+            printf '%s\n' "$PR_BODY" > release_body.md
+          else
+            gh api "repos/${GITHUB_REPOSITORY}/commits/${SHA}/pulls" --jq '.[0].body // ""' > release_body.md
+          fi
+
+      - name: Create release
+        if: steps.guard.outputs.release == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.NF_CORE_BOT_AUTH_TOKEN }}
+        run: |
+          V="${{ steps.version.outputs.version }}"
+          gh release create "$V" \
+            --target "${{ github.event.pull_request.merge_commit_sha || github.sha }}" \
+            --title "nf-core/pixelator $V" \
+            --notes-file release_body.md
