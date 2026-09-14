@@ -87,7 +87,7 @@ The following table provides an overview of all possible columns in the samplesh
 
 | Column                              | Required                  | Description                                                                                                                                                              |
 | ----------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `pool`                              | Yes (with pooled samples) | Custom pool name.                                                                                                                                                        |
+| `pool`                              | Yes (with pooled samples) | Custom pool name. Must be different from `sample`.                                                                                                                       |
 | `hash_index`                        | Yes (with pooled samples) | Index of the hashing antibody used with this sample.                                                                                                                     |
 | `sample`                            | Yes                       | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample.                                                            |
 | `sample_alias`                      | Yes                       | Custom sample alias. Will be used to identify the sample in reports and visualizations.                                                                                  |
@@ -124,6 +124,8 @@ Pooled samples are supported with the Proxiome v2 kit. To process them, include
 the `pool` and `hash_index` columns in the samplesheet and use the
 `proxiome-v2` design. Hash indices have to match the hashing antibody used for each sample.
 Typically there are 8 hashed samples per pool (numbering 1 to 8).
+The `pool` identifier must be different from the `sample` identifier: the pipeline
+uses pool names for pooled processing steps and sample names after sample calling.
 
 ```csv
 pool,hash_index,sample,sample_alias,condition,design,panel,fastq_1,fastq_2
