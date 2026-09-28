@@ -16,16 +16,20 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR_AMPLICON         } from '../../../../modules/local/pixelator/amplicon/main'
-include { PIXELATOR_DEMUX            } from '../../../../modules/local/pixelator/demux/main'
-include { PIXELATOR_COLLAPSE         } from '../../../../modules/local/pixelator/collapse/main'
-include { PIXELATOR_GRAPH            } from '../../../../modules/local/pixelator/graph/main'
-include { PIXELATOR_DENOISE          } from '../../../../modules/local/pixelator/denoise/main'
-include { PIXELATOR_ANALYSIS         } from '../../../../modules/local/pixelator/analysis/main'
-include { PIXELATOR_COMBINE_COLLAPSE } from '../../../../modules/local/pixelator/combine_collapse/main'
-include { PIXELATOR_LAYOUT           } from '../../../../modules/local/pixelator/layout/main'
-include { EXPERIMENT_SUMMARY         } from '../../../../modules/local/experiment_summary/main'
-include { collateVersionsFromTopic; collectReportInputsFromTopic } from '../../utils_nfcore_pixelator_pipeline'
+include { PIXELATOR_AMPLICON         } from '../modules/local/pixelator/amplicon'
+include { PIXELATOR_DEMUX            } from '../modules/local/pixelator/demux'
+include { PIXELATOR_COLLAPSE         } from '../modules/local/pixelator/collapse'
+include { PIXELATOR_GRAPH            } from '../modules/local/pixelator/graph'
+include { PIXELATOR_SAMPLE_CALLING   } from '../modules/local/pixelator/sample_calling'
+include { PIXELATOR_DENOISE          } from '../modules/local/pixelator/denoise'
+include { PIXELATOR_ANALYSIS         } from '../modules/local/pixelator/analysis'
+include { PIXELATOR_COMBINE_COLLAPSE } from '../modules/local/pixelator/combine_collapse'
+include { PIXELATOR_LAYOUT           } from '../modules/local/pixelator/layout'
+
+
+include { EXPERIMENT_SUMMARY         } from '../modules/local/experiment_summary/main'
+include { CAT_FASTQ                  } from '../modules/nf-core/cat/fastq/main'
+include { collateVersionsFromTopic; collectReportInputsFromTopic } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,8 +43,6 @@ include { collateVersionsFromTopic; collectReportInputsFromTopic } from '../../u
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { CAT_FASTQ                     } from '../../../../modules/nf-core/cat/fastq/main'
-
 /*
 ========================================================================================
     IMPORT CUSTOM MODULES/SUBWORKFLOWS
@@ -50,15 +52,28 @@ include { CAT_FASTQ                     } from '../../../../modules/nf-core/cat/
 //
 
 
-workflow PIXELATOR_PNA_V1 {
+workflow PROXIOME_V2 {
     take:
-    ch_fastq       // channel: [ meta, [path(sample_1.fq), path(sample_2.fq)] ]
-    ch_panel_files // channel: [ meta, path(panel_file) |  ]
+    ch_fastq               // channel: [ meta, [path(sample_1.fq), path(sample_2.fq)] ]
+    ch_panel_files         // channel: [ meta, path(panel_file) |  ]
 
     main:
+    // Pool-level steps collapse samples together; sample calling splits them
+    // apart again, so keep the original per-sample metadata to restore later.
+    ch_sample_metas = ch_fastq
+        .map { meta, _fq -> [meta.id, meta] }
+        .unique()
 
-    ch_fastq_split = ch_fastq
+    ch_fastq_grouped_by_pool = ch_fastq
+        .map { meta, fq -> tuple(meta.pool, [meta, fq]) }
         .groupTuple()
+        .map { _pool, list ->
+            def meta = pool_meta(list[0][0])
+            def fq = (list as List).collect { item -> item[1] }
+            [meta, fq.unique()]
+         }
+
+    ch_fastq_split = ch_fastq_grouped_by_pool
         .branch {
             meta, fastq ->
                 single: fastq.size() == 1
@@ -70,14 +85,25 @@ workflow PIXELATOR_PNA_V1 {
     //
     // MODULE: Concatenate FastQ files from the same sample if required
     //
-    ch_fastq_split.multiple
 
     ch_cat_fastq = CAT_FASTQ ( ch_fastq_split.multiple )
         .reads
         .mix(ch_fastq_split.single)
 
-    // Check that multi lane samples use the same panel file
-    ch_checked_panel_files = ch_panel_files
+    // Remap panel files to use pool as id
+    ch_panel_files_grouped_by_pool = ch_panel_files
+        .map { meta, panel_file_path -> tuple(meta.pool, [meta, panel_file_path]) }
+        .groupTuple()
+        .map { _pool, list ->
+            def meta = pool_meta(list[0][0])
+            def panel_file = list[0][1]
+            [meta, panel_file]
+         }
+
+
+    // Check that multi lane samples use the same panel file.
+    // Nothing consumes this channel; it is kept for the check it performs.
+    ch_checked_panel_files = ch_panel_files_grouped_by_pool
         .map { meta, data -> [ meta.id, data] }
         .groupTuple()
         .map { id, data ->
@@ -91,11 +117,6 @@ workflow PIXELATOR_PNA_V1 {
             return [ id, unique_panels[0] ]
         }
 
-    ch_cat_panel_files = ch_cat_fastq
-        .map { meta, _fastqs -> [meta.id, meta] }
-        .join(ch_checked_panel_files)
-        .map { _id, meta, panel_files -> [meta, panel_files] }
-
     //
     // MODULE: Run pixelator single-cell-pna amplicon
     //
@@ -106,7 +127,7 @@ workflow PIXELATOR_PNA_V1 {
     // MODULE: Run pixelator single-cell demux
     //
     ch_demux_input = ch_amplicon
-        .join(ch_panel_files)
+        .join(ch_panel_files_grouped_by_pool)
         .map { meta, fq, panel_file -> [meta, fq, panel_file, meta.panel, meta.design] }
 
 
@@ -117,7 +138,7 @@ workflow PIXELATOR_PNA_V1 {
     // MODULE: Run pixelator single-cell collapse
     //
     ch_collapse_input = ch_demuxed
-        .join(ch_panel_files)
+        .join(ch_panel_files_grouped_by_pool)
         .map { meta, parquet, panel_file ->
             // Inject the number of parts into the meta data
             // to be able to group the files without waiting later
@@ -146,15 +167,14 @@ workflow PIXELATOR_PNA_V1 {
             newMeta.remove('parts')
 
             // Strip the duplicates meta from each element
-            def parquet = data.collect { _meta, collapsed, _reports -> collapsed }.flatten()
-            def reports = data.collect { _meta, _collapsed, reports -> reports }.flatten()
+            def parquet = data.collect { it[1] }.flatten()
+            def reports = data.collect { it[2] }.flatten()
             [newMeta, parquet, reports]
         }
 
     ch_collapse_combine_split = ch_collapse_collected.branch {
-        _meta, parquet, _reports ->
-            single: parquet.size() == 1
-            multi: parquet.size() > 1
+        single: it[1].size() == 1
+        multi: it[1].size() > 1
     }
 
 
@@ -168,7 +188,7 @@ workflow PIXELATOR_PNA_V1 {
     // MODULE: Run pixelator single-cell graph
     //
     ch_graph_input = ch_combined_collapsed
-        .join(ch_panel_files)
+        .join(ch_panel_files_grouped_by_pool)
         .map { meta, parquet, panel_file -> [meta, parquet, panel_file, panel_file ? null : meta.panel] }
 
     PIXELATOR_GRAPH(ch_graph_input)
@@ -181,17 +201,43 @@ workflow PIXELATOR_PNA_V1 {
     ch_denoise = PIXELATOR_DENOISE.out.pixelfile
 
     //
+    // MODULE: Run pixelator single-cell sample-calling
+    //
+    ch_sample_calling_input = (params.skip_denoise ? ch_graph : ch_denoise)
+        .map { meta, pixel_file -> [meta, pixel_file, file(params.input)] }
+
+    PIXELATOR_SAMPLE_CALLING (ch_sample_calling_input)
+
+    // Extract the sample names from the pixel file names so that the original
+    // per-sample metadata can be joined back in.
+    // Also filter out the undetermined samples here
+    ch_sample_called = PIXELATOR_SAMPLE_CALLING.out.pixelfile
+        .flatMap { meta, pxl_files ->
+            def files = pxl_files instanceof List ? pxl_files : [pxl_files]
+            def undetermined = "${meta.id}_undetermined.dehashed.pxl".toString()
+            files.findAll { pxl -> pxl.name != undetermined }
+                 .collect { pxl -> [pxl.name.replace('.dehashed.pxl', ''), pxl] }
+        }
+        .join(ch_sample_metas, remainder: true)
+        .filter { _sample_id, pxl, _meta -> pxl != null }
+        .map { sample_id, pxl, meta ->
+            if (!meta) {
+                error("ERROR: sample calling produced \"${pxl.name}\" but \"${sample_id}\" is not in the samplesheet.")
+            }
+            [meta, pxl]
+        }
+
+    //
     // MODULE: Run pixelator single-cell analysis
     //
-    ch_analysis_input = params.skip_denoise ? ch_graph : ch_denoise
-    PIXELATOR_ANALYSIS(ch_analysis_input)
+    PIXELATOR_ANALYSIS ( ch_sample_called )
     ch_analysis = PIXELATOR_ANALYSIS.out.pixelfile
 
     //
     // MODULE: Run pixelator single-cell layout
     //
 
-    PIXELATOR_LAYOUT(ch_analysis)
+    PIXELATOR_LAYOUT( ch_analysis )
 
     // Prepare all data needed by reporting for each pixelator step
     if (!params.skip_experiment_summary) {
@@ -210,6 +256,14 @@ workflow PIXELATOR_PNA_V1 {
     }
 
     emit:
-    graph    = ch_graph
+    graph = ch_graph
     analysis = ch_analysis
+}
+
+// Drop samplesheet fields that describe a single sample; they are meaningless
+// once samples are grouped into a pool.
+def pool_meta(LinkedHashMap meta) {
+    def grouped = meta.findAll { key, _value -> !(key in ['sample_alias', 'condition', 'hash_index']) }
+    grouped.id = meta.pool
+    return grouped
 }
