@@ -21,15 +21,14 @@ nextflow_workflow {
 
             workflow {
                 """
-                def meta = [ pool:'pool1', id:'sample1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ]
-                input[0] = Channel.of([
-                        meta,
-                        [
-                            file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
-                            file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
-                        ]
-                ])
-                input[1] = Channel.of([meta, []])
+                def meta1 = [ pool:'pool1', id:'sample1', sample_alias:'S1', condition:'unstim', hash_index:1, design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ]
+                def meta2 = meta1 + [ id:'sample2', sample_alias:'S2', condition:'stim', hash_index:5 ]
+                def fastqs = [
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
+                ]
+                input[0] = Channel.of([meta1, fastqs], [meta2, fastqs])
+                input[1] = Channel.of([meta1, []], [meta2, []])
                 """
             }
         }
