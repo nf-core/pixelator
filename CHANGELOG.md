@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reject samplesheets where `pool` equals `sample`. By @Aratz [#255](https://github.com/nf-core/pixelator/pull/255)
 - Restore per-sample metadata after PNA sample calling. By @Aratz [#256](https://github.com/nf-core/pixelator/pull/256)
+- Flatten PNA subworkflows into top-level workflows. By @Aratz [#257](https://github.com/nf-core/pixelator/pull/257)
 
 ## [[5.0.2](https://github.com/nf-core/pixelator/releases/tag/5.0.2)] - 2026-09-11
 

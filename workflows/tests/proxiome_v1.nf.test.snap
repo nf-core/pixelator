@@ -71,7 +71,6 @@
                 "pixelator/demux/sample1.meta.json",
                 "pixelator/demux/sample1.report.json",
                 "pixelator/denoise",
-                "pixelator/denoise/sample1.denoised_graph.pxl",
                 "pixelator/denoise/sample1.meta.json",
                 "pixelator/denoise/sample1.report.json",
                 "pixelator/graph",
@@ -79,24 +78,25 @@
                 "pixelator/graph/sample1.meta.json",
                 "pixelator/graph/sample1.report.json",
                 "pixelator/layout",
-                "pixelator/layout/sample1.layout.pxl",
                 "pixelator/layout/sample1.meta.json",
                 "pixelator/layout/sample1.report.json",
                 "pixelator/logs",
-                "pixelator/logs/sample1.pixelator-amplicon.log",
-                "pixelator/logs/sample1.pixelator-analysis.log",
-                "pixelator/logs/sample1.pixelator-collapse.log",
+                "pixelator/logs/sample1",
                 "pixelator/logs/sample1.pixelator-combine-collapse.log",
-                "pixelator/logs/sample1.pixelator-demux.log",
-                "pixelator/logs/sample1.pixelator-denoise.log",
-                "pixelator/logs/sample1.pixelator-graph.log",
-                "pixelator/logs/sample1.pixelator-layout.log"
+                "pixelator/logs/sample1/sample1.pixelator-amplicon.log",
+                "pixelator/logs/sample1/sample1.pixelator-analysis.log",
+                "pixelator/logs/sample1/sample1.pixelator-collapse.log",
+                "pixelator/logs/sample1/sample1.pixelator-demux.log",
+                "pixelator/logs/sample1/sample1.pixelator-denoise.log",
+                "pixelator/logs/sample1/sample1.pixelator-graph.log",
+                "pixelator/logs/sample1/sample1.pixelator-layout.log",
+                "pixelator/sample1.layout.pxl"
             ]
         ],
-        "timestamp": "2026-06-17T09:32:41.349343247",
+        "timestamp": "2026-09-28T09:01:25.399730852",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.04.6"
         }
     }
 }
