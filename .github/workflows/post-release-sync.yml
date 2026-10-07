@@ -26,7 +26,7 @@ jobs:
         with:
           ref: dev
           fetch-depth: 0
-          token: ${{ secrets.NF_CORE_BOT_AUTH_TOKEN }}
+          persist-credentials: false
 
       - name: Compute versions
         id: v
