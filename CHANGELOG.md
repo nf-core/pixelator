@@ -3,9 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[5.1.0dev]($tag_url)] - $date
+## [[5.0.3](https://github.com/nf-core/pixelator/releases/tag/5.0.3)] - 2026-10-07
 
-### Enhancements & fixes
+### Patches
+
+#### Enhancements & fixes
 
 - Size `PIXELATOR_DENOISE` for 8k cell runs in the `cells_8k` profile. By @johandahlberg [#258](https://github.com/nf-core/pixelator/pull/258)
 - Reject samplesheets where `pool` equals `sample`. By @Aratz [#255](https://github.com/nf-core/pixelator/pull/255)
