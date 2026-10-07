@@ -16,7 +16,7 @@ jobs:
   release:
     if: >
       github.repository == 'nf-core/pixelator' &&
-      (github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true)
+      ((github.event_name == 'workflow_dispatch' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')) || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     permissions:
       contents: read
