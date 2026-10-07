@@ -16,16 +16,17 @@ jobs:
   release:
     if: >
       github.repository == 'nf-core/pixelator' &&
-      (github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true)
+      ((github.event_name == 'workflow_dispatch' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')) || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     steps:
       - name: Check out merged code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Read version from nextflow.config
         id: version
@@ -33,11 +34,15 @@ jobs:
 
       - name: Decide whether to release
         id: guard
+        env:
+          V: ${{ steps.version.outputs.version }}
         run: |
-          V="${{ steps.version.outputs.version }}"
           if [[ -z "$V" || "$V" == *dev ]] || git rev-parse "refs/tags/$V" >/dev/null 2>&1; then
             echo "Skipping release (empty/dev version, or tag '$V' already exists)."
             echo "release=false" >> "$GITHUB_OUTPUT"
+          elif [[ ! "$V" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Version '$V' in nextflow.config is not of the form x.y.z."
+            exit 1
           else
             echo "Will release version '$V'."
             echo "release=true" >> "$GITHUB_OUTPUT"
@@ -60,9 +65,10 @@ jobs:
         if: steps.guard.outputs.release == 'true'
         env:
           GH_TOKEN: ${{ secrets.NF_CORE_BOT_AUTH_TOKEN }}
+          V: ${{ steps.version.outputs.version }}
+          SHA: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
         run: |
-          V="${{ steps.version.outputs.version }}"
           gh release create "$V" \
-            --target "${{ github.event.pull_request.merge_commit_sha || github.sha }}" \
+            --target "$SHA" \
             --title "nf-core/pixelator $V" \
             --notes-file release_body.md
