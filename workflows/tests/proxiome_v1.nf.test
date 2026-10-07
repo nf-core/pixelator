@@ -1,12 +1,11 @@
 nextflow_workflow {
 
-    name "Test Workflow PIXELATOR_PNA_V1"
-    script "../main.nf"
-    workflow "PIXELATOR_PNA_V1"
+    name "Test Workflow PROXIOME_V1"
+    script "../proxiome_v1.nf"
+    workflow "PROXIOME_V1"
     profile "test_proxiome_v1"
 
-    tag "subworkflows"
-    tag "subworkflows_pixelator"
+    tag "workflows"
     tag "pixelator"
     tag "pixelator/pna"
 

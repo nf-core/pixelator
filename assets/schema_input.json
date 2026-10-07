@@ -47,6 +47,7 @@
                 "type": "string",
                 "pattern": "^\\S+$",
                 "errorMessage": "pool ID cannot contain spaces",
+                "description": "Pool name (no spaces). Must differ from sample.",
                 "meta": ["pool"]
             },
             "hash_index": {
