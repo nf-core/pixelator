@@ -34,8 +34,9 @@ jobs:
 
       - name: Decide whether to release
         id: guard
+        env:
+          V: ${{ steps.version.outputs.version }}
         run: |
-          V="${{ steps.version.outputs.version }}"
           if [[ -z "$V" || "$V" == *dev ]] || git rev-parse "refs/tags/$V" >/dev/null 2>&1; then
             echo "Skipping release (empty/dev version, or tag '$V' already exists)."
             echo "release=false" >> "$GITHUB_OUTPUT"
@@ -61,9 +62,10 @@ jobs:
         if: steps.guard.outputs.release == 'true'
         env:
           GH_TOKEN: ${{ secrets.NF_CORE_BOT_AUTH_TOKEN }}
+          V: ${{ steps.version.outputs.version }}
+          SHA: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
         run: |
-          V="${{ steps.version.outputs.version }}"
           gh release create "$V" \
-            --target "${{ github.event.pull_request.merge_commit_sha || github.sha }}" \
+            --target "$SHA" \
             --title "nf-core/pixelator $V" \
             --notes-file release_body.md

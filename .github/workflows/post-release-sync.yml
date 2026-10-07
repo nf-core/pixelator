@@ -29,7 +29,6 @@ jobs:
           persist-credentials: false
 
       - name: Compute versions
-        id: v
         env:
           TAG: ${{ github.event.release.tag_name }}
           INPUT: ${{ github.event.inputs.released_version }}
@@ -40,14 +39,14 @@ jobs:
           fi
           RELEASED="${RELEASED#v}"
           IFS=. read -r MAJ MIN _ <<< "$RELEASED"
-          echo "released=$RELEASED" >> "$GITHUB_OUTPUT"
-          echo "next=${MAJ}.$((MIN + 1)).0dev" >> "$GITHUB_OUTPUT"
+          echo "RELEASED=$RELEASED" >> "$GITHUB_ENV"
+          echo "NEXT=${MAJ}.$((MIN + 1)).0dev" >> "$GITHUB_ENV"
 
       - name: Configure git and create branch
         run: |
           git config user.email "core@nf-co.re"
           git config user.name "nf-core-bot"
-          git switch -c "post-release_${{ steps.v.outputs.released }}"
+          git switch -c "post-release_${RELEASED}"
           git fetch origin master
           git merge --no-edit origin/master
 
@@ -69,18 +68,20 @@ jobs:
           config: ${{ github.workspace }}/.nf-core.yml
 
       - name: Install nf-core tools
-        run: uv tool install nf-core==${{ steps.read_yml.outputs['nf_core_version'] }}
+        env:
+          NF_CORE_VERSION: ${{ steps.read_yml.outputs['nf_core_version'] }}
+        run: uv tool install "nf-core==${NF_CORE_VERSION}"
 
       - name: Bump version
-        run: nf-core pipelines bump-version "${{ steps.v.outputs.next }}"
+        run: nf-core pipelines bump-version "${NEXT}"
 
       - name: Update test snapshots
         run: |
-          sed -i -E 's#("nf-core/pixelator": ")v[^"]*#\1v${{ steps.v.outputs.next }}#' tests/*.nf.test.snap
+          sed -i -E 's#("nf-core/pixelator": ")v[^"]*#\1v'"${NEXT}"'#' tests/*.nf.test.snap
 
       - name: Add CHANGELOG section
         run: |
-          HEADER="## [[${{ steps.v.outputs.next }}](\$tag_url)] - \$date"
+          HEADER="## [[${NEXT}](\$tag_url)] - \$date"
           awk -v h="$HEADER" '!ins && /^## \[/ {print h; print ""; ins=1} {print}' CHANGELOG.md > CHANGELOG.tmp
           mv CHANGELOG.tmp CHANGELOG.md
 
@@ -88,10 +89,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.NF_CORE_BOT_AUTH_TOKEN }}
         run: |
-          BR="post-release_${{ steps.v.outputs.released }}"
+          BR="post-release_${RELEASED}"
           git add -A
-          git commit -m "[automated] Post-release sync: bump to ${{ steps.v.outputs.next }}"
+          git commit -m "[automated] Post-release sync: bump to ${NEXT}"
+          gh auth setup-git
           git push origin "$BR"
           gh pr create --base dev --head "$BR" \
-            --title "Post-release sync: bump to ${{ steps.v.outputs.next }}" \
-            --body "Automated back-sync of master into dev after release ${{ steps.v.outputs.released }}, bumping the development version to ${{ steps.v.outputs.next }}."
+            --title "Post-release sync: bump to ${NEXT}" \
+            --body "Automated back-sync of master into dev after release ${RELEASED}, bumping the development version to ${NEXT}."
