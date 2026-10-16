@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[5.1.0dev]($tag_url)] - $date
 
+### Patches
+
+#### Enhancements & fixes
+
+- Setup AWS megatests. By @Aratz [#267](https://github.com/nf-core/pixelator/pull/267)
+
 ## [[5.0.3](https://github.com/nf-core/pixelator/releases/tag/5.0.3)] - 2026-10-07
 
 ### Patches
