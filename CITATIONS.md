@@ -10,6 +10,18 @@
 
 ## Pipeline tools
 
+- [pixelator](https://doi.org/10.1038/s41592-024-02268-9)
+
+  > Karlsson, F., Simonetti, M.,Galonska, C. et al. "Single-Cell Protein Interactomes by the Proximity Network Assay". _bioRxiv_ 2025.06.19.660329; doi: [10.1101/2025.06.19.660329](https://doi.org/10.1101/2025.06.19.660329)
+
+- [cutadapt](http://dx.doi.org/10.14806/ej.17.1.200)
+
+  > Martin, Marcel. “Cutadapt Removes Adapter Sequences from High-Throughput Sequencing Reads.” EMBnet.Journal 17, no. 1 (May 2, 2011): 10–12. https://doi.org/10.14806/ej.17.1.200.
+
+- [fastp](https://doi.org/10.1002/imt2.107)
+
+  > Chen, Shifu. “Ultrafast One-Pass FASTQ Data Preprocessing, Quality Control, and Deduplication Using Fastp.” IMeta 2, no. 2 (2023): e107. https://doi.org/10.1002/imt2.107.
+
 ## Software packaging/containerisation tools
 
 - [Anaconda](https://anaconda.com)

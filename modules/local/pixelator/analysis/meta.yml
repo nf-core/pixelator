@@ -1,0 +1,99 @@
+name: pixelator_analysis
+description: Run `pixelator single-cell-pna analysis` on pixel data.
+keywords:
+  - pixelator
+  - single-cell-pna
+  - analysis
+  - pxl
+tools:
+  - pixelator:
+      description: Single-cell sequencing data analysis toolkit from Pixelgen Technologies.
+      homepage: https://pixelgen.com/
+      documentation: https://software.pixelgen.com/pixelator/
+      licence: ["MIT"]
+      identifier: ""
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. [ id:'sample1' ]
+    - data:
+        type: file
+        description: Input file for the analysis subcommand.
+        ontologies: []
+output:
+  pixelfile:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.pxl":
+          type: file
+          description: Pixelator PXL output file.
+          pattern: "*.pxl"
+          ontologies: []
+  report_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.report.json":
+          type: file
+          description: Run report in JSON format.
+          pattern: "*.report.json"
+          ontologies: []
+  metadata_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.meta.json":
+          type: file
+          description: Metadata in JSON format.
+          pattern: "*.meta.json"
+          ontologies: []
+  all_results:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*":
+          type: directory
+          description: All files generated in the analysis output directory.
+          pattern: "*"
+          ontologies: []
+  log:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*pixelator-analysis.log":
+          type: file
+          description: Pixelator analysis command log.
+          pattern: "*pixelator-analysis.log"
+          ontologies: []
+  versions_pixelator:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+authors:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
+maintainers:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"

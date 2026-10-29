@@ -1,0 +1,108 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_COLLAPSE"
+    script "../main.nf"
+    process "PIXELATOR_COLLAPSE"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/collapse"
+
+    test("PNA collapse - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool1.demux.m1.part_000.parquet', checkIfExists: true)
+                    ],
+                    [],                         // panel_file
+                    'proxiome-v2-immuno-155-prerelease',   // panel
+                    'proxiome-v2'                     // design
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("PNA collapse - small test - single file") {
+        when {
+            params {
+                outdir   = "$outputDir"
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool1.demux.m1.part_000.parquet', checkIfExists: true)
+                    ],
+                    [],                     // panel_file
+                    'proxiome-v2-immuno-155-prerelease',   // panel
+                    'proxiome-v2'                 // design
+                ]
+                """
+            }
+        }
+
+        then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions_pixelator,
+                ).match() }
+            )
+        }
+    }
+
+    test("PNA collapse - small test - multiple files") {
+        when {
+            params {
+                outdir   = "$outputDir"
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool1.demux.m1.part_000.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/demux/pool1.demux.m2.part_000.parquet', checkIfExists: true)
+                    ],
+                    [],                      // panel_file
+                    'proxiome-v2-immuno-155-prerelease',   // panel
+                    'proxiome-v2'                  // design
+                ]
+                """
+            }
+        }
+
+        then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions,
+                ).match() }
+            )
+        }
+    }
+}

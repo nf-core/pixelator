@@ -1,0 +1,48 @@
+nextflow_workflow {
+
+    name "Test Workflow PROXIOME_V2"
+    script "../proxiome_v2.nf"
+    workflow "PROXIOME_V2"
+    profile "test_proxiome_v2"
+
+    tag "workflows"
+    tag "pixelator"
+    tag "pixelator/pna"
+
+    test("Default parameters [design: proxiome-v2, panel: proxiome-v2-immuno-155-prerelease]") {
+        when {
+
+            params {
+                skip_experiment_summary = true
+                outdir = "$outputDir"
+                pna_demux_output_chunk_reads = "30K"
+            }
+
+            workflow {
+                """
+                def meta1 = [ pool:'pool1', id:'sample1', sample_alias:'S1', condition:'unstim', hash_index:1, design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ]
+                def meta2 = meta1 + [ id:'sample2', sample_alias:'S2', condition:'stim', hash_index:5 ]
+                def fastqs = [
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
+                ]
+                input[0] = Channel.of([meta1, fastqs], [meta2, fastqs])
+                input[1] = Channel.of([meta1, []], [meta2, []])
+                """
+            }
+        }
+
+        then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                ).match() }
+            )
+        }
+    }
+}

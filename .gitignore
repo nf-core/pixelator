@@ -7,6 +7,9 @@ testing/
 testing*
 *.pyc
 null/
+.idea
+.vscode
+.nf-test*
 .lineage/
 .nf-test/
 .nf-test.log
