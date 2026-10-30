@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Enhancements & fixes
 
 - Setup AWS megatests. By @Aratz [#267](https://github.com/nf-core/pixelator/pull/267)
+- Update nf-core template to 4.2.1 by @Aratz [#269](https://github.com/nf-core/pixelator/pull/269)
+- Update pixelator to 0.31.0. By @Aratz [#270](https://github.com/nf-core/pixelator/pull/270)
+
+### Software dependencies
+
+| Dependency  | Old version | New version |
+| ----------- | ----------- | ----------- |
+| `pixelator` | 0.30.0      | 0.31.0      |
 
 ## [[5.0.3](https://github.com/nf-core/pixelator/releases/tag/5.0.3)] - 2026-10-07
 

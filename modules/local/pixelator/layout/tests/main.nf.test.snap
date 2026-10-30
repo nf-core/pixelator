@@ -17,7 +17,7 @@
                 [
                     "PIXELATOR_LAYOUT",
                     "pixelator",
-                    "0.30.0"
+                    "0.31.0"
                 ]
             ]
         ],
@@ -103,7 +103,7 @@
                     [
                         "PIXELATOR_LAYOUT",
                         "pixelator",
-                        "0.30.0"
+                        "0.31.0"
                     ]
                 ],
                 "all_results": [
@@ -169,7 +169,7 @@
                     [
                         "PIXELATOR_LAYOUT",
                         "pixelator",
-                        "0.30.0"
+                        "0.31.0"
                     ]
                 ]
             }
