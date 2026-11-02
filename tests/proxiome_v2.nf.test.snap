@@ -164,7 +164,7 @@
                     "pixelator": "0.31.0"
                 },
                 "Workflow": {
-                    "nf-core/pixelator": "v6.0.0"
+                    "nf-core/pixelator": "v6.1.0dev"
                 }
             }
         ],
@@ -212,7 +212,7 @@
                     "pixelator": "0.31.0"
                 },
                 "Workflow": {
-                    "nf-core/pixelator": "v6.0.0"
+                    "nf-core/pixelator": "v6.1.0dev"
                 }
             },
             [
