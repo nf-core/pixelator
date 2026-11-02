@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | Dependency    | Old version | New version |
 | ------------- | ----------- | ----------- |
 | `pixelator`   | 0.30.0      | 0.31.0      |
-| `pixelatorES` | 0.11.2      | 0.12.0      |
+| `pixelatorES` | 0.11.2      | 0.15.1      |
 
 ## [[5.0.3](https://github.com/nf-core/pixelator/releases/tag/5.0.3)] - 2026-10-07
 
