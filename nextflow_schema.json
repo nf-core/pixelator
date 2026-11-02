@@ -420,13 +420,6 @@
                     "type": "boolean",
                     "default": true
                 },
-                "pna_analysis_proximity_nbr_of_permutations": {
-                    "type": "integer",
-                    "fa_icon": "fas fa-random",
-                    "description": "Number of permutations to use when computing the expected proximity scores",
-                    "default": 100,
-                    "minimum": 50
-                },
                 "pna_analysis_compute_svd_var_explained": {
                     "description": "Compute the variance explained by the SVD components",
                     "fa_icon": "fas fa-chart-pie",
@@ -645,6 +638,7 @@
                 },
                 "trace_report_suffix": {
                     "type": "string",
+                    "fa_icon": "far fa-calendar",
                     "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
                     "hidden": true
                 },

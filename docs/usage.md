@@ -130,7 +130,7 @@ uses pool names for pooled processing steps and sample names after sample callin
 ```csv
 pool,hash_index,sample,sample_alias,condition,design,panel,fastq_1,fastq_2
 pool1,1,sample1,s1,control,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
-pool2,2,sample2,s2,treatment,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool1_R1_001.fastq.gz,pool1_R2_001.fastq.gz
+pool2,2,sample2,s2,treatment,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool2_R1_001.fastq.gz,pool2_R2_001.fastq.gz
 ```
 
 ### Multiple runs of the same sample

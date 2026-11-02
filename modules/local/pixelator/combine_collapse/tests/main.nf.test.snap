@@ -16,7 +16,7 @@
                 [
                     "PIXELATOR_COMBINE_COLLAPSE",
                     "pixelator",
-                    "0.30.0"
+                    "0.31.0"
                 ]
             ]
         ],
@@ -86,7 +86,7 @@
                     [
                         "PIXELATOR_COMBINE_COLLAPSE",
                         "pixelator",
-                        "0.30.0"
+                        "0.31.0"
                     ]
                 ],
                 "log": [
@@ -137,7 +137,7 @@
                     [
                         "PIXELATOR_COMBINE_COLLAPSE",
                         "pixelator",
-                        "0.30.0"
+                        "0.31.0"
                     ]
                 ]
             }

@@ -75,7 +75,7 @@
                     [
                         "PIXELATOR_GRAPH",
                         "pixelator",
-                        "0.30.0"
+                        "0.31.0"
                     ]
                 ],
                 "all_results": [
@@ -141,7 +141,7 @@
                     [
                         "PIXELATOR_GRAPH",
                         "pixelator",
-                        "0.30.0"
+                        "0.31.0"
                     ]
                 ]
             }
@@ -170,7 +170,7 @@
                 [
                     "PIXELATOR_GRAPH",
                     "pixelator",
-                    "0.30.0"
+                    "0.31.0"
                 ]
             ]
         ],

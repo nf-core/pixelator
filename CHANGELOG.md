@@ -3,6 +3,40 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[6.0.0](https://github.com/nf-core/pixelator/releases/tag/6.0.0)] - 2026-11-02
+
+### Major
+
+#### Enhancements & fixes
+
+- Update pixelator to 0.31.0. By @Aratz [#270](https://github.com/nf-core/pixelator/pull/270)
+
+### Patches
+
+#### Enhancements & fixes
+
+- Setup AWS megatests. By @Aratz [#267](https://github.com/nf-core/pixelator/pull/267)
+- Update nf-core template to 4.2.1 by @Aratz [#269](https://github.com/nf-core/pixelator/pull/269)
+- Update pixelatorES to 0.15.1. By @Aratz [#270](https://github.com/nf-core/pixelator/pull/270)
+
+### Parameters
+
+| Old parameter                                  | New parameter |
+| ---------------------------------------------- | ------------- |
+| `--pna_analysis_proximity_nbr_of_permutations` |               |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
+> Parameter has been **added** if just the new parameter information is present.
+> Parameter has been **removed** if new parameter information isn't present.
+
+### Software dependencies
+
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.30.0      | 0.31.0      |
+| `pixelatorES` | 0.11.2      | 0.15.1      |
+
 ## [[5.0.3](https://github.com/nf-core/pixelator/releases/tag/5.0.3)] - 2026-10-07
 
 ### Patches
