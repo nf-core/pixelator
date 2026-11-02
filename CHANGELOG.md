@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[5.1.0dev]($tag_url)] - $date
+## [[6.0.0](https://github.com/nf-core/pixelator/releases/tag/6.0.0)] - 2026-11-02
 
 ### Major
 
@@ -21,8 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Parameters
 
-| Old parameter | New parameter |
-| `--pna_analysis_proximity_nbr_of_permutations` | |
+| Old parameter                                  | New parameter |
+| ---------------------------------------------- | ------------- |
+| `--pna_analysis_proximity_nbr_of_permutations` |               |
 
 > [!NOTE]
 > Parameter has been **updated** if both old and new parameter information is present.
@@ -34,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | Dependency    | Old version | New version |
 | ------------- | ----------- | ----------- |
 | `pixelator`   | 0.30.0      | 0.31.0      |
-| `pixelatorES` | 0.11.2      | 0.12.0      |
+| `pixelatorES` | 0.11.2      | 0.15.1      |
 
 ## [[5.0.3](https://github.com/nf-core/pixelator/releases/tag/5.0.3)] - 2026-10-07
 
