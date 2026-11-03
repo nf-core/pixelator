@@ -75,7 +75,7 @@
                     [
                         "PIXELATOR_GRAPH",
                         "pixelator",
-                        "0.31.0"
+                        "0.31.0.post1.dev14+g45647a1b8.d20261102"
                     ]
                 ],
                 "all_results": [
@@ -141,15 +141,15 @@
                     [
                         "PIXELATOR_GRAPH",
                         "pixelator",
-                        "0.31.0"
+                        "0.31.0.post1.dev14+g45647a1b8.d20261102"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-06-17T09:06:33.227014884",
+        "timestamp": "2026-11-02T16:06:07.648916008",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.10.4"
         }
     },
     "PNA graph - small test": {
@@ -170,14 +170,14 @@
                 [
                     "PIXELATOR_GRAPH",
                     "pixelator",
-                    "0.31.0"
+                    "0.31.0.post1.dev14+g45647a1b8.d20261102"
                 ]
             ]
         ],
-        "timestamp": "2026-06-17T09:06:47.873445645",
+        "timestamp": "2026-11-02T16:06:25.266751447",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.10.4"
         }
     }
 }

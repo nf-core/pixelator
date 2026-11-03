@@ -1,9 +1,9 @@
-name: pixelator_collapse
-description: Run `pixelator single-cell-pna collapse` to collapse reads into molecule-level parquet outputs.
+name: pixelator_edgelist
+description: Run `pixelator single-cell-pna edgelist` to build a per-read edgelist parquet file directly from raw FASTQ reads.
 keywords:
   - pixelator
   - single-cell-pna
-  - collapse
+  - edgelist
   - parquet
 tools:
   - pixelator:
@@ -20,8 +20,10 @@ input:
           e.g. [ id:'sample1', design:'pna-2' ]
     - reads:
         type: file
-        description: Input FASTQ files.
-        pattern: "*.{fq,fastq,fq.gz,fastq.gz,fq.zst,fastq.zst}"
+        description: |
+          Input FASTQ files. One file (`fastq_1`) when `meta.single_end` is true,
+          or `[read_forward, read_reverse]` when paired-end.
+        pattern: "*.{fq,fastq,fq.gz,fastq.gz}"
         ontologies:
           - http://edamontology.org/format_2545
     - panel_file:
@@ -35,13 +37,13 @@ input:
         type: string
         description: Assay design identifier.
 output:
-  collapsed:
+  edgelist:
     - - meta:
           type: map
           description: Groovy Map containing sample information.
       - "*.parquet":
           type: file
-          description: Collapsed molecule-level parquet output(s).
+          description: Per-read edgelist parquet output.
           pattern: "*.parquet"
           ontologies: []
   report_json:
@@ -66,10 +68,10 @@ output:
     - - meta:
           type: map
           description: Groovy Map containing sample information.
-      - "*pixelator-collapse.log":
+      - "*pixelator-edgelist.log":
           type: file
-          description: Pixelator collapse command log.
-          pattern: "*pixelator-collapse.log"
+          description: Pixelator edgelist command log.
+          pattern: "*pixelator-edgelist.log"
           ontologies: []
   versions_pixelator:
     - - ${task.process}:
@@ -95,8 +97,6 @@ topics:
 authors:
   - "@Aratz"
   - "@johandahlberg"
-  - "@fbdtemme"
 maintainers:
   - "@Aratz"
   - "@johandahlberg"
-  - "@fbdtemme"

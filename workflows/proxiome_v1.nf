@@ -16,13 +16,12 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR_AMPLICON         } from '../modules/local/pixelator/amplicon/main'
-include { PIXELATOR_DEMUX            } from '../modules/local/pixelator/demux/main'
-include { PIXELATOR_COLLAPSE         } from '../modules/local/pixelator/collapse/main'
+include { PIXELATOR_EDGELIST ; duplicateEdgelistStems } from '../modules/local/pixelator/edgelist/main'
+include { PIXELATOR_AGGREGATE        } from '../modules/local/pixelator/aggregate/main'
 include { PIXELATOR_GRAPH            } from '../modules/local/pixelator/graph/main'
+include { PIXELATOR_GRAPH_COLLAPSE   } from '../modules/local/pixelator/graph_collapse/main'
 include { PIXELATOR_DENOISE          } from '../modules/local/pixelator/denoise/main'
 include { PIXELATOR_ANALYSIS         } from '../modules/local/pixelator/analysis/main'
-include { PIXELATOR_COMBINE_COLLAPSE } from '../modules/local/pixelator/combine_collapse/main'
 include { PIXELATOR_LAYOUT           } from '../modules/local/pixelator/layout/main'
 include { EXPERIMENT_SUMMARY         } from '../modules/local/experiment_summary/main'
 include { collateVersionsFromTopic; collectReportInputsFromTopic } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
@@ -38,8 +37,6 @@ include { collateVersionsFromTopic; collectReportInputsFromTopic } from '../subw
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-
-include { CAT_FASTQ                     } from '../modules/nf-core/cat/fastq/main'
 
 /*
 ========================================================================================
@@ -57,127 +54,108 @@ workflow PROXIOME_V1 {
 
     main:
 
-    ch_fastq_split = ch_fastq
+    // Group the FASTQ inputs of each sample (one per samplesheet row), then keep
+    // unique FASTQ inputs so each lane/run is processed by edgelist independently.
+    ch_fastq_grouped_by_sample = ch_fastq
+        .map { meta, fq -> tuple(meta.id, [meta, fq]) }
         .groupTuple()
-        .branch {
-            meta, fastq ->
-                single: fastq.size() == 1
-                    return [ meta, fastq.flatten() ]
-                multiple: fastq.size() > 1
-                    return [ meta, fastq.flatten() ]
+        .map { _id, list ->
+            def unique_endedness = list.collect { item -> item[0].single_end }.unique()
+            if (unique_endedness.size() > 1) {
+                exit 1, "ERROR: Runs of the same sample must all be single-end or all paired-end."
+            }
+            def meta = list[0][0].clone()
+            def fq = (list as List).collect { item -> item[1] }.unique()
+            // Pixelator names the edgelist parquet from the FASTQ basename, and
+            // aggregate stages every lane of a sample into one directory.
+            def duplicate_stems = duplicateEdgelistStems(fq, meta.single_end)
+            if (duplicate_stems) {
+                exit 1, "ERROR: FASTQ files in sample '${meta.id}' produce the same edgelist name (${duplicate_stems.join(', ')}). Each run of a sample must have a unique FASTQ basename."
+            }
+            [meta, fq]
         }
 
-    //
-    // MODULE: Concatenate FastQ files from the same sample if required
-    //
-    ch_cat_fastq = CAT_FASTQ ( ch_fastq_split.multiple )
-        .reads
-        .mix(ch_fastq_split.single)
-
-    // Check that multi lane samples use the same panel file.
-    // Nothing consumes this channel; it is kept for the check it performs.
-    ch_checked_panel_files = ch_panel_files
-        .map { meta, data -> [ meta.id, data] }
+    // Check that all runs of a sample use one panel
+    ch_panel_by_id = ch_panel_files
+        .map { meta, panel_file_path -> tuple(meta.id, panel_file_path) }
         .groupTuple()
-        .map { id, data ->
-            if (!data) {
-                return [id, []]
-            }
-            def unique_panels = data.unique()
+        .map { id, panel_files ->
+            def unique_panels = panel_files.unique()
             if (unique_panels.size() > 1) {
-                exit 1, "ERROR: Concatenated samples must use the same panel."
+                exit 1, "ERROR: Runs of the same sample must use the same panel."
             }
-            return [ id, unique_panels[0] ]
+            [id, unique_panels[0]]
         }
 
     //
-    // MODULE: Run pixelator single-cell-pna amplicon
+    // MODULE: Run pixelator single-cell-pna edgelist on each FASTQ input
     //
-    PIXELATOR_AMPLICON ( ch_cat_fastq )
-    ch_amplicon = PIXELATOR_AMPLICON.out.amplicon
-
-    //
-    // MODULE: Run pixelator single-cell demux
-    //
-    ch_demux_input = ch_amplicon
-        .join(ch_panel_files)
-        .map { meta, fq, panel_file -> [meta, fq, panel_file, meta.panel, meta.design] }
-
-
-    PIXELATOR_DEMUX(ch_demux_input)
-    ch_demuxed = PIXELATOR_DEMUX.out.demuxed
-
-    //
-    // MODULE: Run pixelator single-cell collapse
-    //
-    ch_collapse_input = ch_demuxed
-        .join(ch_panel_files)
-        .map { meta, parquet, panel_file ->
+    ch_edgelist_input = ch_fastq_grouped_by_sample
+        .map { meta, fq -> [meta.id, meta, fq] }
+        .join(ch_panel_by_id)
+        .flatMap { _id, meta, fq_units, panel_file ->
             // Inject the number of parts into the meta data
             // to be able to group the files without waiting later
-            def newMeta = meta.clone()
-            newMeta['parts'] = parquet.size()
-            parquet.collect { single_parquet_file ->
-                [newMeta, single_parquet_file, panel_file, panel_file ? null : meta.panel, meta.design]
+            def baseMeta = meta.clone()
+            baseMeta['parts'] = fq_units.size()
+            fq_units.withIndex().collect { unit, index ->
+                def partMeta = baseMeta.clone()
+                partMeta['part'] = index
+                def reads = unit instanceof Collection ? unit : [unit]
+                [partMeta, reads, panel_file, meta.panel, meta.design]
             }
         }
-        .flatMap()
 
+    PIXELATOR_EDGELIST(ch_edgelist_input)
 
-    PIXELATOR_COLLAPSE(ch_collapse_input)
-    ch_collapsed = PIXELATOR_COLLAPSE.out.collapsed
-    ch_collapsed_reports = PIXELATOR_COLLAPSE.out.report_json
-
-    // Collect the partitioned collapse.parquet files in a list per sample
-    // use the dynamic size information from `meta.parts` to group the files
-    ch_collapse_collected = ch_collapsed
-        .join(ch_collapsed_reports)
-        .map { meta, collapsed, reports -> tuple(groupKey(meta.id, meta.parts), [meta, collapsed, reports]) }
+    // Collect the per-lane edgelist parquet files in a list per sample.
+    // groupKey(id, size) lets groupTuple emit a sample as soon as all of its
+    // lanes are done, instead of waiting for every sample to finish.
+    ch_edgelist_collected = PIXELATOR_EDGELIST.out.edgelist
+        .map { meta, parquet -> tuple(groupKey(meta.id, meta.parts), [meta, parquet]) }
         .groupTuple()
         .map { _key, data ->
-            // Remove the parts meta key again
+            // Remove the parts meta keys again
             def newMeta = data[0][0].clone()
             newMeta.remove('parts')
-
-            // Strip the duplicates meta from each element
-            def parquet = data.collect { _meta, collapsed, _reports -> collapsed }.flatten()
-            def reports = data.collect { _meta, _collapsed, reports -> reports }.flatten()
-            [newMeta, parquet, reports]
+            newMeta.remove('part')
+            def parquet = data.collect { item -> item[1] }.flatten()
+            [newMeta, parquet]
         }
 
-    ch_collapse_combine_split = ch_collapse_collected.branch {
-        _meta, parquet, _reports ->
-            single: parquet.size() == 1
-            multi: parquet.size() > 1
-    }
-
-
-    PIXELATOR_COMBINE_COLLAPSE(ch_collapse_combine_split.multi)
-
-    ch_combined_collapsed = ch_collapse_combine_split.single
-        .map { meta, parquet, _reports -> [meta, parquet] }
-        .mix(PIXELATOR_COMBINE_COLLAPSE.out.parquet)
+    //
+    // MODULE: Run pixelator single-cell-pna aggregate
+    //
+    PIXELATOR_AGGREGATE(ch_edgelist_collected)
+    ch_aggregated = PIXELATOR_AGGREGATE.out.parquet
 
     //
     // MODULE: Run pixelator single-cell graph
     //
-    ch_graph_input = ch_combined_collapsed
-        .join(ch_panel_files)
-        .map { meta, parquet, panel_file -> [meta, parquet, panel_file, panel_file ? null : meta.panel] }
+    ch_graph_input = ch_aggregated
+        .map { meta, parquet -> [meta.id, meta, parquet] }
+        .join(ch_panel_by_id)
+        .map { _id, meta, parquet, panel_file -> [meta, parquet, panel_file, panel_file ? null : meta.panel] }
 
     PIXELATOR_GRAPH(ch_graph_input)
     ch_graph = PIXELATOR_GRAPH.out.pixelfile
 
     //
+    // MODULE: Run pixelator single-cell-pna graph-collapse
+    //
+    PIXELATOR_GRAPH_COLLAPSE ( ch_graph )
+    ch_graph_collapsed = params.skip_graph_collapse ? ch_graph : PIXELATOR_GRAPH_COLLAPSE.out.pixelfile
+
+    //
     // MODULE: Run pixelator single-cell denoise
     //
-    PIXELATOR_DENOISE ( ch_graph )
+    PIXELATOR_DENOISE ( ch_graph_collapsed )
     ch_denoise = PIXELATOR_DENOISE.out.pixelfile
 
     //
     // MODULE: Run pixelator single-cell analysis
     //
-    ch_analysis_input = params.skip_denoise ? ch_graph : ch_denoise
+    ch_analysis_input = params.skip_denoise ? ch_graph_collapsed : ch_denoise
     PIXELATOR_ANALYSIS(ch_analysis_input)
     ch_analysis = PIXELATOR_ANALYSIS.out.pixelfile
 
@@ -200,6 +178,7 @@ workflow PROXIOME_V1 {
             ch_input,
             ch_experiment_summary_input,
             ch_versions_yml,
+            'edgelist_aggregate',
         )
     }
 

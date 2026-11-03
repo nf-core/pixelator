@@ -1,9 +1,9 @@
-name: pixelator_demux
-description: Run `pixelator single-cell-pna demux` to split reads and generate demultiplexed outputs.
+name: pixelator_aggregate
+description: Run `pixelator single-cell-pna aggregate` to collapse a per-read edgelist parquet into unique molecules with read counts.
 keywords:
   - pixelator
   - single-cell-pna
-  - demux
+  - aggregate
   - parquet
 tools:
   - pixelator:
@@ -17,53 +17,22 @@ input:
         type: map
         description: |
           Groovy Map containing sample information
-          e.g. [ id:'sample1', design:'pna-2' ]
-    - reads:
+          e.g. [ id:'sample1' ]
+    - edgelist_parquet:
         type: file
-        description: Input FASTQ files.
-        pattern: "*.{fq,fastq,fq.gz,fastq.gz,fq.zst,fastq.zst}"
-        ontologies:
-          - http://edamontology.org/format_2545
-    - panel_file:
-        type: file
-        description: Optional panel definition file.
+        description: Per-read edgelist parquet file(s) produced by the edgelist step. Multiple files are merged into a single output.
+        pattern: "*.parquet"
         ontologies: []
-    - panel:
-        type: string
-        description: Optional panel name.
-    - design:
-        type: string
-        description: Assay design identifier.
 output:
-  demuxed:
+  parquet:
     - - meta:
           type: map
           description: Groovy Map containing sample information.
       - "*.parquet":
           type: file
-          description: Demultiplexed parquet output(s).
+          description: Aggregated molecule-level parquet output (one file per sample).
           pattern: "*.parquet"
           ontologies: []
-  passed:
-    - - meta:
-          type: map
-          description: Groovy Map containing sample information.
-      - "*demux.passed*.{fq,fastq}.zst":
-          type: file
-          description: Reads that passed demultiplexing.
-          pattern: "*demux.passed*.{fq,fastq}.zst"
-          ontologies:
-            - http://edamontology.org/format_2545
-  failed:
-    - - meta:
-          type: map
-          description: Groovy Map containing sample information.
-      - "*demux.failed.{fq,fastq}.zst":
-          type: file
-          description: Reads that failed demultiplexing.
-          pattern: "*demux.failed.{fq,fastq}.zst"
-          ontologies:
-            - http://edamontology.org/format_2545
   report_json:
     - - meta:
           type: map
@@ -86,10 +55,10 @@ output:
     - - meta:
           type: map
           description: Groovy Map containing sample information.
-      - "*pixelator-demux.log":
+      - "*pixelator-aggregate.log":
           type: file
-          description: Pixelator demux command log.
-          pattern: "*pixelator-demux.log"
+          description: Pixelator aggregate command log.
+          pattern: "*pixelator-aggregate.log"
           ontologies: []
   versions_pixelator:
     - - ${task.process}:
@@ -115,8 +84,6 @@ topics:
 authors:
   - "@Aratz"
   - "@johandahlberg"
-  - "@fbdtemme"
 maintainers:
   - "@Aratz"
   - "@johandahlberg"
-  - "@fbdtemme"

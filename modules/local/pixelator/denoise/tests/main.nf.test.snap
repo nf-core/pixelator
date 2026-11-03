@@ -16,14 +16,14 @@
                 [
                     "PIXELATOR_DENOISE",
                     "pixelator",
-                    "0.31.0"
+                    "0.31.0.post1.dev14+g45647a1b8.d20261102"
                 ]
             ]
         ],
-        "timestamp": "2026-06-17T09:06:26.542202157",
+        "timestamp": "2026-11-02T16:05:59.207305906",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.10.4"
         }
     },
     "PNA denoise - stub": {
@@ -102,7 +102,7 @@
                     [
                         "PIXELATOR_DENOISE",
                         "pixelator",
-                        "0.31.0"
+                        "0.31.0.post1.dev14+g45647a1b8.d20261102"
                     ]
                 ],
                 "all_results": [
@@ -168,15 +168,15 @@
                     [
                         "PIXELATOR_DENOISE",
                         "pixelator",
-                        "0.31.0"
+                        "0.31.0.post1.dev14+g45647a1b8.d20261102"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-06-17T09:06:14.523138136",
+        "timestamp": "2026-11-02T16:05:44.493970732",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.10.4"
         }
     }
 }

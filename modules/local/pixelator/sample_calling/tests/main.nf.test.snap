@@ -23,14 +23,14 @@
                 [
                     "PIXELATOR_SAMPLE_CALLING",
                     "pixelator",
-                    "0.31.0"
+                    "0.31.0.post1.dev14+g45647a1b8.d20261102"
                 ]
             ]
         ],
-        "timestamp": "2026-08-10T16:47:53.112736554",
+        "timestamp": "2026-11-02T16:07:15.859379151",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.2"
+            "nextflow": "26.10.4"
         }
     },
     "PNA sample calling - stub": {
@@ -114,7 +114,7 @@
                     [
                         "PIXELATOR_SAMPLE_CALLING",
                         "pixelator",
-                        "0.31.0"
+                        "0.31.0.post1.dev14+g45647a1b8.d20261102"
                     ]
                 ],
                 "all_results": [
@@ -184,15 +184,15 @@
                     [
                         "PIXELATOR_SAMPLE_CALLING",
                         "pixelator",
-                        "0.31.0"
+                        "0.31.0.post1.dev14+g45647a1b8.d20261102"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-09-14T15:14:55.093272788",
+        "timestamp": "2026-11-02T16:06:59.489844386",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.6"
+            "nextflow": "26.10.4"
         }
     }
 }
