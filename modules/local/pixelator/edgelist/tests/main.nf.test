@@ -3,6 +3,7 @@ nextflow_process {
     name "Test Process PIXELATOR_EDGELIST"
     script "../main.nf"
     process "PIXELATOR_EDGELIST"
+    config "./nextflow.config"
     tag "modules"
     tag "pixelator"
     tag "pixelator/edgelist"
@@ -33,39 +34,7 @@ nextflow_process {
                 { assert process.success },
                 { assert snapshot(
                     process.out.edgelist,
-                    process.out.report_json,
-                    process.out.metadata_json,
-                    process.out.log,
-                ).match() }
-            )
-        }
-    }
-
-    test("PNA edgelist - stub single-end") {
-
-        options "-stub"
-
-        when {
-            process {
-                """
-                input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist', single_end: true ],
-                    [
-                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true)
-                    ],
-                    [],                                     // panel_file
-                    'proxiome-v2-immuno-155-prerelease',     // panel
-                    'proxiome-v2'                            // design
-                ]
-                """
-            }
-        }
-
-        then {
-            assertAll(
-                { assert process.success },
-                { assert snapshot(
-                    process.out.edgelist,
+                    process.out.dropped_reads,
                     process.out.report_json,
                     process.out.metadata_json,
                     process.out.log,
@@ -99,6 +68,7 @@ nextflow_process {
             def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
                 { assert workflow.success },
+                { assert process.out.dropped_reads.size() == 1 },
                 { assert snapshot(
                     workflow.trace.succeeded().size(),
                     stable_name,

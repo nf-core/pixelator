@@ -14,6 +14,7 @@ process PIXELATOR_EDGELIST {
 
     output:
     tuple val(meta), path("edgelist/*.parquet", arity: 1), emit: edgelist
+    tuple val(meta), path("dropped_reads/*.parquet"),     emit: dropped_reads, optional: true
     tuple val(meta), path("edgelist/*.report.json"),      emit: report_json
     tuple val(meta), path("edgelist/*.meta.json"),        emit: metadata_json
     tuple val(meta), path("*pixelator-edgelist.log"),     emit: log
@@ -52,19 +53,28 @@ process PIXELATOR_EDGELIST {
         --threads ${task.cpus} \\
         --output . \\
         ${args}
+
+    # Keep the dropped reads out of edgelist/ so that the edgelist output stays unambiguous
+    mkdir dropped_reads
+    find edgelist -name '*.dropped_reads.parquet' -exec mv -t dropped_reads {} +
     """
 
     stub:
+    def args = task.ext.args ?: ''
     def read_list = reads instanceof List ? reads : [reads]
     def output_stem = edgelistOutputStem(read_list, meta.single_end)
     def log_prefix = task.ext.prefix ?: output_stem
+    def dropped_reads_cmd = args.contains('--save-dropped-reads')
+        ? "touch dropped_reads/${output_stem}.dropped_reads.parquet"
+        : ""
 
     """
-    mkdir edgelist
+    mkdir edgelist dropped_reads
     touch edgelist/${output_stem}.report.json
     touch edgelist/${output_stem}.meta.json
     touch edgelist/${output_stem}.parquet
     touch ${log_prefix}.pixelator-edgelist.log
+    ${dropped_reads_cmd}
     """
 }
 

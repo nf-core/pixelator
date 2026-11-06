@@ -47,6 +47,7 @@ These per-read edgelists are intermediate and by default not placed in the outpu
     - `<fastq-name>.parquet`: Per-read edgelist.
     - `<fastq-name>.report.json`: QC metrics collected by the edgelist step.
     - `<fastq-name>.meta.json`: Command invocation metadata.
+    - `<fastq-name>.dropped_reads.parquet`: Reads that did not make it into the edgelist, with the reason they were dropped (only with `--save_pna_edgelist_dropped_reads`).
   - `logs`
     - `<fastq-name>.pixelator-edgelist.log`: pixelator log output.
 

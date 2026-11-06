@@ -87,6 +87,12 @@
                     "type": "boolean",
                     "description": "Save the intermediate per-read edgelist parquet file generated from the raw input reads.",
                     "help": "By default, the intermediate edgelist parquet file will not be saved to the results directory. Specify this flag (or set it to `true` in your config file) to copy this file to the results directory when complete."
+                },
+                "save_pna_edgelist_dropped_reads": {
+                    "fa_icon": "fas fa-save",
+                    "type": "boolean",
+                    "description": "Save the reads that were dropped by the edgelist step, with the reason they were dropped.",
+                    "help": "By default, reads that do not make it into the edgelist are not recorded. Specify this flag (or set it to `true` in your config file) to write them to a `<fastq-name>.dropped_reads.parquet` file, which is copied to the results directory when complete."
                 }
             }
         },

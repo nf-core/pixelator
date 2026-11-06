@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 |                                 | `--pna_graph_collapse_report_collapsed_sequences` |
 |                                 | `--skip_graph_collapse`                           |
 |                                 | `--save_pna_edgelist_reads`                       |
+|                                 | `--save_pna_edgelist_dropped_reads`               |
 |                                 | `--save_pna_aggregate_reads`                      |
 |                                 | `--save_pna_graph_collapse_pixelfile`             |
 

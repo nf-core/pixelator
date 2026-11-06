@@ -22,6 +22,18 @@
                         "technology": "proxiome-v2-edgelist",
                         "single_end": false
                     },
+                    "pool1.dropped_reads.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "pool1",
+                        "design": "proxiome-v2",
+                        "panel": "proxiome-v2-immuno-155-prerelease",
+                        "technology": "proxiome-v2-edgelist",
+                        "single_end": false
+                    },
                     "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ],
