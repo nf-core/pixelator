@@ -131,11 +131,11 @@
                 [
                     "PIXELATOR_EDGELIST",
                     "pixelator",
-                    "0.31.0.post1.dev14+g45647a1b8.d20261102"
+                    "0.32.0"
                 ]
             ]
         ],
-        "timestamp": "2026-11-02T16:00:30.68656153",
+        "timestamp": "2026-11-06T09:36:54.596542973",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"

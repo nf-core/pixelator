@@ -16,11 +16,11 @@
                 [
                     "PIXELATOR_DENOISE",
                     "pixelator",
-                    "0.31.0.post1.dev14+g45647a1b8.d20261102"
+                    "0.32.0"
                 ]
             ]
         ],
-        "timestamp": "2026-11-02T16:05:59.207305906",
+        "timestamp": "2026-11-06T09:36:10.626348663",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
@@ -102,7 +102,7 @@
                     [
                         "PIXELATOR_DENOISE",
                         "pixelator",
-                        "0.31.0.post1.dev14+g45647a1b8.d20261102"
+                        "0.32.0"
                     ]
                 ],
                 "all_results": [
@@ -168,12 +168,12 @@
                     [
                         "PIXELATOR_DENOISE",
                         "pixelator",
-                        "0.31.0.post1.dev14+g45647a1b8.d20261102"
+                        "0.32.0"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-11-02T16:05:44.493970732",
+        "timestamp": "2026-11-06T09:35:40.438563947",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"

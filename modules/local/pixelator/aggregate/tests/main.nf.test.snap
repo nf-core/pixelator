@@ -22,11 +22,11 @@
                 [
                     "PIXELATOR_AGGREGATE",
                     "pixelator",
-                    "0.31.0.post1.dev14+g45647a1b8.d20261102"
+                    "0.32.0"
                 ]
             ]
         ],
-        "timestamp": "2026-11-02T15:59:44.783063179",
+        "timestamp": "2026-11-06T09:33:49.817733612",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
@@ -112,11 +112,11 @@
                 [
                     "PIXELATOR_AGGREGATE",
                     "pixelator",
-                    "0.31.0.post1.dev14+g45647a1b8.d20261102"
+                    "0.32.0"
                 ]
             ]
         ],
-        "timestamp": "2026-11-02T16:00:03.102054546",
+        "timestamp": "2026-11-06T09:34:27.507708374",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"

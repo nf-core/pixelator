@@ -78,7 +78,7 @@
                     [
                         "PIXELATOR_GRAPH_COLLAPSE",
                         "pixelator",
-                        "0.31.0.post1.dev14+g45647a1b8.d20261102"
+                        "0.32.0"
                     ]
                 ],
                 "all_results": [
@@ -147,12 +147,12 @@
                     [
                         "PIXELATOR_GRAPH_COLLAPSE",
                         "pixelator",
-                        "0.31.0.post1.dev14+g45647a1b8.d20261102"
+                        "0.32.0"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-11-02T16:00:38.78354014",
+        "timestamp": "2026-11-06T09:37:56.033815331",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
@@ -176,11 +176,11 @@
                 [
                     "PIXELATOR_GRAPH_COLLAPSE",
                     "pixelator",
-                    "0.31.0.post1.dev14+g45647a1b8.d20261102"
+                    "0.32.0"
                 ]
             ]
         ],
-        "timestamp": "2026-11-02T16:00:50.174983548",
+        "timestamp": "2026-11-06T09:38:14.704980191",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
