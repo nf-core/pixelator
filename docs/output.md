@@ -37,8 +37,6 @@ based on their quality, UMI complexity and similarity between the UMI and the pi
 Each FASTQ input (e.g. each lane of a sample) is processed independently. Output files are named after the FASTQ file,
 without the extension and without the `R1`/`R2` suffix for paired-end data.
 
-These per-read edgelists are intermediate and by default not placed in the output folder with the final files delivered to users.
-
 <details markdown="1">
 <summary>Output files</summary>
 
