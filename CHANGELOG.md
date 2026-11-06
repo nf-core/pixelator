@@ -15,28 +15,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Parameters
 
-| Old parameter                                    | New parameter                                      |
-| ------------------------------------------------ | -------------------------------------------------- |
-| `--pna_amplicon_*`                               |                                                    |
-| `--pna_demux_*`                                  |                                                    |
-| `--pna_collapse_*`                               |                                                    |
-| `--save_pna_amplicon_reads`                      |                                                    |
-| `--save_pna_demux_parquet`                       |                                                    |
-| `--save_pna_demux_passed_reads`                  |                                                    |
-| `--save_pna_demux_failed_reads`                  |                                                    |
-| `--save_pna_collapsed_reads`                     |                                                    |
-|                                                  | `--pna_edgelist_mismatch_threshold`                |
-|                                                  | `--pna_edgelist_min_avg_quality`                   |
-|                                                  | `--pna_edgelist_max_umi_base_freq`                 |
-|                                                  | `--pna_edgelist_lbs_overlap_max_edits`             |
-|                                                  | `--pna_graph_collapse_bfs_distance`                |
-|                                                  | `--pna_graph_collapse_hamming_threshold`           |
-|                                                  | `--pna_graph_collapse_max_degree`                  |
-|                                                  | `--pna_graph_collapse_report_collapsed_sequences`  |
-|                                                  | `--skip_graph_collapse`                            |
-|                                                  | `--save_pna_edgelist_reads`                        |
-|                                                  | `--save_pna_aggregate_reads`                       |
-|                                                  | `--save_pna_graph_collapse_pixelfile`              |
+| Old parameter                   | New parameter                                     |
+| ------------------------------- | ------------------------------------------------- |
+| `--pna_amplicon_*`              |                                                   |
+| `--pna_demux_*`                 |                                                   |
+| `--pna_collapse_*`              |                                                   |
+| `--save_pna_amplicon_reads`     |                                                   |
+| `--save_pna_demux_parquet`      |                                                   |
+| `--save_pna_demux_passed_reads` |                                                   |
+| `--save_pna_demux_failed_reads` |                                                   |
+| `--save_pna_collapsed_reads`    |                                                   |
+|                                 | `--pna_edgelist_mismatch_threshold`               |
+|                                 | `--pna_edgelist_min_avg_quality`                  |
+|                                 | `--pna_edgelist_max_umi_base_freq`                |
+|                                 | `--pna_edgelist_lbs_overlap_max_edits`            |
+|                                 | `--pna_graph_collapse_bfs_distance`               |
+|                                 | `--pna_graph_collapse_hamming_threshold`          |
+|                                 | `--pna_graph_collapse_max_degree`                 |
+|                                 | `--pna_graph_collapse_report_collapsed_sequences` |
+|                                 | `--skip_graph_collapse`                           |
+|                                 | `--save_pna_edgelist_reads`                       |
+|                                 | `--save_pna_aggregate_reads`                      |
+|                                 | `--save_pna_graph_collapse_pixelfile`             |
 
 > [!NOTE]
 > Parameter has been **updated** if both old and new parameter information is present.
@@ -45,9 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Software dependencies
 
-| Dependency  | Old version | New version                  |
-| ----------- | ----------- | ---------------------------- |
-| `pixelator` | 0.31.0      | 0.31.0.post1.dev14+g45647a1b8 |
+| Dependency    | Old version | New version |
+| ------------- | ----------- | ----------- |
+| `pixelator`   | 0.31.0      | 0.32.0      |
+| `pixelatorES` | 0.15.1      | 0.16.0      |
 
 ## [[6.0.0](https://github.com/nf-core/pixelator/releases/tag/6.0.0)] - 2026-11-02
 
