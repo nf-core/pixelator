@@ -6,6 +6,7 @@
                 "pipeline_info",
                 "pixelator",
                 "pixelator/denoise",
+                "pixelator/denoise/sample1.denoised_graph.pxl",
                 "pixelator/denoise/sample1.meta.json",
                 "pixelator/denoise/sample1.report.json",
                 "pixelator/logs",
@@ -20,7 +21,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-06T09:36:10.626348663",
+        "timestamp": "2026-11-06T15:51:01.41983277",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
