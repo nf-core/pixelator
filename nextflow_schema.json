@@ -44,158 +44,69 @@
                 }
             }
         },
-        "pna_amplicon_options": {
-            "title": "Amplicon options",
+        "pna_edgelist_options": {
+            "title": "Edgelist options",
             "type": "object",
-            "fa_icon": "fas fa-dna",
+            "fa_icon": "fas fa-project-diagram",
+            "description": "Options for building a per-read edgelist directly from FASTQ.",
             "properties": {
-                "save_pna_amplicon_reads": {
-                    "fa_icon": "fas fa-save",
-                    "type": "boolean",
-                    "description": "Save intermediate amplicon reads generated from the raw input reads.",
-                    "help": "By default, generated amplicon FastQ files will not be saved to the results directory. Specify this flag (or set it to `true` in your config file) to copy these files to the results directory when complete."
-                },
-                "pna_amplicon_mismatches": {
-                    "type": "number",
+                "pna_edgelist_mismatch_threshold": {
                     "fa_icon": "fas fa-not-equal",
+                    "description": "Allow this many mismatches when matching marker barcodes.",
+                    "type": "integer",
+                    "default": 0,
                     "minimum": 0,
-                    "maximum": 0.5,
-                    "description": "The number of mismatches allowed while anchoring reads using LBS sequences (in percentage of seen LBS length) [default: 0.1; 0.0<=x<=0.5]",
-                    "default": 0.1
+                    "maximum": 3
                 },
-                "pna_amplicon_remove_polyg": {
-                    "description": "Remove PolyG sequences (length of 10 or more)",
-                    "fa_icon": "fas fa-cut",
-                    "type": "boolean",
-                    "default": true
-                },
-                "pna_amplicon_quality_cutoff": {
-                    "description": "Minimum average quality a read must have. Pass 0 to disable quality filtering.",
+                "pna_edgelist_min_avg_quality": {
                     "fa_icon": "fas fa-sliders-h",
+                    "description": "Drop reads whose average quality in marker and UMI regions is below this.",
                     "type": "integer",
-                    "default": 20
+                    "default": 20,
+                    "minimum": 0,
+                    "maximum": 93
                 },
-                "pna_amplicon_low_complexity_filter": {
-                    "type": "boolean",
-                    "fa_icon": "fas fa-filter",
-                    "default": true,
-                    "description": "Enable filtering of amplicons with low complexity UMI sequences."
-                },
-                "pna_amplicon_low_complexity_threshold": {
-                    "type": "number",
+                "pna_edgelist_max_umi_base_freq": {
                     "fa_icon": "fas fa-percentage",
+                    "description": "Drop low-complexity UMIs where one base makes up more than this fraction of the UMI.",
+                    "type": "number",
                     "default": 0.8,
-                    "minimum": 0.5,
-                    "maximum": 1,
-                    "description": "The threshold for determining if a UMI sequence is of low complexity and will be removed. [0.5<=x<=1.0]"
+                    "minimum": 0,
+                    "maximum": 1
                 },
-                "pna_amplicon_lbs_filter": {
-                    "type": "boolean",
+                "pna_edgelist_lbs_overlap_max_edits": {
                     "fa_icon": "fas fa-filter",
-                    "default": true,
-                    "description": "Enable filtering of amplicons with UMI sequences that show similarity to the LBS sequence."
-                },
-                "pna_amplicon_lbs_filter_min_overlap": {
+                    "description": "Drop reads whose UMI aligns to any substring of an assay LBS (or its reverse complement) within this many edits (Levenshtein distance).",
                     "type": "integer",
-                    "fa_icon": "fas fa-arrows-alt-h",
-                    "default": 8,
-                    "minimum": 4,
-                    "maximum": 28,
-                    "description": "The minimum overlap required in a semi-global alignment of a UMI sequence with the LBS regions. Reads with less overlap will not be removed by the LBS filter. [4<=x<=28]"
-                },
-                "pna_amplicon_lbs_filter_error_rate": {
-                    "type": "number",
-                    "fa_icon": "fas fa-percentage",
-                    "default": 0.1,
+                    "default": 6,
                     "minimum": 0,
-                    "maximum": 1,
-                    "description": "The allowed error-rate in a semi-global alignment of a UMI sequence with the LBS regions. The error rate is defined as a percentage of UMI length. [0.0<=x<=1.0]"
+                    "maximum": 32
+                },
+                "save_pna_edgelist_reads": {
+                    "fa_icon": "fas fa-save",
+                    "type": "boolean",
+                    "description": "Save the intermediate per-read edgelist parquet file generated from the raw input reads.",
+                    "help": "By default, the intermediate edgelist parquet file will not be saved to the results directory. Specify this flag (or set it to `true` in your config file) to copy this file to the results directory when complete."
+                },
+                "save_pna_edgelist_dropped_reads": {
+                    "fa_icon": "fas fa-save",
+                    "type": "boolean",
+                    "description": "Save the reads that were dropped by the edgelist step, with the reason they were dropped.",
+                    "help": "By default, reads that do not make it into the edgelist are not recorded. Specify this flag (or set it to `true` in your config file) to write them to a `<fastq-name>.dropped_reads.parquet` file, which is copied to the results directory when complete."
                 }
             }
         },
-        "pna_demux_options": {
-            "title": "Demux options",
-            "type": "object",
-            "fa_icon": "fas fa-random",
-            "properties": {
-                "pna_demux_mismatches": {
-                    "fa_icon": "fas fa-not-equal",
-                    "description": "The number of mismatches allowed in marker barcodes.",
-                    "type": "integer",
-                    "default": 1,
-                    "minimum": 0,
-                    "maximum": 2
-                },
-                "pna_demux_output_chunk_reads": {
-                    "fa_icon": "fas fa-arrows-alt-h",
-                    "type": "string",
-                    "default": "50M",
-                    "description": "The target number of reads in a single file of the partitioned demux output.",
-                    "help": "This option can be used to fine-tune the parallelization of the subsequent collapse stage. A smaller value will create split the demux molecule list into more and smaller parts."
-                },
-                "pna_demux_output_max_chunks": {
-                    "fa_icon": "fas fa-arrows-alt-h",
-                    "type": "integer",
-                    "minimum": 1,
-                    "maximum": 32,
-                    "default": 8,
-                    "description": "The maximum number of chunks that the demuxed ouput for each umi region will be split into",
-                    "help": "This option is used to control the parallelization of the subsequent collapse stage."
-                },
-                "pna_demux_strategy": {
-                    "fa_icon": "fas fa-code-branch",
-                    "description": "The demux and collapsing strategy to use",
-                    "default": "independent",
-                    "enum": ["paired", "independent"],
-                    "type": "string",
-                    "help": "**paired:** Use the paired collapsing strategy. This is the default and recommended strategy for PNA data.\n\n**independent:** Use the independent collapsing strategy. This strategy will corrects errors in UMI regions independently. It provides performance benefits but is experimental."
-                },
-                "save_pna_demux_parquet": {
-                    "fa_icon": "fas fa-save",
-                    "type": "boolean",
-                    "description": "Save intermediate parquet files containing embeddings of all reads that contain valid antibody barcodes.",
-                    "help": "By default, parquet files containing embeddings of reads with valid antibody barcodes will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
-                },
-                "save_pna_demux_passed_reads": {
-                    "fa_icon": "fas fa-save",
-                    "type": "boolean",
-                    "description": "Save intermediate FASTQC read files containing all reads that contain valid antibody barcodes.",
-                    "help": "By default, FastQ files containing reads with valid antibody barcodes will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
-                },
-                "save_pna_demux_failed_reads": {
-                    "fa_icon": "fas fa-save",
-                    "type": "boolean",
-                    "description": "Save intermediate FASTQC read files containing all reads that do not contain valid antibody barcodes.",
-                    "help": "By default, FastQ files containing reads without valid antibody barcodes will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
-                }
-            }
-        },
-        "pna_collapse_options": {
-            "title": "Collapse options",
+        "pna_aggregate_options": {
+            "title": "Aggregate options",
             "type": "object",
             "fa_icon": "fas fa-compress-alt",
+            "description": "Options for collapsing per-read edgelists into unique molecules.",
             "properties": {
-                "pna_collapse_algorithm": {
-                    "fa_icon": "fas fa-project-diagram",
-                    "description": "The algorithm to use for collapsing.",
-                    "default": "directional",
-                    "enum": ["cluster", "directional"],
-                    "type": "string",
-                    "help": "**cluster:** Form networks of connected UMIs (based on hamming distance threshold). Each connected component is a read group. In the above example, all the UMIs are contained in a single connected component and thus there is one read group containing all reads, with ACGT as the `selected` UMI.\n\n**directional (default):** Form networks with edges defined based on hamming distance threshold and node A counts >= (2 * node B counts) - 1. Each connected component is a read group, with the node with the highest counts selected as the top node for the component."
-                },
-                "pna_collapse_mismatches": {
-                    "fa_icon": "fas fa-not-equal",
-                    "description": "The number of mismatches allowed when collapsing (adjacency)",
-                    "type": "integer",
-                    "default": 2,
-                    "minimum": 0,
-                    "maximum": 5
-                },
-                "save_pna_collapsed_reads": {
+                "save_pna_aggregate_reads": {
                     "fa_icon": "fas fa-save",
                     "type": "boolean",
-                    "description": "Save an intermediate parquet file containing collapsed read information.",
-                    "help": "By default, intermediate collapsed reads will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
+                    "description": "Save the aggregated molecule-level parquet file.",
+                    "help": "By default, the aggregated parquet file will not be saved to the results directory. Specify this flag (or set it to `true` in your config file) to copy this file to the results directory when complete."
                 }
             }
         },
@@ -294,6 +205,51 @@
                     "minimum": 1,
                     "default": 1000000,
                     "description": "Components with more nodes than this will be filtered from the output data. Set to null to enable automatic size filtering based on the data."
+                }
+            }
+        },
+        "pna_graph_collapse_options": {
+            "title": "Graph-collapse options",
+            "type": "object",
+            "fa_icon": "fas fa-compress-arrows-alt",
+            "description": "Options for collapsing likely UMI sequencing errors on low-degree nodes after the graph step.",
+            "properties": {
+                "skip_graph_collapse": {
+                    "description": "Skip graph-collapse step",
+                    "fa_icon": "fas fa-forward",
+                    "type": "boolean"
+                },
+                "save_pna_graph_collapse_pixelfile": {
+                    "fa_icon": "fas fa-save",
+                    "type": "boolean",
+                    "description": "Save the PXL dataset after the graph-collapse stage.",
+                    "help": "By default, the PXL file after graph-collapse will not be saved to the results directory. Specify this flag (or set it to `true` in your config file) to copy this file to the results directory when complete."
+                },
+                "pna_graph_collapse_bfs_distance": {
+                    "fa_icon": "fas fa-route",
+                    "description": "Maximum number of hops from a searched node to look for a same-marker, same-role collapse candidate.",
+                    "type": "integer",
+                    "default": 6,
+                    "minimum": 2
+                },
+                "pna_graph_collapse_hamming_threshold": {
+                    "fa_icon": "fas fa-not-equal",
+                    "description": "Maximum Hamming distance (inclusive) between a searched node's UMI and a candidate's UMI for the node to be collapsed into that candidate.",
+                    "type": "integer",
+                    "default": 2,
+                    "minimum": 0
+                },
+                "pna_graph_collapse_max_degree": {
+                    "fa_icon": "fas fa-project-diagram",
+                    "description": "Search a node for a collapse target only when its degree is at most this value. 1 investigates only leaves.",
+                    "type": "integer",
+                    "default": 1,
+                    "minimum": 0
+                },
+                "pna_graph_collapse_report_collapsed_sequences": {
+                    "fa_icon": "fas fa-file-alt",
+                    "description": "Also write a TSV file listing the component, original UMI and corrected UMI of every collapsed node.",
+                    "type": "boolean"
                 }
             }
         },
@@ -662,16 +618,16 @@
             "$ref": "#/$defs/input_output_options"
         },
         {
-            "$ref": "#/$defs/pna_amplicon_options"
+            "$ref": "#/$defs/pna_edgelist_options"
         },
         {
-            "$ref": "#/$defs/pna_demux_options"
-        },
-        {
-            "$ref": "#/$defs/pna_collapse_options"
+            "$ref": "#/$defs/pna_aggregate_options"
         },
         {
             "$ref": "#/$defs/pna_graph_options"
+        },
+        {
+            "$ref": "#/$defs/pna_graph_collapse_options"
         },
         {
             "$ref": "#/$defs/pna_sample_calling_options"

@@ -6,6 +6,7 @@
                 "pipeline_info",
                 "pixelator",
                 "pixelator/denoise",
+                "pixelator/denoise/sample1.denoised_graph.pxl",
                 "pixelator/denoise/sample1.meta.json",
                 "pixelator/denoise/sample1.report.json",
                 "pixelator/logs",
@@ -16,14 +17,14 @@
                 [
                     "PIXELATOR_DENOISE",
                     "pixelator",
-                    "0.31.0"
+                    "0.32.0"
                 ]
             ]
         ],
-        "timestamp": "2026-06-17T09:06:26.542202157",
+        "timestamp": "2026-11-06T15:51:01.41983277",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.10.4"
         }
     },
     "PNA denoise - stub": {
@@ -102,7 +103,7 @@
                     [
                         "PIXELATOR_DENOISE",
                         "pixelator",
-                        "0.31.0"
+                        "0.32.0"
                     ]
                 ],
                 "all_results": [
@@ -168,15 +169,15 @@
                     [
                         "PIXELATOR_DENOISE",
                         "pixelator",
-                        "0.31.0"
+                        "0.32.0"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-06-17T09:06:14.523138136",
+        "timestamp": "2026-11-06T09:35:40.438563947",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.10.4"
         }
     }
 }

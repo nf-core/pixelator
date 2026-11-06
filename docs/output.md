@@ -15,10 +15,10 @@ The directories listed below will be created in the results directory after the 
 
 The PNA pipeline consists of the following steps:
 
-- [Amplicon](#amplicon)
-- [Demultiplexing](#demultiplexing)
-- [Molecule collapsing and error correction](#molecule-collapsing-and-error-correction)
+- [Edgelist](#edgelist)
+- [Aggregate](#aggregate)
 - [Graph construction](#graph-construction)
+- [Graph collapse](#graph-collapse)
 - [Sample Calling](#sample-calling)
 - [Denoising](#denoising)
 - [Analysis](#analysis)
@@ -28,78 +28,55 @@ The PNA pipeline consists of the following steps:
 
 The output of the Proximity Network Assay (PNA) pipeline is organized into several directories, each corresponding to a specific step in the pipeline. Below is an overview of the output structure and the files generated at each step:
 
-#### Amplicon
+#### Edgelist
 
-The amplicon step uses `pixelator single-cell-pna amplicon` to create full-length amplicon sequences from both single-end and paired-end data.
-It will also filter reads based on the presence of the pixel binding sequences and the quality of the reads.
+The edgelist step uses `pixelator single-cell-pna edgelist` to build a per-read edgelist directly from the raw FASTQ files,
+for both single-end and paired-end data. Reads are matched to the markers of the panel, and reads are dropped
+based on their quality, UMI complexity and similarity between the UMI and the pixel binding sequences.
+
+Each FASTQ input (e.g. each lane of a sample) is processed independently. Output files are named after the FASTQ file,
+without the extension and without the `R1`/`R2` suffix for paired-end data.
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
-  - `amplicon`
-    - `<sample-id>.amplizon.fq.zst`: Combine R1 and R2 reads into full amplicon reads.
-    - `<sample-id>.report.json`: QC metrics collected by the amplicon step.
-    - `<sample-id>.meta.json`: Command invocation metadata.
+  - `edgelist`
+    - `<fastq-name>.parquet`: Per-read edgelist.
+    - `<fastq-name>.report.json`: QC metrics collected by the edgelist step.
+    - `<fastq-name>.meta.json`: Command invocation metadata.
+    - `<fastq-name>.dropped_reads.parquet`: Reads that did not make it into the edgelist, with the reason they were dropped (only with `--save_pna_edgelist_dropped_reads`).
   - `logs`
-    - `<sample-id>.pixelator-amplicon.log`: pixelator log output.
+    - `<fastq-name>.pixelator-edgelist.log`: pixelator log output.
 
 </details>
 
-#### Demultiplexing
+#### Aggregate
 
-The `pixelator single-cell-pna demux` command assigns each read to a marker groups, and saves these to parquet files for further processing by
-the collapse command. It also generates QC report in JSON format. Discarded reads (i.e. reads that did not have a match
-to any marker in the panel) are saved to a separate `<sample-id>.demux.failed.zst` file.
+This step uses the `pixelator single-cell-pna aggregate` command.
 
-In the parquet files the molecules from each amplicon are stored in a byte array format, to allow for fast processing
-in the collapse step.
+The `aggregate` command merges the edgelists of all the FASTQ inputs of a sample (or pool) and collapses them into unique molecules,
+computing a read count for each molecule.
 
-These processed and discarded FASTQ reads are intermediate and by default not placed in the output folder with the final files delivered to users.
+The output of this step is used as an edge list input for the graph construction step.
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
-  - `demux`
-    - `<sample-id>.demux.failed.fq.zst`: Discarded reads that do not match a marker.
-    - `<sample-id>.demux.m1.part_000.parquet`: Marker 1 reads in parquet format.
-    - `<sample-id>.demux.m2.part_000.parquet`: Marker 2 reads in parquet format.
-    - `<sample-id>.meta.json`: Command invocation metadata.
-    - `<sample-id>.report.json`: QC metrics for the demux step.
-
-  - `logs`
-    - `<sample-id>.pixelator-demultiplex.log`: pixelator log output.
-
-</details>
-
-#### Molecule collapsing and error correction
-
-This step uses the `pixelator single-cell-pna collapse` command.
-
-The `collapse` command quantifies molecules by performing error correction and detecting duplicate molecules.
-It uses a the unique molecular identifier sequences to check for uniqueness (while allowing for sequencing errors),
-and it will then collapse and compute a read count for each molecule.
-
-The output of this step is then used as an edge list input for the graph construction step.
-
-<details markdown="1">
-<summary>Output files</summary>
-
-- `pixelator`
-  - `collapse`
-    - `<sample-id>.collapse.parquet`: Edge list of the graph.
-    - `<sample-id>.report.json`: QC metrics for the collapse step.
+  - `aggregate`
+    - `<sample-id>.parquet`: Edge list of the graph.
+    - `<sample-id>.report.json`: QC metrics for the aggregate step.
     - `<sample-id>.meta.json`: Command invocation metadata.
 
   - `logs`
-    - `<sample-id>.pixelator-collapse.log`: pixelator log output.
+    - `<sample-id>.pixelator-aggregate.log`: pixelator log output.
 
 </details>
 
 #### Graph construction
 
-This step uses the `pixelator single-cell-pna graph` command. The input is the edge list parquet file generated in the collapse step.
+This step uses the `pixelator single-cell-pna graph` command. The input is the edge list parquet file generated in the aggregate step.
 The graph step will attempt to resolve any multiplet due to erronous edges in the graph, it will then find the connected components
 of the graph (i.e. the putative cells) and assign a unique ID to each component.
 
@@ -118,6 +95,30 @@ the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/px
 
   - `logs`
     - `<sample-id>.pixelator-graph.log`: pixelator log output.
+
+</details>
+
+#### Graph collapse
+
+This step uses the `pixelator single-cell-pna graph-collapse` command. It collapses likely UMI sequencing errors
+in each component of the graph. Since a UMI read error is unlikely to recur, an erroneous UMI typically shows up as a
+leaf node in the graph. Each such node is renamed to the nearest node of the same role whose UMI is within a given
+Hamming distance, and the corrected graph is saved as a new PXL file.
+
+This step can be skipped with `--skip_graph_collapse`.
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `pixelator`
+  - `graph-collapse`
+    - `<sample-id>.graph-collapse.pxl`: The pixel file containing the data after UMI error correction.
+    - `<sample-id>.collapsed_sequences.tsv`: Collapsed UMI sequences, only when `--pna_graph_collapse_report_collapsed_sequences` is set.
+    - `<sample-id>.meta.json`: Command invocation metadata.
+    - `<sample-id>.report.json`: QC metrics for the graph-collapse step.
+
+  - `logs`
+    - `<sample-id>.pixelator-graph-collapse.log`: pixelator log output.
 
 </details>
 

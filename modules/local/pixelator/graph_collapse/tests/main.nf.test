@@ -1,0 +1,61 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_GRAPH_COLLAPSE"
+    script "../main.nf"
+    process "PIXELATOR_GRAPH_COLLAPSE"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/graph_collapse"
+
+    test("PNA graph-collapse - stub") {
+
+        options "-stub"
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist' ],
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/graph/pool1.graph.pxl', checkIfExists: true),
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("PNA graph-collapse - small test") {
+        when {
+            params {
+                outdir   = "$outputDir"
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist' ],
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/graph/pool1.graph.pxl', checkIfExists: true),
+                ]
+                """
+            }
+        }
+
+        then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    process.out.versions_pixelator,
+                ).match() }
+            )
+        }
+    }
+}

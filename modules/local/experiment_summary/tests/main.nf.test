@@ -36,6 +36,7 @@ nextflow_process {
                     '    nf-core/pixelator: 5.1.0dev',
                     '    Nextflow: 25.10.4',
                 ).collectFile(name: 'software_versions.yml', newLine: true)
+                input[3] = 'amplicon_demux'
                 """
             }
         }
@@ -144,6 +145,7 @@ nextflow_process {
                     '    nf-core/pixelator: 5.1.0dev',
                     '    Nextflow: 25.10.4',
                 ).collectFile(name: 'software_versions.yml', newLine: true)
+                input[3] = 'amplicon_demux'
                 """
             }
         }
