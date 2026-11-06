@@ -68,63 +68,6 @@
             "nextflow": "26.10.4"
         }
     },
-    "PNA edgelist - stub single-end": {
-        "content": [
-            [
-                [
-                    {
-                        "id": "pool1",
-                        "design": "proxiome-v2",
-                        "panel": "proxiome-v2-immuno-155-prerelease",
-                        "technology": "proxiome-v2-edgelist",
-                        "single_end": true
-                    },
-                    "pool1_R1.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "pool1",
-                        "design": "proxiome-v2",
-                        "panel": "proxiome-v2-immuno-155-prerelease",
-                        "technology": "proxiome-v2-edgelist",
-                        "single_end": true
-                    },
-                    "pool1_R1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "pool1",
-                        "design": "proxiome-v2",
-                        "panel": "proxiome-v2-immuno-155-prerelease",
-                        "technology": "proxiome-v2-edgelist",
-                        "single_end": true
-                    },
-                    "pool1_R1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "pool1",
-                        "design": "proxiome-v2",
-                        "panel": "proxiome-v2-immuno-155-prerelease",
-                        "technology": "proxiome-v2-edgelist",
-                        "single_end": true
-                    },
-                    "pool1_R1.pixelator-edgelist.log:md5,d41d8cd98f00b204e9800998ecf8427e"
-                ]
-            ]
-        ],
-        "timestamp": "2026-11-02T16:00:19.493862159",
-        "meta": {
-            "nf-test": "0.9.5",
-            "nextflow": "26.10.4"
-        }
-    },
     "PNA edgelist - small test": {
         "content": [
             1,
@@ -132,6 +75,7 @@
                 "pipeline_info",
                 "pixelator",
                 "pixelator/edgelist",
+                "pixelator/edgelist/pool1.dropped_reads.parquet",
                 "pixelator/edgelist/pool1.meta.json",
                 "pixelator/edgelist/pool1.parquet",
                 "pixelator/edgelist/pool1.report.json",
@@ -147,7 +91,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-06T09:36:54.596542973",
+        "timestamp": "2026-11-06T10:41:58.654082805",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
