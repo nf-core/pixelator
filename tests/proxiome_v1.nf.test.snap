@@ -23,8 +23,10 @@
                 "pixelator/analysis/sample_2.report.json",
                 "pixelator/denoise",
                 "pixelator/denoise/sample_1.meta.json",
+                "pixelator/denoise/sample_1.pxl",
                 "pixelator/denoise/sample_1.report.json",
                 "pixelator/denoise/sample_2.meta.json",
+                "pixelator/denoise/sample_2.pxl",
                 "pixelator/denoise/sample_2.report.json",
                 "pixelator/edgelist",
                 "pixelator/edgelist/sample1.meta.json",
@@ -110,7 +112,7 @@
                 }
             }
         ],
-        "timestamp": "2026-11-06T09:38:07.701103146",
+        "timestamp": "2026-11-09T08:22:40.657493241",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
@@ -168,8 +170,10 @@
                 "pixelator/analysis/sample_2.meta.json",
                 "pixelator/analysis/sample_2.report.json",
                 "pixelator/denoise",
+                "pixelator/denoise/sample_1.denoised_graph.pxl",
                 "pixelator/denoise/sample_1.meta.json",
                 "pixelator/denoise/sample_1.report.json",
+                "pixelator/denoise/sample_2.denoised_graph.pxl",
                 "pixelator/denoise/sample_2.meta.json",
                 "pixelator/denoise/sample_2.report.json",
                 "pixelator/edgelist",
@@ -227,7 +231,7 @@
                 
             ]
         ],
-        "timestamp": "2026-11-06T09:37:03.738736827",
+        "timestamp": "2026-11-09T08:21:58.453880604",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
