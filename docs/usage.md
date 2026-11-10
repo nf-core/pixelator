@@ -12,8 +12,7 @@ The typical command for running the pipeline is as follows:
 nextflow run nf-core/pixelator \
     -profile docker,cells_8k \
     --input ./samplesheet.csv \
-    --outdir ./results \
-    --technology proxiome-v2
+    --outdir ./results
 ```
 
 This will launch the pipeline with the `docker` configuration profile, and resource configurations
@@ -31,11 +30,12 @@ work                # Directory containing the nextflow working files
 
 ## Parameters
 
-nf-core/pixelator can take a wide range of parameters, three of which are mandatory:
+nf-core/pixelator can take a wide range of parameters, two of which are mandatory:
 
 - `--input`: the path to your samplesheet
 - `--outdir`: the directory where the `.pxl` files and the experiment summary will be saved.
-- `--technology`: the workflow to use to process your data (`proxiome_v1` or `proxiome_v2`), depending on the kit that was used to process the samples.
+
+Whether your samples are pooled is detected from the samplesheet: rows with the `pool` and `hash_index` columns set are processed per pool and split back into samples by the sample-calling step. Rows without them are processed per sample.
 
 Detailed documentation about each parameter can be found at [https://nf-co.re/pixelator/parameters/](https://nf-co.re/pixelator/parameters/).
 
@@ -194,7 +194,7 @@ For example, using the same samplesheet as above, but with the samplesheet on th
   - sample1_R2.fq.gz
 
 ```shell
-nextflow run nf-core/pixelator --input samplesheet.csv --input_basedir s3://my-company-data/experiment-1/ --output ./resulst --technology proxiome-v1
+nextflow run nf-core/pixelator --input samplesheet.csv --input_basedir s3://my-company-data/experiment-1/ --output ./resulst
 ```
 
 ### Design

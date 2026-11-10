@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **(breaking change)** Replace amplicon/demux/collapse with edgelist/aggregate/graph-collapse.
 - **(breaking change)** Remove layout step. Computing the layout is now fast enough to be done
   on the fly when analyzing the data.
+- **(breaking change)** Remove `--technology`; pooling is detected from the samplesheet `pool` column.
 
 ### Parameters
 
@@ -28,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | `--pna_layout_*`                |                                                   |
 | `--skip_layout`                 |                                                   |
 | `--save_pna_analysis_pixelfile` |                                                   |
+| `--technology`                  |                                                   |
 |                                 | `--pna_edgelist_mismatch_threshold`               |
 |                                 | `--pna_edgelist_min_avg_quality`                  |
 |                                 | `--pna_edgelist_max_umi_base_freq`                |

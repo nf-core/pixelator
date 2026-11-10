@@ -48,10 +48,10 @@ include { collateVersionsFromTopic; collectReportInputsFromTopic } from '../subw
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Runs both proxiome-v1 (one sample per FASTQ set) and proxiome-v2 (hashed samples
-    pooled together in the FASTQ files). The technology decides:
-      - what is processed as one unit: a sample (v1) or a pool (v2)
-      - whether the sample-calling step splits the pools back into samples (v2 only)
+    Runs both non-pooled data (one sample per FASTQ set) and pooled data (hashed samples
+    pooled together in the FASTQ files). The samplesheet decides, for each row:
+      - what is processed as one unit: the pool if the row has a `pool`, else the sample
+      - whether the sample-calling step splits the pool back into samples (pools only)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
@@ -61,12 +61,6 @@ workflow PROXIOME {
     ch_panel_files // channel: [ meta, path(panel_file) |  ]
 
     main:
-    def pooled = params.technology in ['proxiome-v2', 'hashed_samples']
-    if (!pooled && !(params.technology in ['proxiome-v1', 'nonhashed_samples'])) {
-        error "Unknown technology: \"${params.technology}\""
-    }
-    def unit = pooled ? 'pool' : 'sample'
-
     // Pool-level steps collapse samples together; sample calling splits them
     // apart again, so keep the original per-sample metadata to restore later.
     ch_sample_metas = ch_fastq
@@ -76,14 +70,16 @@ workflow PROXIOME {
     // Group the runs (e.g. lanes) of each unit, then keep unique FASTQ inputs so
     // each lane/run is processed by edgelist independently.
     ch_fastq_grouped = ch_fastq
-        .map { meta, fq -> tuple(pooled ? meta.pool : meta.id, [meta, fq]) }
+        .map { meta, fq -> tuple(meta.pool ?: meta.id, [meta, fq]) }
         .groupTuple()
         .map { _key, list ->
+            def is_pool = list[0][0].pool
+            def unit = is_pool ? 'pool' : 'sample'
             def unique_endedness = list.collect { item -> item[0].single_end }.unique()
             if (unique_endedness.size() > 1) {
                 exit 1, "ERROR: Runs of the same ${unit} must all be single-end or all paired-end."
             }
-            def meta = pooled ? pool_meta(list[0][0]) : list[0][0].clone()
+            def meta = is_pool ? pool_meta(list[0][0]) : list[0][0].clone()
             def fq = (list as List).collect { item -> item[1] }.unique()
             // Pixelator names the edgelist parquet from the FASTQ basename, and
             // aggregate stages every lane of a unit into one directory.
@@ -96,12 +92,12 @@ workflow PROXIOME {
 
     // Key the panel files by unit id, and check that a unit uses one panel
     ch_panel_by_id = ch_panel_files
-        .map { meta, panel_file_path -> tuple(pooled ? meta.pool : meta.id, panel_file_path) }
+        .map { meta, panel_file_path -> tuple(meta.pool ?: meta.id, panel_file_path) }
         .groupTuple()
         .map { id, panel_files ->
             def unique_panels = panel_files.unique()
             if (unique_panels.size() > 1) {
-                exit 1, "ERROR: Runs of the same ${unit} must use the same panel."
+                exit 1, "ERROR: Runs of the same sample or pool ('${id}') must use the same panel."
             }
             [id, unique_panels[0]]
         }
@@ -174,10 +170,14 @@ workflow PROXIOME {
     //
     // MODULE: Run pixelator single-cell sample-calling (pooled data only)
     //
-    // For non-pooled data nothing enters the step, so it never runs.
-    ch_sample_calling_input = pooled
-        ? ch_denoise.map { meta, pixel_file -> [meta, pixel_file, file(params.input)] }
-        : channel.empty()
+    // Pools are split back into samples; non-pooled units skip the step.
+    ch_denoise_split = ch_denoise.branch { meta, _pixel_file ->
+        pooled: meta.pool
+        single: true
+    }
+
+    ch_sample_calling_input = ch_denoise_split.pooled
+        .map { meta, pixel_file -> [meta, pixel_file, file(params.input)] }
 
     PIXELATOR_SAMPLE_CALLING (ch_sample_calling_input)
 
@@ -203,7 +203,7 @@ workflow PROXIOME {
     //
     // MODULE: Run pixelator single-cell analysis
     //
-    ch_analysis_input = pooled ? ch_sample_called : ch_denoise
+    ch_analysis_input = ch_sample_called.mix(ch_denoise_split.single)
     PIXELATOR_ANALYSIS ( ch_analysis_input )
     ch_analysis = PIXELATOR_ANALYSIS.out.pixelfile
 

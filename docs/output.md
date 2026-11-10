@@ -175,7 +175,7 @@ the analysis step.
 </details>
 
 > [!NOTE]
-> This step is run only when `--technology proxiome-v2` is set.
+> This step is run only for pooled samples, i.e. rows with the `pool` and `hash_index` columns set in the samplesheet.
 
 #### Analysis
 
