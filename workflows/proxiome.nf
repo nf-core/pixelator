@@ -46,59 +46,79 @@ include { collateVersionsFromTopic; collectReportInputsFromTopic } from '../subw
 
 //
 
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Runs both non-pooled data (one sample per FASTQ set) and pooled data (hashed samples
+    pooled together in the FASTQ files). The samplesheet decides, for each row
+    (`--technology` is only checked against it):
+      - what is processed as one unit: the pool if the row has a `pool`, else the sample
+      - whether the sample-calling step splits the pool back into samples (pools only)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 
-workflow PROXIOME_V2 {
+workflow PROXIOME {
     take:
-    ch_fastq               // channel: [ meta, [path(sample_1.fq), path(sample_2.fq)] ]
-    ch_panel_files         // channel: [ meta, path(panel_file) |  ]
+    ch_fastq       // channel: [ meta, [path(sample_1.fq), path(sample_2.fq)] ]
+    ch_panel_files // channel: [ meta, path(panel_file) |  ]
 
     main:
+    // The technology is only used to check that the samplesheet is consistent with it;
+    // pooling itself is detected per row from the `pool` column.
+    def expect_pooled = params.technology in ['proxiome-v2', 'hashed_samples']
+
     // Pool-level steps collapse samples together; sample calling splits them
     // apart again, so keep the original per-sample metadata to restore later.
     ch_sample_metas = ch_fastq
         .map { meta, _fq -> [meta.id, meta] }
         .unique()
 
-    // Group hashed samples that share a pool, then keep unique FASTQ inputs so
+    // Group the runs (e.g. lanes) of each unit, then keep unique FASTQ inputs so
     // each lane/run is processed by edgelist independently.
-    ch_fastq_grouped_by_pool = ch_fastq
-        .map { meta, fq -> tuple(meta.pool, [meta, fq]) }
+    ch_fastq_grouped = ch_fastq
+        .map { meta, fq ->
+            if (expect_pooled && !meta.pool) {
+                exit 1, "ERROR: Sample '${meta.id}' has no `pool`, but --technology ${params.technology} requires pooled samples."
+            }
+            if (!expect_pooled && meta.pool) {
+                exit 1, "ERROR: Sample '${meta.id}' has `pool` '${meta.pool}', but --technology ${params.technology} does not use pooled samples."
+            }
+            tuple(meta.pool ?: meta.id, [meta, fq])
+        }
         .groupTuple()
-        .map { _pool, list ->
+        .map { _key, list ->
+            def is_pool = list[0][0].pool
+            def unit = is_pool ? 'pool' : 'sample'
             def unique_endedness = list.collect { item -> item[0].single_end }.unique()
             if (unique_endedness.size() > 1) {
-                exit 1, "ERROR: Samples in the same pool must all be single-end or all paired-end."
+                exit 1, "ERROR: Runs of the same ${unit} must all be single-end or all paired-end."
             }
-            def meta = pool_meta(list[0][0])
+            def meta = is_pool ? pool_meta(list[0][0]) : list[0][0].clone()
             def fq = (list as List).collect { item -> item[1] }.unique()
             // Pixelator names the edgelist parquet from the FASTQ basename, and
-            // aggregate stages every lane of a pool into one directory.
+            // aggregate stages every lane of a unit into one directory.
             def duplicate_stems = duplicateEdgelistStems(fq, meta.single_end)
             if (duplicate_stems) {
-                exit 1, "ERROR: FASTQ files in pool '${meta.id}' produce the same edgelist name (${duplicate_stems.join(', ')}). Each run in a pool must have a unique FASTQ basename."
+                exit 1, "ERROR: FASTQ files in ${unit} '${meta.id}' produce the same edgelist name (${duplicate_stems.join(', ')}). Each run of a ${unit} must have a unique FASTQ basename."
             }
             [meta, fq]
         }
 
-    // Remap panel files to use pool as id, and check that a pool uses one panel
-    ch_panel_files_grouped_by_pool = ch_panel_files
-        .map { meta, panel_file_path -> tuple(meta.pool, [meta, panel_file_path]) }
+    // Key the panel files by unit id, and check that a unit uses one panel
+    ch_panel_by_id = ch_panel_files
+        .map { meta, panel_file_path -> tuple(meta.pool ?: meta.id, panel_file_path) }
         .groupTuple()
-        .map { _pool, list ->
-            def unique_panels = list.collect { item -> item[1] }.unique()
+        .map { id, panel_files ->
+            def unique_panels = panel_files.unique()
             if (unique_panels.size() > 1) {
-                exit 1, "ERROR: Samples in the same pool must use the same panel."
+                exit 1, "ERROR: Runs of the same sample or pool ('${id}') must use the same panel."
             }
-            [pool_meta(list[0][0]), unique_panels[0]]
+            [id, unique_panels[0]]
         }
-
-    ch_panel_by_id = ch_panel_files_grouped_by_pool
-        .map { meta, panel_file -> [meta.id, panel_file] }
 
     //
     // MODULE: Run pixelator single-cell-pna edgelist on each FASTQ input
     //
-    ch_edgelist_input = ch_fastq_grouped_by_pool
+    ch_edgelist_input = ch_fastq_grouped
         .map { meta, fq -> [meta.id, meta, fq] }
         .join(ch_panel_by_id)
         .flatMap { _id, meta, fq_units, panel_file ->
@@ -106,19 +126,19 @@ workflow PROXIOME_V2 {
             // to be able to group the files without waiting later
             def baseMeta = meta.clone()
             baseMeta['parts'] = fq_units.size()
-            fq_units.withIndex().collect { unit, index ->
+            fq_units.withIndex().collect { fq_unit, index ->
                 def partMeta = baseMeta.clone()
                 partMeta['part'] = index
-                def reads = unit instanceof Collection ? unit : [unit]
+                def reads = fq_unit instanceof Collection ? fq_unit : [fq_unit]
                 [partMeta, reads, panel_file, panel_file ? null : meta.panel, meta.design]
             }
         }
 
     PIXELATOR_EDGELIST(ch_edgelist_input)
 
-    // Collect the per-lane edgelist parquet files in a list per pool.
-    // groupKey(id, size) lets groupTuple emit a pool as soon as all of its
-    // lanes are done, instead of waiting for every pool to finish.
+    // Collect the per-lane edgelist parquet files in a list per unit.
+    // groupKey(id, size) lets groupTuple emit a unit as soon as all of its
+    // lanes are done, instead of waiting for every unit to finish.
     ch_edgelist_collected = PIXELATOR_EDGELIST.out.edgelist
         .map { meta, parquet -> tuple(groupKey(meta.id, meta.parts), [meta, parquet]) }
         .groupTuple()
@@ -158,12 +178,18 @@ workflow PROXIOME_V2 {
     // MODULE: Run pixelator single-cell denoise
     //
     PIXELATOR_DENOISE ( ch_graph_collapsed )
-    ch_denoise = PIXELATOR_DENOISE.out.pixelfile
+    ch_denoise = params.skip_denoise ? ch_graph_collapsed : PIXELATOR_DENOISE.out.pixelfile
 
     //
-    // MODULE: Run pixelator single-cell sample-calling
+    // MODULE: Run pixelator single-cell sample-calling (pooled data only)
     //
-    ch_sample_calling_input = (params.skip_denoise ? ch_graph_collapsed : ch_denoise)
+    // Pools are split back into samples; non-pooled units skip the step.
+    ch_denoise_split = ch_denoise.branch { meta, _pixel_file ->
+        pooled: meta.pool
+        single: true
+    }
+
+    ch_sample_calling_input = ch_denoise_split.pooled
         .map { meta, pixel_file -> [meta, pixel_file, file(params.input)] }
 
     PIXELATOR_SAMPLE_CALLING (ch_sample_calling_input)
@@ -190,7 +216,8 @@ workflow PROXIOME_V2 {
     //
     // MODULE: Run pixelator single-cell analysis
     //
-    PIXELATOR_ANALYSIS ( ch_sample_called )
+    ch_analysis_input = ch_sample_called.mix(ch_denoise_split.single)
+    PIXELATOR_ANALYSIS ( ch_analysis_input )
     ch_analysis = PIXELATOR_ANALYSIS.out.pixelfile
 
     // Prepare all data needed by reporting for each pixelator step
@@ -211,7 +238,7 @@ workflow PROXIOME_V2 {
     }
 
     emit:
-    graph = ch_graph
+    graph    = ch_graph
     analysis = ch_analysis
 }
 

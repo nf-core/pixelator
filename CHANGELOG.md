@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Enhancements & fixes
 
-- **(breaking change)** Replace amplicon/demux/collapse with edgelist/aggregate/graph-collapse.
+- **(breaking change)** Replace amplicon/demux/collapse with edgelist/aggregate/graph-collapse. By @Aratz [#274](https://github.com/nf-core/pixelator/pull/274)
 - **(breaking change)** Remove layout step. Computing the layout is now fast enough to be done
-  on the fly when analyzing the data.
+  on the fly when analyzing the data. By @Aratz [#274](https://github.com/nf-core/pixelator/pull/274)
 
 ### Parameters
 
@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | `--pna_layout_*`                |                                                   |
 | `--skip_layout`                 |                                                   |
 | `--save_pna_analysis_pixelfile` |                                                   |
+| `--technology`                  |                                                   |
 |                                 | `--pna_edgelist_mismatch_threshold`               |
 |                                 | `--pna_edgelist_min_avg_quality`                  |
 |                                 | `--pna_edgelist_max_umi_base_freq`                |
