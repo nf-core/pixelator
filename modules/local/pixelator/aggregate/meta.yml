@@ -1,10 +1,10 @@
-name: pixelator_layout
-description: Run `pixelator single-cell-pna layout` to compute layout outputs from pixel data.
+name: pixelator_aggregate
+description: Run `pixelator single-cell-pna aggregate` to collapse a per-read edgelist parquet into unique molecules with read counts.
 keywords:
   - pixelator
   - single-cell-pna
-  - layout
-  - pxl
+  - aggregate
+  - parquet
 tools:
   - pixelator:
       description: Single-cell sequencing data analysis toolkit from Pixelgen Technologies.
@@ -18,19 +18,20 @@ input:
         description: |
           Groovy Map containing sample information
           e.g. [ id:'sample1' ]
-    - data:
+    - edgelist_parquet:
         type: file
-        description: Input file for the layout subcommand.
+        description: Per-read edgelist parquet file(s) produced by the edgelist step. Multiple files are merged into a single output.
+        pattern: "*.parquet"
         ontologies: []
 output:
-  pixelfile:
+  parquet:
     - - meta:
           type: map
           description: Groovy Map containing sample information.
-      - "*.pxl":
+      - "*.parquet":
           type: file
-          description: Pixelator PXL output file.
-          pattern: "*.pxl"
+          description: Aggregated molecule-level parquet output (one file per sample).
+          pattern: "*.parquet"
           ontologies: []
   report_json:
     - - meta:
@@ -50,23 +51,14 @@ output:
           description: Metadata in JSON format.
           pattern: "*.meta.json"
           ontologies: []
-  all_results:
-    - - meta:
-          type: map
-          description: Groovy Map containing sample information.
-      - "*":
-          type: directory
-          description: All files generated in the layout output directory.
-          pattern: "*"
-          ontologies: []
   log:
     - - meta:
           type: map
           description: Groovy Map containing sample information.
-      - "*pixelator-layout.log":
+      - "*pixelator-aggregate.log":
           type: file
-          description: Pixelator layout command log.
-          pattern: "*pixelator-layout.log"
+          description: Pixelator aggregate command log.
+          pattern: "*pixelator-aggregate.log"
           ontologies: []
   versions_pixelator:
     - - ${task.process}:
@@ -92,8 +84,6 @@ topics:
 authors:
   - "@Aratz"
   - "@johandahlberg"
-  - "@fbdtemme"
 maintainers:
   - "@Aratz"
   - "@johandahlberg"
-  - "@fbdtemme"

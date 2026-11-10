@@ -268,7 +268,7 @@ def collateVersionsFromTopic() {
 // stages the files, so intermediate PXL copies are not downloaded.
 def collectReportInputsFromTopic() {
     // Later stages first. The first stage that appears in the topic is the last that ran.
-    def pxl_stage_preference = ['layout', 'analysis', 'sample_calling', 'denoise', 'graph']
+    def pxl_stage_preference = ['analysis', 'sample_calling', 'denoise', 'graph_collapse', 'graph']
 
     return channel
         .topic('all_results_for_reports')
@@ -480,7 +480,9 @@ def validate_input_samplesheet(URI samplesheetUrl, items) {
     def panel_file = items[1]
     def fq = items[2..-1]
 
-    def paired_end = fq.size() == 2
+    // nf-schema yields an empty list for a missing fastq_2, so check the value, not the size
+    def paired_end = fq.size() == 2 && fq[1]
+    meta = meta + [single_end: !paired_end]
     def panel_file_abs = resolve_relative_path(panel_file, samplesheetUrl)
     def fq1_abs = resolve_relative_path(fq[0], samplesheetUrl)
 

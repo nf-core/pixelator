@@ -10,6 +10,16 @@
         "additionalProperties": false,
         "allOf": [
             {
+                "not": {
+                    "required": ["panel", "panel_file"],
+                    "properties": {
+                        "panel": { "minLength": 1 },
+                        "panel_file": { "minLength": 1 }
+                    }
+                },
+                "errorMessage": "`panel` and `panel_file` are mutually exclusive; specify only one of them."
+            },
+            {
                 "if": {
                     "properties": {
                         "design": {

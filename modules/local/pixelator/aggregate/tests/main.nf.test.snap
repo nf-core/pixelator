@@ -1,0 +1,125 @@
+{
+    "PNA aggregate - small test": {
+        "content": [
+            2,
+            [
+                "pipeline_info",
+                "pixelator",
+                "pixelator/aggregate",
+                "pixelator/aggregate/pool1.meta.json",
+                "pixelator/aggregate/pool1.parquet",
+                "pixelator/aggregate/pool1.report.json",
+                "pixelator/edgelist",
+                "pixelator/edgelist/pool1.meta.json",
+                "pixelator/edgelist/pool1.parquet",
+                "pixelator/edgelist/pool1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/pool1",
+                "pixelator/logs/pool1/pool1.pixelator-aggregate.log",
+                "pixelator/logs/pool1/pool1.pixelator-edgelist.log"
+            ],
+            [
+                [
+                    "PIXELATOR_AGGREGATE",
+                    "pixelator",
+                    "0.32.0"
+                ]
+            ]
+        ],
+        "timestamp": "2026-11-06T09:33:49.817733612",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.10.4"
+        }
+    },
+    "PNA aggregate - stub": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "pool1",
+                        "design": "proxiome-v2",
+                        "panel": "proxiome-v2-immuno-155-prerelease",
+                        "technology": "proxiome-v2-edgelist"
+                    },
+                    "pool1.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "pool1",
+                        "design": "proxiome-v2",
+                        "panel": "proxiome-v2-immuno-155-prerelease",
+                        "technology": "proxiome-v2-edgelist"
+                    },
+                    "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "pool1",
+                        "design": "proxiome-v2",
+                        "panel": "proxiome-v2-immuno-155-prerelease",
+                        "technology": "proxiome-v2-edgelist"
+                    },
+                    "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "pool1",
+                        "design": "proxiome-v2",
+                        "panel": "proxiome-v2-immuno-155-prerelease",
+                        "technology": "proxiome-v2-edgelist"
+                    },
+                    "pool1.pixelator-aggregate.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ]
+        ],
+        "timestamp": "2026-11-02T15:59:27.267833115",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.10.4"
+        }
+    },
+    "PNA aggregate - small test - multiple files": {
+        "content": [
+            3,
+            [
+                "pipeline_info",
+                "pixelator",
+                "pixelator/aggregate",
+                "pixelator/aggregate/pool1.meta.json",
+                "pixelator/aggregate/pool1.parquet",
+                "pixelator/aggregate/pool1.report.json",
+                "pixelator/edgelist",
+                "pixelator/edgelist/pool1.meta.json",
+                "pixelator/edgelist/pool1.parquet",
+                "pixelator/edgelist/pool1.report.json",
+                "pixelator/edgelist/pool1_reseq.meta.json",
+                "pixelator/edgelist/pool1_reseq.parquet",
+                "pixelator/edgelist/pool1_reseq.report.json",
+                "pixelator/logs",
+                "pixelator/logs/pool1",
+                "pixelator/logs/pool1/pool1.pixelator-aggregate.log",
+                "pixelator/logs/pool1/pool1.pixelator-edgelist.log",
+                "pixelator/logs/pool1/pool1_reseq.pixelator-edgelist.log"
+            ],
+            [
+                [
+                    "PIXELATOR_AGGREGATE",
+                    "pixelator",
+                    "0.32.0"
+                ]
+            ]
+        ],
+        "timestamp": "2026-11-06T09:34:27.507708374",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.10.4"
+        }
+    }
+}

@@ -31,10 +31,10 @@ using `pixelator` to produce a PXL file containing single-cell protein abundance
 
 The pipeline will run the following steps:
 
-1. Do quality control checks of input reads and build amplicons ([`pixelator single-cell-pna amplicon`](https://github.com/PixelgenTechnologies/pixelator))
-2. Create groups of amplicons based on their marker assignments ([`pixelator single-cell-pna demux`](https://github.com/PixelgenTechnologies/pixelator))
-3. Derive original molecules to use as edge list downstream by error correcting, and counting input amplicons ([`pixelator single-cell-pna collapse`](https://github.com/PixelgenTechnologies/pixelator))
-4. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator single-cell-pna graph`](https://github.com/PixelgenTechnologies/pixelator))
+1. Do quality control checks of input reads and build a per-read edge list directly from the FASTQ files ([`pixelator single-cell-pna edgelist`](https://github.com/PixelgenTechnologies/pixelator))
+2. Derive original molecules to use as edge list downstream by aggregating and counting the per-read edge lists ([`pixelator single-cell-pna aggregate`](https://github.com/PixelgenTechnologies/pixelator))
+3. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator single-cell-pna graph`](https://github.com/PixelgenTechnologies/pixelator))
+4. Correct UMI sequencing errors in the cell graphs ([`pixelator single-cell-pna graph-collapse`](https://github.com/PixelgenTechnologies/pixelator))
 5. _(Conditional; only for PNA hashed data)_ Assign components to samples in pooled experiments ([`pixelator single-cell-pna sample-calling`](https://github.com/PixelgenTechnologies/pixelator))
 6. Denoise the cell graphs ([`pixelator single-cell-pna denoise`](https://github.com/PixelgenTechnologies/pixelator))
 7. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))

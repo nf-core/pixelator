@@ -1,9 +1,9 @@
-name: pixelator_demux
-description: Run `pixelator single-cell-pna demux` to split reads and generate demultiplexed outputs.
+name: pixelator_edgelist
+description: Run `pixelator single-cell-pna edgelist` to build a per-read edgelist parquet file directly from raw FASTQ reads.
 keywords:
   - pixelator
   - single-cell-pna
-  - demux
+  - edgelist
   - parquet
 tools:
   - pixelator:
@@ -20,8 +20,10 @@ input:
           e.g. [ id:'sample1', design:'pna-2' ]
     - reads:
         type: file
-        description: Input FASTQ files.
-        pattern: "*.{fq,fastq,fq.gz,fastq.gz,fq.zst,fastq.zst}"
+        description: |
+          Input FASTQ files. One file (`fastq_1`) when `meta.single_end` is true,
+          or `[read_forward, read_reverse]` when paired-end.
+        pattern: "*.{fq,fastq,fq.gz,fastq.gz}"
         ontologies:
           - http://edamontology.org/format_2545
     - panel_file:
@@ -35,35 +37,15 @@ input:
         type: string
         description: Assay design identifier.
 output:
-  demuxed:
+  edgelist:
     - - meta:
           type: map
           description: Groovy Map containing sample information.
       - "*.parquet":
           type: file
-          description: Demultiplexed parquet output(s).
+          description: Per-read edgelist parquet output.
           pattern: "*.parquet"
           ontologies: []
-  passed:
-    - - meta:
-          type: map
-          description: Groovy Map containing sample information.
-      - "*demux.passed*.{fq,fastq}.zst":
-          type: file
-          description: Reads that passed demultiplexing.
-          pattern: "*demux.passed*.{fq,fastq}.zst"
-          ontologies:
-            - http://edamontology.org/format_2545
-  failed:
-    - - meta:
-          type: map
-          description: Groovy Map containing sample information.
-      - "*demux.failed.{fq,fastq}.zst":
-          type: file
-          description: Reads that failed demultiplexing.
-          pattern: "*demux.failed.{fq,fastq}.zst"
-          ontologies:
-            - http://edamontology.org/format_2545
   report_json:
     - - meta:
           type: map
@@ -86,10 +68,10 @@ output:
     - - meta:
           type: map
           description: Groovy Map containing sample information.
-      - "*pixelator-demux.log":
+      - "*pixelator-edgelist.log":
           type: file
-          description: Pixelator demux command log.
-          pattern: "*pixelator-demux.log"
+          description: Pixelator edgelist command log.
+          pattern: "*pixelator-edgelist.log"
           ontologies: []
   versions_pixelator:
     - - ${task.process}:
@@ -115,8 +97,6 @@ topics:
 authors:
   - "@Aratz"
   - "@johandahlberg"
-  - "@fbdtemme"
 maintainers:
   - "@Aratz"
   - "@johandahlberg"
-  - "@fbdtemme"
