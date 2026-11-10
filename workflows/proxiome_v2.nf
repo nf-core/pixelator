@@ -112,7 +112,7 @@ workflow PROXIOME_V2 {
                 def partMeta = baseMeta.clone()
                 partMeta['part'] = index
                 def reads = unit instanceof Collection ? unit : [unit]
-                [partMeta, reads, panel_file, meta.panel, meta.design]
+                [partMeta, reads, panel_file, panel_file ? null : meta.panel, meta.design]
             }
         }
 
