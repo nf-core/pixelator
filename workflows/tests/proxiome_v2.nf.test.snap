@@ -17,6 +17,7 @@
                 "pixelator/analysis/sample2.meta.json",
                 "pixelator/analysis/sample2.report.json",
                 "pixelator/denoise",
+                "pixelator/denoise/pool1.denoised_graph.pxl",
                 "pixelator/denoise/pool1.meta.json",
                 "pixelator/denoise/pool1.report.json",
                 "pixelator/edgelist",
@@ -64,7 +65,7 @@
                 "pixelator/sample_calling/sample2.report.json"
             ]
         ],
-        "timestamp": "2026-11-06T09:37:30.424596749",
+        "timestamp": "2026-11-10T09:01:07.679807083",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
