@@ -10,8 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Enhancements & fixes
 
 - **(breaking change)** Replace amplicon/demux/collapse with edgelist/aggregate/graph-collapse.
-- Use unreleased pixelator container `ghcr.io/pixelgentechnologies/pixelator:sha-45647a1`.
-- Remove `CAT_FASTQ`; lanes are processed independently by edgelist and merged by aggregate.
 
 ### Parameters
 
