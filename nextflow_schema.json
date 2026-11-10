@@ -583,7 +583,7 @@
                     "type": "string",
                     "fa_icon": "far fa-check-circle",
                     "description": "Base URL or local path to location of pipeline test dataset files.",
-                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/e8950f260973a6778e2ff24988e12fd4474d60e1/",
+                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/6d3a6e336688e2237fad53a03de56a02a6375987/",
                     "hidden": true
                 },
                 "modules_testdata_base_path": {
