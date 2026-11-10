@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **(breaking change)** Replace amplicon/demux/collapse with edgelist/aggregate/graph-collapse.
 - **(breaking change)** Remove layout step. Computing the layout is now fast enough to be done
-on the fly when analyzing the data.
+  on the fly when analyzing the data.
 
 ### Parameters
 
