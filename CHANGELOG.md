@@ -9,10 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Enhancements & fixes
 
-- **(breaking change)** Replace amplicon/demux/collapse with edgelist/aggregate/graph-collapse.
+- **(breaking change)** Replace amplicon/demux/collapse with edgelist/aggregate/graph-collapse. By @Aratz [#274](https://github.com/nf-core/pixelator/pull/274)
 - **(breaking change)** Remove layout step. Computing the layout is now fast enough to be done
-  on the fly when analyzing the data.
-- **(breaking change)** Remove `--technology`; pooling is detected from the samplesheet `pool` column.
+  on the fly when analyzing the data. By @Aratz [#274](https://github.com/nf-core/pixelator/pull/274)
+- **(breaking change)** Remove `--technology`; pooling is detected from the samplesheet `pool` column. By @Aratz [#275](https://github.com/nf-core/pixelator/pull/275)
 
 ### Parameters
 
