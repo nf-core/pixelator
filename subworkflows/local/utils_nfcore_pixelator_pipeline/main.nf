@@ -268,7 +268,7 @@ def collateVersionsFromTopic() {
 // stages the files, so intermediate PXL copies are not downloaded.
 def collectReportInputsFromTopic() {
     // Later stages first. The first stage that appears in the topic is the last that ran.
-    def pxl_stage_preference = ['layout', 'analysis', 'sample_calling', 'denoise', 'graph_collapse', 'graph']
+    def pxl_stage_preference = ['analysis', 'sample_calling', 'denoise', 'graph_collapse', 'graph']
 
     return channel
         .topic('all_results_for_reports')
