@@ -49,7 +49,8 @@ include { collateVersionsFromTopic; collectReportInputsFromTopic } from '../subw
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Runs both non-pooled data (one sample per FASTQ set) and pooled data (hashed samples
-    pooled together in the FASTQ files). The samplesheet decides, for each row:
+    pooled together in the FASTQ files). The samplesheet decides, for each row
+    (`--technology` is only checked against it):
       - what is processed as one unit: the pool if the row has a `pool`, else the sample
       - whether the sample-calling step splits the pool back into samples (pools only)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,6 +62,10 @@ workflow PROXIOME {
     ch_panel_files // channel: [ meta, path(panel_file) |  ]
 
     main:
+    // The technology is only used to check that the samplesheet is consistent with it;
+    // pooling itself is detected per row from the `pool` column.
+    def expect_pooled = params.technology in ['proxiome-v2', 'hashed_samples']
+
     // Pool-level steps collapse samples together; sample calling splits them
     // apart again, so keep the original per-sample metadata to restore later.
     ch_sample_metas = ch_fastq
@@ -70,7 +75,15 @@ workflow PROXIOME {
     // Group the runs (e.g. lanes) of each unit, then keep unique FASTQ inputs so
     // each lane/run is processed by edgelist independently.
     ch_fastq_grouped = ch_fastq
-        .map { meta, fq -> tuple(meta.pool ?: meta.id, [meta, fq]) }
+        .map { meta, fq ->
+            if (expect_pooled && !meta.pool) {
+                exit 1, "ERROR: Sample '${meta.id}' has no `pool`, but --technology ${params.technology} requires pooled samples."
+            }
+            if (!expect_pooled && meta.pool) {
+                exit 1, "ERROR: Sample '${meta.id}' has `pool` '${meta.pool}', but --technology ${params.technology} does not use pooled samples."
+            }
+            tuple(meta.pool ?: meta.id, [meta, fq])
+        }
         .groupTuple()
         .map { _key, list ->
             def is_pool = list[0][0].pool
