@@ -23,8 +23,6 @@ include { PIXELATOR_GRAPH_COLLAPSE   } from '../modules/local/pixelator/graph_co
 include { PIXELATOR_SAMPLE_CALLING   } from '../modules/local/pixelator/sample_calling'
 include { PIXELATOR_DENOISE          } from '../modules/local/pixelator/denoise'
 include { PIXELATOR_ANALYSIS         } from '../modules/local/pixelator/analysis'
-include { PIXELATOR_LAYOUT           } from '../modules/local/pixelator/layout'
-
 include { EXPERIMENT_SUMMARY         } from '../modules/local/experiment_summary/main'
 include { collateVersionsFromTopic; collectReportInputsFromTopic } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
 
@@ -194,12 +192,6 @@ workflow PROXIOME_V2 {
     //
     PIXELATOR_ANALYSIS ( ch_sample_called )
     ch_analysis = PIXELATOR_ANALYSIS.out.pixelfile
-
-    //
-    // MODULE: Run pixelator single-cell layout
-    //
-
-    PIXELATOR_LAYOUT( ch_analysis )
 
     // Prepare all data needed by reporting for each pixelator step
     if (!params.skip_experiment_summary) {

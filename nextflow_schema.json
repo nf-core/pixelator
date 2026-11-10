@@ -119,7 +119,7 @@
                     "type": "boolean",
                     "fa_icon": "fas fa-save",
                     "description": "Save the PXL dataset after the graph stage.",
-                    "help": "By default, the PXL file after graph will not be saved to the results directory unless `--skip_analysis` and `--skip_layout` is passed. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
+                    "help": "By default, the PXL file after graph will not be saved to the results directory. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
                 },
                 "pna_graph_multiplet_recovery": {
                     "description": "Activate the multiplet recovery using leiden community detection",
@@ -358,12 +358,6 @@
                     "fa_icon": "fas fa-forward",
                     "type": "boolean"
                 },
-                "save_pna_analysis_pixelfile": {
-                    "fa_icon": "fas fa-save",
-                    "type": "boolean",
-                    "description": "Save the PXL dataset after the analysis stage.",
-                    "help": "By default, the PXL dataset after the analysis stage will only be saved be saved when `--skip_layout` is passed. Specify this flag (or set to `true` in your config file) to copy these files to the results directory when complete."
-                },
                 "pna_analysis_compute_proximity": {
                     "description": "Compute proximity scores",
                     "fa_icon": "fas fa-ruler-combined",
@@ -389,45 +383,6 @@
                     "default": 50,
                     "minimum": 10,
                     "maximum": 200
-                }
-            }
-        },
-        "pna_layout_options": {
-            "title": "Layout options",
-            "type": "object",
-            "fa_icon": "fas fa-draw-polygon",
-            "properties": {
-                "skip_layout": {
-                    "description": "Skip layout step",
-                    "fa_icon": "fas fa-forward",
-                    "type": "boolean"
-                },
-                "pna_layout_no_node_marker_counts": {
-                    "description": "Skip adding marker counts to the layout.",
-                    "fa_icon": "fas fa-ban",
-                    "type": "boolean"
-                },
-                "pna_layout_layout_algorithm": {
-                    "description": "Select a layout algorithm to use. This can be specified as a comma separated list to compute multiple layouts. Possible values are: pmds, pmds_3d, wpmds, wpmds_3d, coarsened_pmds_3d.",
-                    "fa_icon": "fas fa-project-diagram",
-                    "type": "string",
-                    "enum": ["pmds_3d", "wpmds_3d", "coarsened_pmds_3d"],
-                    "default": "coarsened_pmds_3d"
-                },
-                "pna_layout_pmds_pivots": {
-                    "type": "integer",
-                    "fa_icon": "fas fa-compass",
-                    "description": "Number of pivots to use for the PMDS layout algorithm. Default: 50. More gives better results, but increases computation time.",
-                    "default": 50,
-                    "minimum": 50
-                },
-                "pna_layout_wpmds_k": {
-                    "type": "integer",
-                    "fa_icon": "fas fa-ruler",
-                    "description": "The window size used when computing probability weights for the wpmds layout method. Only used when layout algorithm is set to wpmds.",
-                    "default": 5,
-                    "minimum": 1,
-                    "maximum": 10
                 }
             }
         },
@@ -637,9 +592,6 @@
         },
         {
             "$ref": "#/$defs/pna_analysis_options"
-        },
-        {
-            "$ref": "#/$defs/pna_layout_options"
         },
         {
             "$ref": "#/$defs/experiment_summary_options"

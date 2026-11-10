@@ -1,7 +1,7 @@
 {
     "Default parameters [design: proxiome-v1, panel: proxiome-v1-immuno-155-v1.1]": {
         "content": [
-            7,
+            6,
             [
                 "pipeline_info",
                 "pixelator",
@@ -10,7 +10,6 @@
                 "pixelator/aggregate/sample1.parquet",
                 "pixelator/aggregate/sample1.report.json",
                 "pixelator/analysis",
-                "pixelator/analysis/sample1.analysis.pxl",
                 "pixelator/analysis/sample1.meta.json",
                 "pixelator/analysis/sample1.report.json",
                 "pixelator/denoise",
@@ -29,9 +28,6 @@
                 "pixelator/graph/sample1.graph.pxl",
                 "pixelator/graph/sample1.meta.json",
                 "pixelator/graph/sample1.report.json",
-                "pixelator/layout",
-                "pixelator/layout/sample1.meta.json",
-                "pixelator/layout/sample1.report.json",
                 "pixelator/logs",
                 "pixelator/logs/sample1",
                 "pixelator/logs/sample1/sample1.pixelator-aggregate.log",
@@ -40,11 +36,10 @@
                 "pixelator/logs/sample1/sample1.pixelator-edgelist.log",
                 "pixelator/logs/sample1/sample1.pixelator-graph-collapse.log",
                 "pixelator/logs/sample1/sample1.pixelator-graph.log",
-                "pixelator/logs/sample1/sample1.pixelator-layout.log",
-                "pixelator/sample1.layout.pxl"
+                "pixelator/sample1.analysis.pxl"
             ]
         ],
-        "timestamp": "2026-11-10T08:59:47.24895623",
+        "timestamp": "2026-11-10T10:40:32.93363828",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"

@@ -1,7 +1,7 @@
 {
     "Params: default - stub": {
         "content": [
-            23,
+            19,
             [
                 "pipeline_info",
                 "pipeline_info/nf_core_pixelator_software_versions.yml",
@@ -16,16 +16,12 @@
                 "pixelator/aggregate/pool2.report.json",
                 "pixelator/analysis",
                 "pixelator/analysis/sample1.meta.json",
-                "pixelator/analysis/sample1.pxl",
                 "pixelator/analysis/sample1.report.json",
                 "pixelator/analysis/sample2.meta.json",
-                "pixelator/analysis/sample2.pxl",
                 "pixelator/analysis/sample2.report.json",
                 "pixelator/analysis/sample3.meta.json",
-                "pixelator/analysis/sample3.pxl",
                 "pixelator/analysis/sample3.report.json",
                 "pixelator/analysis/sample4.meta.json",
-                "pixelator/analysis/sample4.pxl",
                 "pixelator/analysis/sample4.report.json",
                 "pixelator/denoise",
                 "pixelator/denoise/pool1.meta.json",
@@ -59,15 +55,6 @@
                 "pixelator/graph/pool2.meta.json",
                 "pixelator/graph/pool2.pxl",
                 "pixelator/graph/pool2.report.json",
-                "pixelator/layout",
-                "pixelator/layout/sample1.meta.json",
-                "pixelator/layout/sample1.report.json",
-                "pixelator/layout/sample2.meta.json",
-                "pixelator/layout/sample2.report.json",
-                "pixelator/layout/sample3.meta.json",
-                "pixelator/layout/sample3.report.json",
-                "pixelator/layout/sample4.meta.json",
-                "pixelator/layout/sample4.report.json",
                 "pixelator/logs",
                 "pixelator/logs/pool1",
                 "pixelator/logs/pool1/pool1.pixelator-aggregate.log",
@@ -86,16 +73,12 @@
                 "pixelator/logs/pool2/pool2.pixelator-sample-calling.log",
                 "pixelator/logs/sample1",
                 "pixelator/logs/sample1/sample1.pixelator-analysis.log",
-                "pixelator/logs/sample1/sample1.pixelator-layout.log",
                 "pixelator/logs/sample2",
                 "pixelator/logs/sample2/sample2.pixelator-analysis.log",
-                "pixelator/logs/sample2/sample2.pixelator-layout.log",
                 "pixelator/logs/sample3",
                 "pixelator/logs/sample3/sample3.pixelator-analysis.log",
-                "pixelator/logs/sample3/sample3.pixelator-layout.log",
                 "pixelator/logs/sample4",
                 "pixelator/logs/sample4/sample4.pixelator-analysis.log",
-                "pixelator/logs/sample4/sample4.pixelator-layout.log",
                 "pixelator/sample1.pxl",
                 "pixelator/sample2.pxl",
                 "pixelator/sample3.pxl",
@@ -132,9 +115,6 @@
                 "PIXELATOR_GRAPH_COLLAPSE": {
                     "pixelator": "0.32.0"
                 },
-                "PIXELATOR_LAYOUT": {
-                    "pixelator": "0.32.0"
-                },
                 "PIXELATOR_LIST_OPTIONS": {
                     "pixelator": "0.32.0"
                 },
@@ -146,7 +126,7 @@
                 }
             }
         ],
-        "timestamp": "2026-11-09T08:18:09.7257901",
+        "timestamp": "2026-11-10T10:44:54.334241817",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
@@ -154,7 +134,7 @@
     },
     "Params: all": {
         "content": [
-            23,
+            19,
             {
                 "PIXELATOR_AGGREGATE": {
                     "pixelator": "0.32.0"
@@ -172,9 +152,6 @@
                     "pixelator": "0.32.0"
                 },
                 "PIXELATOR_GRAPH_COLLAPSE": {
-                    "pixelator": "0.32.0"
-                },
-                "PIXELATOR_LAYOUT": {
                     "pixelator": "0.32.0"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
@@ -200,16 +177,12 @@
                 "pixelator/aggregate/pool2.parquet",
                 "pixelator/aggregate/pool2.report.json",
                 "pixelator/analysis",
-                "pixelator/analysis/sample1.analysis.pxl",
                 "pixelator/analysis/sample1.meta.json",
                 "pixelator/analysis/sample1.report.json",
-                "pixelator/analysis/sample2.analysis.pxl",
                 "pixelator/analysis/sample2.meta.json",
                 "pixelator/analysis/sample2.report.json",
-                "pixelator/analysis/sample3.analysis.pxl",
                 "pixelator/analysis/sample3.meta.json",
                 "pixelator/analysis/sample3.report.json",
-                "pixelator/analysis/sample4.analysis.pxl",
                 "pixelator/analysis/sample4.meta.json",
                 "pixelator/analysis/sample4.report.json",
                 "pixelator/denoise",
@@ -244,15 +217,6 @@
                 "pixelator/graph/pool2.graph.pxl",
                 "pixelator/graph/pool2.meta.json",
                 "pixelator/graph/pool2.report.json",
-                "pixelator/layout",
-                "pixelator/layout/sample1.meta.json",
-                "pixelator/layout/sample1.report.json",
-                "pixelator/layout/sample2.meta.json",
-                "pixelator/layout/sample2.report.json",
-                "pixelator/layout/sample3.meta.json",
-                "pixelator/layout/sample3.report.json",
-                "pixelator/layout/sample4.meta.json",
-                "pixelator/layout/sample4.report.json",
                 "pixelator/logs",
                 "pixelator/logs/pool1",
                 "pixelator/logs/pool1/pool1.pixelator-aggregate.log",
@@ -271,20 +235,16 @@
                 "pixelator/logs/pool2/pool2.pixelator-sample-calling.log",
                 "pixelator/logs/sample1",
                 "pixelator/logs/sample1/sample1.pixelator-analysis.log",
-                "pixelator/logs/sample1/sample1.pixelator-layout.log",
                 "pixelator/logs/sample2",
                 "pixelator/logs/sample2/sample2.pixelator-analysis.log",
-                "pixelator/logs/sample2/sample2.pixelator-layout.log",
                 "pixelator/logs/sample3",
                 "pixelator/logs/sample3/sample3.pixelator-analysis.log",
-                "pixelator/logs/sample3/sample3.pixelator-layout.log",
                 "pixelator/logs/sample4",
                 "pixelator/logs/sample4/sample4.pixelator-analysis.log",
-                "pixelator/logs/sample4/sample4.pixelator-layout.log",
-                "pixelator/sample1.layout.pxl",
-                "pixelator/sample2.layout.pxl",
-                "pixelator/sample3.layout.pxl",
-                "pixelator/sample4.layout.pxl",
+                "pixelator/sample1.analysis.pxl",
+                "pixelator/sample2.analysis.pxl",
+                "pixelator/sample3.analysis.pxl",
+                "pixelator/sample4.analysis.pxl",
                 "pixelator/sample_calling",
                 "pixelator/sample_calling/pool1.sample_calling.report.json",
                 "pixelator/sample_calling/pool1_undetermined.meta.json",
@@ -309,7 +269,7 @@
                 
             ]
         ],
-        "timestamp": "2026-11-09T08:17:21.672020061",
+        "timestamp": "2026-11-10T10:44:10.466179958",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
