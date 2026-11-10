@@ -1,8 +1,8 @@
 nextflow_workflow {
 
-    name "Test Workflow PROXIOME_V1"
-    script "../proxiome_v1.nf"
-    workflow "PROXIOME_V1"
+    name "Test Workflow PROXIOME"
+    script "../proxiome.nf"
+    workflow "PROXIOME"
     profile "test_proxiome_v1"
 
     tag "workflows"

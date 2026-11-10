@@ -15,8 +15,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PROXIOME_V1              } from './workflows/proxiome_v1'
-include { PROXIOME_V2              } from './workflows/proxiome_v2'
+include { PROXIOME                 } from './workflows/proxiome'
 include { PIPELINE_INITIALISATION  } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
 include { PIPELINE_COMPLETION      } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
 include { collateVersionsFromTopic } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
@@ -48,19 +47,10 @@ workflow NFCORE_PIXELATOR {
     //
     // WORKFLOW: Run pipeline
     //
-    if (params.technology == "proxiome-v1" || params.technology == "nonhashed_samples") {
-        PROXIOME_V1(
-            ch_reads,
-            ch_panel_files
-        )
-    } else if (params.technology == "proxiome-v2" || params.technology == "hashed_samples") {
-        PROXIOME_V2(
-            ch_reads,
-            ch_panel_files
-        )
-    } else {
-        error "Unknown technology: \"${params.technology}\""
-    }
+    PROXIOME(
+        ch_reads,
+        ch_panel_files
+    )
 
     //
     // Collate and save software versions
