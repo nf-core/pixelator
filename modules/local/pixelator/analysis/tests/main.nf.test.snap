@@ -6,12 +6,12 @@
                 "pipeline_info",
                 "pixelator",
                 "pixelator/analysis",
-                "pixelator/analysis/sample1.analysis.pxl",
                 "pixelator/analysis/sample1.meta.json",
                 "pixelator/analysis/sample1.report.json",
                 "pixelator/logs",
                 "pixelator/logs/sample1",
-                "pixelator/logs/sample1/sample1.pixelator-analysis.log"
+                "pixelator/logs/sample1/sample1.pixelator-analysis.log",
+                "pixelator/sample1.analysis.pxl"
             ],
             [
                 [
@@ -21,7 +21,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-06T09:35:16.580293635",
+        "timestamp": "2026-11-10T13:56:07.934363463",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
