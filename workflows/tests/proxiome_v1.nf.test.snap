@@ -1,0 +1,48 @@
+{
+    "Default parameters [design: proxiome-v1, panel: proxiome-v1-immuno-155-v1.1]": {
+        "content": [
+            6,
+            [
+                "pipeline_info",
+                "pixelator",
+                "pixelator/aggregate",
+                "pixelator/aggregate/sample1.meta.json",
+                "pixelator/aggregate/sample1.parquet",
+                "pixelator/aggregate/sample1.report.json",
+                "pixelator/analysis",
+                "pixelator/analysis/sample1.meta.json",
+                "pixelator/analysis/sample1.report.json",
+                "pixelator/denoise",
+                "pixelator/denoise/sample1.denoised_graph.pxl",
+                "pixelator/denoise/sample1.meta.json",
+                "pixelator/denoise/sample1.report.json",
+                "pixelator/edgelist",
+                "pixelator/edgelist/sample1.meta.json",
+                "pixelator/edgelist/sample1.parquet",
+                "pixelator/edgelist/sample1.report.json",
+                "pixelator/graph",
+                "pixelator/graph-collapse",
+                "pixelator/graph-collapse/sample1.graph-collapse.pxl",
+                "pixelator/graph-collapse/sample1.meta.json",
+                "pixelator/graph-collapse/sample1.report.json",
+                "pixelator/graph/sample1.graph.pxl",
+                "pixelator/graph/sample1.meta.json",
+                "pixelator/graph/sample1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/sample1",
+                "pixelator/logs/sample1/sample1.pixelator-aggregate.log",
+                "pixelator/logs/sample1/sample1.pixelator-analysis.log",
+                "pixelator/logs/sample1/sample1.pixelator-denoise.log",
+                "pixelator/logs/sample1/sample1.pixelator-edgelist.log",
+                "pixelator/logs/sample1/sample1.pixelator-graph-collapse.log",
+                "pixelator/logs/sample1/sample1.pixelator-graph.log",
+                "pixelator/sample1.analysis.pxl"
+            ]
+        ],
+        "timestamp": "2026-11-10T10:40:32.93363828",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.10.4"
+        }
+    }
+}

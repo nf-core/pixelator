@@ -15,9 +15,11 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR  } from './workflows/pixelator'
-include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
-include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
+include { PROXIOME                 } from './workflows/proxiome'
+include { PIPELINE_INITIALISATION  } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
+include { PIPELINE_COMPLETION      } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
+include { collateVersionsFromTopic } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     NAMED WORKFLOWS FOR PIPELINE
@@ -34,13 +36,32 @@ workflow NFCORE_PIXELATOR {
 
     main:
 
+    file(params.input).copyTo("${params.outdir}/pipeline_info")
+
+    //
+    // Split the samplesheet channel in reads and panel_files
+    //
+    ch_reads       = samplesheet.map { meta, _panel, reads -> [ meta, reads ] }
+    ch_panel_files = samplesheet.map { meta, panel, _reads -> [ meta, panel ] }
+
     //
     // WORKFLOW: Run pipeline
     //
-    PIXELATOR (
-        samplesheet,
-        params.outdir,
+    PROXIOME(
+        ch_reads,
+        ch_panel_files
     )
+
+    //
+    // Collate and save software versions
+    //
+    collateVersionsFromTopic()
+        .collectFile(
+            storeDir: "${params.outdir}/pipeline_info",
+            name: 'nf_core_'  +  'pixelator_software_'  + 'versions.yml',
+            sort: true,
+            newLine: true
+        )
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,6 +82,7 @@ workflow {
         args,
         params.outdir,
         params.input,
+        params.input_basedir,
         params.help,
         params.help_full,
         params.show_hidden
@@ -75,6 +97,7 @@ workflow {
     //
     // SUBWORKFLOW: Run completion tasks
     //
+    // TODO: Pass MultiQC report here once implemented
     PIPELINE_COMPLETION (
         params.email,
         params.email_on_fail,

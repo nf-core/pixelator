@@ -1,0 +1,81 @@
+nextflow_process {
+
+    name "Test Process PIXELATOR_EDGELIST"
+    script "../main.nf"
+    process "PIXELATOR_EDGELIST"
+    config "./nextflow.config"
+    tag "modules"
+    tag "pixelator"
+    tag "pixelator/edgelist"
+
+    test("PNA edgelist - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist', single_end: false ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
+                    ],
+                    [],                                     // panel_file
+                    'proxiome-v2-immuno-155-prerelease',     // panel
+                    'proxiome-v2'                            // design
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.edgelist,
+                    process.out.dropped_reads,
+                    process.out.report_json,
+                    process.out.metadata_json,
+                    process.out.log,
+                ).match() }
+            )
+        }
+    }
+
+    test("PNA edgelist - small test") {
+        when {
+            params {
+                outdir = "$outputDir"
+            }
+            process {
+                """
+                input[0] = [
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist', single_end: false ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
+                    ],
+                    [],                                     // panel_file
+                    'proxiome-v2-immuno-155-prerelease',     // panel
+                    'proxiome-v2'                            // design
+                ]
+                """
+            }
+        }
+
+        then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            assertAll(
+                { assert workflow.success },
+                { assert process.out.dropped_reads.size() == 1 },
+                { assert snapshot(
+                    workflow.trace.succeeded().size(),
+                    stable_name,
+                    process.out.versions_pixelator,
+                ).match() }
+            )
+        }
+    }
+
+}

@@ -1,0 +1,189 @@
+{
+    "PNA graph-collapse - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1.graph-collapse.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "3": [
+                    
+                ],
+                "4": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        [
+                            "pool1.graph-collapse.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "5": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1.pixelator-graph-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "6": [
+                    [
+                        "graph_collapse",
+                        [
+                            "pool1.graph-collapse.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "7": [
+                    [
+                        "PIXELATOR_GRAPH_COLLAPSE",
+                        "pixelator",
+                        "0.32.0"
+                    ]
+                ],
+                "all_results": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        [
+                            "pool1.graph-collapse.pxl:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "collapsed_sequences": [
+                    
+                ],
+                "log": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1.pixelator-graph-collapse.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "metadata_json": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "pixelfile": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1.graph-collapse.pxl:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "report_json": [
+                    [
+                        {
+                            "id": "pool1",
+                            "design": "proxiome-v2",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions_pixelator": [
+                    [
+                        "PIXELATOR_GRAPH_COLLAPSE",
+                        "pixelator",
+                        "0.32.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-11-06T09:37:56.033815331",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.10.4"
+        }
+    },
+    "PNA graph-collapse - small test": {
+        "content": [
+            1,
+            [
+                "pipeline_info",
+                "pixelator",
+                "pixelator/graph-collapse",
+                "pixelator/graph-collapse/pool1.graph-collapse.pxl",
+                "pixelator/graph-collapse/pool1.meta.json",
+                "pixelator/graph-collapse/pool1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/pool1",
+                "pixelator/logs/pool1/pool1.pixelator-graph-collapse.log"
+            ],
+            [
+                [
+                    "PIXELATOR_GRAPH_COLLAPSE",
+                    "pixelator",
+                    "0.32.0"
+                ]
+            ]
+        ],
+        "timestamp": "2026-11-06T09:38:14.704980191",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.10.4"
+        }
+    }
+}

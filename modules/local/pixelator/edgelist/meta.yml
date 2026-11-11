@@ -1,0 +1,102 @@
+name: pixelator_edgelist
+description: Run `pixelator single-cell-pna edgelist` to build a per-read edgelist parquet file directly from raw FASTQ reads.
+keywords:
+  - pixelator
+  - single-cell-pna
+  - edgelist
+  - parquet
+tools:
+  - pixelator:
+      description: Single-cell sequencing data analysis toolkit from Pixelgen Technologies.
+      homepage: https://pixelgen.com/
+      documentation: https://software.pixelgen.com/pixelator/
+      licence: ["MIT"]
+      identifier: ""
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. [ id:'sample1', design:'pna-2' ]
+    - reads:
+        type: file
+        description: |
+          Input FASTQ files. One file (`fastq_1`) when `meta.single_end` is true,
+          or `[read_forward, read_reverse]` when paired-end.
+        pattern: "*.{fq,fastq,fq.gz,fastq.gz}"
+        ontologies:
+          - http://edamontology.org/format_2545
+    - panel_file:
+        type: file
+        description: Optional panel definition file.
+        ontologies: []
+    - panel:
+        type: string
+        description: Optional panel name.
+    - design:
+        type: string
+        description: Assay design identifier.
+output:
+  edgelist:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.parquet":
+          type: file
+          description: Per-read edgelist parquet output.
+          pattern: "*.parquet"
+          ontologies: []
+  report_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.report.json":
+          type: file
+          description: Run report in JSON format.
+          pattern: "*.report.json"
+          ontologies: []
+  metadata_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.meta.json":
+          type: file
+          description: Metadata in JSON format.
+          pattern: "*.meta.json"
+          ontologies: []
+  log:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*pixelator-edgelist.log":
+          type: file
+          description: Pixelator edgelist command log.
+          pattern: "*pixelator-edgelist.log"
+          ontologies: []
+  versions_pixelator:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+authors:
+  - "@Aratz"
+  - "@johandahlberg"
+maintainers:
+  - "@Aratz"
+  - "@johandahlberg"

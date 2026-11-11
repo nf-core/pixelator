@@ -1,0 +1,57 @@
+name: pixelator_list_options
+description: List available Pixelator single-cell-pna design and panel options.
+keywords:
+  - pixelator
+  - single-cell-pna
+  - list
+  - options
+tools:
+  - pixelator:
+      description: Single-cell sequencing data analysis toolkit from Pixelgen Technologies.
+      homepage: https://pixelgen.com/
+      documentation: https://software.pixelgen.com/pixelator/
+      licence: ["MIT"]
+      identifier: ""
+input: []
+output:
+  designs:
+    - - design_options.txt:
+          type: file
+          description: Text file containing available design options.
+          pattern: "design_options.txt"
+          ontologies: []
+  panels:
+    - - panel_options.txt:
+          type: file
+          description: Text file containing available panel options.
+          pattern: "panel_options.txt"
+          ontologies: []
+  versions_pixelator:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+authors:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"
+maintainers:
+  - "@Aratz"
+  - "@johandahlberg"
+  - "@fbdtemme"

@@ -1,0 +1,216 @@
+{
+    "Params: default - stub": {
+        "content": [
+            15,
+            [
+                "pipeline_info",
+                "pipeline_info/nf_core_pixelator_software_versions.yml",
+                "pipeline_info/samplesheet_proxiome_v1.csv",
+                "pixelator",
+                "pixelator/aggregate",
+                "pixelator/aggregate/sample_1.meta.json",
+                "pixelator/aggregate/sample_1.parquet",
+                "pixelator/aggregate/sample_1.report.json",
+                "pixelator/aggregate/sample_2.meta.json",
+                "pixelator/aggregate/sample_2.parquet",
+                "pixelator/aggregate/sample_2.report.json",
+                "pixelator/analysis",
+                "pixelator/analysis/sample_1.meta.json",
+                "pixelator/analysis/sample_1.report.json",
+                "pixelator/analysis/sample_2.meta.json",
+                "pixelator/analysis/sample_2.report.json",
+                "pixelator/denoise",
+                "pixelator/denoise/sample_1.meta.json",
+                "pixelator/denoise/sample_1.pxl",
+                "pixelator/denoise/sample_1.report.json",
+                "pixelator/denoise/sample_2.meta.json",
+                "pixelator/denoise/sample_2.pxl",
+                "pixelator/denoise/sample_2.report.json",
+                "pixelator/edgelist",
+                "pixelator/edgelist/sample1.meta.json",
+                "pixelator/edgelist/sample1.parquet",
+                "pixelator/edgelist/sample1.report.json",
+                "pixelator/edgelist/sample1_reseq.meta.json",
+                "pixelator/edgelist/sample1_reseq.parquet",
+                "pixelator/edgelist/sample1_reseq.report.json",
+                "pixelator/edgelist/sample2.meta.json",
+                "pixelator/edgelist/sample2.parquet",
+                "pixelator/edgelist/sample2.report.json",
+                "pixelator/experiment-summary.html",
+                "pixelator/graph",
+                "pixelator/graph-collapse",
+                "pixelator/graph-collapse/sample_1.graph-collapse.pxl",
+                "pixelator/graph-collapse/sample_1.meta.json",
+                "pixelator/graph-collapse/sample_1.report.json",
+                "pixelator/graph-collapse/sample_2.graph-collapse.pxl",
+                "pixelator/graph-collapse/sample_2.meta.json",
+                "pixelator/graph-collapse/sample_2.report.json",
+                "pixelator/graph/sample_1.meta.json",
+                "pixelator/graph/sample_1.pxl",
+                "pixelator/graph/sample_1.report.json",
+                "pixelator/graph/sample_2.meta.json",
+                "pixelator/graph/sample_2.pxl",
+                "pixelator/graph/sample_2.report.json",
+                "pixelator/logs",
+                "pixelator/logs/sample_1",
+                "pixelator/logs/sample_1/sample1.pixelator-edgelist.log",
+                "pixelator/logs/sample_1/sample1_reseq.pixelator-edgelist.log",
+                "pixelator/logs/sample_1/sample_1.pixelator-aggregate.log",
+                "pixelator/logs/sample_1/sample_1.pixelator-analysis.log",
+                "pixelator/logs/sample_1/sample_1.pixelator-denoise.log",
+                "pixelator/logs/sample_1/sample_1.pixelator-graph-collapse.log",
+                "pixelator/logs/sample_1/sample_1.pixelator-graph.log",
+                "pixelator/logs/sample_2",
+                "pixelator/logs/sample_2/sample2.pixelator-edgelist.log",
+                "pixelator/logs/sample_2/sample_2.pixelator-aggregate.log",
+                "pixelator/logs/sample_2/sample_2.pixelator-analysis.log",
+                "pixelator/logs/sample_2/sample_2.pixelator-denoise.log",
+                "pixelator/logs/sample_2/sample_2.pixelator-graph-collapse.log",
+                "pixelator/logs/sample_2/sample_2.pixelator-graph.log",
+                "pixelator/sample_1.pxl",
+                "pixelator/sample_2.pxl"
+            ],
+            [
+                
+            ],
+            {
+                "PIXELATOR_AGGREGATE": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_ANALYSIS": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_DENOISE": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_EDGELIST": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_GRAPH": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_GRAPH_COLLAPSE": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_LIST_OPTIONS": {
+                    "pixelator": "0.32.0"
+                },
+                "Workflow": {
+                    "nf-core/pixelator": "v6.1.0dev"
+                }
+            }
+        ],
+        "timestamp": "2026-11-10T10:41:53.551775566",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.10.4"
+        }
+    },
+    "Params: all": {
+        "content": [
+            15,
+            {
+                "PIXELATOR_AGGREGATE": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_ANALYSIS": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_DENOISE": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_EDGELIST": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_GRAPH": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_GRAPH_COLLAPSE": {
+                    "pixelator": "0.32.0"
+                },
+                "PIXELATOR_LIST_OPTIONS": {
+                    "pixelator": "0.32.0"
+                },
+                "Workflow": {
+                    "nf-core/pixelator": "v6.1.0dev"
+                }
+            },
+            [
+                "pipeline_info",
+                "pipeline_info/nf_core_pixelator_software_versions.yml",
+                "pipeline_info/samplesheet_proxiome_v1.csv",
+                "pixelator",
+                "pixelator/aggregate",
+                "pixelator/aggregate/sample_1.meta.json",
+                "pixelator/aggregate/sample_1.parquet",
+                "pixelator/aggregate/sample_1.report.json",
+                "pixelator/aggregate/sample_2.meta.json",
+                "pixelator/aggregate/sample_2.parquet",
+                "pixelator/aggregate/sample_2.report.json",
+                "pixelator/analysis",
+                "pixelator/analysis/sample_1.meta.json",
+                "pixelator/analysis/sample_1.report.json",
+                "pixelator/analysis/sample_2.meta.json",
+                "pixelator/analysis/sample_2.report.json",
+                "pixelator/denoise",
+                "pixelator/denoise/sample_1.denoised_graph.pxl",
+                "pixelator/denoise/sample_1.meta.json",
+                "pixelator/denoise/sample_1.report.json",
+                "pixelator/denoise/sample_2.denoised_graph.pxl",
+                "pixelator/denoise/sample_2.meta.json",
+                "pixelator/denoise/sample_2.report.json",
+                "pixelator/edgelist",
+                "pixelator/edgelist/sample1.meta.json",
+                "pixelator/edgelist/sample1.parquet",
+                "pixelator/edgelist/sample1.report.json",
+                "pixelator/edgelist/sample1_reseq.meta.json",
+                "pixelator/edgelist/sample1_reseq.parquet",
+                "pixelator/edgelist/sample1_reseq.report.json",
+                "pixelator/edgelist/sample2.meta.json",
+                "pixelator/edgelist/sample2.parquet",
+                "pixelator/edgelist/sample2.report.json",
+                "pixelator/experiment-summary.html",
+                "pixelator/graph",
+                "pixelator/graph-collapse",
+                "pixelator/graph-collapse/sample_1.graph-collapse.pxl",
+                "pixelator/graph-collapse/sample_1.meta.json",
+                "pixelator/graph-collapse/sample_1.report.json",
+                "pixelator/graph-collapse/sample_2.graph-collapse.pxl",
+                "pixelator/graph-collapse/sample_2.meta.json",
+                "pixelator/graph-collapse/sample_2.report.json",
+                "pixelator/graph/sample_1.graph.pxl",
+                "pixelator/graph/sample_1.meta.json",
+                "pixelator/graph/sample_1.report.json",
+                "pixelator/graph/sample_2.graph.pxl",
+                "pixelator/graph/sample_2.meta.json",
+                "pixelator/graph/sample_2.report.json",
+                "pixelator/logs",
+                "pixelator/logs/sample_1",
+                "pixelator/logs/sample_1/sample1.pixelator-edgelist.log",
+                "pixelator/logs/sample_1/sample1_reseq.pixelator-edgelist.log",
+                "pixelator/logs/sample_1/sample_1.pixelator-aggregate.log",
+                "pixelator/logs/sample_1/sample_1.pixelator-analysis.log",
+                "pixelator/logs/sample_1/sample_1.pixelator-denoise.log",
+                "pixelator/logs/sample_1/sample_1.pixelator-graph-collapse.log",
+                "pixelator/logs/sample_1/sample_1.pixelator-graph.log",
+                "pixelator/logs/sample_2",
+                "pixelator/logs/sample_2/sample2.pixelator-edgelist.log",
+                "pixelator/logs/sample_2/sample_2.pixelator-aggregate.log",
+                "pixelator/logs/sample_2/sample_2.pixelator-analysis.log",
+                "pixelator/logs/sample_2/sample_2.pixelator-denoise.log",
+                "pixelator/logs/sample_2/sample_2.pixelator-graph-collapse.log",
+                "pixelator/logs/sample_2/sample_2.pixelator-graph.log",
+                "pixelator/sample_1.analysis.pxl",
+                "pixelator/sample_2.analysis.pxl"
+            ],
+            [
+                
+            ]
+        ],
+        "timestamp": "2026-11-10T10:41:09.984913559",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.10.4"
+        }
+    }
+}

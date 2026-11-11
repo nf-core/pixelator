@@ -1,0 +1,89 @@
+name: pixelator_aggregate
+description: Run `pixelator single-cell-pna aggregate` to collapse a per-read edgelist parquet into unique molecules with read counts.
+keywords:
+  - pixelator
+  - single-cell-pna
+  - aggregate
+  - parquet
+tools:
+  - pixelator:
+      description: Single-cell sequencing data analysis toolkit from Pixelgen Technologies.
+      homepage: https://pixelgen.com/
+      documentation: https://software.pixelgen.com/pixelator/
+      licence: ["MIT"]
+      identifier: ""
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. [ id:'sample1' ]
+    - edgelist_parquet:
+        type: file
+        description: Per-read edgelist parquet file(s) produced by the edgelist step. Multiple files are merged into a single output.
+        pattern: "*.parquet"
+        ontologies: []
+output:
+  parquet:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.parquet":
+          type: file
+          description: Aggregated molecule-level parquet output (one file per sample).
+          pattern: "*.parquet"
+          ontologies: []
+  report_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.report.json":
+          type: file
+          description: Run report in JSON format.
+          pattern: "*.report.json"
+          ontologies: []
+  metadata_json:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*.meta.json":
+          type: file
+          description: Metadata in JSON format.
+          pattern: "*.meta.json"
+          ontologies: []
+  log:
+    - - meta:
+          type: map
+          description: Groovy Map containing sample information.
+      - "*pixelator-aggregate.log":
+          type: file
+          description: Pixelator aggregate command log.
+          pattern: "*pixelator-aggregate.log"
+          ontologies: []
+  versions_pixelator:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The process the versions were collected from.
+      - pixelator:
+          type: string
+          description: The tool name.
+      - pixelator --version 2>/dev/null | sed 's/pixelator, version //g':
+          type: eval
+          description: The expression used to obtain the tool version.
+authors:
+  - "@Aratz"
+  - "@johandahlberg"
+maintainers:
+  - "@Aratz"
+  - "@johandahlberg"
