@@ -118,10 +118,11 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
+    // The 1-based samplesheet row number is kept in the meta to name the edgelist files
     ch_input = channel
-        .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
+        .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json").withIndex())
         .map {
-            row -> validate_input_samplesheet(inputBaseDir, row)
+            row, index -> validate_input_samplesheet(inputBaseDir, row, index + 1)
         }
 
     //
@@ -475,8 +476,8 @@ def get_data_basedir(URI samplesheet, String input_basedir) {
 //
 // Resolve relative paths and check that all files exist.
 //
-def validate_input_samplesheet(URI samplesheetUrl, items) {
-    def meta = items[0]
+def validate_input_samplesheet(URI samplesheetUrl, items, int row) {
+    def meta = items[0] + [row: row]
     def panel_file = items[1]
     def fq = items[2..-1]
 

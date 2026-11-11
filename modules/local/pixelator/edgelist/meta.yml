@@ -17,7 +17,9 @@ input:
         type: map
         description: |
           Groovy Map containing sample information
-          e.g. [ id:'sample1', design:'pna-2' ]
+          e.g. [ id:'sample1', design:'pna-2', row:1 ].
+          `row` is the first samplesheet row listing the FASTQ input. Together with
+          `id` it is used to name the FASTQs (and thus the outputs) uniquely.
     - reads:
         type: file
         description: |
