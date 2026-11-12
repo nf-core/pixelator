@@ -19,7 +19,7 @@ nextflow_workflow {
 
             workflow {
                 """
-                def meta = [ id:'sample1', design:'proxiome-v1', panel:'proxiome-v1-immuno-155-v1.1', technology:'proxiome-v1', single_end:false ]
+                def meta = [ id:'sample1', design:'proxiome-v1', panel:'proxiome-v1-immuno-155-v1.1', technology:'proxiome-v1', single_end:false, row:1 ]
                 input[0] = Channel.of([
                         meta,
                         [

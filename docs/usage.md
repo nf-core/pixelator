@@ -136,9 +136,9 @@ pool2,2,sample2,s2,treatment,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool2_R1_00
 ### Multiple runs of the same sample
 
 When a sample or pool has been re-sequenced (for example, to increase
-sequencing depth), use the same `sample` or `pool` identifier across runs. The
-pipeline will then concatenate the corresponding FastQ files before downstream
-analysis.
+sequencing depth), use the same `sample` or `pool` identifier across runs.
+The pipeline will then aggregate the corresponding FastQ files into one edgelist
+per sample or pool, before downstream analysis.
 
 > [!NOTE]
 > When combining multiple runs, sample metadata such as pool, hash_index, sample_alias, condition, design and panel needs to be repeated on all rows.

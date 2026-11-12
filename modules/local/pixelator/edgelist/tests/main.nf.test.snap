@@ -8,9 +8,10 @@
                         "design": "proxiome-v2",
                         "panel": "proxiome-v2-immuno-155-prerelease",
                         "technology": "proxiome-v2-edgelist",
-                        "single_end": false
+                        "single_end": false,
+                        "row": 1
                     },
-                    "pool1.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    "pool1_1_pool1_R1.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ],
             [
@@ -20,9 +21,10 @@
                         "design": "proxiome-v2",
                         "panel": "proxiome-v2-immuno-155-prerelease",
                         "technology": "proxiome-v2-edgelist",
-                        "single_end": false
+                        "single_end": false,
+                        "row": 1
                     },
-                    "pool1.dropped_reads.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    "pool1_1_pool1_R1.dropped_reads.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ],
             [
@@ -32,9 +34,10 @@
                         "design": "proxiome-v2",
                         "panel": "proxiome-v2-immuno-155-prerelease",
                         "technology": "proxiome-v2-edgelist",
-                        "single_end": false
+                        "single_end": false,
+                        "row": 1
                     },
-                    "pool1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    "pool1_1_pool1_R1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ],
             [
@@ -44,9 +47,10 @@
                         "design": "proxiome-v2",
                         "panel": "proxiome-v2-immuno-155-prerelease",
                         "technology": "proxiome-v2-edgelist",
-                        "single_end": false
+                        "single_end": false,
+                        "row": 1
                     },
-                    "pool1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    "pool1_1_pool1_R1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ],
             [
@@ -56,13 +60,14 @@
                         "design": "proxiome-v2",
                         "panel": "proxiome-v2-immuno-155-prerelease",
                         "technology": "proxiome-v2-edgelist",
-                        "single_end": false
+                        "single_end": false,
+                        "row": 1
                     },
-                    "pool1.pixelator-edgelist.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    "pool1_1.pixelator-edgelist.log:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ]
         ],
-        "timestamp": "2026-11-02T16:00:11.207724573",
+        "timestamp": "2026-11-11T09:08:36.473235607",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
@@ -75,13 +80,13 @@
                 "pipeline_info",
                 "pixelator",
                 "pixelator/edgelist",
-                "pixelator/edgelist/pool1.dropped_reads.parquet",
-                "pixelator/edgelist/pool1.meta.json",
-                "pixelator/edgelist/pool1.parquet",
-                "pixelator/edgelist/pool1.report.json",
+                "pixelator/edgelist/pool1_1_pool1.dropped_reads.parquet",
+                "pixelator/edgelist/pool1_1_pool1.meta.json",
+                "pixelator/edgelist/pool1_1_pool1.parquet",
+                "pixelator/edgelist/pool1_1_pool1.report.json",
                 "pixelator/logs",
                 "pixelator/logs/pool1",
-                "pixelator/logs/pool1/pool1.pixelator-edgelist.log"
+                "pixelator/logs/pool1/pool1_1.pixelator-edgelist.log"
             ],
             [
                 [
@@ -91,7 +96,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-06T10:41:58.654082805",
+        "timestamp": "2026-11-11T09:08:48.512431264",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"

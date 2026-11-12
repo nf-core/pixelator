@@ -17,9 +17,9 @@
                 "pixelator/denoise/sample1.meta.json",
                 "pixelator/denoise/sample1.report.json",
                 "pixelator/edgelist",
-                "pixelator/edgelist/sample1.meta.json",
-                "pixelator/edgelist/sample1.parquet",
-                "pixelator/edgelist/sample1.report.json",
+                "pixelator/edgelist/sample1_1_sample1.meta.json",
+                "pixelator/edgelist/sample1_1_sample1.parquet",
+                "pixelator/edgelist/sample1_1_sample1.report.json",
                 "pixelator/graph",
                 "pixelator/graph-collapse",
                 "pixelator/graph-collapse/sample1.graph-collapse.pxl",
@@ -33,13 +33,13 @@
                 "pixelator/logs/sample1/sample1.pixelator-aggregate.log",
                 "pixelator/logs/sample1/sample1.pixelator-analysis.log",
                 "pixelator/logs/sample1/sample1.pixelator-denoise.log",
-                "pixelator/logs/sample1/sample1.pixelator-edgelist.log",
                 "pixelator/logs/sample1/sample1.pixelator-graph-collapse.log",
                 "pixelator/logs/sample1/sample1.pixelator-graph.log",
+                "pixelator/logs/sample1/sample1_1.pixelator-edgelist.log",
                 "pixelator/sample1.analysis.pxl"
             ]
         ],
-        "timestamp": "2026-11-10T10:40:32.93363828",
+        "timestamp": "2026-11-11T17:40:04.723702597",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"

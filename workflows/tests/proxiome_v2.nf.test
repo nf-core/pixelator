@@ -19,8 +19,8 @@ nextflow_workflow {
 
             workflow {
                 """
-                def meta1 = [ pool:'pool1', id:'sample1', sample_alias:'S1', condition:'unstim', hash_index:1, design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2', single_end:false ]
-                def meta2 = meta1 + [ id:'sample2', sample_alias:'S2', condition:'stim', hash_index:5 ]
+                def meta1 = [ pool:'pool1', id:'sample1', sample_alias:'S1', condition:'unstim', hash_index:1, design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2', single_end:false, row:1 ]
+                def meta2 = meta1 + [ id:'sample2', sample_alias:'S2', condition:'stim', hash_index:5, row:2 ]
                 def fastqs = [
                     file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)

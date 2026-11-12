@@ -32,15 +32,22 @@ process PIXELATOR_EDGELIST {
         : panel_file ? "--panel ${panel_file}" : "")
     def designOpt = "--design ${design}"
     def read_list = reads instanceof List ? reads : [reads]
-    def read_args = meta.single_end
-        ? "--read-forward ${read_list[0]}"
-        : "--read-forward ${read_list[0]} --read-reverse ${read_list[1]}"
     // Output parquet/report/meta names come from the FASTQ basename (CLI).
     // --sample-name only sets report.json sample_id.
+    // The FASTQs are linked as `<id>_<row>_<name>` (row: first samplesheet row of the FASTQs)
+    // so that output names are unique, also when FASTQ files share the same name.
+    def unit_prefix = "${meta.id}_${meta.row}"
+    def staged_reads = read_list.collect { read -> "${unit_prefix}_${read.name}".toString() }
+    def link_cmd = [read_list, staged_reads].transpose().collect { read, staged -> "ln -s ${read} ${staged}" }.join('\n    ')
+    def read_args = meta.single_end
+        ? "--read-forward ${staged_reads[0]}"
+        : "--read-forward ${staged_reads[0]} --read-reverse ${staged_reads[1]}"
     def sample_name = task.ext.prefix ?: "${meta.id}"
-    def log_prefix = task.ext.prefix ?: edgelistOutputStem(read_list, meta.single_end)
+    def log_prefix = task.ext.prefix ?: unit_prefix
 
     """
+    ${link_cmd}
+
     pixelator \\
         --log-file ${log_prefix}.pixelator-edgelist.log \\
         --verbose \\
@@ -62,8 +69,9 @@ process PIXELATOR_EDGELIST {
     stub:
     def args = task.ext.args ?: ''
     def read_list = reads instanceof List ? reads : [reads]
-    def output_stem = edgelistOutputStem(read_list, meta.single_end)
-    def log_prefix = task.ext.prefix ?: output_stem
+    def unit_prefix = "${meta.id}_${meta.row}"
+    def output_stem = "${unit_prefix}_${read_list[0].name}".replaceFirst(/\.(fastq|fq)\.gz$/, '')
+    def log_prefix = task.ext.prefix ?: unit_prefix
     def dropped_reads_cmd = args.contains('--save-dropped-reads')
         ? "touch dropped_reads/${output_stem}.dropped_reads.parquet"
         : ""
@@ -76,24 +84,4 @@ process PIXELATOR_EDGELIST {
     touch ${log_prefix}.pixelator-edgelist.log
     ${dropped_reads_cmd}
     """
-}
-
-// Match pixelator edgelist output basenames. Strip only .fastq.gz/.fq.gz so a
-// dot in the sample name is kept, and for paired reads also strip the R1/R2 suffix.
-def edgelistOutputStem(read_list, single_end) {
-    def stem = read_list[0].name.replaceFirst(/\.(fastq|fq)\.gz$/, '')
-    if (single_end) {
-        return stem
-    }
-    return stem.replaceFirst(/([._][Rr][12]|_[12])$/, '')
-}
-
-// Stems shared by more than one FASTQ unit. Identical paths are not duplicates;
-// the caller drops those with unique() before calling this.
-def duplicateEdgelistStems(units, single_end) {
-    def stems = units.collect { unit ->
-        def reads = (unit instanceof Collection ? unit : [unit]).collect { read -> file(read) }
-        edgelistOutputStem(reads, single_end)
-    }
-    stems.countBy { stem -> stem }.findAll { _stem, count -> count > 1 }.keySet().sort()
 }

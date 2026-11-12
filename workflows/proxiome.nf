@@ -16,7 +16,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR_EDGELIST ; duplicateEdgelistStems } from '../modules/local/pixelator/edgelist'
+include { PIXELATOR_EDGELIST } from '../modules/local/pixelator/edgelist'
 include { PIXELATOR_AGGREGATE        } from '../modules/local/pixelator/aggregate'
 include { PIXELATOR_GRAPH            } from '../modules/local/pixelator/graph'
 include { PIXELATOR_GRAPH_COLLAPSE   } from '../modules/local/pixelator/graph_collapse'
@@ -68,8 +68,9 @@ workflow PROXIOME {
 
     // Pool-level steps collapse samples together; sample calling splits them
     // apart again, so keep the original per-sample metadata to restore later.
+    // The samplesheet row differs between the runs of a sample, so it is dropped here.
     ch_sample_metas = ch_fastq
-        .map { meta, _fq -> [meta.id, meta] }
+        .map { meta, _fq -> [meta.id, without_row(meta)] }
         .unique()
 
     // Group the runs (e.g. lanes) of each unit, then keep unique FASTQ inputs so
@@ -92,15 +93,14 @@ workflow PROXIOME {
             if (unique_endedness.size() > 1) {
                 exit 1, "ERROR: Runs of the same ${unit} must all be single-end or all paired-end."
             }
-            def meta = is_pool ? pool_meta(list[0][0]) : list[0][0].clone()
-            def fq = (list as List).collect { item -> item[1] }.unique()
-            // Pixelator names the edgelist parquet from the FASTQ basename, and
-            // aggregate stages every lane of a unit into one directory.
-            def duplicate_stems = duplicateEdgelistStems(fq, meta.single_end)
-            if (duplicate_stems) {
-                exit 1, "ERROR: FASTQ files in ${unit} '${meta.id}' produce the same edgelist name (${duplicate_stems.join(', ')}). Each run of a ${unit} must have a unique FASTQ basename."
-            }
-            [meta, fq]
+            def meta = is_pool ? pool_meta(list[0][0]) : without_row(list[0][0])
+            // Unique FASTQ inputs, each with the first samplesheet row it appears on
+            // (pooled samples repeat the same FASTQs on several rows). The row is used
+            // to name the files of the input, which keeps identical FASTQ names apart.
+            def rows_by_fq = (list as List).groupBy { item -> item[1] }
+            def fq = rows_by_fq.keySet() as List
+            def rows = rows_by_fq.values().collect { items -> items.collect { item -> item[0].row }.min() }
+            [meta, fq, rows]
         }
 
     // Key the panel files by unit id, and check that a unit uses one panel
@@ -119,9 +119,9 @@ workflow PROXIOME {
     // MODULE: Run pixelator single-cell-pna edgelist on each FASTQ input
     //
     ch_edgelist_input = ch_fastq_grouped
-        .map { meta, fq -> [meta.id, meta, fq] }
+        .map { meta, fq, rows -> [meta.id, meta, fq, rows] }
         .join(ch_panel_by_id)
-        .flatMap { _id, meta, fq_units, panel_file ->
+        .flatMap { _id, meta, fq_units, rows, panel_file ->
             // Inject the number of parts into the meta data
             // to be able to group the files without waiting later
             def baseMeta = meta.clone()
@@ -129,6 +129,7 @@ workflow PROXIOME {
             fq_units.withIndex().collect { fq_unit, index ->
                 def partMeta = baseMeta.clone()
                 partMeta['part'] = index
+                partMeta['row'] = rows[index]
                 def reads = fq_unit instanceof Collection ? fq_unit : [fq_unit]
                 [partMeta, reads, panel_file, panel_file ? null : meta.panel, meta.design]
             }
@@ -147,6 +148,7 @@ workflow PROXIOME {
             def newMeta = data[0][0].clone()
             newMeta.remove('parts')
             newMeta.remove('part')
+            newMeta.remove('row')
             def parquet = data.collect { item -> item[1] }.flatten()
             [newMeta, parquet]
         }
@@ -242,10 +244,15 @@ workflow PROXIOME {
     analysis = ch_analysis
 }
 
+// Drop the samplesheet row, which differs between the runs of a sample or pool.
+def without_row(Map meta) {
+    return meta.findAll { key, _value -> key != 'row' }
+}
+
 // Drop samplesheet fields that describe a single sample; they are meaningless
 // once samples are grouped into a pool.
 def pool_meta(LinkedHashMap meta) {
-    def grouped = meta.findAll { key, _value -> !(key in ['sample_alias', 'condition', 'hash_index']) }
+    def grouped = meta.findAll { key, _value -> !(key in ['sample_alias', 'condition', 'hash_index', 'row']) }
     grouped.id = meta.pool
     return grouped
 }

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **(breaking change)** Replace amplicon/demux/collapse with edgelist/aggregate/graph-collapse. By @Aratz [#274](https://github.com/nf-core/pixelator/pull/274)
 - **(breaking change)** Remove layout step. Computing the layout is now fast enough to be done
   on the fly when analyzing the data. By @Aratz [#274](https://github.com/nf-core/pixelator/pull/274)
+- Allow identical FASTQ file names; outputs are prefixed with sample and samplesheet row to avoid collisions. By @Aratz [#276](https://github.com/nf-core/pixelator/pull/276)
 
 ### Parameters
 
