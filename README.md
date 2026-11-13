@@ -35,11 +35,10 @@ The pipeline will run the following steps:
 2. Derive original molecules to use as edge list downstream by aggregating and counting the per-read edge lists ([`pixelator single-cell-pna aggregate`](https://github.com/PixelgenTechnologies/pixelator))
 3. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator single-cell-pna graph`](https://github.com/PixelgenTechnologies/pixelator))
 4. Correct UMI sequencing errors in the cell graphs ([`pixelator single-cell-pna graph-collapse`](https://github.com/PixelgenTechnologies/pixelator))
-5. _(Conditional; only for PNA hashed data)_ Assign components to samples in pooled experiments ([`pixelator single-cell-pna sample-calling`](https://github.com/PixelgenTechnologies/pixelator))
-6. Denoise the cell graphs ([`pixelator single-cell-pna denoise`](https://github.com/PixelgenTechnologies/pixelator))
+5. Denoise the cell graphs ([`pixelator single-cell-pna denoise`](https://github.com/PixelgenTechnologies/pixelator))
+6. _(Conditional; only for PNA hashed data)_ Assign components to samples in pooled experiments ([`pixelator single-cell-pna sample-calling`](https://github.com/PixelgenTechnologies/pixelator))
 7. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
-8. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
-9. Proxiome Experiment Summary generation using [PixelatorES](https://github.com/PixelgenTechnologies/pixelatorES)
+8. Proxiome Experiment Summary generation using [PixelatorES](https://github.com/PixelgenTechnologies/pixelatorES)
 
 > [!NOTE]
 > If you are looking to run the pipeline with Molecular Pixelation (MPX) data. Please refer to the [release 2.3.1](https://nf-co.re/pixelator/2.3.1/),

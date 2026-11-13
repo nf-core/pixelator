@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[6.1.0dev]($tag_url)] - $date
+## [[7.0.0](https://github.com/nf-core/pixelator/releases/tag/7.0.0)] - 2026-11-13
 
 ### Major
 
@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **(breaking change)** Replace amplicon/demux/collapse with edgelist/aggregate/graph-collapse. By @Aratz [#274](https://github.com/nf-core/pixelator/pull/274)
 - **(breaking change)** Remove layout step. Computing the layout is now fast enough to be done
   on the fly when analyzing the data. By @Aratz [#274](https://github.com/nf-core/pixelator/pull/274)
+
+### Minor
+
+#### Enhancements & fixes
+
 - Allow identical FASTQ file names; outputs are prefixed with sample and samplesheet row to avoid collisions. By @Aratz [#276](https://github.com/nf-core/pixelator/pull/276)
 
 ### Parameters
@@ -29,7 +34,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | `--pna_layout_*`                |                                                   |
 | `--skip_layout`                 |                                                   |
 | `--save_pna_analysis_pixelfile` |                                                   |
-| `--technology`                  |                                                   |
 |                                 | `--pna_edgelist_mismatch_threshold`               |
 |                                 | `--pna_edgelist_min_avg_quality`                  |
 |                                 | `--pna_edgelist_max_umi_base_freq`                |

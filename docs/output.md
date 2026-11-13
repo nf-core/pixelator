@@ -19,10 +19,9 @@ The PNA pipeline consists of the following steps:
 - [Aggregate](#aggregate)
 - [Graph construction](#graph-construction)
 - [Graph collapse](#graph-collapse)
-- [Sample Calling](#sample-calling)
 - [Denoising](#denoising)
+- [Sample Calling](#sample-calling)
 - [Analysis](#analysis)
-- [Layout creation](#compute-layouts-for-visualization)
 - [Per run report generation](#generate-report-for-all-samples)
 - [Pipeline information](#pipeline-information)
 
@@ -34,20 +33,21 @@ The edgelist step uses `pixelator single-cell-pna edgelist` to build a per-read 
 for both single-end and paired-end data. Reads are matched to the markers of the panel, and reads are dropped
 based on their quality, UMI complexity and similarity between the UMI and the pixel binding sequences.
 
-Each FASTQ input (e.g. each lane of a sample) is processed independently. Output files are named after the FASTQ file,
-without the extension and without the `R1`/`R2` suffix for paired-end data.
+Each FASTQ input (e.g. each lane of a sample) is processed independently. Output files are named
+`<sample-id>_<row>_<fastq-name>`, where `<row>` is the samplesheet row of the FASTQ input and `<fastq-name>` is the FASTQ file name
+without the extension and without the `R1`/`R2` suffix for paired-end data. This keeps outputs apart when FASTQ files share the same name.
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `pixelator`
   - `edgelist`
-    - `<fastq-name>.parquet`: Per-read edgelist.
-    - `<fastq-name>.report.json`: QC metrics collected by the edgelist step.
-    - `<fastq-name>.meta.json`: Command invocation metadata.
-    - `<fastq-name>.dropped_reads.parquet`: Reads that did not make it into the edgelist, with the reason they were dropped (only with `--save_pna_edgelist_dropped_reads`).
+    - `<sample-id>_<row>_<fastq-name>.parquet`: Per-read edgelist (only with `--save_pna_edgelist_reads`).
+    - `<sample-id>_<row>_<fastq-name>.report.json`: QC metrics collected by the edgelist step.
+    - `<sample-id>_<row>_<fastq-name>.meta.json`: Command invocation metadata.
+    - `<sample-id>_<row>_<fastq-name>.dropped_reads.parquet`: Reads that did not make it into the edgelist, with the reason they were dropped (only with `--save_pna_edgelist_dropped_reads`).
   - `logs`
-    - `<fastq-name>.pixelator-edgelist.log`: pixelator log output.
+    - `<sample-id>/<sample-id>_<row>.pixelator-edgelist.log`: pixelator log output.
 
 </details>
 
@@ -65,7 +65,7 @@ The output of this step is used as an edge list input for the graph construction
 
 - `pixelator`
   - `aggregate`
-    - `<sample-id>.parquet`: Edge list of the graph.
+    - `<sample-id>.parquet`: Edge list of the graph (only with `--save_pna_aggregate_reads`).
     - `<sample-id>.report.json`: QC metrics for the aggregate step.
     - `<sample-id>.meta.json`: Command invocation metadata.
 
@@ -89,7 +89,7 @@ the [pixelator documentation](https://software.pixelgen.com/pixelator/outputs/px
 
 - `pixelator`
   - `graph`
-    - `<sample-id>.graph.pxl`: The pixel file containing all data after resolving multiplets.
+    - `<sample-id>.graph.pxl`: The pixel file containing all data after resolving multiplets (only with `--save_pna_graph_pixelfile`).
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: QC metrics for the graph step.
 
@@ -112,7 +112,7 @@ This step can be skipped with `--skip_graph_collapse`.
 
 - `pixelator`
   - `graph-collapse`
-    - `<sample-id>.graph-collapse.pxl`: The pixel file containing the data after UMI error correction.
+    - `<sample-id>.graph-collapse.pxl`: The pixel file containing the data after UMI error correction (only with `--save_pna_graph_collapse_pixelfile`).
     - `<sample-id>.collapsed_sequences.tsv`: Collapsed UMI sequences, only when `--pna_graph_collapse_report_collapsed_sequences` is set.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: QC metrics for the graph-collapse step.
@@ -137,9 +137,9 @@ The denoised graph will be saved as a new PXL file.
 
 - `pixelator`
   - `denoise`
-    - `<sample-id>.denoise.pxl`: The pixel file containing the denoised data.
+    - `<sample-id>.denoised_graph.pxl`: The pixel file containing the denoised data (only with `--save_pna_denoise_pixelfile`).
     - `<sample-id>.meta.json`: Command invocation metadata.
-    - `<sample-id>.report.json`: QC metrics for the graph step.
+    - `<sample-id>.report.json`: QC metrics for the denoise step.
 
   - `logs`
     - `<sample-id>.pixelator-denoise.log`: pixelator log output.
@@ -149,7 +149,7 @@ The denoised graph will be saved as a new PXL file.
 #### Sample Calling
 
 This step uses the `pixelator single-cell-pna sample-calling` command. It takes
-the graph PXL file and the sample sheet as input and assigns each component to
+the PXL file from the previous step and the sample sheet as input and assigns each component to
 the most likely sample in pooled experiments.
 
 Components with sample enrichment below `pna_sample_calling_enrichment_threshold`
@@ -162,7 +162,7 @@ the analysis step.
 
 - `pixelator`
   - `sample_calling`
-    - `<sample-id>.dehashed.pxl`: The pixel file containing the data associated with each samples.
+    - `<sample-id>.dehashed.pxl`: The pixel file containing the data associated with each samples (only with `--save_pna_sample_calling_pixelfile`).
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: QC metrics for the sample calling step.
     - `<pool-id>_undetermined.dehashed.pxl`: The pixel file containing data that could not be associated with any sample. This is only output when `pna_sample_calling_save_undetermined = true`.
@@ -175,7 +175,7 @@ the analysis step.
 </details>
 
 > [!NOTE]
-> This step is run only when `--technology proxiome-v2` is set.
+> This step is run only for pooled samples, i.e. when the samplesheet has a `pool` column (`--technology proxiome-v2`).
 
 #### Analysis
 
@@ -185,36 +185,13 @@ This step uses the `pixelator single-cell-pna analysis` command to calculate spa
 <summary>Output files</summary>
 
 - `pixelator`
+  - `<sample-id>.analysis.pxl`: PXL file with the analysis results added to it. Always saved, directly in the `pixelator` directory.
   - `analysis`
-    - `<sample-id>.analysis.dataset.pxl`: PXL file with the analysis results added to it.
     - `<sample-id>.meta.json`: Command invocation metadata.
     - `<sample-id>.report.json`: Statistics for the analysis step.
 
   - `logs`
     - `<sample-id>.pixelator-analysis.log`: pixelator log output.
-
-</details>
-
-#### Compute layouts for visualization
-
-This step uses the `pixelator single-cell-pna layout` command.
-
-It will generate precomputed layouts that can be used to visualize cells
-as part of the downstream analysis. This data will be appended to a PXL file.
-
-This entire step can also be skipped using the `--skip_layout` option.
-
-<details markdown="1">
-<summary>Output files</summary>
-
-- `pixelator`
-  - `layout`
-    - `<sample-id>.layout.pxl`: PXL file with the layout results added to it.
-    - `<sample-id>.meta.json`: Command invocation metadata.
-    - `<sample-id>.report.json`: Statistics for the layout step.
-
-  - `logs`
-    - `<sample-id>.pixelator-layout.log`: pixelator log output.
 
 </details>
 
@@ -233,7 +210,7 @@ The output from this step will be placed in the output folder root.
 <summary>Output files</summary>
 
 - `pixelator`
-  - `experiment_summary.html`: Proxiome Experiment Summary report
+  - `experiment-summary.html`: Proxiome Experiment Summary report
 
 </details>
 
@@ -254,26 +231,42 @@ The output from this step will be placed in the output folder root.
 
 ### Output directory structure
 
-With default parameters, the pixelator pipeline output directory will only include the latest PXL file
-generated by the pipeline (with the most "complete" information) and an interactive HTML report summarizing the data for all samples.
-The PXL dataset files can be from either the `graph`, `analysis` or `layout` step.
+With default parameters, the pixelator pipeline output directory will include the final PXL file of each sample
+(`<sample-id>.analysis.pxl`, with the most "complete" information), an interactive HTML report summarizing the data for all samples,
+and the JSON reports and metadata of each step.
 
-With default parameters, the `<sample-id>.layout.pxl` will be copied to the output directory.
+Various flags are available to store intermediate files (`--save_pna_*`) and are described in the input parameter documentation. Alternatively, you can keep all intermediate files using `--save_all`.
 
-Various flags are available to store intermediate files and are described in the input parameter documentation. Alternatively, you can keep all intermediate files using `--save_all`.
+> [!NOTE]
+> The layouts used to visualize cells are no longer precomputed by the pipeline.
+> They are computed on the fly when analyzing the PXL file.
 
-> [!WARNING]
-> If the `layout` stage is skipped (using `--skip_layout`), use `--save_pna_<last running step>` to output the latest PXL files.
-
-Below is an example output structure for a pipeline run using the default settings.
+Below is an example output structure for a pipeline run using the default settings on two samples.
 
 - `pipeline_info/`
 - `pixelator/`
+  - `edgelist/`
+    - `*.report.json`
+    - `*.meta.json`
+  - `aggregate/`
+    - `*.report.json`
+    - `*.meta.json`
+  - `graph/`
+    - `*.report.json`
+    - `*.meta.json`
+  - `graph-collapse/`
+    - `*.report.json`
+    - `*.meta.json`
+  - `denoise/`
+    - `*.report.json`
+    - `*.meta.json`
+  - `analysis/`
+    - `*.report.json`
+    - `*.meta.json`
   - `logs/`
     - `<sample-id>/`:
       - `*.log`
 
-  - `pbmcs_unstimulated.layout.pxl`
-  - `pbmcs_unstimulated.qc-report.html`
-  - `uropod_control.layout.pxl`
-  - `uropod_control.qc-report.html`
+  - `pbmcs_unstimulated.analysis.pxl`
+  - `uropod_control.analysis.pxl`
+  - `experiment-summary.html`
