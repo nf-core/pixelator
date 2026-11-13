@@ -1,7 +1,7 @@
 {
     "PNA aggregate - small test": {
         "content": [
-            2,
+            1,
             [
                 "pipeline_info",
                 "pixelator",
@@ -9,14 +9,9 @@
                 "pixelator/aggregate/pool1.meta.json",
                 "pixelator/aggregate/pool1.parquet",
                 "pixelator/aggregate/pool1.report.json",
-                "pixelator/edgelist",
-                "pixelator/edgelist/pool1_1_pool1.meta.json",
-                "pixelator/edgelist/pool1_1_pool1.parquet",
-                "pixelator/edgelist/pool1_1_pool1.report.json",
                 "pixelator/logs",
                 "pixelator/logs/pool1",
-                "pixelator/logs/pool1/pool1.pixelator-aggregate.log",
-                "pixelator/logs/pool1/pool1_1.pixelator-edgelist.log"
+                "pixelator/logs/pool1/pool1.pixelator-aggregate.log"
             ],
             [
                 [
@@ -26,7 +21,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-11T09:27:04.129119727",
+        "timestamp": "2026-11-13T15:47:09.0828756",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
@@ -87,7 +82,7 @@
     },
     "PNA aggregate - small test - multiple files": {
         "content": [
-            3,
+            1,
             [
                 "pipeline_info",
                 "pixelator",
@@ -95,18 +90,9 @@
                 "pixelator/aggregate/pool1.meta.json",
                 "pixelator/aggregate/pool1.parquet",
                 "pixelator/aggregate/pool1.report.json",
-                "pixelator/edgelist",
-                "pixelator/edgelist/pool1_1_pool1.meta.json",
-                "pixelator/edgelist/pool1_1_pool1.parquet",
-                "pixelator/edgelist/pool1_1_pool1.report.json",
-                "pixelator/edgelist/pool1_2_pool1_reseq.meta.json",
-                "pixelator/edgelist/pool1_2_pool1_reseq.parquet",
-                "pixelator/edgelist/pool1_2_pool1_reseq.report.json",
                 "pixelator/logs",
                 "pixelator/logs/pool1",
-                "pixelator/logs/pool1/pool1.pixelator-aggregate.log",
-                "pixelator/logs/pool1/pool1_1.pixelator-edgelist.log",
-                "pixelator/logs/pool1/pool1_2.pixelator-edgelist.log"
+                "pixelator/logs/pool1/pool1.pixelator-aggregate.log"
             ],
             [
                 [
@@ -116,7 +102,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-11T09:27:24.50350069",
+        "timestamp": "2026-11-13T15:47:20.692994403",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.10.4"
