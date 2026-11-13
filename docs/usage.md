@@ -35,7 +35,7 @@ nf-core/pixelator can take a wide range of parameters, three of which are mandat
 
 - `--input`: the path to your samplesheet
 - `--outdir`: the directory where the `.pxl` files and the experiment summary will be saved.
-- `--technology`: the workflow to use to process your data (`proxiome_v1` or `proxiome_v2`), depending on the kit that was used to process the samples.
+- `--technology`: the workflow to use to process your data (`proxiome-v1` or `proxiome-v2`), depending on the kit that was used to process the samples.
 
 Detailed documentation about each parameter can be found at [https://nf-co.re/pixelator/parameters/](https://nf-co.re/pixelator/parameters/).
 
@@ -137,8 +137,9 @@ pool2,2,sample2,s2,treatment,proxiome-v2,proxiome-v2-immuno-155-v2.0,pool2_R1_00
 
 When a sample or pool has been re-sequenced (for example, to increase
 sequencing depth), use the same `sample` or `pool` identifier across runs.
-The pipeline will then aggregate the corresponding FastQ files into one edgelist
-per sample or pool, before downstream analysis.
+The pipeline will build an edgelist for each FastQ input independently (`edgelist` step), and then
+merge them into one edgelist per sample or pool (`aggregate` step), before downstream analysis.
+FastQ files from different rows can share the same file name.
 
 > [!NOTE]
 > When combining multiple runs, sample metadata such as pool, hash_index, sample_alias, condition, design and panel needs to be repeated on all rows.
@@ -194,7 +195,7 @@ For example, using the same samplesheet as above, but with the samplesheet on th
   - sample1_R2.fq.gz
 
 ```shell
-nextflow run nf-core/pixelator --input samplesheet.csv --input_basedir s3://my-company-data/experiment-1/ --output ./resulst --technology proxiome-v1
+nextflow run nf-core/pixelator --input samplesheet.csv --input_basedir s3://my-company-data/experiment-1/ --outdir ./results --technology proxiome-v1
 ```
 
 ### Design
@@ -317,7 +318,7 @@ Specify the path to a specific config file (this is a core Nextflow command). Se
 
 ### DuckDB temporary storage
 
-When Pixelator runs memory-constrained DuckDB work (for example `denoise` or component filtering), it can spill
+When Pixelator runs memory-constrained DuckDB work (for example `aggregate`, `graph-collapse` or `denoise`), it can spill
 temporary data to disk. For container profiles, nf-core/pixelator sets
 `PIXELATOR_DUCKDB_TEMP_DIR` to `TMPDIR` if it is set, otherwise to `/tmp`, so spill files land on local disk rather than next to the
 `.pxl` file (which may live on networked storage such as S3/Fusion).
