@@ -13,7 +13,7 @@
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.10.4-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
-[![nf-core template version](https://img.shields.io/badge/nf--core_template-4.2.1-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/4.2.1)
+[![nf-core template version](https://img.shields.io/badge/nf--core_template-4.2.2-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/4.2.2)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
@@ -31,15 +31,14 @@ using `pixelator` to produce a PXL file containing single-cell protein abundance
 
 The pipeline will run the following steps:
 
-1. Do quality control checks of input reads and build amplicons ([`pixelator single-cell-pna amplicon`](https://github.com/PixelgenTechnologies/pixelator))
-2. Create groups of amplicons based on their marker assignments ([`pixelator single-cell-pna demux`](https://github.com/PixelgenTechnologies/pixelator))
-3. Derive original molecules to use as edge list downstream by error correcting, and counting input amplicons ([`pixelator single-cell-pna collapse`](https://github.com/PixelgenTechnologies/pixelator))
-4. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator single-cell-pna graph`](https://github.com/PixelgenTechnologies/pixelator))
-5. _(Conditional; only for PNA hashed data)_ Assign components to samples in pooled experiments ([`pixelator single-cell-pna sample-calling`](https://github.com/PixelgenTechnologies/pixelator))
-6. Denoise the cell graphs ([`pixelator single-cell-pna denoise`](https://github.com/PixelgenTechnologies/pixelator))
+1. Do quality control checks of input reads and build a per-read edge list directly from the FASTQ files ([`pixelator single-cell-pna edgelist`](https://github.com/PixelgenTechnologies/pixelator))
+2. Derive original molecules to use as edge list downstream by aggregating and counting the per-read edge lists ([`pixelator single-cell-pna aggregate`](https://github.com/PixelgenTechnologies/pixelator))
+3. Compute the components of the graph from the edge list in order to create putative cells ([`pixelator single-cell-pna graph`](https://github.com/PixelgenTechnologies/pixelator))
+4. Correct UMI sequencing errors in the cell graphs ([`pixelator single-cell-pna graph-collapse`](https://github.com/PixelgenTechnologies/pixelator))
+5. Denoise the cell graphs ([`pixelator single-cell-pna denoise`](https://github.com/PixelgenTechnologies/pixelator))
+6. _(Conditional; only for PNA hashed data)_ Assign components to samples in pooled experiments ([`pixelator single-cell-pna sample-calling`](https://github.com/PixelgenTechnologies/pixelator))
 7. Analyze the spatial information in the cell graphs ([`pixelator single-cell-pna analysis`](https://github.com/PixelgenTechnologies/pixelator))
-8. Generate 3D graph layouts for visualization of cells ([`pixelator single-cell-pna layout`](https://github.com/PixelgenTechnologies/pixelator))
-9. Proxiome Experiment Summary generation using [PixelatorES](https://github.com/PixelgenTechnologies/pixelatorES)
+8. Proxiome Experiment Summary generation using [PixelatorES](https://github.com/PixelgenTechnologies/pixelatorES)
 
 > [!NOTE]
 > If you are looking to run the pipeline with Molecular Pixelation (MPX) data. Please refer to the [release 2.3.1](https://nf-co.re/pixelator/2.3.1/),

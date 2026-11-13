@@ -6,25 +6,25 @@
                 "pipeline_info",
                 "pixelator",
                 "pixelator/analysis",
-                "pixelator/analysis/sample1.analysis.pxl",
                 "pixelator/analysis/sample1.meta.json",
                 "pixelator/analysis/sample1.report.json",
                 "pixelator/logs",
                 "pixelator/logs/sample1",
-                "pixelator/logs/sample1/sample1.pixelator-analysis.log"
+                "pixelator/logs/sample1/sample1.pixelator-analysis.log",
+                "pixelator/sample1.analysis.pxl"
             ],
             [
                 [
                     "PIXELATOR_ANALYSIS",
                     "pixelator",
-                    "0.31.0"
+                    "0.32.0"
                 ]
             ]
         ],
-        "timestamp": "2026-06-17T09:03:34.334645405",
+        "timestamp": "2026-11-10T13:56:07.934363463",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.10.4"
         }
     },
     "PNA analysis - stub": {
@@ -103,7 +103,7 @@
                     [
                         "PIXELATOR_ANALYSIS",
                         "pixelator",
-                        "0.31.0"
+                        "0.32.0"
                     ]
                 ],
                 "all_results": [
@@ -169,15 +169,15 @@
                     [
                         "PIXELATOR_ANALYSIS",
                         "pixelator",
-                        "0.31.0"
+                        "0.32.0"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-06-17T09:02:53.51770839",
+        "timestamp": "2026-11-06T09:34:44.915737077",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.5"
+            "nextflow": "26.10.4"
         }
     }
 }

@@ -10,6 +10,23 @@
         "additionalProperties": false,
         "allOf": [
             {
+                "dependentRequired": {
+                    "pool": ["hash_index"],
+                    "hash_index": ["pool"]
+                },
+                "errorMessage": "`pool` and `hash_index` must be set together."
+            },
+            {
+                "not": {
+                    "required": ["panel", "panel_file"],
+                    "properties": {
+                        "panel": { "minLength": 1 },
+                        "panel_file": { "minLength": 1 }
+                    }
+                },
+                "errorMessage": "`panel` and `panel_file` are mutually exclusive; specify only one of them."
+            },
+            {
                 "if": {
                     "properties": {
                         "design": {

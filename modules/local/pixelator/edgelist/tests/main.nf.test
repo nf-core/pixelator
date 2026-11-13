@@ -1,13 +1,14 @@
 nextflow_process {
 
-    name "Test Process PIXELATOR_AMPLICON"
+    name "Test Process PIXELATOR_EDGELIST"
     script "../main.nf"
-    process "PIXELATOR_AMPLICON"
+    process "PIXELATOR_EDGELIST"
+    config "./nextflow.config"
     tag "modules"
     tag "pixelator"
-    tag "pixelator/amplicon"
+    tag "pixelator/edgelist"
 
-    test("PNA amplicon - stub") {
+    test("PNA edgelist - stub") {
 
         options "-stub"
 
@@ -15,11 +16,14 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist', single_end: false, row: 1 ],
                     [
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
-                    ]
+                    ],
+                    [],                                     // panel_file
+                    'proxiome-v2-immuno-155-prerelease',     // panel
+                    'proxiome-v2'                            // design
                 ]
                 """
             }
@@ -28,24 +32,33 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(process.out).match() }
+                { assert snapshot(
+                    process.out.edgelist,
+                    process.out.dropped_reads,
+                    process.out.report_json,
+                    process.out.metadata_json,
+                    process.out.log,
+                ).match() }
             )
         }
     }
 
-    test("PNA amplicon - small test") {
+    test("PNA edgelist - small test") {
         when {
             params {
-                outdir   = "$outputDir"
+                outdir = "$outputDir"
             }
             process {
                 """
                 input[0] = [
-                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2' ],
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist', single_end: false, row: 1 ],
                     [
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
-                    ]
+                    ],
+                    [],                                     // panel_file
+                    'proxiome-v2-immuno-155-prerelease',     // panel
+                    'proxiome-v2'                            // design
                 ]
                 """
             }
@@ -55,14 +68,14 @@ nextflow_process {
             def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             assertAll(
                 { assert workflow.success },
+                { assert process.out.dropped_reads.size() == 1 },
                 { assert snapshot(
-                    // Number of successful tasks
                     workflow.trace.succeeded().size(),
-                    // All stable path name, with a relative path
                     stable_name,
                     process.out.versions_pixelator,
                 ).match() }
             )
         }
     }
+
 }
