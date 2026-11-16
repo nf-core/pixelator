@@ -111,14 +111,20 @@ workflow PROXIOME {
     //
     // MODULE: Run pixelator single-cell-pna graph-collapse
     //
-    PIXELATOR_GRAPH_COLLAPSE ( ch_graph )
-    ch_graph_collapsed = params.skip_graph_collapse ? ch_graph : PIXELATOR_GRAPH_COLLAPSE.out.pixelfile
+    ch_graph_collapsed = ch_graph
+    if (!params.skip_graph_collapse) {
+        PIXELATOR_GRAPH_COLLAPSE ( ch_graph )
+        ch_graph_collapsed = PIXELATOR_GRAPH_COLLAPSE.out.pixelfile
+    }
 
     //
     // MODULE: Run pixelator single-cell denoise
     //
-    PIXELATOR_DENOISE ( ch_graph_collapsed )
-    ch_denoise = params.skip_denoise ? ch_graph_collapsed : PIXELATOR_DENOISE.out.pixelfile
+    ch_denoise = ch_graph_collapsed
+    if (!params.skip_denoise) {
+        PIXELATOR_DENOISE ( ch_graph_collapsed )
+        ch_denoise = PIXELATOR_DENOISE.out.pixelfile
+    }
 
     //
     // MODULE: Run pixelator single-cell sample-calling (pooled data only)
@@ -157,8 +163,11 @@ workflow PROXIOME {
     // MODULE: Run pixelator single-cell analysis
     //
     ch_analysis_input = ch_sample_called.mix(ch_denoise_split.single)
-    PIXELATOR_ANALYSIS ( ch_analysis_input )
-    ch_analysis = PIXELATOR_ANALYSIS.out.pixelfile
+    ch_analysis = channel.empty()
+    if (!params.skip_analysis) {
+        PIXELATOR_ANALYSIS ( ch_analysis_input )
+        ch_analysis = PIXELATOR_ANALYSIS.out.pixelfile
+    }
 
     // Prepare all data needed by reporting for each pixelator step
     if (!params.skip_experiment_summary) {
