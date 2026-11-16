@@ -130,7 +130,6 @@ workflow PROXIOME {
             baseMeta['parts'] = fq_units.size()
             fq_units.withIndex().collect { fq_unit, index ->
                 def partMeta = baseMeta.clone()
-                partMeta['part'] = index
                 partMeta['row'] = rows[index]
                 def reads = fq_unit instanceof Collection ? fq_unit : [fq_unit]
                 [partMeta, reads, panel_file, panel_file ? null : meta.panel, meta.design]
@@ -146,12 +145,14 @@ workflow PROXIOME {
         .map { meta, parquet -> tuple(groupKey(meta.id, meta.parts), [meta, parquet]) }
         .groupTuple()
         .map { _key, data ->
+            // Order the lanes by samplesheet row, so that the input of aggregate does
+            // not depend on the order in which the edgelist tasks finish (-resume stability)
+            def sorted = data.sort(false) { item -> item[0].row }
             // Remove the parts meta keys again
-            def newMeta = data[0][0].clone()
+            def newMeta = sorted[0][0].clone()
             newMeta.remove('parts')
-            newMeta.remove('part')
             newMeta.remove('row')
-            def parquet = data.collect { item -> item[1] }.flatten()
+            def parquet = sorted.collect { item -> item[1] }.flatten()
             [newMeta, parquet]
         }
 
