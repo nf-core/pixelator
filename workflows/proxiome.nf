@@ -4,6 +4,8 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+include { collectVersions              } from 'plugin/nf-core-utils'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     CONFIG FILES
@@ -24,7 +26,7 @@ include { PIXELATOR_SAMPLE_CALLING   } from '../modules/local/pixelator/sample_c
 include { PIXELATOR_DENOISE          } from '../modules/local/pixelator/denoise'
 include { PIXELATOR_ANALYSIS         } from '../modules/local/pixelator/analysis'
 include { EXPERIMENT_SUMMARY         } from '../modules/local/experiment_summary/main'
-include { collateVersionsFromTopic; collectReportInputsFromTopic } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
+include { collectReportInputsFromTopic } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -227,8 +229,12 @@ workflow PROXIOME {
         ch_input = channel.fromPath(params.input)
         ch_experiment_summary_input = collectReportInputsFromTopic()
 
-        ch_versions_yml = collateVersionsFromTopic()
-            .collectFile(name: 'software_versions.yml', sort: true, newLine: true)
+        // Any process consuming this must not emit to the `versions` topic itself,
+        // as the topic only closes once all of its publishers have finished.
+        ch_versions_yml = channel.topic('versions')
+            .toList()
+            .map { versions -> collectVersions(versions) }
+            .collectFile(name: 'software_versions.yml', newLine: true)
             .first()
 
         EXPERIMENT_SUMMARY(

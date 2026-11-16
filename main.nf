@@ -18,7 +18,7 @@
 include { PROXIOME                 } from './workflows/proxiome'
 include { PIPELINE_INITIALISATION  } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
 include { PIPELINE_COMPLETION      } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
-include { collateVersionsFromTopic } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
+include { collectVersions          } from 'plugin/nf-core-utils'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -55,11 +55,12 @@ workflow NFCORE_PIXELATOR {
     //
     // Collate and save software versions
     //
-    collateVersionsFromTopic()
+    channel.topic('versions')
+        .toList()
+        .map { versions -> collectVersions(versions) }
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
             name: 'nf_core_'  +  'pixelator_software_'  + 'versions.yml',
-            sort: true,
             newLine: true
         )
 }
