@@ -129,25 +129,25 @@
             ],
             {
                 "PIXELATOR_AGGREGATE": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_ANALYSIS": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_DENOISE": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_EDGELIST": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_GRAPH": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_GRAPH_COLLAPSE": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "Workflow": {
                     "nf-core/pixelator": "v7.0.0"
@@ -165,25 +165,25 @@
             28,
             {
                 "PIXELATOR_AGGREGATE": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_ANALYSIS": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_DENOISE": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_EDGELIST": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_GRAPH": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_GRAPH_COLLAPSE": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "PIXELATOR_LIST_OPTIONS": {
-                    "pixelator": "0.32.0"
+                    "pixelator": "0.32.1"
                 },
                 "Workflow": {
                     "nf-core/pixelator": "v7.0.0"

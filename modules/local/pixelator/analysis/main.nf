@@ -3,8 +3,8 @@ process PIXELATOR_ANALYSIS {
     label 'process_medium'
 
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'ghcr.io/pixelgentechnologies/pixelator:0.32.0'
-        : 'ghcr.io/pixelgentechnologies/pixelator:0.32.0'}"
+        ? 'ghcr.io/pixelgentechnologies/pixelator:0.32.1'
+        : 'ghcr.io/pixelgentechnologies/pixelator:0.32.1'}"
 
     input:
     tuple val(meta), path(data)
