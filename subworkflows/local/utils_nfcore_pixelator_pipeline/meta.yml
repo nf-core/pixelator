@@ -35,6 +35,9 @@ input:
   - input_basedir:
       type: string
       description: Optional base path used for resolving relative input paths.
+  - technology:
+      type: string
+      description: Technology of the samples, checked against the `pool` column of the samplesheet.
   - help:
       type: boolean
       description: Boolean flag to display help and exit.
@@ -54,11 +57,25 @@ input:
       type: boolean
       description: Boolean flag to send plain-text completion emails.
 output:
-  - samplesheet:
+  - lanes:
       type: file
       description: |
-        Channel containing validated samplesheet entries and resolved input paths.
-        Structure: [ val(meta), path(panel_file), path(reads) ]
+        Channel with one item per unique FASTQ input of each sample or pool, after validation.
+        The meta describes the sample or pool, with the number of lanes (`parts`) and the first
+        samplesheet row listing the input (`row`).
+        Structure: [ val(meta), path(reads), path(panel_file) ]
+      pattern: "*"
+  - unit_panel_files:
+      type: file
+      description: |
+        Channel with the panel file of each sample or pool.
+        Structure: [ val(id), path(panel_file) ]
+      pattern: "*"
+  - sample_metas:
+      type: file
+      description: |
+        Channel with the metadata of each sample, used to restore it after sample calling.
+        Structure: [ val(sample_id), val(meta) ]
       pattern: "*"
   - versions:
       type: file

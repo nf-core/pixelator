@@ -32,24 +32,21 @@ include { collectVersions          } from 'plugin/nf-core-utils'
 workflow NFCORE_PIXELATOR {
 
     take:
-    samplesheet // channel: samplesheet read in from --input
+    lanes            // channel: [ meta, [path(sample_1.fq), path(sample_2.fq)], path(panel_file) | ], one per FASTQ input
+    unit_panel_files // channel: [ id, path(panel_file) | ]
+    sample_metas     // channel: [ sample_id, meta ]
 
     main:
 
     file(params.input).copyTo("${params.outdir}/pipeline_info")
 
     //
-    // Split the samplesheet channel in reads and panel_files
-    //
-    ch_reads       = samplesheet.map { meta, _panel, reads -> [ meta, reads ] }
-    ch_panel_files = samplesheet.map { meta, panel, _reads -> [ meta, panel ] }
-
-    //
     // WORKFLOW: Run pipeline
     //
     PROXIOME(
-        ch_reads,
-        ch_panel_files
+        lanes,
+        unit_panel_files,
+        sample_metas
     )
 
     //
@@ -84,6 +81,7 @@ workflow {
         params.outdir,
         params.input,
         params.input_basedir,
+        params.technology,
         params.help,
         params.help_full,
         params.show_hidden
@@ -93,7 +91,9 @@ workflow {
     // WORKFLOW: Run main workflow
     //
     NFCORE_PIXELATOR (
-        PIPELINE_INITIALISATION.out.samplesheet
+        PIPELINE_INITIALISATION.out.lanes,
+        PIPELINE_INITIALISATION.out.unit_panel_files,
+        PIPELINE_INITIALISATION.out.sample_metas
     )
     //
     // SUBWORKFLOW: Run completion tasks
