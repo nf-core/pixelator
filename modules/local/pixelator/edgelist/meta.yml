@@ -18,6 +18,7 @@ input:
         description: |
           Groovy Map containing sample information
           e.g. [ id:'sample1', design:'pna-2', row:1 ].
+          `design` is passed as `--design`.
           `row` is the first samplesheet row listing the FASTQ input. Together with
           `id` it is used to name the FASTQs (and thus the outputs) uniquely.
     - reads:
@@ -30,14 +31,10 @@ input:
           - http://edamontology.org/format_2545
     - panel_file:
         type: file
-        description: Optional panel definition file.
+        description: |
+          Panel definition file. Empty when the panel is given by name with `meta.panel`
+          (passed as `--panel`); exactly one of the two is set.
         ontologies: []
-    - panel:
-        type: string
-        description: Optional panel name.
-    - design:
-        type: string
-        description: Assay design identifier.
 output:
   edgelist:
     - - meta:

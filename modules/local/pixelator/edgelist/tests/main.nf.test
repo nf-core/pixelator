@@ -21,9 +21,7 @@ nextflow_process {
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
                     ],
-                    [],                                     // panel_file
-                    'proxiome-v2-immuno-155-prerelease',     // panel
-                    'proxiome-v2'                            // design
+                    []                                      // panel_file
                 ]
                 """
             }
@@ -32,13 +30,7 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(
-                    process.out.edgelist,
-                    process.out.dropped_reads,
-                    process.out.report_json,
-                    process.out.metadata_json,
-                    process.out.log,
-                ).match() }
+                { assert snapshot(sanitizeOutput(process.out)).match() }
             )
         }
     }
@@ -56,9 +48,7 @@ nextflow_process {
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
                     ],
-                    [],                                     // panel_file
-                    'proxiome-v2-immuno-155-prerelease',     // panel
-                    'proxiome-v2'                            // design
+                    []                                      // panel_file
                 ]
                 """
             }
@@ -72,7 +62,7 @@ nextflow_process {
                 { assert snapshot(
                     workflow.trace.succeeded().size(),
                     stable_name,
-                    process.out.versions_pixelator,
+                    sanitizeOutput(process.out, unstableKeys: ["edgelist", "metadata_json", "log"]),
                 ).match() }
             )
         }

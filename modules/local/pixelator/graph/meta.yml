@@ -24,11 +24,10 @@ input:
         ontologies: []
     - panel_file:
         type: file
-        description: Optional panel definition file.
+        description: |
+          Panel definition file. Empty when the panel is given by name with `meta.panel`
+          (passed as `--panel`); exactly one of the two is set.
         ontologies: []
-    - panel:
-        type: string
-        description: Optional panel name.
 output:
   all_results:
     - - meta:

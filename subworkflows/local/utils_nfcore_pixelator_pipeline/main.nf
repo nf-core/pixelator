@@ -13,7 +13,6 @@ include { paramsSummaryMap          } from 'plugin/nf-schema'
 include { samplesheetToList         } from 'plugin/nf-schema'
 include { completionEmail           } from '../../nf-core/utils_nfcore_pipeline'
 include { completionSummary         } from '../../nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML    } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NFCORE_PIPELINE     } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipeline'
 
@@ -34,6 +33,7 @@ workflow PIPELINE_INITIALISATION {
     outdir            //  string: The output directory where the results will be saved
     input             //  string: Path to input samplesheet
     input_basedir     //  string: Path to the base directory for relative paths resolving
+    technology        //  string: Technology of the samples, checked against the samplesheet
     help              // boolean: Display help message and exit
     help_full         // boolean: Show the full help message
     show_hidden       // boolean: Show hidden parameters in the help message
@@ -116,14 +116,13 @@ workflow PIPELINE_INITIALISATION {
     log.info("Resolving relative paths in samplesheet relative to: ${inputBaseDir}")
 
     //
-    // Create channel from input file provided through params.input
+    // Read, validate and group the samplesheet. The 1-based samplesheet row number is
+    // kept in the meta to name the edgelist files
     //
-    // The 1-based samplesheet row number is kept in the meta to name the edgelist files
-    ch_input = channel
-        .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json").withIndex())
-        .map {
-            row, index -> validate_input_samplesheet(inputBaseDir, row, index + 1)
-        }
+    def rows = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
+        .withIndex()
+        .collect { row, index -> validate_input_samplesheet(inputBaseDir, row, index + 1) }
+    def units = group_samplesheet_units(rows, technology)
 
     //
     // Validate design and panel samplesheet fields agains a dynamic set of allowed values
@@ -142,24 +141,33 @@ workflow PIPELINE_INITIALISATION {
         .map { panel_option -> panel_option.trim() }
         .reduce(new HashSet()) { prev, curr -> prev << curr }
 
-
-    //
-    // Combine the validated inputs again into a single channel
-    //
-    ch_samplesheet = ch_input
-        .map { it -> it[0] }
+    // Check every design/panel combination of the samplesheet once.
+    // The lanes are only released when all of them are valid.
+    ch_options_checked = channel
+        .fromList(units.options)
         .combine(ch_panel_options)
         .combine(ch_design_options)
-        .map { meta, panel_options, design_options ->
-            meta = validate_panel(meta, panel_options)
-            meta = validate_design(meta, design_options)
-            return meta
+        .map { options, panel_options, design_options ->
+            validate_panel(options, panel_options)
+            validate_design(options, design_options)
+            return options
         }
-        .join(ch_input)
+        .toList()
+        .map { _all_options -> true } // single value, so that `combine` below adds exactly one element
+
+    ch_lanes = channel
+        .fromList(units.lanes)
+        .combine(ch_options_checked)
+        .map { meta, reads, panel_file, _checked -> [meta, reads, panel_file] }
+
+    ch_unit_panel_files = channel.fromList(units.unit_panel_files)
+    ch_sample_metas     = channel.fromList(units.sample_metas)
 
     emit:
-    samplesheet = ch_samplesheet
-    versions    = ch_versions
+    lanes            = ch_lanes
+    unit_panel_files = ch_unit_panel_files
+    sample_metas     = ch_sample_metas
+    versions         = ch_versions
 }
 
 /*
@@ -234,33 +242,6 @@ def getGenomeAttribute(attribute) {
         }
     }
     return null
-}
-
-//
-// Collate the `versions` topic into a channel of YAML fragments
-//
-// Any process consuming the result must not emit to the `versions` topic itself,
-// as the topic only closes once all of its publishers have finished.
-//
-def collateVersionsFromTopic() {
-    def topic_versions = channel.topic("versions")
-        .distinct()
-        .branch { entry ->
-            versions_file: entry instanceof Path
-            versions_tuple: true
-        }
-
-    def topic_versions_string = topic_versions.versions_tuple
-        .map { process, tool, version ->
-            [ process[process.lastIndexOf(':')+1..-1], "  ${tool}: ${version}" ]
-        }
-        .groupTuple(by:0)
-        .map { process, tool_versions ->
-            tool_versions.unique().sort()
-            "${process}:\n${tool_versions.join('\n')}"
-        }
-
-    return softwareVersionsToYAML(topic_versions.versions_file).mix(topic_versions_string)
 }
 
 // Collect report inputs from the topic. Keep every JSON file, but only PXL files
@@ -512,4 +493,88 @@ def validate_input_samplesheet(URI samplesheetUrl, items, int row) {
     }
 
     return [meta, panel_file_abs, reads]
+}
+
+//
+// Drop the samplesheet row, which differs between the runs of a sample or pool.
+//
+def without_row(Map meta) {
+    return meta.findAll { key, _value -> key != 'row' }
+}
+
+//
+// Drop samplesheet fields that describe a single sample; they are meaningless
+// once samples are grouped into a pool.
+//
+def pool_meta(LinkedHashMap meta) {
+    def grouped = meta.findAll { key, _value -> !(key in ['sample_alias', 'condition', 'hash_index', 'row']) }
+    grouped.id = meta.pool
+    return grouped
+}
+
+//
+// Group the validated samplesheet rows ([meta, panel_file, reads]) into processing
+// units (the pool if the row has a `pool`, else the sample) and check that the rows
+// of a unit are consistent. Returns a map with:
+//   lanes:            [meta, reads, panel_file] per unique FASTQ input of a unit.
+//                     The meta is the unit meta, with the number of lanes (`parts`)
+//                     and the first samplesheet row listing the input (`row`).
+//   unit_panel_files: [unit id, panel_file]
+//   sample_metas:     [sample id, meta], to restore the per-sample metadata after sample calling
+//   options:          distinct [design, panel] pairs to validate against pixelator
+//
+def group_samplesheet_units(List rows, String technology) {
+    // The technology is only used to check that the samplesheet is consistent with it;
+    // pooling itself is detected per row from the `pool` column.
+    def expect_pooled = technology in ['proxiome-v2', 'hashed_samples']
+
+    rows.each { meta, _panel_file, _reads ->
+        if (expect_pooled && !meta.pool) {
+            error("ERROR: Sample '${meta.id}' has no `pool`, but --technology ${technology} requires pooled samples.")
+        }
+        if (!expect_pooled && meta.pool) {
+            error("ERROR: Sample '${meta.id}' has `pool` '${meta.pool}', but --technology ${technology} does not use pooled samples.")
+        }
+    }
+
+    def lanes = []
+    def unit_panel_files = []
+    rows.groupBy { meta, _panel_file, _reads -> meta.pool ?: meta.id }.each { unit_id, unit_rows ->
+        def (first_meta, _first_panel_file, _first_reads) = unit_rows[0]
+        def is_pool = first_meta.pool
+
+        if (unit_rows.collect { meta, _panel_file, _reads -> meta.single_end }.unique().size() > 1) {
+            error("ERROR: Runs of the same ${is_pool ? 'pool' : 'sample'} must all be single-end or all paired-end.")
+        }
+
+        if (unit_rows.collect { meta, _panel_file, _reads -> meta.design }.unique().size() > 1) {
+            error("ERROR: Runs of the same sample or pool ('${unit_id}') must use the same design.")
+        }
+
+        def panel_files = unit_rows.collect { _meta, panel_file, _reads -> panel_file }.unique()
+        if (panel_files.size() > 1) {
+            error("ERROR: Runs of the same sample or pool ('${unit_id}') must use the same panel.")
+        }
+
+        // Unique FASTQ inputs (pooled samples repeat the same FASTQs on several rows),
+        // each with the first samplesheet row it appears on. The row is used to name
+        // the output files of the input, so that different FASTQs sharing the same
+        // file name (e.g. in different folders) do not overwrite each other.
+        // Example for pool1 (3 samples: sample1-3; 2 runs: original + re-sequencing), so 6 rows:
+        // rows 1-3 (one per sample) list pool1_R1/R2.fastq.gz, rows 4-6 list pool1_reseq_R1/R2.fastq.gz
+        def rows_by_reads = unit_rows.groupBy { _meta, _panel_file, reads -> reads }  // [[pool1_R1, pool1_R2]: [row1, row2, row3], [pool1_reseq_R1, pool1_reseq_R2]: [row4, row5, row6]]
+        def unit_meta = (is_pool ? pool_meta(first_meta) : without_row(first_meta)) + [parts: rows_by_reads.size()]  // [id: 'pool1', pool: 'pool1', ..., parts: 2] (2 unique FASTQ pairs, not the 3 samples)
+        rows_by_reads.each { reads, reads_rows ->  // 1st: reads = [pool1_R1, pool1_R2], reads_rows = [row1, row2, row3]
+            def first_row = reads_rows.collect { meta, _panel_file, _reads -> meta.row }.min()  // 1st: [1, 2, 3].min() = 1, 2nd: [4, 5, 6].min() = 4
+            lanes << [unit_meta + [row: first_row], reads, panel_files[0]]  // 1st: [[id: 'pool1', ..., parts: 2, row: 1], [pool1_R1, pool1_R2], panel]
+        }
+        unit_panel_files << [unit_id, panel_files[0]]
+    }
+
+    return [
+        lanes: lanes,
+        unit_panel_files: unit_panel_files,
+        sample_metas: rows.collect { meta, _panel_file, _reads -> [meta.id, without_row(meta)] }.unique(),
+        options: rows.collect { meta, _panel_file, _reads -> [design: meta.design, panel: meta.panel] }.unique(),
+    ]
 }

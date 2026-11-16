@@ -16,7 +16,7 @@ nextflow_process {
                 """
                 input[0] = [
                     [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist' ],
-                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true)
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/edgelist/pool1.parquet', checkIfExists: true)
                 ]
                 """
             }
@@ -25,44 +25,22 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(
-                    process.out.parquet,
-                    process.out.report_json,
-                    process.out.metadata_json,
-                    process.out.log,
-                ).match() }
+                { assert snapshot(sanitizeOutput(process.out)).match() }
             )
         }
     }
 
-    test("PNA aggregate - small test") { // TODO upload data to test data repo when making public
-        setup {
-            run("PIXELATOR_EDGELIST") {
-                script "../../edgelist/main.nf"
-                process {
-                    """
-                    input[0] = [
-                        [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist', single_end: false, row: 1 ],
-                        [
-                            file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
-                            file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
-                        ],
-                        [],
-                        'proxiome-v2-immuno-155-prerelease',
-                        'proxiome-v2'
-                    ]
-                    """
-                }
-            }
-        }
-
+    test("PNA aggregate - small test") {
         when {
             params {
                 outdir = "$outputDir"
             }
             process {
                 """
-                input[0] = PIXELATOR_EDGELIST.out.edgelist
+                input[0] = [
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist' ],
+                    file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/edgelist/pool1.parquet', checkIfExists: true),
+                ]
                 """
             }
         }
@@ -74,64 +52,26 @@ nextflow_process {
                 { assert snapshot(
                     workflow.trace.succeeded().size(),
                     stable_name,
-                    process.out.versions_pixelator,
+                    sanitizeOutput(process.out, unstableKeys: ["metadata_json", "log"]),
                 ).match() }
             )
         }
     }
 
     test("PNA aggregate - small test - multiple files") {
-        setup {
-            run("PIXELATOR_EDGELIST", alias: "EDGELIST_LANE1") {
-                script "../../edgelist/main.nf"
-                process {
-                    """
-                    input[0] = [
-                        [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist', single_end: false, row: 1 ],
-                        [
-                            file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R1.fastq.gz', checkIfExists: true),
-                            file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
-                        ],
-                        [],
-                        'proxiome-v2-immuno-155-prerelease',
-                        'proxiome-v2'
-                    ]
-                    """
-                }
-            }
-            run("PIXELATOR_EDGELIST", alias: "EDGELIST_LANE2") {
-                script "../../edgelist/main.nf"
-                process {
-                    """
-                    input[0] = [
-                        [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist', single_end: false, row: 2 ],
-                        [
-                            file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_reseq_R1.fastq.gz', checkIfExists: true),
-                            file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_reseq_R2.fastq.gz', checkIfExists: true)
-                        ],
-                        [],
-                        'proxiome-v2-immuno-155-prerelease',
-                        'proxiome-v2'
-                    ]
-                    """
-                }
-            }
-        }
-
         when {
             params {
                 outdir = "$outputDir"
             }
             process {
                 """
-                input[0] = EDGELIST_LANE1.out.edgelist
-                    .combine(EDGELIST_LANE2.out.edgelist)
-                    .map { meta1, file1, meta2, file2 ->
-                        [
-                            [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist' ],
-                            [ file1, file2 ]
-                        ]
-                    }
+                input[0] = [
+                    [ id:'pool1', design:'proxiome-v2', panel:'proxiome-v2-immuno-155-prerelease', technology:'proxiome-v2-edgelist' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/edgelist/pool1.parquet', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'new-test-data/pna/modules/edgelist/pool1_reseq.parquet', checkIfExists: true),
+                    ]
+                ]
                 """
             }
         }
@@ -143,7 +83,7 @@ nextflow_process {
                 { assert snapshot(
                     workflow.trace.succeeded().size(),
                     stable_name,
-                    process.out.versions_pixelator,
+                    sanitizeOutput(process.out, unstableKeys: ["metadata_json", "log"]),
                 ).match() }
             )
         }

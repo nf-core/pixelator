@@ -3,13 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[7.0.0](https://github.com/nf-core/pixelator/releases/tag/7.0.0)] - 2026-11-13
+## [[7.0.0](https://github.com/nf-core/pixelator/releases/tag/7.0.0)] - 2026-11-16
 
 ### Major
 
 #### Enhancements & fixes
 
-- **(breaking change)** Replace amplicon/demux/collapse with edgelist/aggregate/graph-collapse. By @Aratz [#274](https://github.com/nf-core/pixelator/pull/274)
+- **(breaking change)** Replace amplicon/demux/collapse with edgelist/aggregate/graph-collapse. This speeds up total time execution by three to four (!!) times. By @Aratz [#274](https://github.com/nf-core/pixelator/pull/274)
 - **(breaking change)** Remove layout step. Computing the layout is now fast enough to be done
   on the fly when analyzing the data. By @Aratz [#274](https://github.com/nf-core/pixelator/pull/274)
 
