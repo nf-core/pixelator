@@ -18,14 +18,14 @@ include { collectVersions              } from 'plugin/nf-core-utils'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PIXELATOR_EDGELIST } from '../modules/local/pixelator/edgelist'
-include { PIXELATOR_AGGREGATE        } from '../modules/local/pixelator/aggregate'
-include { PIXELATOR_GRAPH            } from '../modules/local/pixelator/graph'
-include { PIXELATOR_GRAPH_COLLAPSE   } from '../modules/local/pixelator/graph_collapse'
-include { PIXELATOR_SAMPLE_CALLING   } from '../modules/local/pixelator/sample_calling'
-include { PIXELATOR_DENOISE          } from '../modules/local/pixelator/denoise'
-include { PIXELATOR_ANALYSIS         } from '../modules/local/pixelator/analysis'
-include { EXPERIMENT_SUMMARY         } from '../modules/local/experiment_summary/main'
+include { PIXELATOR_EDGELIST           } from '../modules/local/pixelator/edgelist'
+include { PIXELATOR_AGGREGATE          } from '../modules/local/pixelator/aggregate'
+include { PIXELATOR_GRAPH              } from '../modules/local/pixelator/graph'
+include { PIXELATOR_GRAPH_COLLAPSE     } from '../modules/local/pixelator/graph_collapse'
+include { PIXELATOR_SAMPLE_CALLING     } from '../modules/local/pixelator/sample_calling'
+include { PIXELATOR_DENOISE            } from '../modules/local/pixelator/denoise'
+include { PIXELATOR_ANALYSIS           } from '../modules/local/pixelator/analysis'
+include { EXPERIMENT_SUMMARY           } from '../modules/local/experiment_summary/main'
 include { collectReportInputsFromTopic } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
 
 /*
