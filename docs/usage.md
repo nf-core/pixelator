@@ -263,8 +263,8 @@ Several generic profiles are bundled with the pipeline which instruct the pipeli
 
 > [!WARNING]
 > This version of the pipeline does not support conda environments, due to issues with upstream dependencies.
-> This means you cannot use the `conda` and `mamba` profiles. Please use `docker` or `singularity` instead.
-> We hope to add support for conda environments in the future.
+> This means you cannot use the `conda` and `mamba` profiles. Please use a container engine instead (`docker`, `singularity`, `apptainer`, `podman`, `shifter` or `charliecloud`).
+> We hope to add support for conda environments in the future. If you genuinely need Conda or Mamba support, you are welcome to reach out to the maintainers by [opening a GitHub issue](https://github.com/nf-core/pixelator/issues) or on the [Slack `#pixelator` channel](https://nfcore.slack.com/channels/pixelator).
 
 The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to check if your system is supported, please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 

@@ -2,9 +2,6 @@ process PIXELATOR_GRAPH_COLLAPSE {
     tag "${meta.id}"
     label 'process_high'
 
-    // TODO: Add conda
-    // conda "bioconda::pixelator=0.18.2"
-
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'ghcr.io/pixelgentechnologies/pixelator:0.32.0'
         : 'ghcr.io/pixelgentechnologies/pixelator:0.32.0'}"

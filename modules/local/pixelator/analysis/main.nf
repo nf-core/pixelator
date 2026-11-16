@@ -2,9 +2,6 @@ process PIXELATOR_ANALYSIS {
     tag "${meta.id}"
     label 'process_medium'
 
-    // TODO: Add conda
-    // conda "bioconda::pixelator=0.18.2"
-
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'ghcr.io/pixelgentechnologies/pixelator:0.32.0'
         : 'ghcr.io/pixelgentechnologies/pixelator:0.32.0'}"
