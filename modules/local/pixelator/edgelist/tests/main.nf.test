@@ -32,13 +32,7 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(
-                    process.out.edgelist,
-                    process.out.dropped_reads,
-                    process.out.report_json,
-                    process.out.metadata_json,
-                    process.out.log,
-                ).match() }
+                { assert snapshot(sanitizeOutput(process.out)).match() }
             )
         }
     }
@@ -72,7 +66,7 @@ nextflow_process {
                 { assert snapshot(
                     workflow.trace.succeeded().size(),
                     stable_name,
-                    process.out.versions_pixelator,
+                    sanitizeOutput(process.out, unstableKeys: ["edgelist", "metadata_json", "log"]),
                 ).match() }
             )
         }
