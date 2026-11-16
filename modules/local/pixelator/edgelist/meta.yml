@@ -18,6 +18,7 @@ input:
         description: |
           Groovy Map containing sample information
           e.g. [ id:'sample1', design:'pna-2', row:1 ].
+          `design` is passed as `--design`.
           `row` is the first samplesheet row listing the FASTQ input. Together with
           `id` it is used to name the FASTQs (and thus the outputs) uniquely.
     - reads:
@@ -35,9 +36,6 @@ input:
     - panel:
         type: string
         description: Optional panel name.
-    - design:
-        type: string
-        description: Assay design identifier.
 output:
   edgelist:
     - - meta:

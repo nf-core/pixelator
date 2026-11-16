@@ -22,8 +22,7 @@ nextflow_process {
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
                     ],
                     [],                                     // panel_file
-                    'proxiome-v2-immuno-155-prerelease',     // panel
-                    'proxiome-v2'                            // design
+                    'proxiome-v2-immuno-155-prerelease'      // panel
                 ]
                 """
             }
@@ -51,8 +50,7 @@ nextflow_process {
                         file(params.pipelines_testdata_base_path + 'new-test-data/pna/fastq/pool1_R2.fastq.gz', checkIfExists: true)
                     ],
                     [],                                     // panel_file
-                    'proxiome-v2-immuno-155-prerelease',     // panel
-                    'proxiome-v2'                            // design
+                    'proxiome-v2-immuno-155-prerelease'      // panel
                 ]
                 """
             }

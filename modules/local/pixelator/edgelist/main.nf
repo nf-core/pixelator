@@ -7,7 +7,7 @@ process PIXELATOR_EDGELIST {
         : 'ghcr.io/pixelgentechnologies/pixelator:0.32.0'}"
 
     input:
-    tuple val(meta), path(reads, arity: '1..*'), path(panel_file), val(panel), val(design)
+    tuple val(meta), path(reads, arity: '1..*'), path(panel_file), val(panel)
 
     output:
     tuple val(meta), path("edgelist/*.parquet", arity: 1), emit: edgelist
@@ -27,7 +27,6 @@ process PIXELATOR_EDGELIST {
     def panelOpt = (panel
         ? "--panel ${panel}"
         : panel_file ? "--panel ${panel_file}" : "")
-    def designOpt = "--design ${design}"
     def read_list = reads instanceof List ? reads : [reads]
     // Output parquet/report/meta names come from the FASTQ basename (CLI).
     // --sample-name only sets report.json sample_id.
@@ -53,7 +52,7 @@ process PIXELATOR_EDGELIST {
         ${read_args} \\
         --sample-name ${sample_name} \\
         ${panelOpt} \\
-        ${designOpt} \\
+        --design ${meta.design} \\
         --threads ${task.cpus} \\
         --output . \\
         ${args}

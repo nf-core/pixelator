@@ -69,7 +69,7 @@ workflow PROXIOME {
     // MODULE: Run pixelator single-cell-pna edgelist on each FASTQ input
     //
     ch_edgelist_input = ch_lanes
-        .map { meta, reads, panel_file -> [meta, reads, panel_file, panel_file ? null : meta.panel, meta.design] }
+        .map { meta, reads, panel_file -> [meta, reads, panel_file, panel_file ? null : meta.panel] }
 
     PIXELATOR_EDGELIST(ch_edgelist_input)
 
