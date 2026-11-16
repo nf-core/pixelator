@@ -68,10 +68,7 @@ workflow PROXIOME {
     //
     // MODULE: Run pixelator single-cell-pna edgelist on each FASTQ input
     //
-    ch_edgelist_input = ch_lanes
-        .map { meta, reads, panel_file -> [meta, reads, panel_file, panel_file ? null : meta.panel] }
-
-    PIXELATOR_EDGELIST(ch_edgelist_input)
+    PIXELATOR_EDGELIST(ch_lanes)
 
     // Collect the per-lane edgelist parquet files in a list per unit.
     // groupKey(id, size) lets groupTuple emit a unit as soon as all of its
@@ -103,7 +100,7 @@ workflow PROXIOME {
     ch_graph_input = ch_aggregated
         .map { meta, parquet -> [meta.id, meta, parquet] }
         .join(ch_unit_panel_files)
-        .map { _id, meta, parquet, panel_file -> [meta, parquet, panel_file, panel_file ? null : meta.panel] }
+        .map { _id, meta, parquet, panel_file -> [meta, parquet, panel_file] }
 
     PIXELATOR_GRAPH(ch_graph_input)
     ch_graph = PIXELATOR_GRAPH.out.pixelfile

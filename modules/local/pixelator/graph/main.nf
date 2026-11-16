@@ -8,7 +8,7 @@ process PIXELATOR_GRAPH {
         : 'ghcr.io/pixelgentechnologies/pixelator:0.32.0'}"
 
     input:
-    tuple val(meta), path(edge_list), path(panel_file), val(panel)
+    tuple val(meta), path(edge_list), path(panel_file)
 
     output:
     tuple val(meta), path("graph/*"),              emit: all_results
@@ -27,9 +27,8 @@ process PIXELATOR_GRAPH {
 
     prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ''
-    def panelOpt = (panel
-        ? "--panel ${panel}"
-        : panel_file ? "--panel ${panel_file}" : "")
+    // The samplesheet schema requires exactly one of `panel` and `panel_file`
+    def panel_opt = "--panel ${meta.panel ?: panel_file}"
 
     """
     pixelator \\
@@ -38,7 +37,7 @@ process PIXELATOR_GRAPH {
         --verbose \\
         single-cell-pna \\
         graph \\
-        ${panelOpt} \\
+        ${panel_opt} \\
         --output . \\
         ${args} \\
         ${edge_list}
