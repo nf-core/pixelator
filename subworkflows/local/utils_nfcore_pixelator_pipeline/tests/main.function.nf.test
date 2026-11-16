@@ -90,7 +90,7 @@ nextflow_function {
         then {
             assertAll(
                 { assert function.failed },
-                { assert function.stderr.join(" ").contains("does not use pooled samples") },
+                { assert (function.stdout + function.stderr).join(" ").contains("does not use pooled samples") },
             )
         }
     }
@@ -111,7 +111,7 @@ nextflow_function {
         then {
             assertAll(
                 { assert function.failed },
-                { assert function.stderr.join(" ").contains("requires pooled samples") },
+                { assert (function.stdout + function.stderr).join(" ").contains("requires pooled samples") },
             )
         }
     }
@@ -134,7 +134,7 @@ nextflow_function {
         then {
             assertAll(
                 { assert function.failed },
-                { assert function.stderr.join(" ").contains("must all be single-end or all paired-end") },
+                { assert (function.stdout + function.stderr).join(" ").contains("must all be single-end or all paired-end") },
             )
         }
     }
@@ -157,7 +157,7 @@ nextflow_function {
         then {
             assertAll(
                 { assert function.failed },
-                { assert function.stderr.join(" ").contains("must use the same design") },
+                { assert (function.stdout + function.stderr).join(" ").contains("must use the same design") },
             )
         }
     }
@@ -180,7 +180,7 @@ nextflow_function {
         then {
             assertAll(
                 { assert function.failed },
-                { assert function.stderr.join(" ").contains("must use the same panel") },
+                { assert (function.stdout + function.stderr).join(" ").contains("must use the same panel") },
             )
         }
     }
