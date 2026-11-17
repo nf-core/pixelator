@@ -2,11 +2,9 @@ process PIXELATOR_LIST_OPTIONS {
     label 'process_single'
 
 
-    // TODO: Add conda back
-    // conda "${moduleDir}/environment.yml"
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.31.0'
-        : 'quay.io/pixelgen-technologies/pixelator:0.31.0'}"
+        ? 'ghcr.io/pixelgentechnologies/pixelator:0.32.1'
+        : 'ghcr.io/pixelgentechnologies/pixelator:0.32.1'}"
 
     output:
     path "design_options.txt", emit: designs

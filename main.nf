@@ -15,11 +15,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { PROXIOME_V1              } from './workflows/proxiome_v1'
-include { PROXIOME_V2              } from './workflows/proxiome_v2'
+include { PROXIOME                 } from './workflows/proxiome'
 include { PIPELINE_INITIALISATION  } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
 include { PIPELINE_COMPLETION      } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
-include { collateVersionsFromTopic } from './subworkflows/local/utils_nfcore_pixelator_pipeline'
+include { collectVersions          } from 'plugin/nf-core-utils'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,43 +32,32 @@ include { collateVersionsFromTopic } from './subworkflows/local/utils_nfcore_pix
 workflow NFCORE_PIXELATOR {
 
     take:
-    samplesheet // channel: samplesheet read in from --input
+    lanes            // channel: [ meta, [path(sample_1.fq), path(sample_2.fq)], path(panel_file) | ], one per FASTQ input
+    unit_panel_files // channel: [ id, path(panel_file) | ]
+    sample_metas     // channel: [ sample_id, meta ]
 
     main:
 
     file(params.input).copyTo("${params.outdir}/pipeline_info")
 
     //
-    // Split the samplesheet channel in reads and panel_files
-    //
-    ch_reads       = samplesheet.map { meta, _panel, reads -> [ meta, reads ] }
-    ch_panel_files = samplesheet.map { meta, panel, _reads -> [ meta, panel ] }
-
-    //
     // WORKFLOW: Run pipeline
     //
-    if (params.technology == "proxiome-v1" || params.technology == "nonhashed_samples") {
-        PROXIOME_V1(
-            ch_reads,
-            ch_panel_files
-        )
-    } else if (params.technology == "proxiome-v2" || params.technology == "hashed_samples") {
-        PROXIOME_V2(
-            ch_reads,
-            ch_panel_files
-        )
-    } else {
-        error "Unknown technology: \"${params.technology}\""
-    }
+    PROXIOME(
+        lanes,
+        unit_panel_files,
+        sample_metas
+    )
 
     //
     // Collate and save software versions
     //
-    collateVersionsFromTopic()
+    channel.topic('versions')
+        .toList()
+        .map { versions -> collectVersions(versions) }
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
             name: 'nf_core_'  +  'pixelator_software_'  + 'versions.yml',
-            sort: true,
             newLine: true
         )
 }
@@ -93,6 +81,7 @@ workflow {
         params.outdir,
         params.input,
         params.input_basedir,
+        params.technology,
         params.help,
         params.help_full,
         params.show_hidden
@@ -102,7 +91,9 @@ workflow {
     // WORKFLOW: Run main workflow
     //
     NFCORE_PIXELATOR (
-        PIPELINE_INITIALISATION.out.samplesheet
+        PIPELINE_INITIALISATION.out.lanes,
+        PIPELINE_INITIALISATION.out.unit_panel_files,
+        PIPELINE_INITIALISATION.out.sample_metas
     )
     //
     // SUBWORKFLOW: Run completion tasks

@@ -1,0 +1,181 @@
+{
+    "PNA edgelist - stub": {
+        "content": [
+            {
+                "dropped_reads": [
+                    [
+                        {
+                            "design": "proxiome-v2",
+                            "id": "pool1",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "row": 1,
+                            "single_end": false,
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1_1_pool1_R1.dropped_reads.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "edgelist": [
+                    [
+                        {
+                            "design": "proxiome-v2",
+                            "id": "pool1",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "row": 1,
+                            "single_end": false,
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1_1_pool1_R1.parquet:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "log": [
+                    [
+                        {
+                            "design": "proxiome-v2",
+                            "id": "pool1",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "row": 1,
+                            "single_end": false,
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1_1.pixelator-edgelist.log:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "metadata_json": [
+                    [
+                        {
+                            "design": "proxiome-v2",
+                            "id": "pool1",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "row": 1,
+                            "single_end": false,
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1_1_pool1_R1.meta.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "report_json": [
+                    [
+                        {
+                            "design": "proxiome-v2",
+                            "id": "pool1",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "row": 1,
+                            "single_end": false,
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1_1_pool1_R1.report.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions_pixelator": [
+                    [
+                        "PIXELATOR_EDGELIST",
+                        "pixelator",
+                        "0.32.1"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-11-13T16:17:41.841678654",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.10.4"
+        }
+    },
+    "PNA edgelist - small test": {
+        "content": [
+            1,
+            [
+                "pipeline_info",
+                "pixelator",
+                "pixelator/edgelist",
+                "pixelator/edgelist/pool1_1_pool1.dropped_reads.parquet",
+                "pixelator/edgelist/pool1_1_pool1.meta.json",
+                "pixelator/edgelist/pool1_1_pool1.parquet",
+                "pixelator/edgelist/pool1_1_pool1.report.json",
+                "pixelator/logs",
+                "pixelator/logs/pool1",
+                "pixelator/logs/pool1/pool1_1.pixelator-edgelist.log"
+            ],
+            {
+                "dropped_reads": [
+                    [
+                        {
+                            "design": "proxiome-v2",
+                            "id": "pool1",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "row": 1,
+                            "single_end": false,
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1_1_pool1.dropped_reads.parquet:md5,220d6ee21c56665fc033c3bb7a306d65"
+                    ]
+                ],
+                "edgelist": [
+                    [
+                        {
+                            "design": "proxiome-v2",
+                            "id": "pool1",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "row": 1,
+                            "single_end": false,
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1_1_pool1.parquet"
+                    ]
+                ],
+                "log": [
+                    [
+                        {
+                            "design": "proxiome-v2",
+                            "id": "pool1",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "row": 1,
+                            "single_end": false,
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1_1.pixelator-edgelist.log"
+                    ]
+                ],
+                "metadata_json": [
+                    [
+                        {
+                            "design": "proxiome-v2",
+                            "id": "pool1",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "row": 1,
+                            "single_end": false,
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1_1_pool1.meta.json"
+                    ]
+                ],
+                "report_json": [
+                    [
+                        {
+                            "design": "proxiome-v2",
+                            "id": "pool1",
+                            "panel": "proxiome-v2-immuno-155-prerelease",
+                            "row": 1,
+                            "single_end": false,
+                            "technology": "proxiome-v2-edgelist"
+                        },
+                        "pool1_1_pool1.report.json:md5,4f77c89e0cfcb7f3e538481ad1a8cd22"
+                    ]
+                ],
+                "versions_pixelator": [
+                    [
+                        "PIXELATOR_EDGELIST",
+                        "pixelator",
+                        "0.32.1"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-11-13T16:17:53.206461688",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.10.4"
+        }
+    }
+}

@@ -2,12 +2,9 @@ process PIXELATOR_ANALYSIS {
     tag "${meta.id}"
     label 'process_medium'
 
-    // TODO: Add conda
-    // conda "bioconda::pixelator=0.18.2"
-
     container "${params.pixelator_container?:workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelator:0.31.0'
-        : 'quay.io/pixelgen-technologies/pixelator:0.31.0'}"
+        ? 'ghcr.io/pixelgentechnologies/pixelator:0.32.1'
+        : 'ghcr.io/pixelgentechnologies/pixelator:0.32.1'}"
 
     input:
     tuple val(meta), path(data)

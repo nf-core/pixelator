@@ -36,6 +36,13 @@ input:
         description: Collated software versions, copied into the report data folder.
         pattern: "*.{yml,yaml}"
         ontologies: []
+  - - es_workflow:
+        type: string
+        description: |
+          Name of the pixelatorES workflow whose stage vocabulary matches the
+          labels in `result_stages`, e.g. `edgelist_aggregate` for the edgelist /
+          aggregate front end. Determines how the report interprets the staged
+          stage folders.
 output:
   html:
     - - meta:

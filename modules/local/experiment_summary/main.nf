@@ -4,13 +4,14 @@ process EXPERIMENT_SUMMARY {
     label "error_retry"
 
     container "${params.experiment_summary_container?: workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'quay.io/pixelgen-technologies/pixelatores:0.15.1'
-        : 'quay.io/pixelgen-technologies/pixelatores:0.15.1'}"
+        ? 'quay.io/pixelgen-technologies/pixelatores:0.16.0'
+        : 'quay.io/pixelgen-technologies/pixelatores:0.16.0'}"
 
     input:
     path samplesheet_path
     tuple val(meta), val(result_stages), path(results_data, arity: "1..*", stageAs: "results_raw/?/*")
     path versions_yml, stageAs: 'software_versions.yml'
+    val es_workflow
 
     output:
     tuple val(meta), path("*experiment-summary.html")  , emit: html
@@ -50,6 +51,7 @@ process EXPERIMENT_SUMMARY {
     quarto render ./quarto/pixelatorES.qmd \\
         -P sample_sheet="\$PWD/${samplesheet_path}" \\
         -P data_folder="\$PWD/results/" \\
+        -P workflow="${es_workflow}" \\
         $args \\
 
     mv ./quarto/pixelatorES.html experiment-summary.html
