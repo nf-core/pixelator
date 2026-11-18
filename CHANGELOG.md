@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[7.1.0dev]($tag_url)] - $date
 
+### Patches
+
+#### Enhancements & fixes
+
+- Lower high-memory process requests slightly so tasks fit standard cloud/HPC hosts. By @johandahlberg [#286](https://github.com/nf-core/pixelator/pull/286)
+
 ## [[7.0.0](https://github.com/nf-core/pixelator/releases/tag/7.0.0)] - 2026-11-16
 
 ### Major
