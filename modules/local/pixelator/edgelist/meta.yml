@@ -17,10 +17,13 @@ input:
         type: map
         description: |
           Groovy Map containing sample information
-          e.g. [ id:'sample1', design:'pna-2', row:1 ].
+          e.g. [ id:'sample1', design:'pna-2', row:1, single_end:true, single_end_reverse:false, min_avg_quality:20 ].
           `design` is passed as `--design`.
           `row` is the first samplesheet row listing the FASTQ input. Together with
           `id` it is used to name the FASTQs (and thus the outputs) uniquely.
+          When `single_end` is true, `single_end_reverse` passes the FASTQ as the
+          reverse read instead of the forward read. The pipeline config passes
+          `min_avg_quality`, when set, as `--min-avg-quality`.
     - reads:
         type: file
         description: |

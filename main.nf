@@ -81,7 +81,14 @@ workflow {
         params.outdir,
         params.input,
         params.input_basedir,
-        params.technology,
+        [
+            technology: params.technology,
+            design: params.design,
+            sequencing_technology: params.sequencing_technology,
+            // Defaults to null, so a value given on the command line arrives as a string
+            reverse_read: params.reverse_read?.toString()?.toBoolean(),
+            min_avg_quality: params.pna_edgelist_min_avg_quality,
+        ],
         params.help,
         params.help_full,
         params.show_hidden

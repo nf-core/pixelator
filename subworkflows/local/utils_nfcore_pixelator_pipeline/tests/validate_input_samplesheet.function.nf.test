@@ -1,0 +1,141 @@
+nextflow_function {
+
+    name "Test samplesheet row validation"
+    script "../main.nf"
+    function "validate_input_samplesheet"
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "utils_nfcore_pixelator_pipeline"
+
+    // Inputs are the samplesheet base URI, a samplesheet row as returned by samplesheetToList
+    // ([meta, panel_file, fastq_1, fastq_2]), the 1-based row number and the pipeline defaults.
+    // The FASTQ files only need to exist, so empty temporary files are used.
+
+    test("Paired-end SBS row - read as forward and reverse, default design and quality") {
+
+        when {
+            function {
+                """
+                def fq1 = java.nio.file.Files.createTempFile('s1_R1', '.fastq.gz').toString()
+                def fq2 = java.nio.file.Files.createTempFile('s1_R2', '.fastq.gz').toString()
+                input[0] = new URI('file:///')
+                input[1] = [ [ id:'sample1', panel:'p' ], [], fq1, fq2 ]
+                input[2] = 1
+                input[3] = [ design:'proxiome-v2', sequencing_technology:'sbs', reverse_read:null, min_avg_quality:null ]
+                """
+            }
+        }
+
+        then {
+            def meta = function.result[0]
+            assertAll(
+                { assert function.success },
+                { assert meta.design == 'proxiome-v2' },
+                { assert meta.single_end == false },
+                { assert meta.single_end_reverse == false },
+                { assert meta.min_avg_quality == 20 },
+                { assert function.result[2].size() == 2 },
+            )
+        }
+    }
+
+    test("Single-end SBX row - read as reverse with a lower quality threshold") {
+
+        when {
+            function {
+                """
+                def fq1 = java.nio.file.Files.createTempFile('s1', '.fastq.gz').toString()
+                input[0] = new URI('file:///')
+                input[1] = [ [ id:'sample1', design:'proxiome-v1', panel:'p', sequencing_technology:'sbx' ], [], fq1, [] ]
+                input[2] = 1
+                input[3] = [ design:'proxiome-v2', sequencing_technology:'sbs', reverse_read:null, min_avg_quality:null ]
+                """
+            }
+        }
+
+        then {
+            def meta = function.result[0]
+            assertAll(
+                { assert function.success },
+                // The samplesheet values win over the defaults
+                { assert meta.design == 'proxiome-v1' },
+                { assert meta.single_end == true },
+                { assert meta.single_end_reverse == true },
+                { assert meta.min_avg_quality == 5 },
+                // Only the resolved read settings are kept in the meta
+                { assert !meta.containsKey('sequencing_technology') && !meta.containsKey('reverse_read') },
+            )
+        }
+    }
+
+    test("Single-end row - samplesheet columns win over the global parameters") {
+
+        when {
+            function {
+                """
+                def fq1 = java.nio.file.Files.createTempFile('s1', '.fastq.gz').toString()
+                input[0] = new URI('file:///')
+                input[1] = [ [ id:'sample1', panel:'p', reverse_read:'no', min_avg_quality:0 ], [], fq1, [] ]
+                input[2] = 1
+                input[3] = [ design:'proxiome-v2', sequencing_technology:'sbx', reverse_read:true, min_avg_quality:12 ]
+                """
+            }
+        }
+
+        then {
+            def meta = function.result[0]
+            assertAll(
+                { assert function.success },
+                { assert meta.single_end_reverse == false },
+                // 0 is a valid threshold, not an empty cell
+                { assert meta.min_avg_quality == 0 },
+            )
+        }
+    }
+
+    test("Paired-end SBX row - fails") {
+
+        when {
+            function {
+                """
+                def fq1 = java.nio.file.Files.createTempFile('s1_R1', '.fastq.gz').toString()
+                def fq2 = java.nio.file.Files.createTempFile('s1_R2', '.fastq.gz').toString()
+                input[0] = new URI('file:///')
+                input[1] = [ [ id:'sample1', panel:'p' ], [], fq1, fq2 ]
+                input[2] = 1
+                input[3] = [ design:'proxiome-v2', sequencing_technology:'sbx', reverse_read:null, min_avg_quality:null ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert function.failed },
+                { assert (function.stdout + function.stderr).join(" ").contains("sequencing technology sbx takes only fastq_1") },
+            )
+        }
+    }
+
+    test("Pooled sample with the proxiome-v1 design from --design - fails") {
+
+        when {
+            function {
+                """
+                def fq1 = java.nio.file.Files.createTempFile('p1_R1', '.fastq.gz').toString()
+                def fq2 = java.nio.file.Files.createTempFile('p1_R2', '.fastq.gz').toString()
+                input[0] = new URI('file:///')
+                input[1] = [ [ id:'sample1', pool:'pool1', hash_index:1, panel:'p' ], [], fq1, fq2 ]
+                input[2] = 1
+                input[3] = [ design:'proxiome-v1', sequencing_technology:'sbs', reverse_read:null, min_avg_quality:null ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert function.failed },
+                { assert (function.stdout + function.stderr).join(" ").contains("pooled samples can only be used with the `proxiome-v2` design") },
+            )
+        }
+    }
+}
