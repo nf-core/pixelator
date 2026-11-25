@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Enhancements & fixes
 
 - Lower high-memory process requests slightly so tasks fit standard cloud/HPC hosts. By @johandahlberg [#286](https://github.com/nf-core/pixelator/pull/286)
+- `--multiplet-recovery` and `--edge-cycle-verification` can now be set to false. By @Aratz [#288](https://github.com/nf-core/pixelator/pull/288)
 
 ## [[7.0.0](https://github.com/nf-core/pixelator/releases/tag/7.0.0)] - 2026-11-16
 
