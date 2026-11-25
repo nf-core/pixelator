@@ -26,7 +26,7 @@ include { PIXELATOR_SAMPLE_CALLING     } from '../modules/local/pixelator/sample
 include { PIXELATOR_DENOISE            } from '../modules/local/pixelator/denoise'
 include { PIXELATOR_ANALYSIS           } from '../modules/local/pixelator/analysis'
 include { EXPERIMENT_SUMMARY           } from '../modules/local/experiment_summary/main'
-include { collectReportInputsFromTopic } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
+include { collectReportInputsFromTopic; without_read_settings } from '../subworkflows/local/utils_nfcore_pixelator_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -80,8 +80,8 @@ workflow PROXIOME {
             // Order the lanes by samplesheet row, so that the input of aggregate does
             // not depend on the order in which the edgelist tasks finish (-resume stability)
             def sorted = data.sort(false) { item -> item[0].row }
-            // Remove the parts meta keys again
-            def newMeta = sorted[0][0].clone()
+            // Remove the per-lane meta keys again. The read settings can differ between lanes.
+            def newMeta = without_read_settings(sorted[0][0])
             newMeta.remove('parts')
             newMeta.remove('row')
             def parquet = sorted.collect { item -> item[1] }.flatten()

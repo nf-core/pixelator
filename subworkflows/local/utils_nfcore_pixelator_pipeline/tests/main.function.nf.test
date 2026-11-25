@@ -116,15 +116,15 @@ nextflow_function {
         }
     }
 
-    test("Mixed single-end and paired-end runs of a sample - fails") {
+    test("Runs of a sample read differently - each lane keeps its own read settings") {
 
         when {
             function {
                 """
                 def base = [ id:'sample1', design:'proxiome-v1', panel:'p' ]
                 input[0] = [
-                    [ base + [ single_end:false, row:1 ], [], ['a_R1.fastq.gz', 'a_R2.fastq.gz'] ],
-                    [ base + [ single_end:true, row:2 ], [], ['b_R1.fastq.gz'] ],
+                    [ base + [ single_end:false, single_end_reverse:false, min_avg_quality:20, row:1 ], [], ['a_R1.fastq.gz', 'a_R2.fastq.gz'] ],
+                    [ base + [ single_end:true, single_end_reverse:true, min_avg_quality:5, row:2 ], [], ['b.fastq.gz'] ],
                 ]
                 input[1] = 'proxiome-v1'
                 """
@@ -132,9 +132,39 @@ nextflow_function {
         }
 
         then {
+            def result = function.result
+            assertAll(
+                { assert function.success },
+                { assert result.lanes.collect { lane -> lane[0].subMap(['single_end', 'single_end_reverse', 'min_avg_quality']) } == [
+                    [ single_end:false, single_end_reverse:false, min_avg_quality:20 ],
+                    [ single_end:true, single_end_reverse:true, min_avg_quality:5 ],
+                ] },
+                // The read settings belong to the lanes, not to the sample
+                { assert result.sample_metas.size() == 1 },
+                { assert !result.sample_metas[0][1].containsKey('single_end') && !result.sample_metas[0][1].containsKey('min_avg_quality') },
+            )
+        }
+    }
+
+    test("FASTQ read differently on the rows of a pool - fails") {
+
+        when {
+            function {
+                """
+                def base = [ pool:'pool1', design:'proxiome-v2', panel:'p', single_end:true, min_avg_quality:20 ]
+                input[0] = [
+                    [ base + [ id:'sample1', hash_index:1, single_end_reverse:false, row:1 ], [], ['a.fastq.gz'] ],
+                    [ base + [ id:'sample2', hash_index:5, single_end_reverse:true, row:2 ], [], ['a.fastq.gz'] ],
+                ]
+                input[1] = 'proxiome-v2'
+                """
+            }
+        }
+
+        then {
             assertAll(
                 { assert function.failed },
-                { assert (function.stdout + function.stderr).join(" ").contains("must all be single-end or all paired-end") },
+                { assert (function.stdout + function.stderr).join(" ").contains("is listed on several rows with a different") },
             )
         }
     }

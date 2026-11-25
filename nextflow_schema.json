@@ -61,8 +61,8 @@
                 "pna_edgelist_min_avg_quality": {
                     "fa_icon": "fas fa-sliders-h",
                     "description": "Drop reads whose average quality in marker and UMI regions is below this.",
+                    "help_text": "When not set, the value depends on each sample's sequencing technology: 20 for `sbs`, 5 for `sbx`. The samplesheet `min_avg_quality` column takes precedence for its rows.",
                     "type": "integer",
-                    "default": 20,
                     "minimum": 0,
                     "maximum": 93
                 },
@@ -434,6 +434,28 @@
                     "fa_icon": "fas fa-microchip",
                     "description": "The technology used to process the samples",
                     "enum": ["proxiome-v1", "proxiome-v2", "hashed_samples", "nonhashed_samples"]
+                },
+                "design": {
+                    "type": "string",
+                    "fa_icon": "fas fa-drafting-compass",
+                    "pattern": "^\\S+$",
+                    "description": "The pixelator design to use for samples that have no `design` in the samplesheet.",
+                    "help_text": "The samplesheet `design` column takes precedence. Run `pixelator single-cell-pna --list-designs` for the available designs.",
+                    "default": "proxiome-v2"
+                },
+                "sequencing_technology": {
+                    "type": "string",
+                    "fa_icon": "fas fa-dna",
+                    "description": "The sequencing technology used to generate the FASTQ files, for samplesheet rows without a `sequencing_technology`. Sets how the edgelist step reads them.",
+                    "help_text": "- `sbs`: sequencing by synthesis (Illumina, MGI, etc.). Paired-end samples (`fastq_1` and `fastq_2`) pass `fastq_1` as the forward read and `fastq_2` as the reverse read. Single-end samples pass `fastq_1` as the forward read.\n- `sbx`: Roche SBX. Samples have only `fastq_1`, passed as the reverse read, and `--pna_edgelist_min_avg_quality` defaults to 5 instead of 20.\n\nThe samplesheet `sequencing_technology` column takes precedence. The read direction and quality threshold can be overridden with `--reverse_read` (or the `reverse_read` column) and `--pna_edgelist_min_avg_quality`.",
+                    "default": "sbs",
+                    "enum": ["sbs", "sbx"]
+                },
+                "reverse_read": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-exchange-alt",
+                    "description": "Pass single-end FASTQ files to edgelist as the reverse read instead of the forward read, for samplesheet rows without a `reverse_read`.",
+                    "help_text": "When not set, the value depends on the sequencing technology: `true` for `sbx`, `false` for `sbs`. The samplesheet `reverse_read` column (`yes` or `no`) takes precedence. Applies only to single-end rows; paired-end rows ignore it. Set it to `true` with `sbs` to use only the reverse read of a paired-end run (put the R2 file in `fastq_1`), for example when the forward read has poor quality."
                 }
             }
         },

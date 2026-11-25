@@ -6,7 +6,7 @@
     "type": "array",
     "items": {
         "type": "object",
-        "required": ["sample", "sample_alias", "condition", "design", "fastq_1"],
+        "required": ["sample", "sample_alias", "condition", "fastq_1"],
         "additionalProperties": false,
         "allOf": [
             {
@@ -39,7 +39,8 @@
                         "design": {
                             "const": "proxiome-v1"
                         }
-                    }
+                    },
+                    "required": ["design"]
                 },
                 "then": {
                     "not": {
@@ -97,9 +98,9 @@
             },
             "design": {
                 "type": "string",
-                "pattern": "^\\S+$",
-                "errorMessage": "Design must be specified",
-                "description": "Design identifier (no spaces).",
+                "pattern": "^\\S*$",
+                "errorMessage": "Design cannot contain spaces",
+                "description": "Optional design identifier (no spaces). Overrides --design for this sample.",
                 "meta": ["design"]
             },
             "panel": {
@@ -126,6 +127,28 @@
                 "pattern": "^\\S+\\.f(ast)?q\\.gz$",
                 "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'",
                 "description": "Optional FASTQ(.gz) path for read 2 (no spaces)."
+            },
+            "sequencing_technology": {
+                "type": "string",
+                "enum": ["sbs", "sbx", ""],
+                "errorMessage": "sequencing_technology must be 'sbs', 'sbx' or empty",
+                "description": "Optional sequencing technology of the FASTQ files. Overrides --sequencing_technology for this row.",
+                "meta": ["sequencing_technology"]
+            },
+            "reverse_read": {
+                "type": "string",
+                "enum": ["yes", "no", ""],
+                "errorMessage": "reverse_read must be 'yes', 'no' or empty",
+                "description": "Optional. Whether the single-end fastq_1 is the reverse read. Overrides --reverse_read for this row.",
+                "meta": ["reverse_read"]
+            },
+            "min_avg_quality": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 93,
+                "errorMessage": "min_avg_quality must be an integer between 0 and 93, or empty",
+                "description": "Optional edgelist read quality threshold for this row. Overrides --pna_edgelist_min_avg_quality.",
+                "meta": ["min_avg_quality"]
             }
         }
     }

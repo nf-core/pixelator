@@ -5,12 +5,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[7.1.0dev]($tag_url)] - $date
 
+### Minor
+
+#### Enhancements & fixes
+
+- Support different sequencing technologies. `--sequencing_technology` (`sbs`, the default, or `sbx` for Roche SBX) and a samplesheet column with the same name set how the edgelist step reads the FASTQ files and the default read quality threshold (20 for `sbs`, 5 for `sbx`).
+- Add `--reverse_read` and a `reverse_read` samplesheet column to pass single-end FASTQ files as the reverse read.
+- Add a `min_avg_quality` samplesheet column to set the edgelist read quality threshold per row. `--pna_edgelist_min_avg_quality` now defaults to the sequencing technology default.
+- Add `--design` (default `proxiome-v2`); the `design` samplesheet column is now optional and overrides it.
+- Allow the runs of a sample or pool to differ in sequencing technology, read direction and quality threshold, and to mix single-end and paired-end runs.
+
 ### Patches
 
 #### Enhancements & fixes
 
 - Lower high-memory process requests slightly so tasks fit standard cloud/HPC hosts. By @johandahlberg [#286](https://github.com/nf-core/pixelator/pull/286)
 - `--multiplet-recovery` and `--edge-cycle-verification` can now be set to false. By @Aratz [#288](https://github.com/nf-core/pixelator/pull/288)
+
+### Parameters
+
+| Old parameter                    | New parameter                                          |
+| -------------------------------- | ------------------------------------------------------ |
+|                                  | `--design` (default `proxiome-v2`)                     |
+|                                  | `--sequencing_technology` (default `sbs`)              |
+|                                  | `--reverse_read`                                       |
+| `--pna_edgelist_min_avg_quality` | `--pna_edgelist_min_avg_quality` (default: technology) |
+
+> [!NOTE]
+> Parameter has been **updated** if both old and new parameter information is present.
 
 ## [[7.0.0](https://github.com/nf-core/pixelator/releases/tag/7.0.0)] - 2026-11-16
 

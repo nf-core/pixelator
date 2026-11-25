@@ -33,7 +33,9 @@ workflow PIPELINE_INITIALISATION {
     outdir            //  string: The output directory where the results will be saved
     input             //  string: Path to input samplesheet
     input_basedir     //  string: Path to the base directory for relative paths resolving
-    technology        //  string: Technology of the samples, checked against the samplesheet
+    sample_defaults   //     map: technology (checked against the samplesheet), and the values for samplesheet
+                      //          rows that leave them empty: design, sequencing_technology, reverse_read and
+                      //          min_avg_quality (reverse_read and min_avg_quality: null to follow the sequencing technology)
     help              // boolean: Display help message and exit
     help_full         // boolean: Show the full help message
     show_hidden       // boolean: Show hidden parameters in the help message
@@ -121,8 +123,8 @@ workflow PIPELINE_INITIALISATION {
     //
     def rows = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
         .withIndex()
-        .collect { row, index -> validate_input_samplesheet(inputBaseDir, row, index + 1) }
-    def units = group_samplesheet_units(rows, technology)
+        .collect { row, index -> validate_input_samplesheet(inputBaseDir, row, index + 1, sample_defaults) }
+    def units = group_samplesheet_units(rows, sample_defaults.technology)
 
     //
     // Validate design and panel samplesheet fields agains a dynamic set of allowed values
@@ -218,20 +220,6 @@ workflow PIPELINE_COMPLETION {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-//
-// Validate channels from input samplesheet
-//
-def validateInputSamplesheet(input) {
-    def (metas, fastqs) = input[1..2]
-
-    // Check that multiple runs of the same sample are of the same datatype i.e. single-end / paired-end
-    def endedness_ok = metas.collect { meta -> meta.single_end }.unique().size == 1
-    if (!endedness_ok) {
-        error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
-    }
-
-    return [metas[0], fastqs]
-}
 //
 // Get attribute from genome config file e.g. fasta
 //
@@ -456,15 +444,47 @@ def get_data_basedir(URI samplesheet, String input_basedir) {
 
 //
 // Resolve relative paths and check that all files exist.
+// Also resolve the design and how edgelist reads the FASTQ files. A value in the samplesheet row
+// wins over the global parameter, which wins over the sequencing technology default.
+// The edgelist module only sees how to read the FASTQ files (see edgelist_read_settings),
+// not which technology made them.
 //
-def validate_input_samplesheet(URI samplesheetUrl, items, int row) {
+def validate_input_samplesheet(URI samplesheetUrl, items, int row, Map defaults) {
     def meta = items[0] + [row: row]
     def panel_file = items[1]
     def fq = items[2..-1]
 
     // nf-schema yields an empty list for a missing fastq_2, so check the value, not the size
     def paired_end = fq.size() == 2 && fq[1]
-    meta = meta + [single_end: !paired_end]
+
+    // Missing columns and empty cells arrive as null, [] or '', which Groovy treats as false
+    def design = meta.design ?: defaults.design
+
+    def sequencing_technology = meta.sequencing_technology ?: defaults.sequencing_technology
+    if (sequencing_technology == 'sbx' && paired_end) {
+        error("ERROR: Please check input samplesheet -> sample '${meta.id}' has a fastq_2, but sequencing technology sbx takes only fastq_1.")
+    }
+    if (meta.reverse_read && paired_end) {
+        error("ERROR: Please check input samplesheet -> sample '${meta.id}' has a fastq_2, but reverse_read only applies to single-end samples.")
+    }
+    // SBX gives a single reverse read; single-end SBS gives a forward read unless overridden.
+    // The global --reverse_read only applies to single-end rows.
+    def reverse = paired_end ? false
+        : meta.reverse_read ? meta.reverse_read == 'yes'
+        : defaults.reverse_read != null ? defaults.reverse_read
+        : sequencing_technology == 'sbx'
+    // An empty cell in this integer column is not a number, and 0 is a valid threshold
+    def row_quality = meta.min_avg_quality instanceof Number ? meta.min_avg_quality : null
+    def min_avg_quality = row_quality != null ? row_quality
+        : defaults.min_avg_quality != null ? defaults.min_avg_quality
+        : sequencing_technology == 'sbx' ? 5 : 20
+
+    meta = meta.findAll { key, _value -> !(key in ['sequencing_technology', 'reverse_read']) } + [
+        design: design,
+        single_end: !paired_end,
+        single_end_reverse: reverse,
+        min_avg_quality: min_avg_quality,
+    ]
     def panel_file_abs = resolve_relative_path(panel_file, samplesheetUrl)
     def fq1_abs = resolve_relative_path(fq[0], samplesheetUrl)
 
@@ -492,7 +512,24 @@ def validate_input_samplesheet(URI samplesheetUrl, items, int row) {
         error("ERROR: Please check input samplesheet -> `pool` must be different from `sample`: ${meta.id}")
     }
 
+    // The samplesheet schema only sees an explicit `design`, not the --design default
+    if (meta.pool && design == 'proxiome-v1') {
+        error("ERROR: Please check input samplesheet -> sample '${meta.id}' is pooled, but pooled samples can only be used with the `proxiome-v2` design.")
+    }
+
     return [meta, panel_file_abs, reads]
+}
+
+//
+// How edgelist reads one FASTQ input. These are set per samplesheet row, so they can
+// differ between the runs of a sample or pool and only belong in the meta of a lane.
+//
+def edgelist_read_settings(Map meta) {
+    return meta.subMap(['single_end', 'single_end_reverse', 'min_avg_quality'])
+}
+
+def without_read_settings(Map meta) {
+    return meta.findAll { key, _value -> !(key in edgelist_read_settings(meta).keySet()) }
 }
 
 //
@@ -517,8 +554,9 @@ def pool_meta(LinkedHashMap meta) {
 // units (the pool if the row has a `pool`, else the sample) and check that the rows
 // of a unit are consistent. Returns a map with:
 //   lanes:            [meta, reads, panel_file] per unique FASTQ input of a unit.
-//                     The meta is the unit meta, with the number of lanes (`parts`)
-//                     and the first samplesheet row listing the input (`row`).
+//                     The meta is the unit meta, with the number of lanes (`parts`),
+//                     the first samplesheet row listing the input (`row`) and how
+//                     edgelist reads the input (see edgelist_read_settings).
 //   unit_panel_files: [unit id, panel_file]
 //   sample_metas:     [sample id, meta], to restore the per-sample metadata after sample calling
 //   options:          distinct [design, panel] pairs to validate against pixelator
@@ -543,10 +581,6 @@ def group_samplesheet_units(List rows, String technology) {
         def (first_meta, _first_panel_file, _first_reads) = unit_rows[0]
         def is_pool = first_meta.pool
 
-        if (unit_rows.collect { meta, _panel_file, _reads -> meta.single_end }.unique().size() > 1) {
-            error("ERROR: Runs of the same ${is_pool ? 'pool' : 'sample'} must all be single-end or all paired-end.")
-        }
-
         if (unit_rows.collect { meta, _panel_file, _reads -> meta.design }.unique().size() > 1) {
             error("ERROR: Runs of the same sample or pool ('${unit_id}') must use the same design.")
         }
@@ -563,10 +597,15 @@ def group_samplesheet_units(List rows, String technology) {
         // Example for pool1 (3 samples: sample1-3; 2 runs: original + re-sequencing), so 6 rows:
         // rows 1-3 (one per sample) list pool1_R1/R2.fastq.gz, rows 4-6 list pool1_reseq_R1/R2.fastq.gz
         def rows_by_reads = unit_rows.groupBy { _meta, _panel_file, reads -> reads }  // [[pool1_R1, pool1_R2]: [row1, row2, row3], [pool1_reseq_R1, pool1_reseq_R2]: [row4, row5, row6]]
-        def unit_meta = (is_pool ? pool_meta(first_meta) : without_row(first_meta)) + [parts: rows_by_reads.size()]  // [id: 'pool1', pool: 'pool1', ..., parts: 2] (2 unique FASTQ pairs, not the 3 samples)
+        def unit_meta = without_read_settings(is_pool ? pool_meta(first_meta) : without_row(first_meta)) + [parts: rows_by_reads.size()]  // [id: 'pool1', pool: 'pool1', ..., parts: 2] (2 unique FASTQ pairs, not the 3 samples)
         rows_by_reads.each { reads, reads_rows ->  // 1st: reads = [pool1_R1, pool1_R2], reads_rows = [row1, row2, row3]
             def first_row = reads_rows.collect { meta, _panel_file, _reads -> meta.row }.min()  // 1st: [1, 2, 3].min() = 1, 2nd: [4, 5, 6].min() = 4
-            lanes << [unit_meta + [row: first_row], reads, panel_files[0]]  // 1st: [[id: 'pool1', ..., parts: 2, row: 1], [pool1_R1, pool1_R2], panel]
+            // A FASTQ listed on several rows (the samples of a pool) must be read the same way on each of them
+            def read_settings = reads_rows.collect { meta, _panel_file, _reads -> edgelist_read_settings(meta) }.unique()
+            if (read_settings.size() > 1) {
+                error("ERROR: Please check input samplesheet -> ${reads[0]} is listed on several rows with a different sequencing_technology, reverse_read or min_avg_quality.")
+            }
+            lanes << [unit_meta + [row: first_row] + read_settings[0], reads, panel_files[0]]  // 1st: [[id: 'pool1', ..., parts: 2, row: 1, single_end: false, ...], [pool1_R1, pool1_R2], panel]
         }
         unit_panel_files << [unit_id, panel_files[0]]
     }
@@ -574,7 +613,7 @@ def group_samplesheet_units(List rows, String technology) {
     return [
         lanes: lanes,
         unit_panel_files: unit_panel_files,
-        sample_metas: rows.collect { meta, _panel_file, _reads -> [meta.id, without_row(meta)] }.unique(),
+        sample_metas: rows.collect { meta, _panel_file, _reads -> [meta.id, without_read_settings(without_row(meta))] }.unique(),
         options: rows.collect { meta, _panel_file, _reads -> [design: meta.design, panel: meta.panel] }.unique(),
     ]
 }

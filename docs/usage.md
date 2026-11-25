@@ -85,22 +85,63 @@ You can export to CSV from spreadsheet programs such as Microsoft Excel, Google 
 
 The following table provides an overview of all possible columns in the samplesheet.
 
-| Column                              | Required                  | Description                                                                                                                                                              |
-| ----------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `pool`                              | Yes (with pooled samples) | Custom pool name. Must be different from `sample`.                                                                                                                       |
-| `hash_index`                        | Yes (with pooled samples) | Index of the hashing antibody used with this sample.                                                                                                                     |
-| `sample`                            | Yes                       | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample.                                                            |
-| `sample_alias`                      | Yes                       | Custom sample alias. Will be used to identify the sample in reports and visualizations.                                                                                  |
-| `condition`                         | Yes                       | Custom experimental condition for the sample (e.g. control, treatment). Used for reports and visualizations.                                                             |
-| `design`                            | Yes                       | The name of the pixelator design configuration.                                                                                                                          |
-| `panel` <br />or<br /> `panel_file` | Yes                       | Name of the panel to use. <br />or<br /> Path to a CSV file containing a custom panel.                                                                                   |
-| `fastq_1`                           | Yes                       | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                    |
-| `fastq_2`                           | No                        | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". Parameter only used if you are running paired-end. |
+| Column                              | Required                  | Description                                                                                                                                                                          |
+| ----------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pool`                              | Yes (with pooled samples) | Custom pool name. Must be different from `sample`.                                                                                                                                   |
+| `hash_index`                        | Yes (with pooled samples) | Index of the hashing antibody used with this sample.                                                                                                                                 |
+| `sample`                            | Yes                       | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample.                                                                        |
+| `sample_alias`                      | Yes                       | Custom sample alias. Will be used to identify the sample in reports and visualizations.                                                                                              |
+| `condition`                         | Yes                       | Custom experimental condition for the sample (e.g. control, treatment). Used for reports and visualizations.                                                                         |
+| `design`                            | No                        | The name of the pixelator design configuration. Overrides `--design` (default `proxiome-v2`).                                                                                        |
+| `panel` <br />or<br /> `panel_file` | Yes                       | Name of the panel to use. <br />or<br /> Path to a CSV file containing a custom panel.                                                                                               |
+| `fastq_1`                           | Yes                       | Path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                                |
+| `fastq_2`                           | No                        | Path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". Parameter only used if you are running paired-end.             |
+| `sequencing_technology`             | No                        | `sbs` or `sbx`. Overrides `--sequencing_technology` for this row. See [Sequencing technology](#sequencing-technology).                                                               |
+| `reverse_read`                      | No                        | `yes` or `no`. Whether the single-end `fastq_1` is the reverse read. Overrides `--reverse_read` for this row. See [Sequencing technology](#sequencing-technology).                   |
+| `min_avg_quality`                   | No                        | Edgelist read quality threshold for this row. Overrides `--pna_edgelist_min_avg_quality` and the sequencing technology default. See [Sequencing technology](#sequencing-technology). |
 
 The `panel` and `panel_file` options are mutually exclusive. If both are specified, the pipeline will throw an error.
 One of them has to be specified.
 
 The pipeline will auto-detect whether a sample is single- or paired-end based on if both `fastq_1` and `fastq_2` or only `fastq_1` is present in the samplesheet.
+
+### Sequencing technology
+
+The sequencing technology sets which read each FASTQ file is passed as in the edgelist step,
+and the read quality threshold.
+
+| Sequencing technology | Platforms           | FASTQ files           | Edgelist input                                      | Quality threshold |
+| --------------------- | ------------------- | --------------------- | --------------------------------------------------- | ----------------- |
+| `sbs` (default)       | Illumina, MGI, etc. | `fastq_1` + `fastq_2` | `--read-forward <fastq_1> --read-reverse <fastq_2>` | 20                |
+| `sbs` (default)       | Illumina, MGI, etc. | `fastq_1`             | `--read-forward <fastq_1>`                          | 20                |
+| `sbx`                 | Roche SBX           | `fastq_1`             | `--read-reverse <fastq_1>`                          | 5                 |
+
+Whether a sample is paired- or single-end comes from the samplesheet. With `sbx`, samples must not have a `fastq_2`.
+
+SBX base qualities are lower than the observed error rate suggests, so with the default threshold of 20 many
+good reads are dropped. With `sbx` the pipeline therefore lowers the quality threshold to 5.
+
+The sequencing technology and the read direction can be set for the whole run or for each samplesheet row.
+For each row, the pipeline uses the first of these that is set:
+
+1. The `sequencing_technology` and `reverse_read` columns of the samplesheet. A missing column or an empty
+   cell counts as not set.
+2. The `--sequencing_technology` and `--reverse_read` parameters.
+3. The defaults: `sbs`, and a reverse read only with `sbx`.
+
+`reverse_read` (`yes` or `no`) and `--reverse_read` only apply to single-end rows. Setting `reverse_read` on a
+row with a `fastq_2` is an error, while `--reverse_read` leaves those rows as they are.
+
+For example, if the forward read of a paired-end run has poor quality but the reverse read is long enough on its
+own, put the R2 file in `fastq_1` and set `reverse_read` to `yes` (or run with `--reverse_read` for all samples).
+This keeps the `sbs` quality threshold of 20 and passes R2 as the reverse read.
+
+The quality threshold follows the same order: the `min_avg_quality` column, then `--pna_edgelist_min_avg_quality`,
+then the sequencing technology default.
+
+Runs of the same sample or pool can come from different sequencing technologies, for example an SBS run and an
+SBX re-sequencing of the same library. A FASTQ file that is listed on several rows, such as the samples of a
+pool, must be read the same way on each of them.
 
 > [!WARNING]
 > It is important that you select a panel file that matches the kit lot version you are
@@ -143,6 +184,7 @@ FastQ files from different rows can share the same file name.
 
 > [!NOTE]
 > When combining multiple runs, sample metadata such as pool, hash_index, sample_alias, condition, design and panel needs to be repeated on all rows.
+> All rows of a sample or pool must have the same design. The sequencing technology and read direction can differ between runs.
 
 Below is an example for the same sample sequenced across 3 lanes:
 
@@ -201,6 +243,8 @@ nextflow run nf-core/pixelator --input samplesheet.csv --input_basedir s3://my-c
 ### Design
 
 The `design` column specifies the name of the pixelator assay design configuration to use.
+Samples that leave the column empty, or a samplesheet without the column, use `--design`, which defaults to
+`proxiome-v2`. Set the design explicitly for data from the Proxiome v1 kit.
 
 A list of available designs can be listed by running following command:
 

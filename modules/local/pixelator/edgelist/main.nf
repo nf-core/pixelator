@@ -34,9 +34,11 @@ process PIXELATOR_EDGELIST {
     def unit_prefix = "${meta.id}_${meta.row}"
     def staged_reads = read_list.collect { read -> "${unit_prefix}_${read.name}".toString() }
     def link_cmd = [read_list, staged_reads].transpose().collect { read, staged -> "ln -s ${read} ${staged}" }.join('\n    ')
-    def read_args = meta.single_end
-        ? "--read-forward ${staged_reads[0]}"
-        : "--read-forward ${staged_reads[0]} --read-reverse ${staged_reads[1]}"
+    def read_args = !meta.single_end
+        ? "--read-forward ${staged_reads[0]} --read-reverse ${staged_reads[1]}"
+        : meta.single_end_reverse
+            ? "--read-reverse ${staged_reads[0]}"
+            : "--read-forward ${staged_reads[0]}"
     def sample_name = task.ext.prefix ?: "${meta.id}"
     def log_prefix = task.ext.prefix ?: unit_prefix
 
